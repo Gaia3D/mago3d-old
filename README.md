@@ -1,6 +1,7 @@
-D - 10
+openjdk 16
+postgres 13.3
+gradle7
 
-몇 일 남지 않았으니... 최선을 다해서 개발 하시오.
-
+spring boot 2.5
 
 
