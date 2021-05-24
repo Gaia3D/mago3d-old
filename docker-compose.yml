@@ -6,9 +6,7 @@ services:
   db:
     container_name: mago3d-db
     restart: always
-    build:
-      context: ./doc/docker/postgres
-      dockerfile: Dockerfile
+    image: gaia3d/postgres:mago3d-13
     volumes:
       - ./doc/database:/database:ro
       - ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh:ro
