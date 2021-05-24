@@ -83,13 +83,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.2'
+
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4'
 	implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-	implementation 'org.springframework.security:spring-security-core:5.2.1.RELEASE'
-
-	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.4.1'
+    implementation 'org.springframework.security:spring-security-core:5.3.9.RELEASE'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.5.3'
 
     implementation 'org.apache.commons:commons-compress:1.18'
 
@@ -100,10 +100,8 @@ dependencies {
 	
 	//providedRuntime 'org.apache.tomcat.embed:tomcat-embed-jasper'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-	
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 

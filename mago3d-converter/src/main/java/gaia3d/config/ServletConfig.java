@@ -29,10 +29,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackages = { "gaia3d.config" }, includeFilters = {
-		@Filter(type = FilterType.ANNOTATION, value = Component.class),
-		@Filter(type = FilterType.ANNOTATION, value = Controller.class),
-		@Filter(type = FilterType.ANNOTATION, value = RestController.class)})
+@ComponentScan(
+		basePackages = {"gaia3d.config"},
+		includeFilters = {
+				@Filter(type = FilterType.ANNOTATION, value = Component.class),
+				@Filter(type = FilterType.ANNOTATION, value = Controller.class),
+				@Filter(type = FilterType.ANNOTATION, value = RestController.class)
+		})
 public class ServletConfig implements WebMvcConfigurer {
 	
 	@Override

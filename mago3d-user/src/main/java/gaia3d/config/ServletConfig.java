@@ -40,10 +40,13 @@ import nz.net.ultraq.thymeleaf.LayoutDialect;
 @Slf4j
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackages = { "gaia3d.config", "gaia3d.controller.view", "gaia3d.controller.rest", "gaia3d.interceptor" }, includeFilters = {
-		@Filter(type = FilterType.ANNOTATION, value = Component.class),
-		@Filter(type = FilterType.ANNOTATION, value = Controller.class),
-		@Filter(type = FilterType.ANNOTATION, value = RestController.class)})
+@ComponentScan(
+		basePackages = {"gaia3d.config", "gaia3d.controller.view", "gaia3d.controller.rest", "gaia3d.interceptor"},
+		includeFilters = {
+				@Filter(type = FilterType.ANNOTATION, value = Component.class),
+				@Filter(type = FilterType.ANNOTATION, value = Controller.class),
+				@Filter(type = FilterType.ANNOTATION, value = RestController.class)
+		})
 public class ServletConfig implements WebMvcConfigurer {
 	
 	@Autowired
