@@ -1,7 +1,8 @@
 package gaia3d.config;
 
-import java.time.Duration;
-
+import gaia3d.interceptor.*;
+import lombok.extern.slf4j.Slf4j;
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -18,24 +19,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.support.RequestDataValueProcessor;
 
-import gaia3d.interceptor.CSRFHandlerInterceptor;
-import gaia3d.interceptor.ConfigInterceptor;
-import gaia3d.interceptor.LocaleInterceptor;
-import gaia3d.interceptor.LogInterceptor;
-import gaia3d.interceptor.SecurityInterceptor;
-import lombok.extern.slf4j.Slf4j;
+import java.time.Duration;
+
 //import nz.net.ultraq.thymeleaf.LayoutDialect;
-import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 @Slf4j
 @EnableWebMvc
@@ -95,11 +84,12 @@ public class ServletConfig implements WebMvcConfigurer {
 	public LayoutDialect layoutDialect() {
 		return new LayoutDialect();
 	}
-	
-	@Bean
-	public LocaleResolver localeResolver() {
-        return new SessionLocaleResolver();
-	}
+
+	// spring boot 버전 업 데이터 되면서 bean name 충돌 발생, 이게 필요 없을거 같은데...
+//	@Bean
+//	public LocaleResolver localeResolver() {
+//        return new SessionLocaleResolver();
+//	}
 
 	@Bean
 	public ReloadableResourceBundleMessageSource messageSource(){
