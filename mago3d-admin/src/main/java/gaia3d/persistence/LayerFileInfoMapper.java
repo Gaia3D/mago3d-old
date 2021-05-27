@@ -1,11 +1,10 @@
 package gaia3d.persistence;
 
-import java.util.List;
-import java.util.Map;
-
+import gaia3d.domain.layer.LayerFileInfo;
 import org.springframework.stereotype.Repository;
 
-import gaia3d.domain.layer.LayerFileInfo;
+import java.util.List;
+import java.util.Map;
 
 /**
  * layer shape 파일 정보
@@ -44,10 +43,10 @@ public interface LayerFileInfoMapper {
 	
 	/**
 	 * layer shape 파일 그룹 정보 취득
-	 * @param layerFileInfoGroupId
+	 * @param layerFileInfoTeamId
 	 * @return
 	 */
-	List<LayerFileInfo> getLayerFileInfoGroup(Integer layerFileInfoGroupId);
+	List<LayerFileInfo> getLayerFileInfoTeam(Integer layerFileInfoTeamId);
 	
 	/**
 	 * 레이어별 shape 파일 version 최대값 + 1 을 취득
@@ -93,10 +92,10 @@ public interface LayerFileInfoMapper {
 	
 	/**
 	 * 동일 그룹 layerFileInfo 정보 활성화로 수정
-	 * @param layerFileInfoGroupMap
+	 * @param layerFileInfo
 	 * @return
 	 */
-	int updateLayerFileInfoGroup(Map<String, Object> layerFileInfoGroupMap);
+	int updateLayerFileInfoTeam(LayerFileInfo layerFileInfo);
 	
 	/**
 	 * layer shape 파일 정보 수정
@@ -106,11 +105,11 @@ public interface LayerFileInfoMapper {
 	int updateLayerFileInfo(LayerFileInfo layerFileInfo);
 	
 	/**
-	 * layerFileInfoGroupId에 의한 layer shape 파일 정보 수정
+	 * layerFileInfoTeamId에 의한 layer shape 파일 정보 수정
 	 * @param layerFileInfo
 	 * @return
 	 */
-	int updateLayerFileInfoByGroupId(LayerFileInfo layerFileInfo);
+	int updateLayerFileInfoByTeamId(LayerFileInfo layerFileInfo);
 	
 	/**
 	 * 해당 레이어의 이전 데이터를 전부 비활성화 상태로 수정
@@ -141,9 +140,9 @@ public interface LayerFileInfoMapper {
 	int deleteLayerFileInfo(Integer layerId);
 	
 	/**
-	 * group id 로 레이어 파일 이력을 삭제
-	 * @param deleteLayerFileInfoGroupId
+	 * team id 로 레이어 파일 이력을 삭제
+	 * @param layerFileInfoTeamId
 	 * @return
 	 */
-	int deleteLayerFileInfoByGroupId(Integer layerFileInfoGroupId);
+	int deleteLayerFileInfoByTeamId(Integer layerFileInfoTeamId);
 }

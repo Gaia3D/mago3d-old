@@ -10,10 +10,10 @@
 		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
 		<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
 		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
-		<link rel="stylesheet" th:href="@{/externlib/dropzone/dropzone.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/externlib/dropzone-5.7.0/dropzone.min.css(cacheVersion=${contentCacheVersion})}">
 		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
 		<script type="text/javascript" th:src="@{/externlib/handlebars-4.1.2/handlebars.js(cacheVersion=${contentCacheVersion})}"></script>
-		<script type="text/javascript" th:src="@{/externlib/dropzone/dropzone.min.js(cacheVersion=${contentCacheVersion})}"></script>
+		<script type="text/javascript" th:src="@{/externlib/dropzone-5.7.0/dropzone.min.js(cacheVersion=${contentCacheVersion})}"></script>
 		<style type="text/css">
 			.dropzone .dz-preview.lp-preview {
 				width: 150px;
@@ -74,7 +74,7 @@
 					<div th:replace="~{/fragments/page-header :: #pageHeaderWrap}"></div>
 					<div class="page-content">
 						<div class="input-header row">
-							<div class="content-desc u-pull-right"><span class="icon-glyph glyph-emark-dot color-warning"></span><spring:message code='check'/></div>
+							<div class="content-desc u-pull-right"><span class="icon-glyph glyph-emark-dot color-warning"></span><th:text="#{check}"></div>
 						</div>
 						<form id="layer" th:object="${layer}" method="post" th:action="@{#}" onsubmit="return false;">
 						<table class="input-table scope-row" summary="upload 레이어 수정 테이블">
@@ -92,11 +92,11 @@
 								</th>
 								<td class="col-input">
 									<input type="hidden" id="layerGroupId" name="layerGroupId" th:field="*{layerGroupId}" />
-									<input type="text" id="layerGroupName" name="layerGroupName" th:field="*{layerGroupName}" class="ml" readonly="true" />
-									<input type="button" id="layerGroupButtion" value="Layer 그룹 찾기" />
+									<input type="text" id="layerGroupName" name="layerGroupName" th:field="*{layerGroupName}" class="m" readonly="readonly" />
+									<input type="button" id="layerGroupButton" value="Layer 그룹 찾기" />
 								</td>
 								<th class="col-label" scope="row">
-			                        <label for="sharing">공유 유형</label>
+			                        <label for="sharingPublic">공유 유형</label>
 			                    </th>
 			                    <td class="col-input radio-set">
 									<input type="radio" id="sharingPublic" name="sharing" th:field="*{sharing}" value="public" />
@@ -113,23 +113,23 @@
 			                        <span class="icon-glyph glyph-emark-dot color-warning"></span>
 			                    </th>
 			                    <td class="col-input">
-			                        <input type="text" id="layerName" name="layerName" th:field="*{layerName}" class="ml" />
+			                        <input type="text" id="layerName" name="layerName" th:field="*{layerName}" class="m" />
 			                    </td>
 			                    <th class="col-label" scope="row">
 			                        <label for="layerKey">Layer Key</label>
 			                        <span class="icon-glyph glyph-emark-dot color-warning"></span>
 			                    </th>
 			                    <td class="col-input">
-			                        <input type="text" id="layerKey" name="layerKey" th:field="*{layerKey}" class="ml" readonly="true" />
+			                        <input type="text" id="layerKey" name="layerKey" th:field="*{layerKey}" class="m" maxlength="100" readonly="readonly" />
 			                    </td>
 			                </tr>
 			                <tr>
 			                    <th class="col-label" scope="row">
-			                        <label for="serviceType">서비스 타입</label>
+			                        <label for="ogcWebServices">OGC Web Services</label>
 			                        <span class="icon-glyph glyph-emark-dot color-warning"></span>
 			                    </th>
 			                    <td class="col-input">
-			                        <select id="serviceType" name="serviceType" th:field="*{serviceType}" class="selectBoxClass">
+			                        <select id="ogcWebServices" name="ogcWebServices" th:field="*{ogcWebServices}" class="selectBoxClass">
 										<option value="">선택</option>
 										<option value="wms">WMS</option>
 										<option value="wfs">WFS</option>
@@ -138,7 +138,7 @@
 									</select>
 			                    </td>
 			                    <th class="col-label" scope="row">
-			                        <label>Cache 사용 유무</label>
+			                        <label for="cacheAvailableTrue">Cache 사용 여부</label>
 			                    </th>
 			                    <td class="col-input radio-set">
 									<input type="radio" id="cacheAvailableTrue" name="cacheAvailable" th:field="*{cacheAvailable}" value="true" />
@@ -220,7 +220,7 @@
 			                        <label for="zIndex">표시 순서(Z-Index)</label>
 			                    </th>
 			                    <td class="col-input">
-			                        <input type="text" id="zIndex" name="zIndex" th:field="*{zIndex}" class="s" />
+			                        <input type="text" id="zIndex" name="zIndex" th:field="*{viewZIndex}" class="s" />
 			                    </td>
 			                </tr>
 			                <tr>
@@ -235,7 +235,7 @@
 									<label for="defaultDisplayFalse">미사용</label>
 			                    </td>
 			                	<th class="col-label" scope="row">
-			                        <label>사용유무</label>
+			                        <label>사용 여부</label>
 			                        <span class="icon-glyph glyph-emark-dot color-warning"></span>
 			                    </th>
 			                    <td class="col-input radio-set">
@@ -247,7 +247,7 @@
 			                </tr>
 			                <tr>
 			                	<th class="col-label" scope="row">
-			                        <label>Label 표시 유무</label>
+			                        <label>Label 표시 여부</label>
 			                    </th>
 			                    <td class="col-input radio-set">
 									<input type="radio" id="labelDisplayTrue" name="labelDisplay" th:field="*{labelDisplay}" value="true" />
@@ -262,9 +262,9 @@
 			                        <input type="text" id="description" name="description" th:field="*{description}" class="l"/>
 			                    </td>
 			                </tr>
-			                <tr>
+			                <tr class="uploadLayerArea">
 			                	<th class="col-label" scope="row">
-			                        <form:label path="coordinate">좌표계</form:label>
+			                        <label for="coordinate">좌표계</label>
 			                    </th>
 			                    <td class="col-input">
 			                        <select id="coordinate" name="coordinate" th:field="*{coordinate}" class="selectBoxClass">
@@ -340,12 +340,12 @@
 									</tr>
 								</thead>
 								<tbody id="layerFileInfoListArea">
-								<th:block th:if="${layerFileInfoList.empty}">
+<th:block th:if="${#lists.isEmpty(layerFileInfoList)}">
 									<tr style="height:50px;">
 										<td colspan="9" style="padding-top:15px; text-align:center;">첨부 파일이 존재하지 않습니다.</td>
 									</tr>
-								</th:block>
-								<th:block th:unless="${layerFileInfoList.empty}" th:each="layerFileInfo, status : ${layerFileInfoList}">
+</th:block>
+<th:block th:unless="${#lists.isEmpty(layerFileInfoList)}" th:each="layerFileInfo, status : ${layerFileInfoList}">
 									<tr th:classappend="${#strings.equals(layerFileInfo.enableYn, 'Y')} ? selected">
 										<td class="col-key" th:text="${layerFileInfoListSize - status.index}"></td>
 										<td class="col-key" th:text="${layerFileInfo.fileName}" style="max-width:315px; word-wrap:break-word;"></td>
@@ -357,11 +357,11 @@
 												<p style="font-size:14px;">적용중</p>
 											</th:block>
 											<th:block th:unless="${#strings.equals(layerFileInfo.enableYn, 'Y')}">
-												<button type="button" class="textBtn" th:onclick="changeStatus([[${layerFileInfo.layerId }]], [[${layerFileInfo.layerFileInfoGroupId}]], [[${layerFileInfo.layerFileInfoId}]]);"
+												<button type="button" class="textBtn" th:onclick="changeStatus([[${layerFileInfo.layerId }]], [[${layerFileInfo.layerFileInfoTeamId}]], [[${layerFileInfo.layerFileInfoId}]]);"
 														title="적용하기">적용하기</button>
 											</th:block>
 										</td>
-										<td class="col-type"><a th:href="@{/layer/{layerId}/layer-file-info/{layerFileInfoGroupId}/download(layerId=${layer.layerId},layerFileInfoGroupId=${layerFileInfo.layerFileInfoGroupId})}" class="linkButton">다운로드</a></td>
+										<td class="col-type"><a th:href="@{/layer/{layerId}/layer-file-info/{layerFileInfoTeamId}/download(layerId=${layer.layerId},layerFileInfoTeamId=${layerFileInfo.layerFileInfoTeamId})}" class="linkButton">다운로드</a></td>
 										<td th:text="${layerFileInfo.userId}"></td>
 										<td>
 											<th:block th:text="${#temporals.format(layerFileInfo.viewUpdateDate, 'yyyy-MM-dd HH:mm:ss')}"></th:block>
@@ -370,7 +370,7 @@
 											<th:block th:text="${#temporals.format(layerFileInfo.viewInsertDate, 'yyyy-MM-dd HH:mm:ss')}"></th:block>
 										</td>
 									</tr>
-								</th:block>
+</th:block>
 				                </tbody>
 				            </table>
 				        </div>
@@ -384,7 +384,6 @@
 	<div th:replace="~{/layer/loading-dialog :: #layerLoadingDialog}"></div>
 	<div th:replace="~{/layer/layer-group-dialog :: #layerGroupDialog}"></div>
 	<div th:replace="~{/layer/fileinfo-detail-dialog :: #fileInfoDetailDialog}"></div>
-
 </th:block>
 
 <th:block layout:fragment="pageCustomScript">
@@ -403,10 +402,10 @@
     {{#if enableYn}}
                	<p style="font-size:14px;">적용중</p>
     {{else}}
-                <button type="button" onclick="changeStatus('{{layerId}}', '{{layerFileInfoGroupId}}', '{{layerFileInfoId}}'); return false;" title="적용하기" class="textBtn">적용하기</button>
+                <button type="button" onclick="changeStatus('{{layerId}}', '{{layerFileInfoTeamId}}', '{{layerFileInfoId}}'); return false;" title="적용하기" class="textBtn">적용하기</button>
     {{/if}}
             </td>
-            <td class="col-type"><a href="/layer/{{layerId }}/layer-file-info/{{layerFileInfoGroupId}}/download" download class="linkButton">다운로드</button></td>
+            <td class="col-type"><a href="/layer/{{layerId }}/layer-file-info/{{layerFileInfoTeamId}}/download" class="linkButton">다운로드</a></td>
             <td class="col-key">{{userId}}</td>
             <td class="col-key">{{viewUpdateDate}}</td>
 			<td class="col-key">{{viewInsertDate}}</td>
@@ -427,7 +426,7 @@
 		$(".forLineColor").val([[${layer.layerLineColor}]]);
 		$(".forPolygon").val([[${layer.layerFillColor}]]);
 
-		if([[${layer.serviceType}]] !== "wms") {
+		if([[${layer.ogcWebServices}]] !== "wms") {
 			$("input[name='cacheAvailable']").attr("disabled", true);
 		}
         
@@ -443,7 +442,7 @@
 	});
 	
 	// wms일 경우에만 cache 설정 할 수 있도록 활성화
-	$("select[name=serviceType]").change(function(e){
+	$("select[name=ogcWebServices]").change(function(e){
 		var value = $(this).val();
 	    if(value === "wms") {
 	    	$("input[name='cacheAvailable']").attr("disabled", false);
@@ -533,7 +532,7 @@
 	});
 	
 	// Layer Group 찾기
-	$( "#layerGroupButtion" ).on( "click", function() {
+	$( "#layerGroupButton" ).on( "click", function() {
 		layerGroupDialog.dialog( "open" );
 		layerGroupDialog.dialog( "option", "title", "Layer 그룹 선택");
 	});
@@ -563,9 +562,9 @@
 			$("#layerKey").focus();
 			return false;
 		}
-		if (!$("select[name=serviceType]").val()) {
-			alert("서비스 타입을 선택해 주십시오.");
-			$("#serviceType").focus();
+		if (!$("select[name=ogcWebServices]").val()) {
+			alert("OGC Web Services를 선택해 주십시오.");
+			$("#ogcWebServices").focus();
 			return false;
 		}
 		if (!$("select[name=layerType]").val()) {
@@ -697,7 +696,7 @@
                 formData.append("sharing", $(':radio[name="sharing"]:checked').val());
                 formData.append("layerName", $("#layerName").val());
                 formData.append("layerKey", $("#layerKey").val());
-                formData.append("serviceType", $("select[name=serviceType]").val());
+                formData.append("ogcWebServices", $("select[name=ogcWebServices]").val());
                 formData.append("layerType", $("select[name=layerType]").val());
                 formData.append("geometryType", $("select[name=geometryType]").val());
                 formData.append("layerLineColor", $("#layerLineColor").val());
@@ -808,8 +807,8 @@
     }
 
 	// 비활성화 상태의 layer를 활성화 함
-	function changeStatus(layerId, layerFileInfoGroupId, layerFileInfoId) {
-		var info = "layerFileInfoGroupId=" + layerFileInfoGroupId;
+	function changeStatus(layerId, layerFileInfoTeamId, layerFileInfoId) {
+		var info = "layerFileInfoTeamId=" + layerFileInfoTeamId;
 		if(confirm("이 파일을 layer Shape 파일로 사용하시겠습니까?")) {
             $.ajax({
                 url: "/layer/[[${layer.layerId}]]/layer-file-infos/" + layerFileInfoId,

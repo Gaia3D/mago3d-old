@@ -86,9 +86,15 @@
 									<th:block th:text="${pagination.lastPage}"></th:block>
 									<th:block th:text="#{search.page}"></th:block>
 								</div>
+								<div class="list-functions u-pull-right">
+									<div class="button-group">
+										<a href="/layer/input" class="button">레이어 등록</a>
+									</div>
+								</div>
 							</div>
 							<table class="list-table scope-col" summary="2D 레이어 목록 테이블">
 							<caption class="hiddenTag">2D 레이어 목록</caption>
+								<col class="col-number"></col>
 								<col class="col-name" />
 								<col class="col-id" />
 								<col class="col-toggle" />
@@ -98,6 +104,7 @@
 								<col class="col-date" />
 								<thead>
 									<tr>
+										<th scope="col" class="col-number" th:text="#{number}"></th>
 										<th scope="col">Layer 명</th>
 					                    <th scope="col">Layer Key</th>
 					                    <th scope="col">표시순서(Z-Index)</th>
@@ -108,16 +115,17 @@
 									</tr>
 								</thead>
 								<tbody>
-								<th:block th:if="${layerList.empty}">
+<th:block th:if="${#lists.isEmpty(layerList)}">
 									<tr>
-										<td colspan="7" class="col-none">Layer 가 존재하지 않습니다.</td>
+										<td colspan="8" class="col-none">Layer 가 존재하지 않습니다.</td>
 									</tr>
-								</th:block>
-								<th:block th:unless="${layerList.empty}" th:each="layer : ${layerList}">
+</th:block>
+<th:block th:unless="${#lists.isEmpty(layerList)}" th:each="layer : ${layerList}">
 									<tr>
+										<td class="col-number" th:text="${pagination.rowNumber - layerStat.index}"></td>
 										<td class="col-key" th:text="${layer.layerName}"></td>
 					                    <td class="col-key" style="text-align: left;" nowrap="nowrap" th:text="${layer.layerKey}"></td>
-                    					<td class="col-key" nowrap="nowrap" th:text="${layer.viewZIndex}"></td>
+                    					<td class="col-type" nowrap="nowrap" th:text="${layer.viewZIndex}"></td>
 					                    <td class="col-type">
 											<th:block th:if="${#bools.isTrue(layer.available)}">사용</th:block>
 											<th:block th:unless="${#bools.isTrue(layer.available)}">미사용</th:block>
@@ -129,11 +137,11 @@
 											<a th:href="@{/layer/modify(layerId=${layer.layerId})}" class="image-button button-edit" th:text="#{modified}"></a>&nbsp;&nbsp;
 					                    	<a href="#" th:onclick="deleteLayer([[${layer.layerId}]]); return false;" class="image-button button-delete" th:text="#{delete}"></a>
 					                    </td>
-										<td class="col-date"
-											th:text="${#temporals.format(layer.updateDate, 'yyyy-MM-dd HH:mm:ss')}">
+										<td class="col-date">
+											<th:block th:text="${#temporals.format(layer.insertDate, 'yyyy-MM-dd HH:mm')}"></th:block>
 										</td>
 					                </tr>
-								</th:block>
+</th:block>
 								</tbody>
 							</table>
 							</form>
@@ -152,7 +160,6 @@
 <script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/navigation.js(cacheVersion=${contentCacheVersion})}"></script>
-
 <script th:inline="javascript">
 $(document).ready(function() {
 	initDatePicker();
@@ -211,17 +218,16 @@ function deleteLayer(layerId) {
 		}
 	} else {
 		alert(JS_MESSAGE["button.dobule.click"]);
-		return;
 	}
 }
+
 // 지도 보기
 function viewLayer(layerId, layerName) {
     var url = "/layer/" + layerId + "/map";
     var width = 800;
     var height = 700;
 
-    var popWin = window.open(url, "","toolbar=no ,width=" + width + " ,height=" + height
-            + ", directories=no,status=yes,scrollbars=no,menubar=no,location=no");
+    var popWin = window.open(url, "","toolbar=no ,width=" + width + " ,height=" + height + ", directories=no,status=yes,scrollbars=no,menubar=no,location=no");
     popWin.document.title = layerName;
 }
 </script>

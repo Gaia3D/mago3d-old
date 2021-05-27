@@ -1,10 +1,11 @@
 package gaia3d.geospatial;
 
+import gaia3d.support.LogMessageSupport;
+import gaia3d.support.ProcessBuilderSupport;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import lombok.extern.slf4j.Slf4j;
-import gaia3d.support.ProcessBuilderSupport;
 
 /**
  * ogr2ogr을 실행하여 shape 파일로 부터 layer를 생성하는 예제
@@ -68,9 +69,9 @@ public class Ogr2OgrRunnable implements Runnable {
 		try {
 			ProcessBuilderSupport.execute(command, environmentPath);
 		} catch(RuntimeException e) {
-			log.info("@@@ RuntimeException. message = {}", e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@ RuntimeException. message = {}", e.getMessage());
 		} catch (Exception e) {
-			log.info("@@@ Exception. message = {}", e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@ Exception. message = {}", e.getMessage());
 		}
 	}
 }

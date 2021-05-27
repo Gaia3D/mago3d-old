@@ -27,9 +27,9 @@
     </select>
 
     <!-- layer shape 그룹 파일 정보 -->
-    <select id="getLayerFileInfoGroup" parameterType="int" resultType="layerFileInfo">
-        /* getLayerFileInfoGroup */
-        SELECT * FROM layer_file_info WHERE layer_file_info_group_id = #{layerFileInfoGroupId}
+    <select id="getLayerFileInfoTeam" parameterType="int" resultType="layerFileInfo">
+        /* getLayerFileInfoTeam */
+        SELECT * FROM layer_file_info WHERE layer_file_info_team_id = #{layerFileInfoTeamId}
     </select>
 
     <!-- layer shape 파일이 있는지 확인 -->
@@ -55,7 +55,7 @@
     <!-- 레이어 이력내 활성화 된 데이터 정보를 취득 -->
     <select id="getEnableLayerFileInfo" parameterType="int" resultType="layerFileInfo">
         /* getEnableLayerFileInfo */
-        SELECT layer_file_info_id, layer_id, layer_file_info_group_id, version_id
+        SELECT layer_file_info_id, layer_id, layer_file_info_team_id, version_id
         FROM layer_file_info
         WHERE layer_id = #{layerId}
             AND enable_yn = 'Y'
@@ -84,13 +84,13 @@
         WHERE layer_file_info_id = #{layerFileInfoId}
     </update>
 
-    <!-- layerFileInfoGroupId에 의한 layer shape 파일 정보 수정 -->
-    <update id="updateLayerFileInfoByGroupId" parameterType="layerFileInfo">
-        /* updateLayerFileInfoByGroupId */
+    <!-- layerFileInfoTeamId에 의한 layer shape 파일 정보 수정 -->
+    <update id="updateLayerFileInfoByTeamId" parameterType="layerFileInfo">
+        /* updateLayerFileInfoByTeamId */
         UPDATE layer_file_info
         SET enable_yn = 'Y'
         WHERE layer_id = #{layerId}
-            AND layer_file_info_group_id = #{layerFileInfoGroupId}
+            AND layer_file_info_team_id = #{layerFileInfoTeamId}
     </update>
 
     <!-- layerId와 일치하는 모든 shape 파일의 상태를 layer 비활성화로 함 -->
@@ -99,18 +99,15 @@
     </update>
 
     <!-- 동일 그룹 layerFileInfo 정보 활성화로 수정(where 절 중복) -->
-    <update id="updateLayerFileInfoGroup" parameterType="map">
-        /* updateLayerFileInfoGroup */
+    <update id="updateLayerFileInfoTeam" parameterType="layerFileInfo">
+        /* updateLayerFileInfoTeam */
         UPDATE layer_file_info
-        SET layer_file_info_group_id = #{layerFileInfoGroupId},
-            version_id = CAST(#{fileVersion} AS integer),
+        SET layer_file_info_team_id = #{layerFileInfoTeamId},
+            version_id = CAST(#{versionId} AS integer),
             enable_yn = 'Y',
             update_date = NOW()
             <!-- update_date = TO_TIMESTAMP(#{updateDate}, 'YYYYMMDDHH24MISSUS') -->
-        WHERE layer_file_info_id IN
-        <foreach collection="layerFileInfoGroupIdList" item="item" index="index" open="(" close=")" separator=",">
-            #{item.value}
-        </foreach>
+        WHERE layer_file_info_id = #{layerFileInfoId}
     </update>
 
     <!-- 해당 레이어의 이전 데이터를 전부 비활성화 상태로 수정 -->
@@ -144,9 +141,9 @@
         DELETE FROM layer_file_info WHERE layer_id = #{layerId}
     </delete>
 
-    <!-- group id 로 레이어 파일 이력을 삭제 -->
-    <delete id="deleteLayerFileInfoByGroupId" parameterType="int">
-        /* deleteLayerFileInfoByGroupId */
-        DELETE FROM layer_file_info WHERE layer_file_info_group_id = #{layerFileInfoGroupId}
+    <!-- team id 로 레이어 파일 이력을 삭제 -->
+    <delete id="deleteLayerFileInfoByTeamId" parameterType="int">
+        /* deleteLayerFileInfoByTeamId */
+        DELETE FROM layer_file_info WHERE layer_file_info_team_id = #{layerFileInfoTeamId}
     </delete>
 </mapper>

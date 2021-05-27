@@ -48,12 +48,12 @@ public class LayerFileInfoServiceImpl implements LayerFileInfoService {
 
 	/**
 	 * layer shape 파일 그룹 정보 취득
-	 * @param layerFileInfoGroupId
+	 * @param layerFileInfoTeamId
 	 * @return
 	 */
 	@Transactional(readOnly=true)
-	public List<LayerFileInfo> getLayerFileInfoGroup(Integer layerFileInfoGroupId) {
-		return layerFileInfoMapper.getLayerFileInfoGroup(layerFileInfoGroupId);
+	public List<LayerFileInfo> getLayerFileInfoTeam(Integer layerFileInfoTeamId) {
+		return layerFileInfoMapper.getLayerFileInfoTeam(layerFileInfoTeamId);
 	}
 	
 	/**
@@ -107,12 +107,12 @@ public class LayerFileInfoServiceImpl implements LayerFileInfoService {
 	}
 	
 	/**
-	 * group id 로 레이어 파일 이력을 삭제
-	 * @param layerFileInfoGroupId
+	 * team id 로 레이어 파일 이력을 삭제
+	 * @param layerFileInfoTeamId
 	 * @return
 	 */
 	@Transactional
-	public int deleteLayerFileInfoByGroupId(Integer layerFileInfoGroupId) {
-		return layerFileInfoMapper.deleteLayerFileInfoByGroupId(layerFileInfoGroupId);
+	public int deleteLayerFileInfoByTeamId(Integer layerFileInfoTeamId) {
+		return layerFileInfoMapper.deleteLayerFileInfoByTeamId(layerFileInfoTeamId);
 	}
 }

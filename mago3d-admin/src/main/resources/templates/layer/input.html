@@ -8,9 +8,9 @@
 		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
 		<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
 		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
-		<link rel="stylesheet" th:href="@{/externlib/dropzone/dropzone.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/externlib/dropzone-5.7.0/dropzone.min.css(cacheVersion=${contentCacheVersion})}">
 		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-		<script type="text/javascript" th:src="@{/externlib/dropzone/dropzone.min.js(cacheVersion=${contentCacheVersion})}"></script>
+		<script type="text/javascript" th:src="@{/externlib/dropzone-5.7.0/dropzone.min.js(cacheVersion=${contentCacheVersion})}"></script>
 		<style type="text/css">
 			.dropzone .dz-preview.lp-preview {
 				width: 150px;
@@ -99,12 +99,12 @@
 									<span class="icon-glyph glyph-emark-dot color-warning"></span>
 								</th>
 								<td class="col-input">
-									<input type="hidden" id="layerGroupId" name="layerGroupId" />
-									<input type="text" id="layerGroupName" name="layerGroupName" class="m" th:readonly="true" />
-									<input type="button" id="layerGroupButton" value="레이어 그룹 선택" />
+									<input type="hidden" id="layerGroupId" name="layerGroupId" th:field="*{layerGroupId}" />
+									<input type="text" id="layerGroupName" name="layerGroupName" th:field="*{layerGroupName}" class="m" readonly="readonly" />
+									<input type="button" id="layerGroupButton" value="Layer 그룹 찾기" />
 								</td>
 								<th class="col-label" scope="row">
-			                        <label>공유 유형</label>
+			                        <label for="sharingPublic">공유 유형</label>
 			                    </th>
 			                    <td class="col-input radio-set">
 									<input type="radio" id="sharingPublic" name="sharing" value="public" checked />
@@ -121,14 +121,14 @@
 			                        <span class="icon-glyph glyph-emark-dot color-warning"></span>
 			                    </th>
 			                    <td class="col-input">
-			                        <input type="text" id="layerName" name="layerName" class="m" maxlength="256" />
+			                        <input type="text" id="layerName" name="layerName" th:field="*{layerName}" class="m" maxlength="256" />
 			                    </td>
 			                    <th class="col-label" scope="row">
 			                        <label for="layerKey">Layer Key</label>
 			                        <span class="icon-glyph glyph-emark-dot color-warning"></span>
 			                    </th>
 			                    <td class="col-input">
-			                        <input type="text" id="layerKey" name="layerKey" class="m" maxlength="100" />
+			                        <input type="text" id="layerKey" name="layerKey" th:field="*{layerKey}" class="m" maxlength="100" />
 			                        <label for="layerKeySelect" class="hiddenTag">geoserver layerKey</label>
 			                        <select id="layerKeySelect" class="selectBoxClass" style="display:none;">
 										<option value="">선택</option>
@@ -137,11 +137,11 @@
 			                </tr>
 			                <tr>
 			                    <th class="col-label" scope="row">
-			                        <label for="serviceType">서비스 타입</label>
+			                        <label for="ogcWebServices">OGC Web Services</label>
 			                        <span class="icon-glyph glyph-emark-dot color-warning"></span>
 			                    </th>
 			                    <td class="col-input">
-			                        <select id="serviceType" name="serviceType" class="selectBoxClass">
+			                        <select id="ogcWebServices" name="ogcWebServices" th:field="*{ogcWebServices}" class="selectBoxClass">
 										<option value="">선택</option>
 										<option value="wms">WMS</option>
 										<option value="wfs">WFS</option>
@@ -165,7 +165,7 @@
 			                        <span class="icon-glyph glyph-emark-dot color-warning"></span>
 			                    </th>
 			                    <td class="col-input">
-			                        <select id="layerType" name="layerType" class="selectBoxClass">
+			                        <select id="layerType" name="layerType" th:field="*{layerType}" class="selectBoxClass">
 										<option value="">선택</option>
 										<option value="vector">Vector</option>
 										<option value="raster">Raster</option>
@@ -176,14 +176,13 @@
 			                        <span class="icon-glyph glyph-emark-dot color-warning"></span>
 			                    </th>
 								<td class="col-input">
-									<select id="geometryType" name="geometryType" class="forRaster selectBoxClass" >
+									<select id="geometryType" name="geometryType" th:field="*{geometryType}" class="forRaster selectBoxClass">
 										<option value="">선택</option>
 										<option value="Point">Point</option>
 										<option value="Line">Line</option>
 										<option value="Polygon">Polygon</option>
 									</select>
 								</td>
-
 							</tr>
 							<tr>
 								<th class="col-label" scope="row">
@@ -192,17 +191,16 @@
 			                    </th>
 								<td class="col-input">
 									<label for="lineColorValue" class="hiddenTag">외곽선 색상값</label>
-									<input id="lineColorValue" placeholder="RGB" class="forRaster" />
-									<input type="color" id="layerLineColor" name="layerLineColor" class="picker" alt="외곽선 색상" />
+									<input type="text" id="lineColorValue" placeholder="RGB" class="forRaster forLineColor" />
+									<input type="color" id="layerLineColor" name="layerLineColor" class="picker forLineColor" alt="외곽선 색상" />
 								</td>
 								<th class="col-label" scope="row">
 			                        <label for="layerLineStyle">외곽선 두께</label>
 			                    </th>
 								<td class="col-input">
-									<input type="number" id="layerLineStyle"  name="layerLineStyle" class="forRaster" alt="외곽선 두께" min="0.1" max="5.0" size="3" step="0.1">
+									<input type="number" id="layerLineStyle"  name="layerLineStyle" th:field="*{layerLineStyle}" class="forRaster" alt="외곽선 두께" min="0.1" max="5.0" size="3" step="0.1">
 								</td>
 							</tr>
-
 			                <tr>
 			                	<th class="col-label" scope="row">
 			                        <label for="layerFillColor">채우기 색상</label>
@@ -210,7 +208,7 @@
 			                    </th>
 								<td class="col-input">
 									<label for="fillColorValue" class="hiddenTag">채우기 색상값</label>
-									<input id="fillColorValue" placeholder="RGB" class="forRaster forPolygon">
+									<input type="text" id="fillColorValue" placeholder="RGB" class="forRaster forPolygon">
 									<input type="color" id="layerFillColor" name="layerFillColor" class="picker forPolygon" alt="채우기 색상">
 								</td>
 			                	<th class="col-label" scope="row">
@@ -218,24 +216,23 @@
 			                        <span class="icon-glyph glyph-emark-dot color-warning"></span>
 			                    </th>
 								<td class="col-input">
-									<input type="text"  id="layerAlphaStyle" name="layerAlphaStyle" class="slider" alt="투명도"/>
+									<input type="text" id="layerAlphaStyle" name="layerAlphaStyle" th:field="*{layerAlphaStyle}" class="slider" alt="투명도"/>
 									<label for="sliderRange" class="hiddenTag">투명도 값</label>
 									<input type="range" id="sliderRange" min="0" max="100" value="100" alt="투명도">
 								</td>
-
 			                </tr>
 			                <tr>
 			                	<th class="col-label" scope="row">
 			                        <label for="viewOrder">레이어 표시 순서</label>
 			                    </th>
 			                    <td class="col-input">
-			                        <input type="text" id="viewOrder" name="viewOrder" class="s"/>
+			                        <input type="text" id="viewOrder" name="viewOrder" th:field="*{viewOrder}" class="s"/>
 			                    </td>
 			                	<th class="col-label" scope="row">
 			                        <label for="zIndex">표시 순서(Z-Index)</label>
 			                    </th>
 			                    <td class="col-input">
-			                        <input type="text" id="zIndex" name="zIndex" class="s" />
+			                        <input type="text" id="zIndex" name="zIndex" th:field="*{viewZIndex}" class="s" />
 			                    </td>
 			                </tr>
 			                <tr>
@@ -248,7 +245,6 @@
 									<label for="defaultDisplayTrue">사용</label>
 									<input type="radio" id="defaultDisplayFalse" name="defaultDisplay" value="false" />
 									<label for="defaultDisplayFalse">미사용</label>
-
 			                    </td>
 			                	<th class="col-label" scope="row">
 			                        <label>사용 여부</label>
@@ -267,15 +263,15 @@
 			                    </th>
 			                    <td class="col-input radio-set">
 									<input type="radio" id="labelDisplayTrue" name="labelDisplay" value="true" checked />
-									<label for="availableTrue">표시</label>
+									<label for="labelDisplayTrue">표시</label>
 									<input type="radio" id="labelDisplayFalse" name="labelDisplay" value="false" />
-									<label for="availableFalse">비표시</label>
+									<label for="labelDisplayFalse">비표시</label>
 			                    </td>
 			                    <th class="col-label" scope="row">
 			                        <label for="description">설명</label>
 			                    </th>
 			                    <td class="col-input">
-			                        <input type="text" id="description" name="description" class="l"/>
+			                        <input type="text" id="description" name="description" th:field="*{description}" class="l"/>
 			                    </td>
 			                </tr>
 			                <tr class="uploadLayerArea">
@@ -283,7 +279,7 @@
 			                        <label for="coordinate">좌표계</label>
 			                    </th>
 			                    <td class="col-input">
-			                        <select id="coordinate" name="coordinate" class="selectBoxClass">
+			                        <select id="coordinate" name="coordinate" th:field="*{coordinate}" class="selectBoxClass">
 										<option value="EPSG:2096">EPSG:2096</option>
 										<option value="EPSG:2097">EPSG:2097</option>
 										<option value="EPSG:2098">EPSG:2098</option>
@@ -315,7 +311,7 @@
 			                        <label for="shapeEncoding">SHP 파일 인코딩</label>
 			                    </th>
 			                    <td class="col-input">
-			                    	<select id="shapeEncoding" class="selectBoxClass" name="shapeEncoding" style="width:100px; height: 30px;">
+			                    	<select id="shapeEncoding" name="shapeEncoding" th:field="*{shapeEncoding}" class="selectBoxClass" style="width:100px; height: 30px;">
 				                    	<option value="CP949">CP949</option>
 				                        <option value="UTF-8">UTF-8</option>
 				                    </select>
@@ -417,7 +413,7 @@
 	});
 
 	// wms일 경우에만 cache 설정 할 수 있도록 활성화
-	$("select[name=serviceType]").change(function(e){
+	$("select[name=ogcWebServices]").change(function(e){
 		var value = $(this).val();
 	    if(value === "wms") {
 	    	$("input[name='cacheAvailable']").attr("disabled", false);
@@ -542,9 +538,9 @@
 			$("#layerKeySelect").focus();
 			return false;
 		}
-		if (!$("select[name=serviceType]").val()) {
-			alert("서비스 타입을 선택해 주십시오.");
-			$("#serviceType").focus();
+		if (!$("select[name=ogcWebServices]").val()) {
+			alert("OGC Web Services를 선택해 주십시오.");
+			$("#ogcWebServices").focus();
 			return false;
 		}
 		if (!$("select[name=layerType]").val()) {
@@ -654,7 +650,7 @@
 						alert("업로딩 할 파일이 존재하지 않습니다.");
 						return;
 					}
-                    myDropzone._uploadData([{ upload: { filename: '' } }], [{ filename: '', name: '', data: new Blob() }]);
+					myDropzone._uploadData([{ upload: { filename: '' } }], [{ filename: '', name: '', data: new Blob() }]);
                 }
             });
 
@@ -671,7 +667,7 @@
                 formData.append("sharing", $(':radio[name="sharing"]:checked').val());
                 formData.append("layerName", $("#layerName").val());
                 formData.append("layerKey", $("#layerKey").val());
-                formData.append("serviceType", $("select[name=serviceType]").val());
+                formData.append("ogcWebServices", $("select[name=ogcWebServices]").val());
                 formData.append("layerType", $("select[name=layerType]").val());
                 formData.append("geometryType", $("select[name=geometryType]").val());
                 formData.append("layerLineColor", $("#layerLineColor").val());

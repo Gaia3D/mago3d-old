@@ -80,7 +80,7 @@
 									</th>
 									<td class="col-input">
 										<input type="hidden" id="layerGroupId" name="layerGroupId" th:field="*{layerGroupId}" />
-										<input type="text" id="layerGroupName" name="layerGroupName" th:field="*{layerGroupName}" class="ml" th:readonly="true" />
+										<input type="text" id="layerGroupName" name="layerGroupName" th:field="*{layerGroupName}" class="ml" th:readonly="readonly" />
 										<input type="button" id="layerGroupButton" value="Layer 그룹 찾기" />
 									</td>
 									<th class="col-label" scope="row">공유 유형</th>
@@ -106,16 +106,16 @@
 										<span class="icon-glyph glyph-emark-dot color-warning"></span>
 									</th>
 									<td class="col-input">
-										<input type="text" id="layerKey" name="layerKey" th:field="*{layerKey}" class="ml" th:readonly="true" />
+										<input type="text" id="layerKey" name="layerKey" th:field="*{layerKey}" class="ml" th:readonly="readonly" />
 									</td>
 								</tr>
 								<tr>
 									<th class="col-label" scope="row">
-										<label for="serviceType">서비스 타입</label>
+										<label for="ogcWebServices">OGC Web Services</label>
 										<span class="icon-glyph glyph-emark-dot color-warning"></span>
 									</th>
 									<td class="col-input">
-										<select id="serviceType" name="serviceType" th:field="*{serviceType}" class="selectBoxClass">
+										<select id="ogcWebServices" name="ogcWebServices" th:field="*{ogcWebServices}" class="selectBoxClass">
 											<option value="">선택</option>
 											<option value="wms">WMS</option>
 											<option value="wfs">WFS</option>
@@ -283,7 +283,7 @@
         $(".forLineColor").val([[${layer.layerLineColor}]]);
         $(".forPolygon").val([[${layer.layerFillColor}]]);
 
-        if([[${layer.serviceType}]] !== "wms") {
+        if([[${layer.ogcWebServices}]] !== "wms") {
         	$("input[name='cacheAvailable']").attr("disabled", true);
         }
 	});
@@ -297,7 +297,7 @@
 	});
 
 	// wms일 경우에만 cache 설정 할 수 있도록 활성화
-	$("select[name=serviceType]").change(function(e){
+	$("select[name=ogcWebServices]").change(function(e){
 		var value = $(this).val();
 	    if(value === "wms") {
 	    	$("input[name='cacheAvailable']").attr("disabled", false);
@@ -426,9 +426,9 @@
 			$("#layerKey").focus();
 			return false;
 		}
-		if (!$("select[name=serviceType]").val()) {
-			alert("서비스 타입을 선택해 주십시오.");
-			$("#serviceType").focus();
+		if (!$("select[name=ogcWebServices]").val()) {
+			alert("OGC Web Services를 선택해 주십시오.");
+			$("#ogcWebServices").focus();
 			return false;
 		}
 		if (!$("select[name=layerType]").val()) {

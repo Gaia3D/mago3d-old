@@ -23,8 +23,8 @@ public class LayerFileInfo extends FileInfo {
 	private Integer layerFileInfoId;
 	// 레이어 고유번호
 	private Integer layerId;
-	// shape 파일을 같은 파일명으로 그룹핑 한것. shp 파일의 layer_file_id 가 group_id가 됨
-	private Integer layerFileInfoGroupId;
+	// shape 파일을 같은 파일명으로 그룹핑 한것. shp 파일의 layer_file_id 가 team_id가 됨
+	private Integer layerFileInfoTeamId;
 	// 레이어명
 	private String layerName;
 	// layer 활성화 유무. Y: 활성화, N: 비활성화

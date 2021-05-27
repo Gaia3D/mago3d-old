@@ -42,7 +42,7 @@
 								</tr>
 								<tr>
 									<th class="col-label" scope="row">
-										<label for="parentName">상위 그룹</label>
+										<label for="parentName">상위 레이어 그룹</label>
 										<span class="icon-glyph glyph-emark-dot color-warning"></span>
 									</th>
 									<td class="col-input">
@@ -139,7 +139,6 @@
 			});
 		} else {
 			alert(JS_MESSAGE["button.dobule.click"]);
-			return;
 		}
 	}
 
@@ -160,10 +159,6 @@
 
 	// 다이얼로그에서 선택
 	function confirmParent(parent, parentName, parentDepth) {
-		if(parentDepth >= 3) {
-			alert("레이어 그룹은 3Depth 이상 계층으로 입력할 수 없습니다.");
-			return;
-		}
 		$("#parent").val(parent);
 		$("#parentName").val(parentName);
 		layerGroupDialog.dialog( "close" );

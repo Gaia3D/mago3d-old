@@ -12,12 +12,12 @@ public interface LayerGroupService {
      */
     List<LayerGroup> getListLayerGroup();
 
-    /**
-     * 레이어 그룹 정보 조회
+	/**
+	 * 레이어 그룹 정보 조회
 	 * @param layerGroup
-     * @return
-     */
-    LayerGroup getLayerGroup(LayerGroup layerGroup);
+	 * @return
+	 */
+	LayerGroup getLayerGroup(LayerGroup layerGroup);
 
     /**
      * 레이어 그룹 목록 및 하위 레이어 조회

@@ -9,6 +9,7 @@
 		<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
 		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
 		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
 	</th:block>
 </head>
 <body>
@@ -21,7 +22,7 @@
 					<div th:replace="~{/fragments/page-header :: #pageHeaderWrap}"></div>
 					<div class="page-content">
 						<div class="input-header row">
-							<div class="content-desc u-pull-right"><span class="icon-glyph glyph-emark-dot color-warning"></span><spring:message code='check'/></div>
+							<div class="content-desc u-pull-right"><span class="icon-glyph glyph-emark-dot color-warning"></span><th:block th:text="#{check}"></th:block></div>
 						</div>
 						<form id="layerGroup" th:object="${layerGroup}" method="post" th:action="@{#}" onsubmit="return false;">
 						<input type="hidden" id="layerGroupId" name="layerGroupId" th:field="*{layerGroupId}" />
@@ -40,7 +41,7 @@
 							</tr>
 							<tr>
 								<th class="col-label" scope="row">
-									<label for="parentName">상위 그룹</label>
+									<label for="parentName">상위 레이어 그룹</label>
 									<span class="icon-glyph glyph-emark-dot color-warning"></span>
 								</th>
 								<td class="col-input">
@@ -114,17 +115,13 @@
 	});
 
 	// 상위 Layer Group 찾기
-	$( "#layerGroupButtion" ).on( "click", function() {
+	$( "#layerGroupButton" ).on( "click", function() {
 		layerGroupDialog.dialog( "open" );
 		layerGroupDialog.dialog( "option", "title", "Layer 그룹 선택");
 	});
 
 	// 다이얼로그에서 선택
 	function confirmParent(parent, parentName, parentDepth) {
-		if(parentDepth >= 3) {
-			alert("레이어 그룹은 3Depth 이상 계층으로 입력할 수 없습니다.");
-			return;
-		}
 		$("#parent").val(parent);
 		$("#parentName").val(parentName);
 		layerGroupDialog.dialog( "close" );
@@ -167,9 +164,9 @@
 			});
 		} else {
 			alert(JS_MESSAGE["button.dobule.click"]);
-			return;
 		}
 	}
 </script>
+</th:block>
 </body>
 </html>

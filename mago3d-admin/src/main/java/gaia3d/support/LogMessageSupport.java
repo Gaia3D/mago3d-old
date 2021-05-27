@@ -9,10 +9,11 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class LogMessageSupport {
-	
+
 	public static boolean stackTraceEnable = false;
+	public static boolean logDisplay = false;
 	private static final String DEFAULT_MESSAGE = "Default Message = {}";
-	
+
 	/**
 	 * log print
 	 * @param e
@@ -21,10 +22,14 @@ public class LogMessageSupport {
 		if(stackTraceEnable) {
 			e.printStackTrace();
 		} else {
-			log.info(DEFAULT_MESSAGE, e.getMessage());
+			if(logDisplay) {
+				e.printStackTrace();
+			} else {
+				log.info(DEFAULT_MESSAGE, e.getMessage());
+			}
 		}
 	}
-	
+
 	/**
 	 * log print
 	 * @param e
@@ -34,10 +39,14 @@ public class LogMessageSupport {
 		if(stackTraceEnable) {
 			e.printStackTrace();
 		} else {
-			log.info(message, e.getMessage());
+			if(logDisplay) {
+				e.printStackTrace();
+			} else {
+				log.info(message, e.getMessage());
+			}
 		}
 	}
-	
+
 	/**
 	 * log print
 	 * @param e
@@ -45,10 +54,17 @@ public class LogMessageSupport {
 	 * @param value
 	 */
 	public static void printMessage(Exception e, String message, Object... value) {
+		log.info("---------------------------------------------- stackTraceEnable = {}", stackTraceEnable);
 		if(stackTraceEnable) {
 			e.printStackTrace();
 		} else {
-			log.info(message, value);
+			log.info("---------------------------------------------- logDisplay = {}", logDisplay);
+			if(logDisplay) {
+				e.printStackTrace();
+			} else {
+				log.info("---------------------------------------------- message = {}, value = {}", message, value);
+				log.info(message, value);
+			}
 		}
 	}
 }

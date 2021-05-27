@@ -5,7 +5,7 @@ drop table if exists layer_file_info cascade;
 create table layer_group (
 	layer_group_id				integer,
 	layer_group_name      		varchar(256)					not null,
-	user_id						varchar(32),
+    user_id						varchar(32),
 	ancestor					integer							default 0,	
 	parent                		integer							default 0,	
 	depth                	  	integer							default 1,	
@@ -94,27 +94,27 @@ comment on column layer.insert_date is '등록일';
 
 -- layer shape 파일 관리
 create table layer_file_info (
-	layer_file_info_id			integer,			  					
-	layer_id					integer							not null,
-	layer_file_info_group_id	integer,
-	user_id						varchar(32)						not null,
-	enable_yn					char(1)							default 'N',
-	file_name					varchar(100)					not null,
-	file_real_name				varchar(100)					not null,
-	file_path					varchar(256)					not null,
-	file_size					varchar(12)						not null,
-	file_ext					varchar(10)						not null,
-	shape_encoding				varchar(100),
-	version_id					integer							default 0,
-	update_date					timestamp with time zone,
-	insert_date					timestamp with time zone		default now(),
+	layer_file_info_id			    integer,
+	layer_id					    integer							not null,
+	layer_file_info_team_id	        integer,
+	user_id						    varchar(32)						not null,
+	enable_yn					    char(1)							default 'N',
+	file_name					    varchar(100)					not null,
+	file_real_name				    varchar(100)					not null,
+	file_path					    varchar(256)					not null,
+	file_size					    varchar(12)						not null,
+	file_ext					    varchar(10)						not null,
+	shape_encoding				    varchar(100),
+	version_id					    integer							default 0,
+	update_date					    timestamp with time zone,
+	insert_date					    timestamp with time zone		default now(),
 	constraint layer_file_info_pk primary key (layer_file_info_id)
 );
 
 comment on table layer_file_info is 'layer shape 파일 관리';
 comment on column layer_file_info.layer_file_info_id is '파일 고유번호';
 comment on column layer_file_info.layer_id is '파일 고유번호';
-comment on column layer_file_info.layer_file_info_group_id is 'shape 파일 그룹 아이디. .shp 파일의 layer_file_info_id 를 group_id로 함';
+comment on column layer_file_info.layer_file_info_team_id is 'shape 파일 그룹 아이디. .shp 파일의 layer_file_info_id 를 team_id로 함';
 comment on column layer_file_info.user_id is '사용자 id';
 comment on column layer_file_info.enable_yn is 'layer 활성화 유무. Y: 활성화, N: 비활성화';
 comment on column layer_file_info.file_name is '파일 이름';
