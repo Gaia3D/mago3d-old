@@ -141,7 +141,7 @@
 			                        <span class="icon-glyph glyph-emark-dot color-warning"></span>
 			                    </th>
 			                    <td class="col-input">
-			                        <select id="serviceType" name="serviceType" class="selectBoxClass">
+			                        <select id="serviceType" name="ogcWebServices" class="selectBoxClass">
 										<option value="">선택</option>
 										<option value="wms">WMS</option>
 										<option value="wfs">WFS</option>
@@ -417,7 +417,7 @@
 	});
 
 	// wms일 경우에만 cache 설정 할 수 있도록 활성화
-	$("select[name=serviceType]").change(function(e){
+	$("select[name=ogcWebServices]").change(function(e){
 		var value = $(this).val();
 	    if(value === "wms") {
 	    	$("input[name='cacheAvailable']").attr("disabled", false);
@@ -542,7 +542,7 @@
 			$("#layerKeySelect").focus();
 			return false;
 		}
-		if (!$("select[name=serviceType]").val()) {
+		if (!$("select[name=ogcWebServices]").val()) {
 			alert("서비스 타입을 선택해 주십시오.");
 			$("#serviceType").focus();
 			return false;
@@ -671,7 +671,7 @@
                 formData.append("sharing", $(':radio[name="sharing"]:checked').val());
                 formData.append("layerName", $("#layerName").val());
                 formData.append("layerKey", $("#layerKey").val());
-                formData.append("serviceType", $("select[name=serviceType]").val());
+                formData.append("ogcWebServices", $("select[name=ogcWebServices]").val());
                 formData.append("layerType", $("select[name=layerType]").val());
                 formData.append("geometryType", $("select[name=geometryType]").val());
                 formData.append("layerLineColor", $("#layerLineColor").val());

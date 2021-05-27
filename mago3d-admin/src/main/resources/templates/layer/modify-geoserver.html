@@ -115,7 +115,7 @@
 										<span class="icon-glyph glyph-emark-dot color-warning"></span>
 									</th>
 									<td class="col-input">
-										<select id="serviceType" name="serviceType" th:field="*{serviceType}" class="selectBoxClass">
+										<select id="serviceType" name="ogcWebServices" th:field="*{ogcWebServices}" class="selectBoxClass">
 											<option value="">선택</option>
 											<option value="wms">WMS</option>
 											<option value="wfs">WFS</option>
@@ -283,7 +283,7 @@
         $(".forLineColor").val([[${layer.layerLineColor}]]);
         $(".forPolygon").val([[${layer.layerFillColor}]]);
 
-        if([[${layer.serviceType}]] !== "wms") {
+        if([[${layer.ogcWebServices}]] !== "wms") {
         	$("input[name='cacheAvailable']").attr("disabled", true);
         }
 	});
@@ -297,7 +297,7 @@
 	});
 
 	// wms일 경우에만 cache 설정 할 수 있도록 활성화
-	$("select[name=serviceType]").change(function(e){
+	$("select[name=ogcWebServices]").change(function(e){
 		var value = $(this).val();
 	    if(value === "wms") {
 	    	$("input[name='cacheAvailable']").attr("disabled", false);
@@ -426,7 +426,7 @@
 			$("#layerKey").focus();
 			return false;
 		}
-		if (!$("select[name=serviceType]").val()) {
+		if (!$("select[name=ogcWebServices]").val()) {
 			alert("서비스 타입을 선택해 주십시오.");
 			$("#serviceType").focus();
 			return false;
