@@ -262,10 +262,8 @@ public class LayerRestController implements AuthorizationController {
 
 					layerFileInfoList.add(layerFileInfo);
 				}
-				log.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 2");
 			}
 
-			log.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 3");
 			// shape 필수 파일 확인
 			errorCode = shapeFileValidate(layerFileInfoList);
 			if(!StringUtils.isEmpty(errorCode)) {
@@ -284,12 +282,9 @@ public class LayerRestController implements AuthorizationController {
 				return result;
 			}
 
-			log.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 5");
 			// 3. 레이어 기본 정보 및 레이어 이력 정보 등록
 			updateLayerMap = layerService.insertLayer(layer, layerFileInfoList);
-			log.info("================================================================== updateLayerMap = {}", updateLayerMap);
 			if (!layerFileInfoList.isEmpty()) {
-				log.info("============================================================================ updateLayerMap 들어 왔음");
 				// 4. org2ogr 실행
 				layerService.insertOgr2Ogr(layer, isLayerFileInfoExist, (String) updateLayerMap.get("shapeFileName"),
 						(String) updateLayerMap.get("shapeEncoding"));
@@ -312,9 +307,7 @@ public class LayerRestController implements AuthorizationController {
 
 			statusCode = HttpStatus.OK.value();
 		} catch(DataAccessException e) {
-			log.info("-------------------- 여기 1");
-			e.printStackTrace();
-			// ogr2ogr2 실행하다가 에러날경우 이미 들어간 레이어, 레이러 파일정보 삭제 
+			// ogr2ogr2 실행하다가 에러날경우 이미 들어간 레이어, 레이러 파일정보 삭제
 			Integer layerId = (Integer) updateLayerMap.get("layerId");
 			Integer layerFileInfoTeamId = (Integer) updateLayerMap.get("layerFileInfoTeamId");
 			layerService.deleteLayer(layerId);
@@ -325,9 +318,7 @@ public class LayerRestController implements AuthorizationController {
 			message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
 			LogMessageSupport.printMessage(e, "@@ db.exception. message = {}", message);
 		} catch(RuntimeException e) {
-			log.info("-------------------- 여기 2");
-			e.printStackTrace();
-			// ogr2ogr2 실행하다가 에러날경우 이미 들어간 레이어, 레이러 파일정보 삭제 
+			// ogr2ogr2 실행하다가 에러날경우 이미 들어간 레이어, 레이러 파일정보 삭제
 			Integer layerId = (Integer) updateLayerMap.get("layerId");
 			Integer layerFileInfoTeamId = (Integer) updateLayerMap.get("layerFileInfoTeamId");
 			layerService.deleteLayer(layerId);
@@ -338,9 +329,7 @@ public class LayerRestController implements AuthorizationController {
 			message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
 			LogMessageSupport.printMessage(e, "@@ runtime.exception. message = {}", message);
 		} catch(Exception e) {
-			log.info("-------------------- 여기 3");
-			e.printStackTrace();
-			// ogr2ogr2 실행하다가 에러날경우 이미 들어간 레이어, 레이러 파일정보 삭제 
+			// ogr2ogr2 실행하다가 에러날경우 이미 들어간 레이어, 레이러 파일정보 삭제
 			Integer layerId = (Integer) updateLayerMap.get("layerId");
 			Integer layerFileInfoTeamId = (Integer) updateLayerMap.get("layerFileInfoTeamId");
 			layerService.deleteLayer(layerId);

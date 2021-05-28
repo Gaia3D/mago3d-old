@@ -1,11 +1,5 @@
 package gaia3d.service.impl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import gaia3d.domain.Depth;
 import gaia3d.domain.Move;
 import gaia3d.domain.layer.Layer;
@@ -14,6 +8,11 @@ import gaia3d.persistence.LayerGroupMapper;
 import gaia3d.service.LayerGroupService;
 import gaia3d.service.LayerService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -171,15 +170,11 @@ public class LayerGroupServiceImpl implements LayerGroupService {
     	// 삭제하고, children update
 
     	layerGroup = layerGroupMapper.getLayerGroup(layerGroup);
-    	log.info("--- 111111111 delete dataGroup = {}", layerGroup);
 
     	int result = 0;
     	if(Depth.ONE == Depth.findBy(layerGroup.getDepth())) {
-    		log.info("--- one ================");
     		result = layerGroupMapper.deleteLayerGroupByAncestor(layerGroup);
     	} else if(Depth.TWO == Depth.findBy(layerGroup.getDepth())) {
-    		log.info("--- two ================");
-
     		LayerGroup ancestorLayerGroup = new LayerGroup();
     		ancestorLayerGroup.setLayerGroupId(layerGroup.getAncestor());
     		ancestorLayerGroup = layerGroupMapper.getLayerGroup(ancestorLayerGroup);
@@ -189,9 +184,6 @@ public class LayerGroupServiceImpl implements LayerGroupService {
 	    	result = layerGroupMapper.deleteLayerGroupByParent(layerGroup);
     		// ancestor - 1
     	} else if(Depth.THREE == Depth.findBy(layerGroup.getDepth())) {
-    		log.info("--- three ================");
-    		log.info("--- dataGroup ================ {}", layerGroup);
-
     		LayerGroup parentDataGroup = new LayerGroup();
 	    	parentDataGroup.setLayerGroupId(layerGroup.getParent());
 	    	parentDataGroup = layerGroupMapper.getLayerGroup(parentDataGroup);

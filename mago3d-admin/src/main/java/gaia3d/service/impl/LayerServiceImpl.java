@@ -155,13 +155,10 @@ public class LayerServiceImpl implements LayerService {
     */
     @Transactional
     public Map<String, Object> insertLayer(Layer layer, List<LayerFileInfo> layerFileInfoList) {
-        log.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 55");
-    	Map<String, Object> layerFileInfoTeamMap = new HashMap<>();
+        Map<String, Object> layerFileInfoTeamMap = new HashMap<>();
 
         // layer 정보 수정
         layerMapper.insertLayer(layer);
-
-        log.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 66");
 
         // shape 파일이 있을 경우
         if(!layerFileInfoList.isEmpty()) {
@@ -169,7 +166,6 @@ public class LayerServiceImpl implements LayerService {
             String shapeEncoding = null;
             Integer layerId = layer.getLayerId();
             String userId = layer.getUserId();
-            log.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 7");
 
             Integer layerFileInfoTeamId = 0;
             List<Integer> layerFileInfoTeamIdList = new ArrayList<>();
@@ -187,11 +183,9 @@ public class LayerServiceImpl implements LayerService {
                     shapeEncoding = layerFileInfo.getShapeEncoding();
                 }
             }
-            log.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 8");
             log.info("---- shapeFileName = {}", shapeFileName);
 
             Integer fileVersion = layerFileInfoMapper.getMaxFileVersion(layerId);
-            log.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 9");
             if(fileVersion == null) fileVersion = 0;
             fileVersion = fileVersion + 1;
             layerFileInfoTeamMap.put("fileVersion", fileVersion);
@@ -201,7 +195,6 @@ public class LayerServiceImpl implements LayerService {
             layerFileInfoTeamMap.put("layerFileInfoTeamIdList", layerFileInfoTeamIdList);
             layerFileInfoTeamMap.put("layerId", layerId);
             log.info("+++ layerFileInfoTeamMap = {}", layerFileInfoTeamMap);
-            log.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 10");
 
             // TODO mybatis 에세 InaccessibleObjectException Unable to make field private final int java.lang.Integer.value accessible 발생해서 임시 처리
             for(Integer layerFileInfoId : layerFileInfoTeamIdList) {
@@ -211,12 +204,8 @@ public class LayerServiceImpl implements LayerService {
                 layerFileInfo.setLayerFileInfoId(layerFileInfoId);
                 layerFileInfoMapper.updateLayerFileInfoTeam(layerFileInfo);
             }
-
-            log.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 11");
-            log.info(" +++++++++++++++++++++++++++++ 1 +++++++++++++++++++++++++++++++++++++++ ");
         }
 
-        log.info(" +++++++++++++++++++++++++++++ 1 +++++++++++++++++++++++++++++++++++++++ layerFileInfoTeamMap = {}", layerFileInfoTeamMap);
         return layerFileInfoTeamMap;
     }
 
@@ -302,7 +291,6 @@ public class LayerServiceImpl implements LayerService {
     */
     @Transactional
     public void insertOgr2Ogr(Layer layer, boolean isLayerFileInfoExist, String shapeFileName, String shapeEncoding) throws Exception {
-        log.info("@@@@@@@@@@@@@@@@@@@ insertOgr2Ogr 들어왔음");
         //String osType = propertiesConfig.getOsType().toUpperCase();
         String gdalCommandPath =  propertiesConfig.getGdalCommandPath();
         String ogr2ogrPort = propertiesConfig.getOgr2ogrPort();
@@ -311,8 +299,6 @@ public class LayerServiceImpl implements LayerService {
         dbName = dbName.substring(dbName.lastIndexOf("/") + 1);
         String driver = "PG:host=" + ogr2ogrHost + " port=" + ogr2ogrPort + " dbname=" + dbName + " user=" + Crypt.decrypt(username) + " password=" + Crypt.decrypt(password);
         //Layer dbLayer = layerMapper.getLayer(layer.getLayerId());
-
-        log.info("@@@@@@@@@@@@@@@@@@@ driver = {}", driver);
 
         String updateOption;
         if (isLayerFileInfoExist) {
