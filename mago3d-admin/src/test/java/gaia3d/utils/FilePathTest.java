@@ -1,14 +1,13 @@
 package gaia3d.utils;
 
-import java.io.File;
-
+import gaia3d.config.PropertiesConfig;
+import gaia3d.domain.UploadDirectoryType;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import gaia3d.config.PropertiesConfig;
-import gaia3d.domain.uploaddata.UploadDirectoryType;
-import lombok.extern.slf4j.Slf4j;
+import java.io.File;
 
 @Slf4j
 class FilePathTest {

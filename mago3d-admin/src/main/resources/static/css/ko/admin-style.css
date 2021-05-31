@@ -2723,3 +2723,11 @@ bottom: -20px;
 .block-element-wrapper > * {
 display : block;
 }
+
+/*-----skip-navigation-----*/
+.skip-navigation{position:relative;z-index:9999;}
+.skip-navigation a{position: absolute; top: -200px; left:0;
+	width: 160px; line-height: 30px;
+	border: 1px solid #dedede; background-color: #333;}
+.skip-navigation a:focus,
+.skip-navigation a:active{top: 0;}
