@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gaia3d.persistence.MicroServiceMapper">
+
+	<!-- 서비스 목록 -->
+	<select id="getListMicroService" parameterType="microService" resultType="microService">
+		/* getListMicroService */
+		SELECT *
+		FROM micro_service
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="status != null and status != ''">
+				AND status = #{status}
+			</if>
+			<if test="microServiceName != null and microServiceName != ''">
+				AND micro_service_name = #{microServiceName}
+			</if>
+			<if test="microServiceType != null and microServiceType != ''">
+				AND micro_service_type = #{microServiceType}
+			</if>
+		</trim>
+		ORDER BY micro_service_id, insert_date DESC
+	</select>
+
+	<!-- 서비스 정보 -->
+	<select id="getMicroService" parameterType="int" resultType="microService">
+		/* getMicroService */
+		SELECT * FROM micro_service WHERE micro_service_id = #{microServiceId}
+	</select>
+
+	<!-- 서비스 사용 연도 -->
+	<select id="getMicroServiceEnrollYear" resultType="int">
+		/* getMicroServiceEnrollYear */
+		SELECT date_part('year', date_trunc('year', "insert_date"))::Integer AS year
+		FROM micro_service
+		GROUP BY 1
+		ORDER BY 1;
+	</select>
+
+	<!-- MicroServiceLog 이력 목록 -->
+	<select id="getListMicroServiceLog" parameterType="microServiceLog" resultType="microServiceLog">
+		/* getListMicroServiceLog */
+		SELECT *
+		FROM micro_service_log
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
+				AND ${searchWord} = #{searchValue}
+			</if>
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
+				AND ${searchWord} LIKE '%' || #{searchValue} || '%'
+			</if>
+			<if test="startDate != null and startDate != ''">
+				<![CDATA[
+			AND insert_date >= TO_TIMESTAMP(#{startDate}, 'YYYYMMDDHH24MISSUS')
+			]]>
+			</if>
+			<if test="endDate != null and endDate != ''">
+				<![CDATA[
+			AND insert_date <= TO_TIMESTAMP(#{endDate}, 'YYYYMMDDHH24MISSUS')
+			]]>
+			</if>
+		</trim>
+		<choose>
+			<when test="orderWord != null and orderWord != '' and orderValue != null and orderValue != ''">
+				ORDER BY ${orderWord} ${orderValue}
+			</when>
+			<otherwise>
+				ORDER BY insert_date DESC, micro_service_log_id DESC
+			</otherwise>
+		</choose>
+		OFFSET #{offset} LIMIT #{limit}
+	</select>
+
+	<!-- MicroService 요청 이력 총 건수 -->
+	<select id="getMicroServiceLogTotalCount" parameterType="microServiceLog" resultType="long">
+		/* getMicroServiceLogTotalCount */
+		SELECT COUNT(micro_service_log_id)
+		FROM micro_service_log
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
+				AND ${searchWord} = #{searchValue}
+			</if>
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
+				AND ${searchWord} LIKE '%' || #{searchValue} || '%'
+			</if>
+			<if test="startDate != null and startDate != ''">
+				<![CDATA[
+			AND insert_date >= TO_TIMESTAMP(#{startDate}, 'YYYYMMDDHH24MISSUS')
+			]]>
+			</if>
+			<if test="endDate != null and endDate != ''">
+				<![CDATA[
+			AND insert_date <= TO_TIMESTAMP(#{endDate}, 'YYYYMMDDHH24MISSUS')
+			]]>
+			</if>
+		</trim>
+	</select>
+
+	<!-- 다음년도 파티션 테이블 자동 생성 -->
+	<select id="createPartitionTable" parameterType="partitionTable" resultType="int">
+		SELECT create_micro_service_log( '${tableName}', '${startTime}', '${endTime}' )
+	</select>
+
+	<!-- 서비스 등록 -->
+	<insert id="insertMicroService" parameterType="microService" >
+		/* insertMicroService */
+		<selectKey keyProperty="microServiceId" resultType="int" order="BEFORE">
+			SELECT NEXTVAL('micro_service_seq')
+		</selectKey>
+		INSERT INTO micro_service (
+			micro_service_id, micro_service_key, micro_service_name, micro_service_type, server_ip, api_key,
+			url_scheme, url_host, url_port, url_path, status, available, description
+		) values(
+			#{microServiceId}, #{microServiceKey}, #{microServiceName}, #{microServiceType}, #{serverIp}, #{apiKey},
+			#{urlScheme}, #{urlHost}, #{urlPort}, #{urlPath}, #{status}, #{available}, #{description}
+		)
+	</insert>
+
+	<!-- 서비스 수정 -->
+	<update id="updateMicroService" parameterType="microService">
+		/* updateMicroService */
+		UPDATE micro_service
+		SET micro_service_name = #{microServiceName},
+			micro_service_type = #{microServiceType},
+			server_ip = #{serverIp},
+			api_key = #{apiKey},
+			url_scheme = #{urlScheme},
+			url_host = #{urlHost},
+			url_port = #{urlPort},
+			url_path = #{urlPath},
+			<if test="status != null and status != ''">
+			status = #{status},
+			last_health_date = NOW(),
+			</if>
+			available = #{available},
+			description = #{description}
+		WHERE micro_service_id = #{microServiceId}
+	</update>
+
+	<!-- 서비스 상태 수정 -->
+	<update id="updateMicroServiceStatus" parameterType="microService">
+		/* updateMicroService */
+		UPDATE micro_service
+		SET status = #{status},
+			last_health_date = NOW()
+		WHERE micro_service_id = #{microServiceId}
+	</update>
+	<!-- Role 삭제 -->
+	<delete id="deleteMicroService" parameterType="int">
+		/* deleteMicroService */
+		DELETE FROM micro_service WHERE micro_service_id = #{microServiceId}
+	</delete>
+</mapper>

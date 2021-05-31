@@ -19,7 +19,30 @@ var UserPolicy = function(magoInstance) {
 	});
 	
 	$("input[name='objectMoveMode']").change(function(e){
-		changeObjectMoveAPI(magoInstance, $(this).val());
+		var magoManager = magoInstance.getMagoManager();
+
+		var type = Mago3D.MagoManager.EVENT_TYPE.DESELECTEDF4D;
+		var eventObj = {
+			type: type,
+			timestamp: new Date()
+		};
+		magoManager.emit(type, eventObj);
+
+		var translateInteraction = magoManager.defaultTranslateInteraction;
+		var selectInteraction = magoManager.defaultSelectInteraction;
+
+		var value = $(this).val();
+
+		translateInteraction.setActive(false);
+		selectInteraction.setActive(false);
+
+		if(value !== '2') {
+			translateInteraction.setActive(true);
+			selectInteraction.setActive(true);
+
+			translateInteraction.setTargetType(value === "0" ? Mago3D.DataType.F4D : Mago3D.DataType.NATIVE);
+			selectInteraction.setTargetType(value === "0" ? Mago3D.DataType.F4D : Mago3D.DataType.NATIVE);
+		}
 	});
 	
 	//lod 변경

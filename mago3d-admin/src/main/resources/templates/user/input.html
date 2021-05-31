@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
 <head>
-	<meta charset="utf-8">
-    <meta name="referrer" content="origin">
-    <meta name="viewport" content="width=device-width">
-    <meta name="robots" content="index,nofollow">
-	<title>사용자 등록 | mago3D</title>
-	<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
+    <title>사용자 등록</title>
+    <th:block layout:fragment="pageCustomStyle">
+        <link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+        <link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+        <link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
+        <link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
+        <link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+        <link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
+    </th:block>
 </head>
 <body>
 <th:block layout:fragment="pageCustomContent">
@@ -57,7 +55,10 @@
                                         <input type="hidden" id="duplicationValue" />
                                         <input type="text" id="userId" name="userId" class="m" />
                                         <input type="button" id="userDuplicationButton" th:value="#{overlap.check}" />
-                                        <span class="table-desc" style="padding-left: 5px;" th:text="#{minimum.length}"><th:block th:text="${policy.userIdMinLength}"></th:block></span>
+                                        <span class="table-desc" style="padding-left: 5px;">
+                                            <th:block th:text="#{minimum.length}"></th:block>
+											<th:block th:text="${policy.userIdMinLength}"></th:block>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -82,7 +83,7 @@
                                             <th:block th:text="#{user.input.number}"></th:block><th:block th:text="|${policy.passwordNumberCount}, |"></th:block>
                                             <th:block th:text="#{user.input.special.characters}"></th:block><th:block th:text="|${policy.passwordSpecialCharCount} |"></th:block>
                                             <th:block th:text="#{user.input.special.characters.need}"></th:block><th:block th:text="|${policy.passwordMinLength} ~ ${policy.passwordMaxLength} |"></th:block>
-                                            <th:block th:text="#{user.input.do}">
+                                            <th:block th:text="#{user.input.do}"></th:block>
 										</span>
                                     </td>
                                 </tr>
@@ -93,6 +94,31 @@
                                     </th>
                                     <td class="col-input">
                                         <input type="password" id="passwordConfirm" name="passwordConfirm" class="m" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="col-label" scope="row">
+                                        <label for="department">부서명</label>
+                                    </th>
+                                    <td class="col-input">
+                                        <input type="text" id="department" name="department" th:field="*{department}" class="m" maxlength="30" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="col-label" scope="row">
+                                        <label for="position">직위</label>
+                                    </th>
+                                    <td class="col-input">
+                                        <input type="text" id="position" name="position" th:field="*{position}" class="m" maxlength="50" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="col-label" scope="row">
+                                        <label for="email" th:text="#{email}"></label>
+                                        <span class="icon-glyph glyph-emark-dot color-warning"></span>
+                                    </th>
+                                    <td class="col-input">
+                                        <input type="text" id="email" name="email" th:field="*{email}" class="l" />
                                     </td>
                                 </tr>
                             </table>
@@ -112,7 +138,7 @@
         </div>
     </div>
     <!-- 사용자 그룹 -->
-    <div th:replace="~{/user-group/user-group-list-dialog :: #userGroupListDialog}"></div> 
+    <div th:replace="~{/user-group/user-group-dialog :: #userGroupListDialog}"></div>
 </th:block>
 <th:block layout:fragment="pageCustomScript">		
 <script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
@@ -229,7 +255,6 @@
 			});
 		} else {
 			alert(JS_MESSAGE["button.dobule.click"]);
-			return;
 		}
 	}
 
@@ -270,6 +295,11 @@
 			$("#passwordConfirm").focus();
 			return false;
 		}
+        if ($("#email").val() === "") {
+            alert("이메일을 입력하여 주세요.");
+            $("#email").focus();
+            return false;
+        }
 	}
 
 	// 초기화
@@ -281,6 +311,9 @@
 		$("#password").val("");
 		$("#passwordConfirm").val("");
 		$("#duplicationValue").val("");
+        $("#department").val("");
+        $("#position").val("");
+        $("#email").val("");
 	}
 
 </script>

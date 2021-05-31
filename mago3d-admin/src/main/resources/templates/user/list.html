@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
 <head>
-	<meta charset="utf-8">
-    <meta name="referrer" content="origin">
-    <meta name="viewport" content="width=device-width">
-    <meta name="robots" content="index,nofollow">
-	<title>사용자 목록 | mago3D</title>
-	<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
-    <link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+    <title>사용자 목록</title>
+    <th:block layout:fragment="pageCustomStyle">
+        <link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+        <link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+        <link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
+        <link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
+        <link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+    </th:block>
 </head>
 <body>
 <th:block layout:fragment="pageCustomContent">
@@ -41,6 +39,20 @@
 										</select>
 										<input type="search" id="searchValue" name="searchValue" class="m" style="float: right;" />
 									</div>
+                                    <div class="input-set">
+                                        <label for="status">상태</label>
+                                        <select id="status" name="status" class="selectBoxClass">
+                                            <option value=""> 전체 </option>
+                                            <option value="0"> 사용중 </option>
+                                            <option value="1"> 사용중지(관리자) </option>
+                                            <option value="2"> 잠금 </option>
+                                            <option value="3"> 휴먼 </option>
+                                            <option value="4"> 만료 </option>
+                                            <option value="5"> 삭제 </option>
+                                            <option value="6"> 임시 비밀번호 </option>
+                                            <option value="7"> 승인대기 </option>
+                                        </select>
+                                    </div>
 									<div class="input-set">
 										<label for="startDate" th:text="#{search.date}"></label>
 										<input type="text" id="startDate" name="startDate" class="s date" autocomplete="off" />
@@ -93,6 +105,7 @@
                                         <div style="padding-bottom: 3px;" class="button-group">
                                             <a href="#" onclick="updateUserStatus('LOCK'); return false;" class="button" th:text="#{user.group.user.lock}"></a>
                                             <a href="#" onclick="updateUserStatus('UNLOCK'); return false;" class="button" th:text="#{user.group.user.lock.init}"></a>
+                                            <a href="/user/input" class="button">사용자 등록</a>
                                         </div>
                                         <!-- <div style="padding-bottom: 3px;" class="button-group">
                                             <a href="#" onclick="return false;" class="button">비밀번호 초기화</a>
@@ -113,7 +126,11 @@
                                         <col class="col-name"></col>
                                         <col class="col-name"></col>
                                         <col class="col-name"></col>
+                                        <col class="col-name"></col>
+                                        <col class="col-name"></col>
                                         <col class="col-type"></col>
+                                        <col class="col-functions"></col>
+                                        <col class="col-functions"></col>
                                         <col class="col-functions"></col>
                                         <col class="col-functions"></col>
                                         <col class="col-functions"></col>
@@ -125,20 +142,26 @@
                                             <th scope="col" th:text="#{user.group.name}"></th>
                                             <th scope="col">아이디</th>
                                             <th scope="col">이름</th>
+                                            <th scope="col">부서명</th>
+                                            <th scope="col">직위</th>
                                             <th scope="col">상태</th>
+                                            <th scope="col">비밀번호 수정</th>
+                                            <th scope="col">수정</th>
+                                            <th scope="col">삭제</th>
                                             <th scope="col">마지막 로그인</th>
-                                            <th scope="col">편집</th>
                                             <th scope="col">등록일</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:if="${userList.empty}">
-                                            <td colspan="9" class="col-none">사용자 목록이 존재하지 않습니다.</td>
+<th:block th:if="${#lists.isEmpty(userList)}">
+                                        <tr>
+                                            <td colspan="13" class="col-none">사용자 목록이 존재하지 않습니다.</td>
                                         </tr>
-                                        
-                                        <tr th:if="${!userList.empty}" th:each="user : ${userList}">
+</th:block>
+<th:block th:unless="${#lists.isEmpty(userList)}" th:each="user : ${userList}">
+                                        <tr>
                                             <td class="col-checkbox">
-                                                <label for="userId_${user.userId}" class="hiddenTag"></label>
+                                                <label th:for="|userId_${user.userId}|" class="hiddenTag"></label>
                                                 <input type="checkbox" th:id="|userId_${user.userId}|" name="userId" th:value="${user.userId}" />
                                             </td>
                                             <td class="col-number" th:text="${pagination.rowNumber - userStat.index}"></td>
@@ -149,47 +172,53 @@
                                             <td class="col-name">
                                                 <a th:href="@{/user/detail(userId=${user.userId}, pageNo=${pagination.pageNo}, ${pagination.searchParameters})}" class="linkButton" th:text="${user.userName}"></a>
                                             </td>
+                                            <td class="col-name" th:text="${user.department}"></td>
+                                            <td class="col-name" th:text="${user.position}"></td>
                                             <td class="col-type" th:switch="${user.status}">
+                                                <span class="icon-glyph glyph-on on" style="margin-right:3px;"></span>
                                                 <th:block th:case="0">
-                                                    <span class="icon-glyph glyph-on on" style="margin-right:3px;"></span>
-                                                    <span class="icon-text" th:text="user.group.in.use"></span>
+                                                    <span class="icon-text">사용중</span>
                                                 </th:block>
                                                 <th:block th:case="1">
-                                                    <span class="icon-glyph glyph-off off" style="margin-right:3px;"></span>
-                                                    <span class="icon-text" th:text="user.group.stop.use"></span>
+                                                    <span class="icon-text">사용중지(관리자)</span>
                                                 </th:block>
                                                 <th:block th:case="2">
-                                                    <span class="icon-glyph glyph-off off" style="margin-right:3px;"></span>
-                                                    <span class="icon-text" th:text="user.group.lock.password"></span>
+                                                    <span class="icon-text">잠금(비밀번호횟수)</span>
                                                 </th:block>
                                                 <th:block th:case="3">
-                                                    <span class="icon-glyph glyph-off off" style="margin-right:3px;"></span>
-                                                    <span class="icon-text" th:text="user.group.dormancy"></span>
+                                                    <span class="icon-text">휴먼</span>
                                                 </th:block>
                                                 <th:block th:case="4">
-                                                    <span class="icon-glyph glyph-off off" style="margin-right:3px;"></span>
-                                                    <span class="icon-text" th:text="user.group.expires"></span>
+                                                    <span class="icon-text">만료</span>
                                                 </th:block>
                                                 <th:block th:case="5">
-                                                    <span class="icon-glyph glyph-off off" style="margin-right:3px;"></span>
-                                                    <span class="icon-text" th:text="user.group.delete"></span>
+                                                    <span class="icon-text">삭제</span>
                                                 </th:block>
                                                 <th:block th:case="6">
-                                                    <span class="icon-glyph glyph-off off" style="margin-right:3px;"></span>
-                                                    <span class="icon-text" th:text="user.group.temporary.password"></span>
+                                                    <span class="icon-text">임시 비밀번호</span>
+                                                </th:block>
+                                                <th:block th:case="7">
+                                                    <span class="icon-text">대기중</span>
+                                                    <a href="#" th:onclick="approval([[${user.userId}]]); return false;" class="button" style="margin-left: 5px; text-decoration: none;">승인</a>
                                                 </th:block>
                                             </td>
                                             <td class="col-type">
-                                                <p th:text="${#temporals.format(user.lastSigninDate,'yyyy-MM-dd HH:mm')}"></p>
+                                                <a th:href="@{/user/modify(userId=${user.userId}, type=password)}" class="image-button button-edit" th:text="#{modified}"></a>
                                             </td>
                                             <td class="col-type">
-                                                <a th:href="@{/user/modify(userId=${user.userId})}" class="image-button button-edit" th:text="#{modified}"></a>&nbsp;&nbsp;
+                                                <a th:href="@{/user/modify(userId=${user.userId})}" class="image-button button-edit" th:text="#{modified}"></a>
+                                            </td>
+                                            <td class="col-type">
                                                 <a th:href="@{/user/delete(userId=${user.userId})}" onclick="return deleteWarning();" class="image-button button-delete" th:text="#{delete}"></a>
                                             </td>
                                             <td class="col-type">
-                                                <p th:text="${#temporals.format(user.insertDate,'yyyy-MM-dd HH:mm')}"></p>
+                                                <p th:text="${#temporals.format(user.lastSigninDate, 'yyyy-MM-dd HH:mm')}"></p>
+                                            </td>
+                                            <td class="col-type">
+                                                <p th:text="${#temporals.format(user.insertDate, 'yyyy-MM-dd HH:mm')}"></p>
                                             </td>
                                         </tr>
+</th:block>
                                     </tbody>
                                 </table>
 							</form>
@@ -218,6 +247,9 @@
 
 		$("#searchWord").val("[[${userInfo.searchWord}]]");
 		$("#searchValue").val("[[${userInfo.searchValue}]]");
+
+		$("#status").val("[[${userInfo.status}]]");
+
 		$("#orderWord").val("[[${userInfo.orderWord}]]");
 		$("#orderValue").val("[[${userInfo.orderValue}]]");
 
@@ -265,6 +297,36 @@
 		});
 	}
 
+    // 대기 사용자 승인
+    var approvalFlag = true;
+    function approval(userId) {
+        if(approvalFlag) {
+            approvalFlag = false;
+            var formData = $("#searchForm").serialize();
+            $.ajax({
+                url: "/users/" + userId + "/approvals",
+                type: "POST",
+                headers: {"X-Requested-With": "XMLHttpRequest"},
+                data: formData,
+                success: function(msg){
+                    if(msg.statusCode <= 200) {
+                        alert(JS_MESSAGE["update"]);
+                        location.reload();
+                    } else {
+                        alert(JS_MESSAGE[msg.errorCode]);
+                    }
+                    approvalFlag = true;
+                },
+                error:function(request,status,error){
+                    alert(JS_MESSAGE["ajax.error.message"]);
+                    approvalFlag = true;
+                }
+            });
+        } else {
+            alert(JS_MESSAGE["button.dobule.click"]);
+        }
+    }
+
 	// 사용자 잠금, 사용자 잠금 해제
 	var updateUserStatusFlag = true;
 	function updateUserStatus(statusValue) {
@@ -302,7 +364,6 @@
 			});
 		} else {
 			alert(JS_MESSAGE["button.dobule.click"]);
-			return;
 		}
 	}
 

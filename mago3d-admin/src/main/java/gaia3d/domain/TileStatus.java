@@ -1,4 +1,4 @@
-package gaia3d.domain.tile;
+package gaia3d.domain;
 
 public enum TileStatus {
 

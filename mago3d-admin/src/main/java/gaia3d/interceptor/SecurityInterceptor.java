@@ -1,26 +1,24 @@
 package gaia3d.interceptor;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
+import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.Key;
 import gaia3d.domain.user.UserSession;
 import gaia3d.domain.user.UserStatus;
 import gaia3d.support.URLSupport;
 import gaia3d.utils.WebUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 보안 관련 체크 인터셉터
@@ -32,10 +30,16 @@ import lombok.extern.slf4j.Slf4j;
 public class SecurityInterceptor extends HandlerInterceptorAdapter {
 
 	@Autowired
+	private PropertiesConfig propertiesConfig;
+	@Autowired
 	private ObjectMapper objectMapper;
+
+	private int count = 0;
 	
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+		log.info("**** 버그 추적용 SecurityInterceptor count = {}", count);
+		count++;
 
     	String uri = request.getRequestURI();
     	String requestIp = WebUtils.getClientIp(request);
@@ -51,14 +55,15 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
     	int exceptionURICount = URLSupport.EXCEPTION_URI.length;
     	for(int i=0 ; i<exceptionURICount; i++) {
     		if(uri.indexOf(URLSupport.EXCEPTION_URI[i]) >= 0) {
-    			isExceptionURI = true;
+				log.info("################################### uri = {}, exception uri ={}", uri, URLSupport.EXCEPTION_URI[i]);
+				isExceptionURI = true;
     			break;
     		}
     	}
     	
     	// 예외 URL 은 통과 처리
     	if(isExceptionURI) {
-//    		log.info("################################### exception uri");
+    		log.info("################################### exception uri");
     		return true;
     	}
     	
@@ -89,7 +94,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 	    		return false;
 			}
 		}
-		
+
 		// 임시 비밀번호 사용자는 로그인, 패스워드 변경 페이지외에 갈수 없음
 		if(UserStatus.TEMP_PASSWORD == UserStatus.findBy(userSession.getStatus())) {
 			isExceptionURI = false;

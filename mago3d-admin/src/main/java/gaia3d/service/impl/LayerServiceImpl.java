@@ -155,7 +155,7 @@ public class LayerServiceImpl implements LayerService {
     */
     @Transactional
     public Map<String, Object> insertLayer(Layer layer, List<LayerFileInfo> layerFileInfoList) {
-        Map<String, Object> layerFileInfoTeamMap = new HashMap<>();
+    	Map<String, Object> layerFileInfoTeamMap = new HashMap<>();
 
         // layer 정보 수정
         layerMapper.insertLayer(layer);

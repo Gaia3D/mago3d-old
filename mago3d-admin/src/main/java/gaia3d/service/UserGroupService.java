@@ -1,10 +1,10 @@
 package gaia3d.service;
 
-import java.util.List;
-
 import gaia3d.domain.user.UserGroup;
 import gaia3d.domain.user.UserGroupMenu;
 import gaia3d.domain.user.UserGroupRole;
+
+import java.util.List;
 
 public interface UserGroupService {
 
@@ -48,13 +48,13 @@ public interface UserGroupService {
 	 */
 	List<String> getListUserGroupRoleKey(UserGroupRole userGroupRole);
 
-    /**
-     * 사용자 그룹 Key 중복 확인
-     * @param userGroup
-     * @return
-     */
-    Boolean isUserGroupKeyDuplication(UserGroup userGroup);
-    
+	/**
+	 * 사용자 그룹 Key 중복 확인
+	 * @param userGroup
+	 * @return
+	 */
+	Boolean isUserGroupKeyDuplication(UserGroup userGroup);
+
     /**
      * 사용자 그룹 등록
      * @param userGroup
@@ -62,7 +62,7 @@ public interface UserGroupService {
      */
     int insertUserGroup(UserGroup userGroup);
 
-	/**
+    /**
 	 * 사용자 그룹 수정
 	 * @param userGroup
 	 * @return

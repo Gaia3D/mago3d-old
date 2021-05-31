@@ -1,13 +1,12 @@
 package gaia3d.domain.common;
 
+import gaia3d.domain.ConverterType;
+import gaia3d.domain.ServerTarget;
+import gaia3d.domain.UploadDataType;
 import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-
-import gaia3d.domain.ConverterType;
-import gaia3d.domain.ServerTarget;
-import gaia3d.domain.uploaddata.UploadDataType;
 
 @ToString
 @Builder

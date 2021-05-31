@@ -1,50 +1,36 @@
 package gaia3d.controller.rest;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.FileType;
 import gaia3d.domain.Key;
 import gaia3d.domain.policy.Policy;
 import gaia3d.domain.uploaddata.UploadData;
 import gaia3d.domain.uploaddata.UploadDataFile;
-import gaia3d.domain.uploaddata.UploadDataType;
-import gaia3d.domain.uploaddata.UploadDirectoryType;
+import gaia3d.domain.UploadDataType;
+import gaia3d.domain.UploadDirectoryType;
 import gaia3d.domain.user.UserSession;
 import gaia3d.service.PolicyService;
 import gaia3d.service.UploadDataService;
+import gaia3d.support.LogMessageSupport;
 import gaia3d.utils.DateUtils;
 import gaia3d.utils.FileUtils;
 import gaia3d.utils.FormatUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.io.*;
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * 3D 데이터 파일 업로더
@@ -68,7 +54,7 @@ public class UploadDataRestController {
 	
 	@Autowired
 	private UploadDataService uploadDataService;
-	
+
 	/**
 	 * TODO 비동기로 처리해야 할듯
 	 * @param request
@@ -215,18 +201,18 @@ public class UploadDataRestController {
 					} else if (UploadDataType.INDOORGML.getValue().equalsIgnoreCase(dataType) && UploadDataType.GML.getValue().equalsIgnoreCase(extension)) {
 						extension = UploadDataType.INDOORGML.getValue();
 					}
-					
+
 					// 변환 대상 파일만 이름을 변경하고 나머지 파일은 그대로 이름 유지
 					saveFileName = userId + "_" + today + "_" + System.nanoTime() + "." + extension;
 					converterTarget = true;
 					converterTargetCount++;
-				} 
-				
+				}
+    			
 				long size = 0L;
 				try (	InputStream inputStream = multipartFile.getInputStream();
 						OutputStream outputStream = new FileOutputStream(makedDirectory + tempDirectory + File.separator + saveFileName)) {
 				
-					int bytesRead = 0;
+					int bytesRead;
 					byte[] buffer = new byte[BUFFER_SIZE];
 					while ((bytesRead = inputStream.read(buffer, 0, BUFFER_SIZE)) != -1) {
 						size += bytesRead;
@@ -301,7 +287,7 @@ public class UploadDataRestController {
 	 * @return
 	 * @throws Exception
 	 */
-	private Map<String, Object> unzip(	Policy policy, 
+	private Map<String, Object> unzip(	Policy policy,
 										List<String> uploadTypeList, 
 										List<String> converterTypeList, 
 										String today, 
@@ -326,7 +312,7 @@ public class UploadDataRestController {
 		
 		File uploadedFile = new File(targetDirectory + multipartFile.getOriginalFilename());
 		multipartFile.transferTo(uploadedFile);
-		
+
 		Map<String, String> fileNameMatchingMap = new HashMap<>();
 		List<UploadDataFile> uploadDataFileList = new ArrayList<>();
 		// zip 파일을 압축할때 한글이나 다국어가 포함된 경우 java.lang.IllegalArgumentException: malformed input off 같은 오류가 발생. 윈도우가 CP949 인코딩으로 파일명을 저장하기 때문.
@@ -395,7 +381,7 @@ public class UploadDataRestController {
             			if(divideFileName.length != 0) {
             				extension = divideFileName[divideFileName.length - 1];
             				if(uploadTypeList.contains(extension.toLowerCase())) {
-            					
+
             					String searchfileNameKey = fileName.substring(0, fileName.length() - extension.length() - 1);
         						String sameFileName = fileNameMatchingMap.get(searchfileNameKey);
             					if(converterTypeList.contains(extension.toLowerCase())) {
@@ -427,7 +413,7 @@ public class UploadDataRestController {
                 					} else if (UploadDataType.INDOORGML.getValue().equalsIgnoreCase(dataType) && UploadDataType.GML.getValue().equalsIgnoreCase(extension)) {
                 						extension = UploadDataType.INDOORGML.getValue();
                 					}
-            						
+
             						// 변환 대상 파일만 이름을 변경하고 나머지 파일은 그대로 이름 유지
             						saveFileName = userId + "_" + today + "_" + System.nanoTime() + "." + extension;
             						converterTarget = true;
@@ -451,7 +437,7 @@ public class UploadDataRestController {
             			if(divideFileName.length != 0) {
             				extension = divideFileName[divideFileName.length - 1];
             				if(uploadTypeList.contains(extension.toLowerCase())) {
-            					
+
             					String searchfileNameKey = fileName.substring(0, fileName.length() - extension.length() - 1);
         						String sameFileName = fileNameMatchingMap.get(searchfileNameKey);
             					if(converterTypeList.contains(extension.toLowerCase())) {
@@ -483,7 +469,7 @@ public class UploadDataRestController {
                 					} else if (UploadDataType.INDOORGML.getValue().equalsIgnoreCase(dataType) && UploadDataType.GML.getValue().equalsIgnoreCase(extension)) {
                 						extension = UploadDataType.INDOORGML.getValue();
                 					}
-            						
+
             						// 변환 대상 파일만 이름을 변경하고 나머지 파일은 그대로 이름 유지
             						saveFileName = userId + "_" + today + "_" + System.nanoTime() + "." + extension;
 									converterTarget = true;
@@ -496,10 +482,10 @@ public class UploadDataRestController {
 	        					return result;
 	        				}
             			}
-            		}	
+            		}
             		uploadDataFile = fileCopyInUnzip(uploadDataFile, zipFile, entry, directoryPath, saveFileName, extension, fileName, subDirectoryPath, depth);
                 }
-            	
+
             	uploadDataFile.setConverterTarget(converterTarget);
             	uploadDataFile.setFileSize(String.valueOf(entry.getSize()));
             	uploadDataFileList.add(uploadDataFile);
@@ -509,12 +495,12 @@ public class UploadDataRestController {
 		} catch(IOException ex) {
 			log.info("@@@@@@@@@@@@ IOException. message = {}", ex.getCause() != null ? ex.getCause().getMessage() : ex.getMessage());
 		}
-		
+
 		result.put("converterTargetCount", converterTargetCount);
 		result.put("uploadDataFileList", uploadDataFileList);
 		return result;
 	}
-	
+
 	/*
 	 * unzip 로직 안에서 파일 복사
 	 */
@@ -523,14 +509,14 @@ public class UploadDataRestController {
 		long size = 0L;
     	try ( 	InputStream inputStream = zipFile.getInputStream(entry);
     			FileOutputStream outputStream = new FileOutputStream(directoryPath + saveFileName); ) {
-    		
+
     		int bytesRead = 0;
             byte[] buffer = new byte[BUFFER_SIZE];
             while ((bytesRead = inputStream.read(buffer, 0, BUFFER_SIZE)) != -1) {
                 size += bytesRead;
                 outputStream.write(buffer, 0, bytesRead);
             }
-            
+
     		uploadDataFile.setFileType(FileType.FILE.name());
     		uploadDataFile.setFileExt(extension);
     		uploadDataFile.setFileName(fileName);
@@ -539,17 +525,17 @@ public class UploadDataRestController {
     		uploadDataFile.setFileSubPath(subDirectoryPath);
     		uploadDataFile.setDepth(depth);
     		uploadDataFile.setFileSize(String.valueOf(size));
-    	
+
     	} catch(IOException e) {
-    		e.printStackTrace();
+			LogMessageSupport.printMessage(e);
     		log.info("@@@@@@@@@@@@ io exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
     		uploadDataFile.setErrorMessage(e.getMessage());
         } catch(Exception e) {
-        	e.printStackTrace();
+			LogMessageSupport.printMessage(e);
         	log.info("@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
         	uploadDataFile.setErrorMessage(e.getMessage());
         }
-    	
+
     	return uploadDataFile;
 	}
 	
@@ -610,7 +596,7 @@ public class UploadDataRestController {
 		result.put("message", message);
         return result;
 	}
-	
+
 	/**
 	 * 업로드 데이트 수정
 	 * @param request

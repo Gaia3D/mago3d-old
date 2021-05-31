@@ -55,7 +55,7 @@ public class AccessLogServiceImpl implements AccessLogService {
 	public AccessLog getAccessLog(Long accessLogId) {
 		return accessLogMapper.getAccessLog(accessLogId);
 	}
-	
+
 	/**
 	 * 스케줄러에 의한 다음년도 파티션 테이블 자동 생성
 	 * @param tableName

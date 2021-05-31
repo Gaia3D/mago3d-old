@@ -1,19 +1,12 @@
 package gaia3d.domain.tile;
 
-import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-
+import gaia3d.domain.TileStatus;
+import gaia3d.domain.common.Search;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import gaia3d.domain.common.Search;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import java.time.LocalDateTime;
 
 /**
  * 스마트 타일 정보

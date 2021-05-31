@@ -1,10 +1,9 @@
 package gaia3d.persistence;
 
-import java.util.List;
-
+import gaia3d.domain.role.Role;
 import org.springframework.stereotype.Repository;
 
-import gaia3d.domain.role.Role;
+import java.util.List;
 
 /**
  * Role
@@ -20,12 +19,6 @@ public interface RoleMapper {
 	 * @return
 	 */
 	Long getRoleTotalCount(Role role);
-	
-	/**
-	 * role 사용자 수
-	 * @return
-	 */
-	// List<UserStatistics> getRoleUserCount();
 
 	/**
 	 * Role 목록

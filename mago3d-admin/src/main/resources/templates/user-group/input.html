@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
 <head>
-	<meta charset="utf-8">
-    <meta name="referrer" content="origin">
-    <meta name="viewport" content="width=device-width">
-    <meta name="robots" content="index,nofollow">
-	<title>사용자 목록 | mago3D</title>
-	<title>사용자 그룹 등록 | mago3D</title>
-	<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />	
-	<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
+	<title>사용자 그룹 등록</title>
+	<th:block layout:fragment="pageCustomStyle">
+		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
+	</th:block>
 </head>
 <body>
 <th:block layout:fragment="pageCustomContent">
@@ -54,7 +51,7 @@
 									<td class="col-input">
 										<input type="hidden" id="duplicationValue" name="duplicationValue" />
 										<input type="text" id="userGroupKey"  name="userGroupKey" class="l" />
-				  						<input type="button" id="userGroupDuplicationButton" th:value="#{overlap.check}" />
+				  						<input type="button" id="duplicationButton" th:value="#{overlap.check}" />
 									</td>
 								</tr>
 								<tr>
@@ -63,9 +60,9 @@
 										<span class="icon-glyph glyph-emark-dot color-warning"></span>
 									</th>
 									<td class="col-input">
-										<input type="hidden" id="parent" name="parent" />
-			 							<input type="text" id="parentName" name="parentName" class="l" readonly="true" />
-										<input type="button" id="userGroupButtion" value="상위 사용자 그룹 선택" />
+										<input type="hidden" id="parent" name="parent" value="0"/>
+										<input type="text" id="parentName" name="parentName" class="l" th:value="${userGroup.parentName}" readonly="readonly"/>
+										<input type="button" id="userGroupButton" value="상위 사용자 그룹 선택"/>
 									</td>
 								</tr>
 				                <tr>
@@ -97,7 +94,7 @@
 										<label for="description" th:text="#{description}"></label>
 									</th>
 									<td class="col-input">
-										<input type="text" id="description" class="xl" />
+										<input type="text" id="description" name="description" class="xl" />
 									</td>
 								</tr>
 							</table>
@@ -115,7 +112,7 @@
 		</div>
 	</div>
 	<!-- 사용자 그룹 -->
-	<div th:replace="~{/user-group/user-group-list-dialog :: #userGroupListDialog}"></div> 
+	<div th:replace="~{/user-group/user-group-dialog :: #userGroupListDialog}"></div>
 </th:block>
 <th:block layout:fragment="pageCustomScript">
 <script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
@@ -130,49 +127,53 @@
 	function validate() {
 		var number = /^[0-9]+$/;
 		var exceptKorean = /^[a-zA-Z0-9]*$/;
-		if ($("#userGroupName").val() === null || $("#userGroupName").val() === "") {
+		var $userGroupName = $("#userGroupName");
+		if ($userGroupName.val() === null || $userGroupName.val() === "") {
 			alert("사용자 그룹명을 입력해 주세요.");
 			$("#userGroupName").focus();
 			return false;
 		}
-		if ($("#userGroupKey").val() === null || $("#userGroupKey").val() === "") {
+		var $userGroupKey = $("#userGroupKey");
+		if ($userGroupKey.val() === null || $userGroupKey.val() === "") {
 			alert("사용자 그룹 Key(한글불가)을 입력해 주세요.");
-			$("#userGroupKey").focus();
+			$userGroupKey.focus();
 			return false;
 		}
-		if (!exceptKorean.test($("#userGroupKey").val())) {
+		if (!exceptKorean.test($userGroupKey.val())) {
 			alert("사용자 그룹Key는 한글을 입력할 수 없습니다.");
-			$("#userGroupKey").val("");
-			$("#userGroupKey").focus();
+			$userGroupKey.val("");
+			$userGroupKey.focus();
 			return false;
 		}
-		if($("#duplicationValue").val() == null || $("#duplicationValue").val() == "") {
+		var duplicationValue = $("#duplicationValue").val();
+		if (duplicationValue === null || duplicationValue === "") {
 			alert(JS_MESSAGE["group.key.duplication.check"]);
 			return false;
-		} else if($("#duplicationValue").val() == "1") {
+		} else if (duplicationValue === "true") {
 			alert(JS_MESSAGE["group.key.duplication"]);
 			return false;
 		}
-		if($("#parent").val() === null || $("#parent").val() === "" || !number.test($("#parent").val())) {
+		var $parent = $("#parent");
+		if ($parent.val() === null || $parent.val() === "" || !number.test($parent.val())) {
 			alert("상위 사용자 그룹을 선택해 주세요.");
-			$("#parent").focus();
+			$parent.focus();
 			return false;
 		}
 	}
 
 	// 입력값이 변경되면 중복체크, 영문+숫자
-	$("#userGroupKey").on("keyup", function(event) {
+	$("#userGroupKey").on("keyup", function (event) {
 		$("#duplicationValue").val(null);
-		if (!(event.keyCode >=37 && event.keyCode<=40)) {
+		if (!(event.keyCode >= 37 && event.keyCode <= 40)) {
 			var inputValue = $(this).val();
-			$(this).val(inputValue.replace(/[^a-z0-9]/gi,''));
+			$(this).val(inputValue.replace(/[^a-z0-9]/gi, ''));
 		}
 	});
 
 	// 그룹Key 중복 확인
- 	$("#userGroupDuplicationButton").on("click", function() {
+ 	$("#duplicationButton").on("click", function() {
 		var userGroupKey = $("#userGroupKey").val();
-		if (userGroupKey == "") {
+		if (userGroupKey === "") {
 			alert(JS_MESSAGE["group.key.empty"]);
 			$("#userGroupKey").focus();
 			return false;
@@ -183,12 +184,12 @@
 			data: {"userGroupKey": userGroupKey},
 			headers: {"X-Requested-With": "XMLHttpRequest"},
 			dataType: "json",
-			success: function(msg){
-				if(msg.statusCode <= 200) {
-					if(msg.duplication == true) {
+			success: function (msg) {
+				if (msg.statusCode <= 200) {
+					if (msg.duplication === true) {
 						alert(JS_MESSAGE["group.key.duplication"]);
 						$("#userGroupKey").focus();
-						return false;
+						$("#duplicationValue").val("");
 					} else {
 						alert(JS_MESSAGE["group.key.enable"]);
 						$("#duplicationValue").val(msg.duplication);
@@ -198,29 +199,29 @@
 					console.log("---- " + msg.message);
 				}
 			},
-			error:function(request, status, error) {
+			error: function (request, status, error) {
 				//alert(JS_MESSAGE["ajax.error.message"]);
 				alert(" code : " + request.status + "\n" + ", message : " + request.responseText + "\n" + ", error : " + error);
-    		}
+			}
 		});
 	});
 
 	// 저장
 	var insertUserGroupFlag = true;
 	function insertUserGroup() {
-		if (validate() == false) {
+		if (validate() === false) {
 			return false;
 		}
-		if(insertUserGroupFlag) {
+		if (insertUserGroupFlag) {
 			insertUserGroupFlag = false;
 			var formData = $("#userGroup").serialize();
 			$.ajax({
 				url: "/user-groups/insert",
 				type: "POST",
 				headers: {"X-Requested-With": "XMLHttpRequest"},
-		        data: formData,
-				success: function(msg){
-					if(msg.statusCode <= 200) {
+				data: formData,
+				success: function (msg) {
+					if (msg.statusCode <= 200) {
 						alert(JS_MESSAGE["insert"]);
 						window.location.reload();
 					} else {
@@ -229,14 +230,13 @@
 					}
 					insertUserGroupFlag = true;
 				},
-				error:function(request, status, error){
-			        alert(JS_MESSAGE["ajax.error.message"]);
-			        insertUserGroupFlag = true;
+				error: function (request, status, error) {
+					alert(JS_MESSAGE["ajax.error.message"]);
+					insertUserGroupFlag = true;
 				}
 			});
 		} else {
 			alert(JS_MESSAGE["button.dobule.click"]);
-			return;
 		}
 	}
 
@@ -245,38 +245,38 @@
 		height: 600,
 		width: 1200,
 		modal: true,
-		overflow : "auto",
+		overflow: "auto",
 		resizable: false
 	});
 
 	// 상위 User Group 찾기
-	$( "#userGroupButtion" ).on( "click", function() {
-		userGroupDialog.dialog( "open" );
-		userGroupDialog.dialog( "option", "title", "사용자 그룹 선택");
+	$("#userGroupButton").on("click", function () {
+		userGroupDialog.dialog("open");
+		userGroupDialog.dialog("option", "title", "사용자 그룹 선택");
 	});
 
 	// 상위 Node
 	function confirmParent(parent, parentName) {
 		$("#parent").val(parent);
 		$("#parentName").val(parentName);
-		userGroupDialog.dialog( "close" );
+		userGroupDialog.dialog("close");
 	}
 
-	$( "#rootParentSelect" ).on( "click", function() {
+	$("#rootParentSelect").on("click", function () {
 		$("#parent").val(0);
-		$("#parentName").val("${userGroup.parentName}");
-		userGroupDialog.dialog( "close" );
+		$("#parentName").val("[[${userGroup.parentName}]]");
+		userGroupDialog.dialog("close");
 	});
 
 	// 지도에서 찾기
-	$( "#mapButtion" ).on( "click", function() {
+	$("#mapButton").on("click", function () {
 		var url = "/user/location-map";
 		var width = 800;
 		var height = 700;
 
-        var popWin = window.open(url, "","toolbar=no ,width=" + width + " ,height=" + height
-                + ", directories=no,status=yes,scrollbars=no,menubar=no,location=no");
-        //popWin.document.title = layerName;
+		var popWin = window.open(url, "", "toolbar=no ,width=" + width + " ,height=" + height
+				+ ", directories=no,status=yes,scrollbars=no,menubar=no,location=no");
+		//popWin.document.title = layerName;
 	});
 
 	// 초기화
@@ -284,7 +284,7 @@
 		$("#userGroupName").val("");
 		$("#userGroupKey").val("");
 		$("#parent").val(0);
-		$("#parentName").val("${userGroup.parentName}");
+		$("#parentName").val("[[${userGroup.parentName}]]");
 		$("input:radio[name='basic']:radio[value='false']").prop('checked',true);
 		$("input:radio[name='available']:radio[value='true']").prop('checked', true);
 		$("#description").val("");

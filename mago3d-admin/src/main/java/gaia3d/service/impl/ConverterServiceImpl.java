@@ -1,49 +1,30 @@
 package gaia3d.service.impl;
 
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import org.springframework.amqp.AmqpException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import gaia3d.config.PropertiesConfig;
-import gaia3d.domain.ConverterJobResultStatus;
-import gaia3d.domain.ConverterJobStatus;
-import gaia3d.domain.ConverterTemplate;
-import gaia3d.domain.ConverterType;
-import gaia3d.domain.LocationUdateType;
-import gaia3d.domain.MethodType;
-import gaia3d.domain.ServerTarget;
+import gaia3d.domain.*;
 import gaia3d.domain.agent.ConversionJobResult;
 import gaia3d.domain.agent.ConverterLocation;
 import gaia3d.domain.agent.ConverterResultLog;
 import gaia3d.domain.common.QueueMessage;
 import gaia3d.domain.converter.ConverterJob;
 import gaia3d.domain.converter.ConverterJobFile;
-import gaia3d.domain.data.DataAttribute;
-import gaia3d.domain.data.DataGroup;
-import gaia3d.domain.data.DataInfo;
-import gaia3d.domain.data.DataRelationInfo;
-import gaia3d.domain.data.DataStatus;
+import gaia3d.domain.data.*;
 import gaia3d.domain.uploaddata.UploadData;
 import gaia3d.domain.uploaddata.UploadDataFile;
-import gaia3d.domain.uploaddata.UploadDataType;
-import gaia3d.domain.uploaddata.UploadDirectoryType;
 import gaia3d.persistence.ConverterMapper;
-import gaia3d.service.AMQPPublishService;
-import gaia3d.service.ConverterService;
-import gaia3d.service.DataAttributeService;
-import gaia3d.service.DataGroupService;
-import gaia3d.service.DataRelationService;
-import gaia3d.service.DataService;
-import gaia3d.service.UploadDataService;
+import gaia3d.service.*;
 import gaia3d.support.LogMessageSupport;
 import gaia3d.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.AmqpException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * converter manager
@@ -438,7 +419,7 @@ public class ConverterServiceImpl implements ConverterService {
 		// 조금 미묘하다. transaction 처리를 할지, 관리자 UI 재 실행을 위해서는 여기가 맞는거 같기도 하고....
 		// 별도 기능으로 분리해야 하나?
 		try {
-			aMQPPublishService.converterMessageSend(propertiesConfig.getRabbitmqConverterExchange(), propertiesConfig.getRabbitmqConverterRoutingKey(), queueMessage);
+			aMQPPublishService.send(propertiesConfig.getRabbitmqConverterExchange(), propertiesConfig.getRabbitmqConverterRoutingKey(), queueMessage);
 		} catch(AmqpException e) {
 			ConverterJob converterJob = new ConverterJob();
 			//converterJob.setUserId(userId);

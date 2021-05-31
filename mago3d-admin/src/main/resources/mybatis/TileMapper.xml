@@ -200,7 +200,7 @@
 				tile_path = #{tilePath},
 			</if>
 			update_date = NOW()
-		WHERE tile_id = #{tileId}
+		WHERE tile_data_group_id = #{tileDataGroupId}
 	</update>
 
 	<!-- 스마트 타일링 변경 이력 수정 -->

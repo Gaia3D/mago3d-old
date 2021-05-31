@@ -272,18 +272,18 @@
         )
     </insert>
 
-    <!-- 사용자 그룹 메뉴 등록 -->
-    <insert id="insertUserGroupMenu" parameterType="userGroupMenu">
-    	/* insertUserGroupMenu */
-        <selectKey keyProperty="userGroupMenuId" resultType="int" order="BEFORE">
+	<!-- 사용자 그룹 메뉴 등록 -->
+	<insert id="insertUserGroupMenu" parameterType="userGroupMenu">
+		/* insertUserGroupMenu */
+		<selectKey keyProperty="userGroupMenuId" resultType="int" order="BEFORE">
 			SELECT NEXTVAL('user_group_menu_seq')
-        </selectKey>
-        INSERT INTO user_group_menu (
+		</selectKey>
+		INSERT INTO user_group_menu (
 		user_group_menu_id, user_group_id, menu_id, previous_depth, all_yn, read_yn, write_yn, update_yn, delete_yn
-        ) VALUES (
+		) VALUES (
 		#{userGroupMenuId}, #{userGroupId}, #{menuId}, #{previousDepth}, #{allYn}, #{readYn}, #{writeYn}, #{updateYn}, #{deleteYn}
-        )
-    </insert>
+		)
+	</insert>
 
     <!-- 사용자 그룹 Role 등록 -->
     <insert id="insertUserGroupRole" parameterType="userGroupRole">
@@ -360,6 +360,11 @@
 		DELETE FROM user_group
 		WHERE parent = #{userGroupId}
 		OR user_group_id = #{userGroupId}
+	</delete>
+	<!-- 사용자 그룹 MicroService 삭제 -->
+	<delete id="deleteUserGroupMicroService" parameterType="int">
+		/* deleteUserGroupMicroService */
+		DELETE FROM user_group_micro_service WHERE user_group_id = #{userGroupId}
 	</delete>
 
     <!-- 사용자 그룹 메뉴 삭제 -->

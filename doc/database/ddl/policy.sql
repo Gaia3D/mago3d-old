@@ -13,6 +13,7 @@ create table policy(
 	user_update_check						char(1)				default '0',
 	user_delete_check						char(1)				default '0',
 	user_delete_type						char(1)				default '0',
+	signup_type                             varchar(20)         default 'auto',
 	
 	password_change_term 					varchar(3)			default '30',
 	password_min_length						integer				default 8,
@@ -79,6 +80,7 @@ comment on column policy.user_signin_type is '사용자 사인인 인증 방법.
 comment on column policy.user_update_check is '사용자 정보 수정시 확인';
 comment on column policy.user_delete_check is '사용자 정보 삭제시 확인';
 comment on column policy.user_delete_type is '사용자 정보 삭제 방법. 0 : 논리적(기본값), 1 : 물리적(DB 삭제)';
+comment on column policy.signup_type is '회원 가입 후 승인 방법. auto : 승인 없이 사용, approval : 승인 후 사용';
 
 comment on column policy.password_change_term is '패스워드 변경 주기 기본 30일';
 comment on column policy.password_min_length is '패스워드 최소 길이 기본 8';

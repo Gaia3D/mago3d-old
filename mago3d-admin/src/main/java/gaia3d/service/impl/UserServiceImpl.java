@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public int updateUser(UserInfo userInfo) {
 		if(!StringUtils.isEmpty(userInfo.getPassword())) {
-		userInfo.setPassword(PasswordSupport.encodePassword(userInfo.getPassword()));
+			userInfo.setPassword(PasswordSupport.encodePassword(userInfo.getPassword()));
 		}
 		userInfo.setEmail(Crypt.encrypt(userInfo.getEmail()));
 		return userMapper.updateUser(userInfo);

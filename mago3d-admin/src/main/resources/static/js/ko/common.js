@@ -1,3 +1,7 @@
+$(".date").on("click", function () {
+	// 웹 접근성.
+	$('.ui-datepicker-calendar').first().prepend('<caption class="hiddenTag">날짜입력용 달력 - 일,월,화,수,목,금,토로 구성</caption>');
+});
 // 삭제 처리 경고
 function deleteWarning() {
 	if(confirm("삭제 하시겠습니까?")) {
@@ -350,7 +354,7 @@ function locationValidation(longitude, latitude, altitude) {
 	if((-180 <= lon && lon <= 180) &&  (-90 <= lat && lat <= 90) && (-30000 <= alt && alt <= 300000)) {
 		return true;
 	} else {
-		alert("경도 유효범위 : -180 ~ 180\n위도 유효범위 : -90 ~ 90 \n높이 유효범위 : -30000 ~ 300000 입니다.");
+		alert("경도 유효범위 : -180 ~ 180\n위도 유효범위 : -90 ~ 90 \n높이 유효범위 : 300000 입니다.");
 		return false;
 	}
 	

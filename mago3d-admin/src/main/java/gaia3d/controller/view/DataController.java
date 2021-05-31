@@ -88,27 +88,6 @@ public class DataController {
 	}
 
 	/**
-	 * 데이터 등록 화면
-	 */
-	@GetMapping(value = "/input")
-	public String input(HttpServletRequest request, Model model) {
-		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
-
-		Policy policy = policyService.getPolicy();
-		UploadData uploadData = new UploadData();
-
-		DataGroup dataGroup = new DataGroup();
-		dataGroup.setUserId(userSession.getUserId());
-		List<DataGroup> dataGroupList = dataGroupService.getListDataGroup(dataGroup);
-
-		model.addAttribute("policy", policy);
-		model.addAttribute("dataGroupList", dataGroupList);
-		model.addAttribute("uploadData", uploadData);
-
-		return "/data/input";
-	}
-
-	/**
 	 * Data 정보
 	 * @param dataInfo
 	 * @param model

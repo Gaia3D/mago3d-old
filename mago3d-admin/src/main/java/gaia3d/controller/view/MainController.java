@@ -1,16 +1,5 @@
 package gaia3d.controller.view;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import gaia3d.domain.ConverterJobStatus;
 import gaia3d.domain.converter.ConverterJob;
 import gaia3d.domain.policy.Policy;
 import gaia3d.domain.widget.Widget;
@@ -20,6 +9,17 @@ import gaia3d.service.WidgetService;
 import gaia3d.utils.DateUtils;
 import gaia3d.utils.FormatUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+import static gaia3d.domain.ConverterJobStatus.FAIL;
+import static gaia3d.domain.ConverterJobStatus.SUCCESS;
 
 
 /**
@@ -66,6 +66,8 @@ public class MainController {
 		boolean isSystemResourceDraw = false;
 		boolean isScheduleDraw = false;
 		boolean isApiLogDraw = false;
+		boolean isDigitalTwinServiceLogDraw = false;
+		boolean isHealthCheckLogDraw = false;
 
 		// TODO 임시
 		for(Widget dbWidget : widgetList) {
@@ -85,14 +87,18 @@ public class MainController {
 				isScheduleDraw = true;
 			} else if("apiLogWidget".equals(dbWidget.getWidgetKey())) {
 				isApiLogDraw = true;
+			} else if("digitalTwinServiceWidget".equals(dbWidget.getWidgetKey())) {
+				isDigitalTwinServiceLogDraw = true;
+			} else if ("healthCheckWidget".equals(dbWidget.getWidgetKey())) {
+				isHealthCheckLogDraw = true;
 			}
 		}
 
 		ConverterJob converterJob = new ConverterJob();
-		converterJob.setStatus(ConverterJobStatus.SUCCESS.toString().toLowerCase());
+		converterJob.setStatus(SUCCESS.toString().toLowerCase());
 		converterJob.setStartDate(startDate);
 		long converterSuccessCount = converterService.getConverterJobTotalCount(converterJob);
-		converterJob.setStatus(ConverterJobStatus.FAIL.toString().toLowerCase());
+		converterJob.setStatus(FAIL.toString().toLowerCase());
 		long converterFailCount = converterService.getConverterJobTotalCount(converterJob);
 		long converterTotalCount = converterSuccessCount + converterFailCount;
 
@@ -120,6 +126,8 @@ public class MainController {
 		model.addAttribute("isSystemResourceDraw", isSystemResourceDraw);
 		model.addAttribute("isScheduleDraw", isScheduleDraw);
 		model.addAttribute("isApiLogDraw", isApiLogDraw);
+		model.addAttribute("isDigitalTwinServiceLogDraw", isDigitalTwinServiceLogDraw);
+		model.addAttribute("isHealthCheckLogDraw", isHealthCheckLogDraw);
 
 		return "/main/index";
 	}

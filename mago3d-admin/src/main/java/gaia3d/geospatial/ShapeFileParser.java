@@ -1,17 +1,21 @@
 package gaia3d.geospatial;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.charset.Charset;
-
+import gaia3d.domain.ShapeFileField;
+import gaia3d.support.LogMessageSupport;
+import lombok.extern.slf4j.Slf4j;
+import org.geotools.data.FeatureSource;
 import org.geotools.data.shapefile.dbf.DbaseFileHeader;
 import org.geotools.data.shapefile.dbf.DbaseFileReader;
 import org.geotools.data.shapefile.files.ShpFileType;
 import org.geotools.data.shapefile.files.ShpFiles;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.opengis.referencing.cs.CoordinateSystem;
 
-import lombok.extern.slf4j.Slf4j;
-import gaia3d.domain.ShapeFileExt;
-import gaia3d.domain.ShapeFileField;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.charset.Charset;
 
 /**
  * Shape file 관련 유틸 
@@ -19,78 +23,154 @@ import gaia3d.domain.ShapeFileField;
  */
 @Slf4j
 public class ShapeFileParser {
-	
-	// shapefile 경로 
-	private String filePath; 
-	
-	public ShapeFileParser(String filePath) {
-		this.filePath = filePath;
-	}
-	
-	/**
-	 * shape file의 필수 칼럼 검사 
-	 * @return
-	 */
-	public Boolean fieldValidate() {
-		DbaseFileReader reader = null;
-		Boolean fieldValid = false; 
+
+    // shapefile 경로
+    private final String filePath;
+
+    public ShapeFileParser(String filePath) {
+        this.filePath = filePath;
+    }
+
+//    /**
+//     * shape 파일로 부터 extrusion model 시뮬레이션에 필요한 필수 컬럼(design layer) 과 옵션 컬럼 값을 추출
+//     * @param extrusionColumns
+//     * @return
+//     * @throws ParseException
+//     */
+//    public List<DesignLayer> getExtrusionModelList(ObjectMapper objectMapper, String extrusionColumns) throws ParseException {
+//        log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ extrusionColumns = {}", extrusionColumns);
+//        List<DesignLayer> extrusionModelList = new ArrayList<>();
+//        if(StringUtils.isEmpty(extrusionColumns)) return extrusionModelList;
+//
+//        List<String> columnList = Arrays.asList(extrusionColumns.trim().toLowerCase().split(","));
+//        try {
+//            ShapefileDataStore shpDataStore = new ShapefileDataStore(new File(filePath).toURI().toURL());
+//
+//            shpDataStore.setCharset(StandardCharsets.UTF_8);
+//            String typeName = shpDataStore.getTypeNames()[0];
+//            FeatureSource<SimpleFeatureType, SimpleFeature> shapeFeatureSource = shpDataStore.getFeatureSource(typeName);
+//            FeatureCollection<SimpleFeatureType, SimpleFeature> collection = shapeFeatureSource.getFeatures();
+//            FeatureIterator<SimpleFeature> features = collection.features();
+//
+//            String unit = this.getUnitName(shapeFeatureSource);
+//            log.info("@@@@@@@@@@@@@@@@@@@@@@@ unit = {}", unit);
+//            log.info("@@@@@@@@@@@@@@@@@@@@@@@ features = {}", features);
+//            // 이게 한 row 같음
+//            while (features.hasNext()) {
+//                Map<String, String> attributesMap = new HashMap<>();
+//
+//                SimpleFeature feature = features.next();
+//
+//                DesignLayer designLayer = new DesignLayer();
+//                log.info("@@@@@@@@@@@@@@@@@@@@@@@ feature = {}", feature);
+//                // 한 row의 속성들
+//                for (Property attribute : feature.getProperties()) {
+//                    String attributeName = String.valueOf(attribute.getName()).toLowerCase();
+//                    log.info("@@@@@@@@@@@@@@@@@@@@@@@ attributeName = {}", attributeName);
+//                    if(columnList.contains(attributeName)) {
+//                        // 필수 속성값일 경우
+//                        if(attributeName.equalsIgnoreCase(DesignLayer.RequiredColumn.THE_GEOM.getValue())) {
+//                        	Geometry geom = (Geometry) feature.getDefaultGeometry();
+//
+//                        	geom = DouglasPeuckerSimplifier.simplify(geom, (unit.equals("Degree Angle") ? 0.00001 : 0.1));
+//                    		log.info("@@@@@@@@@@@@@@@@@@@@@@@ geomtype = {}", geom.getGeometryType());
+//                        	if(geom instanceof Polygon) {
+//                        		Polygon[] polygonArray = new Polygon[1];
+//                        		polygonArray[0] = (Polygon) geom;
+//                        		geom = new MultiPolygon(polygonArray, new GeometryFactory());
+//                        	}
+//
+//                            designLayer.setTheGeom(geom.toText());
+//                        } else if(attributeName.equalsIgnoreCase(DesignLayer.RequiredColumn.SHAPE_ID.getValue())) {
+//                            designLayer.setShapeId(Long.parseLong(attribute.getValue().toString()));
+//                        }
+//                    } else {
+//                        // 옵션 속성 값일 경우 json 통으로 넣음.
+//                        if(attribute.getValue() != null) {
+//                            attributesMap.put(attributeName, attribute.getValue().toString());
+//                        }
+//                    }
+//                }
+//
+//                designLayer.setAttributes(objectMapper.writeValueAsString(attributesMap));
+//                extrusionModelList.add(designLayer);
+//            }
+//            features.close();
+//        } catch (IOException e) {
+//            LogMessageSupport.printMessage(e);
+//        }
+//
+//        return extrusionModelList;
+//    }
+//
+//    /**
+//     * shape 파일의 coordinate system 유닛 획듯
+//     * @param featureSource
+//     * @return
+//     * @throws ?
+//     */
+//    private String getUnitName(FeatureSource<SimpleFeatureType, SimpleFeature> featureSource) {
+//        CoordinateSystem cs = this.getCoordinateSystem(featureSource);
+//        CoordinateSystemAxis csa0 = cs.getAxis(0);
+//        Unit<?> u0 = csa0.getUnit();
+//        String name = u0.getName();
+//        if(name == null) name = "";
+//    	return name;
+//    }
+    
+    /**
+     * shape 파일의 coordinate system 획듯
+     * @param featureSource
+     * @return
+     * @throws ? 
+     */
+    private CoordinateSystem getCoordinateSystem(FeatureSource<SimpleFeatureType, SimpleFeature> featureSource) {
+    	SimpleFeatureType schema = featureSource.getSchema();
+        CoordinateReferenceSystem sourceCRS = schema.getCoordinateReferenceSystem();
+        return sourceCRS.getCoordinateSystem();
+    }
+
+    /**
+     * shape file의 필수 칼럼 검사
+     *
+     * @return
+     */
+    public Boolean fieldValidate() {
+        DbaseFileReader reader = null;
+        boolean fieldValid = false;
         try {
             ShpFiles shpFile = new ShpFiles(filePath);
-            if(!shpFile.exists(ShpFileType.SHP)) {
-            	return true;
+            // 메타 정보만 수정하는 경우
+            if (!shpFile.exists(ShpFileType.SHP)) {
+                return true;
             }
             // field만 검사할 것이기 때문에 따로 인코딩은 설정하지 않음 
             reader = new DbaseFileReader(shpFile, false, Charset.defaultCharset());
             DbaseFileHeader header = reader.getHeader();
             int filedValidCount = 0;
             // 필드 카운트
-            int numFields = header.getNumFields();
-            for(int iField=0; iField < numFields; ++iField) {
+            for (int iField = 0; iField < header.getNumFields(); iField++) {
                 String fieldName = header.getFieldName(iField);
-                if(ShapeFileField.findBy(fieldName) != null) filedValidCount++;
+                if (ShapeFileField.findBy(fieldName) != null) filedValidCount++;
             }
             // 필수 칼럼이 모두 있는지 확인한 결과 리턴 
-            fieldValid = (filedValidCount == ShapeFileField.values().length) ? true : false;
-            
+            fieldValid = filedValidCount == ShapeFileField.values().length;
+
             reader.close();
         } catch (MalformedURLException e) {
-            log.info("MalformedURLException ============ {}", e.getMessage());
+            LogMessageSupport.printMessage(e, "MalformedURLException ============ {}", e.getMessage());
         } catch (IOException e) {
-            log.info("IOException ============== {} ", e.getMessage());
+            LogMessageSupport.printMessage(e, "IOException ============== {} ", e.getMessage());
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (Exception e) {
+                    LogMessageSupport.printMessage(e, "Exception ============== {} ", e.getMessage());
+                }
+            }
         }
-        
+
         return fieldValid;
-	}
-	/**
-	 * shape 파일 파싱
-	 * @param fileName
-	 */
-	public void parse(String fileName) {
-//		try {
-//			File file = new File(fileName);
-//			FileDataStore myData = FileDataStoreFinder.getDataStore(file);
-//			SimpleFeatureSource source = myData.getFeatureSource();
-//			SimpleFeatureType schema = source.getSchema();
-//	
-//			Query query = new Query(schema.getTypeName());
-//			// query.setMaxFeatures(1);
-//	
-//			FeatureCollection<SimpleFeatureType, SimpleFeature> collection = source.getFeatures(query);
-//			try (FeatureIterator<SimpleFeature> features = collection.features()) {
-//				while (features.hasNext()) {
-//					SimpleFeature feature = features.next();
-//					log.info(feature.getID() + ": ");
-//					for (Property attribute : feature.getProperties()) {
-//						if (attribute.getType() instanceof GeometryTypeImpl) {
-//							log.info("\t\t" + attribute.getName() + ":" + attribute.getValue());
-//						} else {
-//							log.info("\t" + attribute.getName() + ":" + attribute.getValue());
-//						}
-//					}
-//				}
-//			}
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}
-	}
+    }
 }

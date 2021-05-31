@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
 <head>
-	<meta charset="utf-8">
-    <meta name="referrer" content="origin">
-    <meta name="viewport" content="width=device-width">
-    <meta name="robots" content="index,nofollow">
-	<title>데이터 목록 | mago3D</title>
-	<link rel="shortcut icon" th:href="@{/images/favicon.ico(cacheVersion=${contentCacheVersion})}">
-	<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
-	<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
-	<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}">
-	<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}">
-    <link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
-	<link rel="stylesheet" th:href="@{/externlib/json-viewer/json-viewer.css(cacheVersion=${contentCacheVersion})}">
+	<title>데이터 목록</title>
+	<th:block layout:fragment="pageCustomStyle">
+		<link rel="shortcut icon" th:href="@{/images/favicon.ico(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/externlib/json-viewer/json-viewer.css(cacheVersion=${contentCacheVersion})}">
+	</th:block>
 </head>
 <body>
 <th:block layout:fragment="pageCustomContent">
@@ -102,7 +100,7 @@
 										<col class="col-name"></col>
 										<col class="col-name"></col>
 										<col class="col-functions"></col>
-										<col class="col-functions"></col>
+										<!--<col class="col-functions"></col>-->
 										<col class="col-functions"></col>
 										<col class="col-functions"></col>
 									</colgroup>
@@ -122,17 +120,19 @@
 											<th scope="col" class="col-name">지도</th>
 											<th scope="col" class="col-name">메타정보</th>
 											<th scope="col" class="col-name">속성</th>
-											<th scope="col" class="col-name">오브젝트 속성</th>
+											<!--<th scope="col" class="col-name">오브젝트 속성</th>-->
 											<th scope="col" class="col-name">삭제</th>
 											<th scope="col" class="col-date">등록일</th>
 										</tr>
 									</thead> 
 									<tbody>
-										<tr th:if="${dataList.empty}">
-											<td colspan="14" class="col-none" th:text="#{data.does.not.exist}"></td>
+<th:block th:if="${#lists.isEmpty(dataList)}">
+										<tr>
+											<td colspan="13" class="col-none" th:text="#{data.does.not.exist}"></td>
 										</tr>
-
-										<tr th:if="${!dataList.empty}" th:each="dataInfo : ${dataList}">
+</th:block>
+<th:block th:unless="${#lists.isEmpty(dataList)}" th:each="dataInfo : ${dataList}">
+										<tr>
 											<td class="col-checkbox">
 												<label class="hiddenTag">선택 체크박스</label>
 												<input type="checkbox" th:id="|dataId_${dataInfo.dataId}|" name="dataId" value="${dataInfo.dataId}" />
@@ -146,16 +146,18 @@
 											</td>
 											<td class="col-name" th:text="${dataInfo.userId}"></td>
 											<td class="col-name" th:text="${dataInfo.dataType}"></td>
-											<td class="col-type" th:if="${#strings.equals(dataInfo.sharing, 'common')}" th:text="공통"></td>
-											<td class="col-type" th:if="${#strings.equals(dataInfo.sharing, 'public')}" th:text="공개"></td>
-											<td class="col-type" th:if="${#strings.equals(dataInfo.sharing, 'private')}" th:text="개인"></td>
-											<td class="col-type" th:if="${#strings.equals(dataInfo.sharing, 'group')}" th:text="그룹"></td>
-
-											<td class="col-type" th:if="${#strings.equals(dataInfo.status, 'processing')}" th:text="변환중"></td>
-											<td class="col-type" th:if="${#strings.equals(dataInfo.status, 'use')}" th:text="사용중"></td>
-											<td class="col-type" th:if="${#strings.equals(dataInfo.status, 'unused')}" th:text="사용중지"></td>
-											<td class="col-type" th:if="${#strings.equals(dataInfo.status, 'delete')}" th:text="삭제"></td>
-
+											<td class="col-type">
+												<th:block th:if="${#strings.equals(dataInfo.sharing, 'common')}" th:text="공통"></th:block>
+												<th:block th:if="${#strings.equals(dataInfo.sharing, 'public')}" th:text="공개"></th:block>
+												<th:block th:if="${#strings.equals(dataInfo.sharing, 'private')}" th:text="개인"></th:block>
+												<th:block th:if="${#strings.equals(dataInfo.sharing, 'group')}" th:text="그룹"></th:block>
+											</td>
+											<td class="col-type">
+												<th:block th:if="${#strings.equals(dataInfo.status, 'processing')}" th:text="변환중"></th:block>
+												<th:block th:if="${#strings.equals(dataInfo.status, 'use')}" th:text="사용중"></th:block>
+												<th:block th:if="${#strings.equals(dataInfo.status, 'unused')}" th:text="사용중지"></th:block>
+												<th:block th:if="${#strings.equals(dataInfo.status, 'delete')}" th:text="삭제"></th:block>
+											</td>
 											<td class="col-type">
 												<a href="#" th:onclick="viewDataInfo([[${dataInfo.dataId}]]); return false;">보기</a>
 											</td>
@@ -164,19 +166,20 @@
 											</td>
 
 											<td class="col-functions" >
-												<a href="#" th:if="${#bools.isTrue(dataInfo.attributeExist)}" th:text="|보기  |" th:onclick="detailDataAttribute([[${dataInfo.dataId}]], [[${dataInfo.dataName}]]); return false;"></a>
-												<a href="#" th:text="#{modified}" th:onclick="uploadDataAttribute([[${dataInfo.dataId}]], [[${dataInfo.dataName}]]); return false;">
+												<a href="#" th:if="${#bools.isTrue(dataInfo.attributeExist)}" th:text="|보기  |"
+												   th:onclick="detailDataAttribute([[${dataInfo.dataId}]], [[${dataInfo.dataName}]]); return false;"></a>&nbsp;&nbsp;&nbsp;
+												<a href="#" th:text="#{modified}" th:onclick="uploadDataAttribute([[${dataInfo.dataId}]], [[${dataInfo.dataName}]]); return false;"></a>
 											</td>
-											<td class="col-functions">
-													<a href="#" th:if="${#bools.isTrue(dataInfo.objectAttributeExist)}" th:text="보기" th:onclick="detailDataObjectAttribute([[${dataInfo.dataId}]], [[${dataInfo.dataName}]]); return false;"></a>
-													<a href="#" th:text="#{modified}" th:onclick="uploadDataObjectAttribute([[${dataInfo.dataId}]], [[${dataInfo.dataName}]]); return false;"></a>
-											</td>
-
+											<!--<td class="col-functions">
+												<a href="#" th:if="${#bools.isTrue(dataInfo.objectAttributeExist)}" th:text="보기"
+												   th:onclick="detailDataObjectAttribute([[${dataInfo.dataId}]], [[${dataInfo.dataName}]]); return false;"></a>
+												<a href="#" th:text="#{modified}" th:onclick="uploadDataObjectAttribute([[${dataInfo.dataId}]], [[${dataInfo.dataName}]]); return false;"></a>
+											</td>-->
 											<td class="col-functions">
 												<a th:href="@{/data/delete(dataId=${dataInfo.dataId})}" class="image-button button-delete" th:value="#{delete}" onclick="return deleteWarning();"></a>
 											</td>
 											<td class="col-type">
-												<th:block th:text="${#temporals.format(dataInfo.insertDate,'yyyy-MM-dd HH:mm')}"></th:block>
+												<th:block th:text="${#temporals.format(dataInfo.insertDate, 'yyyy-MM-dd HH:mm')}"></th:block>
 											</td>
 										</tr>
 									</tbody>

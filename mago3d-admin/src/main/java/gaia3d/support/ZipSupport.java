@@ -51,15 +51,15 @@ public class ZipSupport {
         			}
         			zipArchiveOutputStream.closeArchiveEntry();
         		} catch(Exception e) {
-        			log.info("@@ db.exception. message = {}", e.getMessage());
+        			LogMessageSupport.printMessage(e, "@@ db.exception. message = {}", e.getMessage());
         			throw new RuntimeException(e.getMessage());
         		}
             }
         } catch(RuntimeException e) {
-        	log.info("@@ RuntimeException. message = {}", e.getMessage());
+        	LogMessageSupport.printMessage(e, "@@ RuntimeException. message = {}", e.getMessage());
         	throw e;
         } catch(IOException e) {
-        	log.info("@@ FileNotFoundException. message = {}", e.getMessage());
+        	LogMessageSupport.printMessage(e, "@@ FileNotFoundException. message = {}", e.getMessage());
         	throw e;
         }
 	}

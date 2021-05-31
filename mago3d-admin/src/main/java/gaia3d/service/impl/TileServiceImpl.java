@@ -1,23 +1,10 @@
 package gaia3d.service.impl;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.springframework.amqp.AmqpException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-
 import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.ServerTarget;
+import gaia3d.domain.TileStatus;
+import gaia3d.domain.UploadDirectoryType;
 import gaia3d.domain.common.TileMessage;
 import gaia3d.domain.data.DataGroup;
 import gaia3d.domain.data.DataInfoSimple;
@@ -25,8 +12,6 @@ import gaia3d.domain.tile.TileDataGroup;
 import gaia3d.domain.tile.TileDataInfo;
 import gaia3d.domain.tile.TileInfo;
 import gaia3d.domain.tile.TileLog;
-import gaia3d.domain.tile.TileStatus;
-import gaia3d.domain.uploaddata.UploadDirectoryType;
 import gaia3d.persistence.TileMapper;
 import gaia3d.service.AMQPPublishService;
 import gaia3d.service.DataGroupService;
@@ -35,6 +20,19 @@ import gaia3d.service.TileService;
 import gaia3d.support.LogMessageSupport;
 import gaia3d.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.AmqpException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -203,7 +201,7 @@ public class TileServiceImpl implements TileService {
 	 */
 	private void executeTileMaker(TileMessage tileMessage) {
 		try {
-			aMQPPublishService.tileMessageSend(propertiesConfig.getRabbitmqTilerExchange(), propertiesConfig.getRabbitmqTilerRoutingKey(), tileMessage);
+			aMQPPublishService.tileMessageSend(propertiesConfig.getRabbitmqConverterExchange(), propertiesConfig.getRabbitmqTilerRoutingKey(), tileMessage);
 		} catch(AmqpException e) {
 
 			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ AmqpException. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
@@ -250,8 +248,6 @@ public class TileServiceImpl implements TileService {
 		TileMessage tileMessage = new TileMessage();
 		tileMessage.setTileId(tileId);
 		tileMessage.setTileKey(tileInfo.getTileKey());
-		tileMessage.setTileName(tileInfo.getTileName());
-		tileMessage.setTilePath(propertiesConfig.getAdminTileServicePath() + tileInfo.getTileKey());
 		tileMessage.setFilePath(tileLog.getFilePath());
 		tileMessage.setFileName(tileLog.getFileRealName());
 		// 스마트 타일 생성
@@ -292,14 +288,12 @@ public class TileServiceImpl implements TileService {
 		// 타일 데이터 그룹 타일 경로 갱신
 		tileMapper.updateTileDataGroup(tileDataGroup);
 
-		if(TileStatus.SUCCESS == TileStatus.valueOf(tileInfo.getStatus().toUpperCase()))
-		{
-			updateDataGroupTiling(tileInfo, true);
-		}
+		String status = tileInfo.getStatus();
+		updateDataGroupTiling(tileInfo, TileStatus.SUCCESS == TileStatus.valueOf(status.toUpperCase()));
 
 		TileLog tileLog = TileLog.builder()
 				.tileId(tileInfo.getTileId())
-				.status(tileInfo.getStatus())
+				.status(status)
 				.userId(tileInfo.getUserId())
 				.build();
 		// 스마트 타일링 로그 상태 갱신

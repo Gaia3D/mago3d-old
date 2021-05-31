@@ -6,11 +6,13 @@ package gaia3d.domain.cache;
  */
 public enum CacheName {
 	GEO_POLICY,
-	//LICENSE, 
+	//LICENSE,
 	MENU,
 	POLICY,
 	ROLE,
 	SMART_TILING_DATA,
-	USER_GROUP
+	USER_GROUP,
+	MICRO_SERVICE,
+	TERRAIN
 }
 

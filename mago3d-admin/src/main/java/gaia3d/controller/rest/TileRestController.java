@@ -111,8 +111,8 @@ public class TileRestController implements AuthorizationController {
 	 * @param tileInfo
 	 * @return
 	 */
-	@PostMapping(value = "/{tileId}")
-	public Map<String, Object> update(HttpServletRequest request, @PathVariable Integer tileId, @ModelAttribute TileInfo tileInfo) {
+	@PutMapping(value = "/{tileId}")
+	public Map<String, Object> update(HttpServletRequest request, @PathVariable Integer tileId, TileInfo tileInfo) {
 		log.info("@@@@@ urbanUpdate tileInfo = {}", tileInfo);
 
 		Map<String, Object> result = new HashMap<>();

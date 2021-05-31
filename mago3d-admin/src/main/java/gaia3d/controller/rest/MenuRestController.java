@@ -287,7 +287,7 @@ public class MenuRestController {
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
 		String message = null;
-		
+
 		menuService.deleteMenu(menuId);
 		String menuTree = getMenuTree(getAllListMenu(MenuTarget.USER.getValue()));
 		log.info("@@ menuTree = {} ", menuTree);
@@ -310,7 +310,7 @@ public class MenuRestController {
 		int count = menuList.size();
 		int lastDepth = 0;
 		Menu menu = menuList.get(0);
-		
+
 		// TODO + 를 append 로 변경 할것
 		builder.append("[")
 		.append("{")
@@ -368,8 +368,8 @@ public class MenuRestController {
 						builder.append("\"subTree\"").append(":").append("[");
 						bigParentheses++;
 					}
-				} 
-				
+				}
+
 				builder.append("{")
 				.append("\"menuId\"").append(":").append("\"" + menu.getMenuId() + "\"").append(",")
 				.append("\"menuType\"").append(":").append("\"" + menu.getMenuType() + "\"").append(",")

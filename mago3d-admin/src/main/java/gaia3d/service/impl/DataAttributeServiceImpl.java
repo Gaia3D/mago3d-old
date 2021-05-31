@@ -1,12 +1,5 @@
 package gaia3d.service.impl;
 
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import gaia3d.domain.data.DataAttribute;
 import gaia3d.domain.data.DataAttributeFileInfo;
 import gaia3d.domain.data.DataInfo;
@@ -15,8 +8,15 @@ import gaia3d.parser.impl.DataAttributeFileJsonParser;
 import gaia3d.persistence.DataAttributeMapper;
 import gaia3d.service.DataAttributeService;
 import gaia3d.service.DataService;
+import gaia3d.support.LogMessageSupport;
 import gaia3d.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Map;
 
 /**
  * 데이터 속성 관리
@@ -54,7 +54,7 @@ public class DataAttributeServiceImpl implements DataAttributeService {
 		// 파일 이력을 저장
 		dataAttributeMapper.insertDataAttributeFileInfo(dataAttributeFileInfo);
 		
-		DataAttributeFileParser dataAttributeFileParser = null;
+		DataAttributeFileParser dataAttributeFileParser;
 		if(FileUtils.EXTENSION_JSON.equals(dataAttributeFileInfo.getFileExt())) {
 			dataAttributeFileParser = new DataAttributeFileJsonParser();
 		} else {
@@ -80,13 +80,13 @@ public class DataAttributeServiceImpl implements DataAttributeService {
 				updateSuccessCount++;
 			}
 		} catch(DataAccessException e) {
-			log.info("@@@@@@@@@@@@ dataAccess exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ dataAccess exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 			insertErrorCount++;
 		} catch(RuntimeException e) {
-			log.info("@@@@@@@@@@@@ runtime exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ runtime exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 			insertErrorCount++;
 		} catch(Exception e) {
-			log.info("@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 			insertErrorCount++;
 		}
 		

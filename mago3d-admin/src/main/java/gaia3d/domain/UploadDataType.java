@@ -1,4 +1,4 @@
-package gaia3d.domain.uploaddata;
+package gaia3d.domain;
 
 /**
  * 3DS 를 enum 으로 바로 사용할 수가 없음
@@ -24,12 +24,11 @@ public enum UploadDataType {
 	DDS("dds"),
 	
 	ZIP("zip"),
-	MTL("mtl"),
-	FBX("fbx");
+	MTL("mtl");
 	
 	private final String value;
 	
-	UploadDataType(String value) {
+	UploadDataType(final String value) {
 		this.value = value;
 	}
 	
@@ -42,8 +41,8 @@ public enum UploadDataType {
 	 * @param value
 	 * @return
 	 */
-	public static UploadDataType findBy(String value) {
-		for(UploadDataType uploadDataType : values()) {
+	public static UploadDataType findBy(final String value) {
+		for(final UploadDataType uploadDataType : values()) {
 			if(uploadDataType.getValue().equals(value)) return uploadDataType;
 		}
 		return null;

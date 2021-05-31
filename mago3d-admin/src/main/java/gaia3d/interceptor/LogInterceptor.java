@@ -120,33 +120,33 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
     	}
     	
 		Enumeration<String> paramterNames = request.getParameterNames();
-		StringBuffer buffer = new StringBuffer(128);
-		String parameterName = null; 
+		StringBuilder builder = new StringBuilder(128);
+		String parameterName;
 		while(paramterNames.hasMoreElements()) { 
 			parameterName = paramterNames.nextElement();
 			
 			// 변수명에 password 관련 것들은 저장하지 않음
 			if(parameterName.indexOf("password") >= 0) continue;
-			
-			buffer.append("&");
-			buffer.append(parameterName);
-			buffer.append("=");
+
+			builder.append("&")
+			.append(parameterName)
+			.append("=");
 			String[] parameterValues = request.getParameterValues(parameterName);
 		    for(String value : parameterValues) {
 		    	if(value == null) {
 		    		// Null 값이 오나? 암튼 테스트가 필요함...
-		    		buffer.append("null");
+					builder.append("null");
 		    	} else if(value.length() > 100) {
 		    		// 30자 이상 검색 조건은 검색 조건으로 판단하지 않음
-		    		buffer.append(value.substring(0, 100));
+					builder.append(value.substring(0, 100));
 		    	} else {
-		    		buffer.append(value);
+					builder.append(value);
 		    	}
 		    	//builder.append("|||");
 		    }
 		}
 		
-		String requestParameters = buffer.toString();
+		String requestParameters = builder.toString();
 		// 1000자가 넘어가면 그건 검색조건이라고 보기 힘듬
 		if(requestParameters.length() > 1000) requestParameters = requestParameters.substring(0, 998);
 		
@@ -165,10 +165,10 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
     	
     	if(!multipleMap.isEmpty()) {
 	    	for(MultipartFile multipartFile : multipleMap.values()) {
-	    		builder.append("&");
-				builder.append("file_name=" + multipartFile.getOriginalFilename());
-				builder.append("&");
-				builder.append("file_size=" + multipartFile.getSize());
+	    		builder.append("&")
+				.append("file_name=").append(multipartFile.getOriginalFilename())
+				.append("&")
+				.append("file_size=").append(multipartFile.getSize());
 	    	}
     	}
     	

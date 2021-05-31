@@ -261,20 +261,20 @@ function mapInit(magoInstance, baseLayers, policy) {
 		initLayer : function(displayFlag) {
 			var wmsLayerList = [];
 			for(var i=0; i < sortedLayer.length; i++) {
-				var serviceType = sortedLayer[i].serviceType;
+				var ogcWebServices = sortedLayer[i].ogcWebServices;
 				var cacheAvailable = sortedLayer[i].cacheAvailable;
 				var layerKey = sortedLayer[i].layerKey;
 				layerMap[layerKey] = sortedLayer[i];
 				// 기본 표시 true일 경우에만 레이어 추가 
 				if(!displayFlag && !sortedLayer[i].defaultDisplay) continue;
-				if(serviceType ==='wms' && cacheAvailable) {
+				if(ogcWebServices ==='wms' && cacheAvailable) {
 					addTileLayer(layerKey);
-				} else if (serviceType ==='wms' && !cacheAvailable) {
+				} else if (ogcWebServices ==='wms' && !cacheAvailable) {
 					wmsLayerList.push(layerKey);
-				} else if(serviceType ==='wfs') {
+				} else if(ogcWebServices ==='wfs') {
 					addWFSLayer(layerKey);
 				} else {
-					alert(serviceType+" 타입은  지원하지 않습니다.");
+					alert(ogcWebServices+" 타입은  지원하지 않습니다.");
 				}
 			}
 			
@@ -287,17 +287,17 @@ function mapInit(magoInstance, baseLayers, policy) {
 		 * 레이어 추가 
 		 */
 		addLayer : function(layerKey) {
-			var serviceType = layerMap[layerKey].serviceType;
+			var ogcWebServices = layerMap[layerKey].ogcWebServices;
 			var cacheAvailable = layerMap[layerKey].cacheAvailable;
-			if(serviceType === 'wms' && cacheAvailable) {
+			if(ogcWebServices === 'wms' && cacheAvailable) {
 				addTileLayer(layerKey);
 			} else {
-				if(serviceType === 'wms') {
+				if(ogcWebServices === 'wms') {
 					addWMSLayer(layerKey);
-				} else if(serviceType ==='wfs') {
+				} else if(ogcWebServices ==='wfs') {
 					addWFSLayer(layerKey);
 				} else {
-					alert(serviceType+" 타입은 지원하지 않는 서비스 타입입니다.");
+					alert(ogcWebServices+" 타입은 지원하지 않는 서비스 타입입니다.");
 				}
 			}
 		},
@@ -323,17 +323,17 @@ function mapInit(magoInstance, baseLayers, policy) {
 		 * 레이어 삭제
 		 */
 		removeLayer : function(layerKey) {
-			var serviceType = layerMap[layerKey].serviceType;
+			var ogcWebServices = layerMap[layerKey].ogcWebServices;
 			var cacheAvailable = layerMap[layerKey].cacheAvailable;
-			if(serviceType === 'wms' && cacheAvailable) {
+			if(ogcWebServices === 'wms' && cacheAvailable) {
 				removeTileLayer(layerKey);
 			} else {
-				if(serviceType === 'wms') {
+				if(ogcWebServices === 'wms') {
 					removeWMSLayer(layerKey);
-				} else if(serviceType ==='wfs') {
+				} else if(ogcWebServices ==='wfs') {
 					removeWFSLayer(layerKey);
 				} else {
-					alert(serviceType+" 타입은 지원하지 않는 서비스 타입입니다.");
+					alert(ogcWebServices+" 타입은 지원하지 않는 서비스 타입입니다.");
 				}
 			}
 		},

@@ -1,16 +1,24 @@
 package gaia3d.controller.rest;
 
-import static java.util.stream.Collectors.toList;
-
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
+import gaia3d.config.PropertiesConfig;
+import gaia3d.domain.Key;
+import gaia3d.domain.converter.ConverterJobFile;
+import gaia3d.domain.data.DataAdjustLog;
+import gaia3d.domain.data.DataInfo;
+import gaia3d.domain.data.DataType;
+import gaia3d.domain.healthcheck.HealthCheckLog;
+import gaia3d.domain.issue.Issue;
+import gaia3d.domain.microservice.MicroServiceLog;
+import gaia3d.domain.user.UserInfo;
+import gaia3d.domain.user.UserSession;
+import gaia3d.domain.user.UserStatus;
+import gaia3d.domain.widget.Widget;
+import gaia3d.service.*;
+import gaia3d.support.LogMessageSupport;
+import gaia3d.utils.LocaleUtils;
+import io.micrometer.core.instrument.util.StringUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,27 +28,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import gaia3d.config.PropertiesConfig;
-import gaia3d.domain.Key;
-import gaia3d.domain.converter.ConverterJobFile;
-import gaia3d.domain.data.DataAdjustLog;
-import gaia3d.domain.data.DataInfo;
-import gaia3d.domain.data.DataType;
-import gaia3d.domain.issue.Issue;
-import gaia3d.domain.user.UserInfo;
-import gaia3d.domain.user.UserSession;
-import gaia3d.domain.user.UserStatus;
-import gaia3d.domain.widget.Widget;
-import gaia3d.service.ConverterService;
-import gaia3d.service.DataAdjustLogService;
-import gaia3d.service.DataService;
-import gaia3d.service.IssueService;
-import gaia3d.service.UserService;
-import gaia3d.service.WidgetService;
-import gaia3d.utils.LocaleUtils;
-import io.micrometer.core.instrument.util.StringUtils;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
+import java.util.*;
+
+import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -60,6 +52,8 @@ public class WidgetRestController {
 	private final RestTemplate restTemplate;
 	private final UserService userService;
 	private final WidgetService widgetService;
+	private final MicroServiceService microService;
+	private final HealthCheckLogService healthCheckLogService;
 
 	/**
 	 * 사용자 현황
@@ -311,7 +305,7 @@ public class WidgetRestController {
 //			@SuppressWarnings("unchecked")
 //			List<Map<String, Object>> processCpuUsage = (List<Map<String, Object>>) response5.getBody().get("measurements");
 		} catch(Exception e) {
-			e.printStackTrace();
+			LogMessageSupport.printMessage(e);
 		}
 
 		int statusCode = HttpStatus.OK.value();
@@ -361,6 +355,54 @@ public class WidgetRestController {
 
 		int statusCode = HttpStatus.OK.value();
 
+		result.put("statusCode", statusCode);
+		result.put("errorCode", errorCode);
+		result.put("message", message);
+		return result;
+	}
+
+	/**
+	 * 마이크로 서비스 로그
+	 * @return
+	 */
+	@GetMapping(value = "/micro-service-logs")
+	public Map<String, Object> microServiceLogs() {
+		Map<String, Object> result = new HashMap<>();
+		String errorCode = null;
+		String message = null;
+
+		MicroServiceLog microServiceLog = new MicroServiceLog();
+		microServiceLog.setOffset(0L);
+		microServiceLog.setLimit(5L);
+		List<MicroServiceLog> microServiceLogList = microService.getListMicroServiceLog(microServiceLog);
+
+		int statusCode = HttpStatus.OK.value();
+
+		result.put("microServiceLogList", microServiceLogList);
+		result.put("statusCode", statusCode);
+		result.put("errorCode", errorCode);
+		result.put("message", message);
+		return result;
+	}
+
+	/**
+	 * 서비스 상태
+	 * @return
+	 */
+	@GetMapping(value = "/health-check-logs")
+	public Map<String, Object> healthCheckLogs() {
+		Map<String, Object> result = new HashMap<>();
+		String errorCode = null;
+		String message = null;
+
+		HealthCheckLog healthCheckLog = new HealthCheckLog();
+		healthCheckLog.setOffset(0L);
+		healthCheckLog.setLimit(5L);
+		List<HealthCheckLog> healthCheckLogList = healthCheckLogService.getListHealthCheckLog(healthCheckLog);
+
+		int statusCode = HttpStatus.OK.value();
+
+		result.put("healthCheckLogList", healthCheckLogList);
 		result.put("statusCode", statusCode);
 		result.put("errorCode", errorCode);
 		result.put("message", message);

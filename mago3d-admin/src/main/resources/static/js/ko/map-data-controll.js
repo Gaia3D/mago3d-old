@@ -8,7 +8,7 @@ var MapDataControll = function(magoInstance) {
 	var dataId;
 	//지도상에서 데이터 all 선택 시
     magoManager.on(Mago3D.MagoManager.EVENT_TYPE.SELECTEDF4D, function(result) {
-    	var f4d = result.f4d;
+    	var f4d = result.selected;
 		if(f4d) {
 			clearDataControl();
 

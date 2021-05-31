@@ -49,7 +49,9 @@ public class Policy {
  	private String userDeleteCheck;
  	// 사용자 정보 삭제 방법. 0 : 논리적(기본값), 1 : 물리적(DB 삭제)
  	private String userDeleteType;
- 	
+ 	// 회원 가입 후 승인 방법. auto : 승인 없이 사용, approval : 승인 후 사용
+	private String signupType;
+
  	// 패스워드 변경 주기 기본 30일
  	private String passwordChangeTerm;
  	// 패스워드 최소 길이 기본 8

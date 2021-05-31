@@ -10,6 +10,7 @@ create table terrain(
     icon_path                                                   varchar(256)					not null,
     basic						                                boolean							default false,
     view_order				                                    integer							default 1,
+    description					                                varchar(256),
     insert_date				                                    timestamp with time zone		default now(),
     constraint terrain_pk 	    primary key (terrain_id)
 );
@@ -23,4 +24,5 @@ comment on column terrain.url is 'url';
 comment on column terrain.icon_path is '아이콘 경로';
 comment on column terrain.basic is '기본 Terrain(여러개중 1개만 true). true : 활성화, false : 비활성화';
 comment on column terrain.view_order is '표시 순서';
+comment on column terrain.description is '설명';
 comment on column terrain.insert_date is '등록일';

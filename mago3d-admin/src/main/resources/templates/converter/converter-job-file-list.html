@@ -24,7 +24,20 @@
                         <!-- S: 검색 -->
                         <div class="filters">
                             <form id="searchForm" th:object="${converterJobFile}" method="get" th:action="@{/converter/converter-job-file-list}" onsubmit="return searchCheck();">
+                                <input type="hidden" id="converterJobId" name="converterJobId" th:field="*{converterJobId}" />
                                 <div class="input-group row">
+                                    <div class="input-set">
+                                        <label for="searchWord" th:text="#{search.word}"></label>
+                                        <select id="searchWord" name="searchWord" class="selectBoxClass">
+                                            <option value="" th:text="#{select}"></option>
+                                            <option value="file_name" th:text="파일명"></option>
+                                        </select>
+                                        <select id="searchOption" name="searchOption" class="selectBoxClass">
+                                            <option value="0" th:text="#{search.same}"></option>
+                                            <option value="1" th:text="#{search.include}"></option>
+                                        </select>
+                                        <input type="search" id="searchValue" name="searchValue" class="m" style="float: right;" />
+                                    </div>
                                     <div class="input-set">
                                         <label for="startDate" th:text="#{search.date}"></label>
                                         <input type="text" id="startDate" name="startDate" class="s date" autocomplete="off" />
@@ -35,6 +48,7 @@
                                         <label for="orderWord" th:text="#{search.order}"></label>
                                         <select id="orderWord" name="orderWord" class="selectBoxClass">
                                             <option value="" th:text="#{search.basic}"></option>
+                                            <option value="file_name" th:text="파일명"></option>
                                             <option value="insert_date" th:text="#{search.insert.date}"></option>
                                         </select>
                                         <select id="orderValue" name="orderValue" class="selectBoxClass">
@@ -141,12 +155,14 @@
             var orderWord = "[[${converterJobFile.orderWord}]]";
             var orderValue = "[[${converterJobFile.orderValue}]]";
             var listCounter = "[[${converterJobFile.listCounter}]]";
+            var converterJobId = "[[${converterJobFile.converterJobId}]]";
 
             if(searchWord != "") $("#searchWord").val(searchWord);
             if(searchOption != "") $("#searchOption").val(searchOption);
             if(orderWord != "") $("#orderWord").val(orderWord);
             if(orderValue != "") $("#orderValue").val(orderValue);
             if(listCounter != "") $("#listCounter").val(listCounter);
+            if(converterJobId != "") $("#converterJobId").val(converterJobId);
 
             initDatePicker();
             initCalendar(new Array("startDate", "endDate"), new Array("[[${converterJobFile.startDate}]]", "[[${converterJobFile.endDate}]]"));

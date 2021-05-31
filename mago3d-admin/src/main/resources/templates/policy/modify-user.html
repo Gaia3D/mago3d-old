@@ -17,7 +17,7 @@
 				</tr>
 				<tr>
 					<th class="col-label l" scope="row">
-						<label path="userFailSigninCount">로그인 실패 횟수</label>
+						<label for="userFailSigninCount">로그인 실패 횟수</label>
 						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
 					<td class="col-input">
@@ -27,7 +27,7 @@
 				</tr>
 				<tr>
 					<th class="col-label l" scope="row">
-						<label path="userFailLockRelease">로그인 실패 잠금 해제 기간</label>
+						<label for="userFailLockRelease">로그인 실패 잠금 해제 기간</label>
 						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
 					<td class="col-input">
@@ -37,7 +37,7 @@
 				</tr>
 				<tr>
 					<th class="col-label l" scope="row">
-						<label path="userLastSigninLock">마지막 로그인으로부터 잠금 기간</label>
+						<label for="userLastSigninLock">마지막 로그인으로부터 잠금 기간</label>
 						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
 					<td class="col-input">
@@ -77,6 +77,18 @@
 						<label for="userDeleteType1" th:text="'논리적(기본값)'"></label>
 						<input type="radio" id="userDeleteType2" name="userDeleteType" th:field="*{userDeleteType}" value="1" />
 						<label for="userDeleteType2" th:text="'물리적(DB 삭제)'"></label>
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label>회원 가입 후 승인 방법</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input radio-set">
+						<input type="radio" id="signupType1" name="signupType" th:field="*{signupType}" value="auto" />
+						<label for="signupType1" th:text="'자동 승인'"></label>
+						<input type="radio" id="signupType2" name="signupType" th:field="*{signupType}" value="approval" />
+						<label for="signupType2" th:text="'승인 후 사용'"></label>
 					</td>
 				</tr>
 			</table>

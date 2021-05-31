@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-    <title layout:title-pattern="$CONTENT_TITLE | $LAYOUT_TITLE"></title>
+    <meta charset="utf-8" />
+    <title layout:title-pattern="$CONTENT_TITLE | $LAYOUT_TITLE">mago3D</title>
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="referrer" content="origin" />
     <th:block layout:fragement="pageCustomStyle"></th:block>
 </head>
 <body>
+    <div class="skip-navigation">
+        <p><a href="#siteBody">메뉴 건너뛰기</a></p>
+    </div>
     <div th:replace="~{/fragments/header :: #headerWrap}"></div>
     <div th:replace="~{/fragments/menu :: #navWrap}"></div>
 

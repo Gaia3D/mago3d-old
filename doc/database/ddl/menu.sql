@@ -11,7 +11,7 @@ create table menu(
 	ancestor			integer,
 	parent				integer									default 1,
 	depth				integer									default 1,
-    previous_depth		integer									default 0,
+	previous_depth		integer									default 0,
 	view_order			integer									default 1,
 	url					varchar(256),
 	url_alias			varchar(256),

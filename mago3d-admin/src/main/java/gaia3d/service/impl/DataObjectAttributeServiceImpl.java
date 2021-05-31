@@ -1,12 +1,5 @@
 package gaia3d.service.impl;
 
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import gaia3d.domain.data.DataInfo;
 import gaia3d.domain.data.DataObjectAttribute;
 import gaia3d.domain.data.DataObjectAttributeFileInfo;
@@ -15,8 +8,15 @@ import gaia3d.parser.impl.DataObjectAttributeFileJsonParser;
 import gaia3d.persistence.DataObjectAttributeMapper;
 import gaia3d.service.DataObjectAttributeService;
 import gaia3d.service.DataService;
+import gaia3d.support.LogMessageSupport;
 import gaia3d.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Map;
 
 /**
  * 데이터 Object 속성 관리
@@ -54,7 +54,7 @@ public class DataObjectAttributeServiceImpl implements DataObjectAttributeServic
 		// 파일 이력을 저장
 		dataObjectAttributeMapper.insertDataObjectAttributeFileInfo(dataObjectAttributeFileInfo);
 		
-		DataObjectAttributeFileParser dataObjectAttributeFileParser = null;
+		DataObjectAttributeFileParser dataObjectAttributeFileParser;
 		if(FileUtils.EXTENSION_JSON.equals(dataObjectAttributeFileInfo.getFileExt())) {
 			dataObjectAttributeFileParser = new DataObjectAttributeFileJsonParser();
 		} else {
@@ -80,13 +80,13 @@ public class DataObjectAttributeServiceImpl implements DataObjectAttributeServic
 				updateSuccessCount++;
 			}
 		} catch(DataAccessException e) {
-			log.info("@@@@@@@@@@@@ dataAccess exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ dataAccess exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 			insertErrorCount++;
 		} catch(RuntimeException e) {
-			log.info("@@@@@@@@@@@@ runtime exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ runtime exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 			insertErrorCount++;
 		} catch(Exception e) {
-			log.info("@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 			insertErrorCount++;
 		}
 		

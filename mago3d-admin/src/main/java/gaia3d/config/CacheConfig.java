@@ -1,34 +1,35 @@
 package gaia3d.config;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
-
-import gaia3d.domain.*;
+import gaia3d.domain.ProfileType;
+import gaia3d.domain.YOrN;
 import gaia3d.domain.cache.CacheManager;
 import gaia3d.domain.cache.CacheName;
 import gaia3d.domain.cache.CacheParams;
 import gaia3d.domain.cache.CacheType;
 import gaia3d.domain.menu.Menu;
 import gaia3d.domain.menu.MenuTarget;
+import gaia3d.domain.microservice.MicroService;
+import gaia3d.domain.microservice.MicroServiceType;
 import gaia3d.domain.policy.Policy;
 import gaia3d.domain.role.RoleTarget;
 import gaia3d.domain.user.UserGroup;
 import gaia3d.domain.user.UserGroupMenu;
 import gaia3d.domain.user.UserGroupRole;
+import gaia3d.service.MenuService;
+import gaia3d.service.MicroServiceService;
 import gaia3d.service.PolicyService;
+import gaia3d.service.UserGroupService;
+import gaia3d.support.LogMessageSupport;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import lombok.extern.slf4j.Slf4j;
-import gaia3d.service.MenuService;
-import gaia3d.service.UserGroupService;
-import gaia3d.support.LogMessageSupport;
+import javax.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Component
@@ -36,6 +37,8 @@ public class CacheConfig {
 
 	@Autowired
 	private MenuService menuService;
+	@Autowired
+	private MicroServiceService microServiceService;
 	@Autowired
 	private PropertiesConfig propertiesConfig;
 	@Autowired
@@ -51,7 +54,8 @@ public class CacheConfig {
 		if(ProfileType.LOCAL == ProfileType.valueOf(CacheManager.getProfile())) {
         	LogMessageSupport.stackTraceEnable = true;
         }
-    	log.info("************ Admin Profile = {}, stackTraceEnable = {} *************", propertiesConfig.getProfile(), LogMessageSupport.stackTraceEnable);
+		LogMessageSupport.logDisplay = propertiesConfig.isLogDisplay();
+		log.info("*** User Profile = {}, stackTraceEnable = {}, logDisplay = {}", propertiesConfig.getProfile(), LogMessageSupport.stackTraceEnable, LogMessageSupport.logDisplay);
         
     	log.info("*************************************************");
         log.info("************ Admin Cache Init Start *************");
@@ -68,6 +72,8 @@ public class CacheConfig {
         menu(cacheParams);
         // 사용자 그룹별 메뉴, Role
         role(cacheParams);
+        // terrain
+		terrain(cacheParams);
         
         log.info("*************************************************");
         log.info("************* Admin Cache Init End **************");
@@ -80,8 +86,22 @@ public class CacheConfig {
 		if(cacheName == CacheName.POLICY) policy(cacheParams);
 		else if(cacheName == CacheName.GEO_POLICY) geoPolicy(cacheParams);
 		else if(cacheName == CacheName.MENU) menu(cacheParams);
+		else if(cacheName == CacheName.MICRO_SERVICE) microService(cacheParams);
 		else if(cacheName == CacheName.ROLE) role(cacheParams);
 		else if(cacheName == CacheName.USER_GROUP) userGroup(cacheParams);
+		else if(cacheName == CacheName.TERRAIN) terrain(cacheParams);
+	}
+
+	/**
+	 * TODO 임시
+	 * micro service
+	 */
+	private void microService(CacheParams cacheParams) {
+		log.info("************ Cache Reload Micro Service ************");
+		CacheType cacheType = cacheParams.getCacheType();
+		if(cacheType == CacheType.BROADCAST) {
+			callRemoteCache(cacheParams);
+		}
 	}
     
     /**
@@ -127,7 +147,7 @@ public class CacheConfig {
     		callRemoteCache(cacheParams);
     	}
     }
-    
+
     /**
      * menu
      * @param cacheParams
@@ -151,7 +171,7 @@ public class CacheConfig {
     	List<UserGroup> userGroupList = userGroupService.getListUserGroup();
 
     	Map<Integer, List<UserGroupMenu>> userGroupMenuMap = new HashMap<>();
-    	
+
     	UserGroupMenu userGroupMenu = new UserGroupMenu();
     	userGroupMenu.setMenuTarget(MenuTarget.ADMIN.getValue());
 
@@ -203,6 +223,17 @@ public class CacheConfig {
 		}
     }
 
+	/**
+	 * Terrain
+	 */
+	private void terrain(CacheParams cacheParams) {
+		log.info("************ Cache Reload terrain ************");
+		CacheType cacheType = cacheParams.getCacheType();
+		if(cacheType == CacheType.BROADCAST) {
+			callRemoteCache(cacheParams);
+		}
+	}
+
     /**
 	 * Remote Cache 갱신 요청
 	 * @param cacheParams
@@ -222,23 +253,20 @@ public class CacheConfig {
 		
 		String authData = stringBuilder.toString();
 
-		// TODO 암호화 해야 하는데 임시 처리
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setContentType(MediaType.APPLICATION_JSON);
-//		MultiValueMap<String, String> params= new LinkedMultiValueMap<String, String>();
-//		params.add("cacheName", cacheName.toString());
-//		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(params, headers);
-
-		// TODO 임시. external_service table로 옮겨야 함
-		try {
-			URI uri = new URI(propertiesConfig.getCacheClientUrl() + "cache/reload");
-			@SuppressWarnings("unchecked")
-			Map<String, Object> result = restTemplate.postForObject(uri, authData, Map.class);
-
-            //ResponseEntity<APIResult> responseEntity = restTemplate.exchange(url, HttpMethod.POST, request, APIResult.class);
-            log.info("----------------------- result = {}", result);
-		} catch (URISyntaxException e) {
-			log.info("데이터 converter 상태 변경 api 호출 실패 = {}", e.getMessage());
+		MicroService cacheMicroService = new MicroService();
+		cacheMicroService.setMicroServiceType(MicroServiceType.CACHE.toString().toLowerCase());
+		List<MicroService> microServiceList = microServiceService.getListMicroService(cacheMicroService);
+		for (MicroService microService : microServiceList) {
+			String cacheUrl = microService.getUrlScheme() + "://" + microService.getUrlHost() + ":" + microService.getUrlPort() + microService.getUrlPath();
+			log.info("----- cacheUrl = {}", cacheUrl);
+			try {
+				@SuppressWarnings("unchecked")
+				ResponseEntity<String> result = restTemplate.postForEntity(cacheUrl, authData, String.class);
+				log.info("----- statusCode = {}", result.getStatusCode());
+				log.info("----- body = {}", result.getBody());
+			} catch (Exception e) {
+				LogMessageSupport.printMessage(e, "cache reload 원격 api 호출 실패 = {}", e.getMessage());
+			}
 		}
 	}
 }

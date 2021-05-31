@@ -1,0 +1,37 @@
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
+<script id="healthCheckListSource" type="text/x-handlebars-template">
+
+    <table class="widget-table">
+        <col class="col-left" />
+        <col class="col-center" />
+        <thead>
+        <tr>
+            <td class="col-center"><em>서비스명</em></td>
+            <td class="col-center"><em>상태</em></td>
+            <td class="col-center"><em>등록일</em></td>
+        </tr>
+        </thead>
+{{#greaterThan healthCheckLogList.length 0}}
+    {{#each healthCheckLogList}}
+        <tr>
+            <td class="col-left ellipsis" style="max-width: 160px;">
+                <span class="index"></span>
+                <em>{{microServiceName}}</em>
+            </td>
+            <td class="col-center">
+                {{status}}
+            </td>
+            <td class="col-center">
+                {{viewInsertDate}}
+            </td>
+        </tr>
+    {{/each}}
+{{else}}
+        <tr>
+            <td colspan="3" class="col-none">실행중인 서비스가 없습니다.</td>
+        </tr>
+{{/greaterThan}}
+    </table>
+
+</script>
+</html>

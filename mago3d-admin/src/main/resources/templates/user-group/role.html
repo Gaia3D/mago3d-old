@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
 <head>
-	<meta charset="utf-8">
-    <meta name="referrer" content="origin">
-    <meta name="viewport" content="width=device-width">
-    <meta name="robots" content="index,nofollow">
-	<title>사용자 그룹 Role | mago3D</title>
-	<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />	
-</head>
+	<title>사용자 그룹 Role</title>
+	<th:block layout:fragment="pageCustomStyle">
+		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+	</th:block>
     <style type="text/css">
     	.title {
 			font-size: 15px;
@@ -52,11 +49,13 @@
 													<th scope="col">설명</th>
 												</tr>
 											</thead>
-
-											<tr th:if="${roleList.empty}">
+<th:block th:if="${#lists.isEmpty(roleList)}">
+											<tr>
 												<td colspan="8" class="col-none">Role이 존재하지 않습니다.</td>
 											</tr>
-											<tr th:if="${!roleList.empty}" th:each="role : ${roleList}">
+</th:block>
+<th:block th:unless="${#lists.isEmpty(roleList)}" th:each="role : ${roleList}">
+											<tr>
 												<td class="col-checkbox">
 													<input type="checkbox" th:id="|roleId${role.roleId}|" name="roleId" th:value="${role.roleId}" />
 												</td>
@@ -76,6 +75,7 @@
 												<td class="col-type" th:text="${role.defaultYn}"></td>
 												<td class="col-id" th:text="${role.description}"></td>
 											</tr>
+</th:block>
 										</table>
 									</div>
 									<div class="button-group">

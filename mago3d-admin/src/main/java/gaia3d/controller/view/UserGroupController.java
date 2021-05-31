@@ -1,20 +1,7 @@
 package gaia3d.controller.view;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import gaia3d.config.CacheConfig;
 import gaia3d.controller.AuthorizationController;
 import gaia3d.domain.cache.CacheName;
@@ -28,11 +15,19 @@ import gaia3d.domain.role.Role;
 import gaia3d.domain.user.UserGroup;
 import gaia3d.domain.user.UserGroupMenu;
 import gaia3d.domain.user.UserGroupRole;
-import gaia3d.service.MenuService;
-import gaia3d.service.PolicyService;
-import gaia3d.service.RoleService;
-import gaia3d.service.UserGroupService;
+import gaia3d.service.*;
+import gaia3d.support.LogMessageSupport;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -40,22 +35,19 @@ import lombok.extern.slf4j.Slf4j;
 public class UserGroupController implements AuthorizationController {
 
 	@Autowired
-	private UserGroupService userGroupService;
-
+	private CacheConfig cacheConfig;
 	@Autowired
 	private MenuService menuService;
-
 	@Autowired
-	private RoleService roleService;
-
+	private MicroServiceService microServiceService;
 	@Autowired
 	private PolicyService policyService;
-
 	@Autowired
 	private ObjectMapper objectMapper;
-
 	@Autowired
-	private CacheConfig cacheConfig;
+	private RoleService roleService;
+	@Autowired
+	private UserGroupService userGroupService;
 
 	/**
 	 * 사용자 그룹 목록
@@ -172,11 +164,11 @@ public class UserGroupController implements AuthorizationController {
 			List<UserGroupMenu> userGroupMenuList = userGroupService.getListUserGroupMenu(userGroupMenu);
 			userGroupMenuJson = objectMapper.writeValueAsString(userGroupMenuList);
 		} catch(JsonProcessingException e) {
-			log.info("@@@@@@@@@@@@ jsonProcessing exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ jsonProcessing exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 		} catch(RuntimeException e) {
-			log.info("@@@@@@@@@@@@ runtime exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ runtime exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 		} catch(Exception e) {
-			log.info("@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 		}
 
 		model.addAttribute("userGroup", userGroup);
@@ -214,11 +206,11 @@ public class UserGroupController implements AuthorizationController {
 			List<UserGroupRole> userGroupRoleList = userGroupService.getListUserGroupRole(userGroupRole);
 			userGroupRoleJson = objectMapper.writeValueAsString(userGroupRoleList);
 		} catch(JsonProcessingException e) {
-			log.info("@@@@@@@@@@@@ jsonProcessing exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ jsonProcessing exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 		} catch(RuntimeException e) {
-			log.info("@@@@@@@@@@@@ runtime exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ runtime exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 		} catch(Exception e) {
-			log.info("@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 		}
 
 		model.addAttribute("userGroup", userGroup);

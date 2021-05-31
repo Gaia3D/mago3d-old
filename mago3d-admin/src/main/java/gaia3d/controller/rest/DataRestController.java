@@ -78,7 +78,7 @@ public class DataRestController {
 		result.put("message", message);
 		return result;
 	}
-	
+
 	/**
 	 * 사용자 데이터 수정
 	 * @param request
@@ -152,7 +152,7 @@ public class DataRestController {
 		result.put("message", message);
 		return result;
 	}
-	
+
 	/**
 	 * 데이터 파일 업로딩
 	 * @param request

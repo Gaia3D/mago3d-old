@@ -50,6 +50,18 @@
 					<input type="text" id="contentDataGroupRoot" name="contentDataGroupRoot" th:field="*{contentDataGroupRoot}" class="s" maxlength="60" />
 				</td>
 			</tr>
+			<tr>
+				<th class="col-label l" scope="row">
+					<label>행정구역이동 기능 사용여부</label>
+					<span class="icon-glyph glyph-emark-dot color-warning"></span>
+				</th>
+				<td class="col-input radio-set">
+					<input type="radio" id="contentDistrictAvailable1" name="contentDistrictAvailable" th:field="*{contentDistrictAvailable}" value=true />
+					<label for="contentDistrictAvailable1" th:text="#{use}"></label>
+					<input type="radio" id="contentDistrictAvailable2" name="contentDistrictAvailable" th:field="*{contentDistrictAvailable}" value=false />
+					<label for="contentDistrictAvailable2" th:text="#{not.use} +'(기본값)'"></label>
+				</td>
+			</tr>
 		</table>
 		<div class="button-group">
 			<div class="center-buttons">

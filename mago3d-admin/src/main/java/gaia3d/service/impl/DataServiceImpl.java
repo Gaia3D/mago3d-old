@@ -1,24 +1,9 @@
 package gaia3d.service.impl;
 
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import gaia3d.domain.MethodType;
 import gaia3d.domain.ServerTarget;
 import gaia3d.domain.SharingType;
-import gaia3d.domain.data.DataFileInfo;
-import gaia3d.domain.data.DataFileParseLog;
-import gaia3d.domain.data.DataGroup;
-import gaia3d.domain.data.DataInfo;
-import gaia3d.domain.data.DataInfoLog;
-import gaia3d.domain.data.DataInfoSimple;
-import gaia3d.domain.data.DataStatus;
+import gaia3d.domain.data.*;
 import gaia3d.parser.DataFileParser;
 import gaia3d.parser.impl.DataFileJsonParser;
 import gaia3d.persistence.DataMapper;
@@ -26,7 +11,16 @@ import gaia3d.service.DataGroupService;
 import gaia3d.service.DataLogService;
 import gaia3d.service.DataRelationService;
 import gaia3d.service.DataService;
+import gaia3d.support.LogMessageSupport;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Data
@@ -227,7 +221,7 @@ public class DataServiceImpl implements DataService {
 					if(dataInfo.getDataId() == null || dataInfo.getDataId() == 0L) {
 						dataMapper.insertBulkDataWithDataId(dataInfo);
 					} else {
-					dataMapper.insertBulkData(dataInfo);
+						dataMapper.insertBulkData(dataInfo);
 					}
 					insertSuccessCount++;
 				} else {
@@ -236,19 +230,19 @@ public class DataServiceImpl implements DataService {
 					updateSuccessCount++;
 				}
 			} catch(DataAccessException e) {
-				log.info("@@@@@@@@@@@@ dataAccess exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+				LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ dataAccess exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 				dataFileParseLog.setIdentifierValue(dataFileInfo.getUserId());
 				dataFileParseLog.setErrorCode(e.getMessage());
 				dataMapper.insertDataFileParseLog(dataFileParseLog);
 				insertErrorCount++;
 			} catch(RuntimeException e) {
-				log.info("@@@@@@@@@@@@ runtime exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+				LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ runtime exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 				dataFileParseLog.setIdentifierValue(dataFileInfo.getUserId());
 				dataFileParseLog.setErrorCode(e.getMessage());
 				dataMapper.insertDataFileParseLog(dataFileParseLog);
 				insertErrorCount++;
 			} catch(Exception e) {
-				log.info("@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+				LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 				dataFileParseLog.setIdentifierValue(dataFileInfo.getUserId());
 				dataFileParseLog.setErrorCode(e.getMessage());
 				dataMapper.insertDataFileParseLog(dataFileParseLog);
@@ -314,7 +308,7 @@ public class DataServiceImpl implements DataService {
 				.dataGroupId(dataGroup.getDataGroupId())
 				.dataCount(dataGroup.getDataCount() - 1).build();
 		dataGroupService.updateDataGroup(tempDataGroup);
-		
+
 		// data_relation 삭제
 		Long dataRelationId = dataInfo.getDataRelationId();
 		if (dataMapper.getDataRelationCount(dataRelationId) == 1) {
@@ -372,4 +366,5 @@ public class DataServiceImpl implements DataService {
 	public int deleteDataByUserId(String userId) {
 		return dataMapper.deleteDataByUserId(userId);
 	}
+
 }

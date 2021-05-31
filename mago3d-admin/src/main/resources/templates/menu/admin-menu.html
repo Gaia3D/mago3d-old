@@ -3,18 +3,18 @@
 <head>
 	<title>관리자 메뉴</title>
 	<th:block layout:fragment="pageCustomStyle">
-	<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
-    <link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-    <link type="text/css" rel="stylesheet" th:href="@{/externlib/{lang}/axisj/ui/arongi/font-awesome.min.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-   	<link type="text/css" rel="stylesheet" th:href="@{/externlib/{lang}/axisj/ui/arongi/AXJ.min.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-	<link type="text/css" rel="stylesheet" th:href="@{/externlib/{lang}/axisj/ui/arongi/AXButton.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-	<link type="text/css" rel="stylesheet" th:href="@{/externlib/{lang}/axisj/ui/arongi/AXInput.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-	<link type="text/css" rel="stylesheet" th:href="@{/externlib/{lang}/axisj/ui/arongi/AXSelect.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-	<link type="text/css" rel="stylesheet" th:href="@{/externlib/{lang}/axisj/ui/arongi/AXTree.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+		<link type="text/css" rel="stylesheet" th:href="@{/externlib/{lang}/axisj/ui/arongi/font-awesome.min.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+		<link type="text/css" rel="stylesheet" th:href="@{/externlib/{lang}/axisj/ui/arongi/AXJ.min.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+		<link type="text/css" rel="stylesheet" th:href="@{/externlib/{lang}/axisj/ui/arongi/AXButton.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+		<link type="text/css" rel="stylesheet" th:href="@{/externlib/{lang}/axisj/ui/arongi/AXInput.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+		<link type="text/css" rel="stylesheet" th:href="@{/externlib/{lang}/axisj/ui/arongi/AXSelect.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+		<link type="text/css" rel="stylesheet" th:href="@{/externlib/{lang}/axisj/ui/arongi/AXTree.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
 	</th:block>
 
 </head>
@@ -30,13 +30,13 @@
 						<div class="row">
 							<div class="one-third column">
 								<div id="AXTreeTarget" class="tree"></div>
-								<div style="margin-top: 15px;">
-									<button type="button" class="detailBtn" onclick="addTree(); return false;">추가</button>
-									<button type="button" class="detailBtn" onclick="addChildTree(); return false;">하위 메뉴 추가</button>
-									<button type="button" class="detailBtn" onclick="delTree(); return false;">선택 삭제</button>
-									<button type="button" class="detailBtn" onclick="moveUpTree(); return false;">위로</button>
-									<button type="button" class="detailBtn" onclick="moveDownTree(); return false;">아래로</button>
-								</div>
+<!--								<div style="margin-top: 15px;">-->
+<!--									<button type="button" class="detailBtn" onclick="addTree(); return false;">추가</button>-->
+<!--									<button type="button" class="detailBtn" onclick="addChildTree(); return false;">하위 메뉴 추가</button>-->
+<!--									<button type="button" class="detailBtn" onclick="delTree(); return false;">선택 삭제</button>-->
+<!--									<button type="button" class="detailBtn" onclick="moveUpTree(); return false;">위로</button>-->
+<!--									<button type="button" class="detailBtn" onclick="moveDownTree(); return false;">아래로</button>-->
+<!--								</div>-->
 							</div>
 							<div class="two-third column">
 								<div class="node">

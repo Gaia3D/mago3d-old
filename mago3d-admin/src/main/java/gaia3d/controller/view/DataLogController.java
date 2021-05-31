@@ -40,7 +40,7 @@ public class DataLogController {
 	private DataGroupService dataGroupService;
 	@Autowired
 	private DataLogService dataLogService;
-	
+
 	/**
 	 * Data 목록
 	 * @param locale

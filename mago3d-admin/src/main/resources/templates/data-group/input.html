@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
 <head>
-	<meta charset="utf-8">
-    <meta name="referrer" content="origin">
-    <meta name="viewport" content="width=device-width">
-    <meta name="robots" content="index,nofollow">
-    <title>데이터 그룹 등록 | mago3D</title>
-    <link rel="shortcut icon" th:href="@{/images/favicon.ico(cacheVersion=${contentCacheVersion})}">
-    <link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
-	<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
-	<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}">
-	<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}">
-	<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css?cacheVersion=(lang=${lang}, cacheVersion=${contentCacheVersion})}">
-	<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
+	<title>데이터 그룹 등록</title>
+	<th:block layout:fragment="pageCustomStyle">
+		<link rel="shortcut icon" th:href="@{/images/favicon.ico(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
+	</th:block>
 </head>
 <body>
 <th:block layout:fragment="pageCustomContent">
@@ -51,8 +49,9 @@
 										<span class="icon-glyph glyph-emark-dot color-warning"></span>
 									</th>
 									<td class="col-input">
+										<input type="hidden" id="duplicationValue" name="duplicationValue" />
 										<input type="text" id="dataGroupKey" name="dataGroupKey" class="l" />
-										<input type="button" id="duplicationButtion" th:value="#{overlap.check}" />
+										<input type="button" id="duplicationButton" th:value="#{overlap.check}" />
 									</td>
 								</tr>
 								<tr>
@@ -61,9 +60,9 @@
 										<span class="icon-glyph glyph-emark-dot color-warning"></span>
 									</th>
 									<td class="col-input">
-										<input type="hidden" id="parent" name="parent" />
-										<input type="text" id="parentName" name="parentName" class="l" th:value="${dataGroup.parentName}" readonly="readonly" />
-										<input type="button" id="dataGroupButtion" value="상위 데이터 그룹 선택" />
+										<input type="hidden" id="parent" name="parent" value="0"/>
+										<input type="text" id="parentName" name="parentName" class="l" th:value="${dataGroup.parentName}" readonly="readonly"/>
+										<input type="button" id="dataGroupButton" value="상위 데이터 그룹 선택"/>
 									</td>
 								</tr>
 								<tr>
@@ -122,7 +121,7 @@
 									</th>
 									<td class="col-input">
 										<input type="text" id="longitude" name="longitude" class="m" />
-										<input type="button" id="mapButtion" value="지도에서 찾기" />
+										<input type="button" id="mapButton" value="지도에서 찾기" />
 									</td>
 								</tr>
 								<tr>
@@ -176,7 +175,7 @@
                         </form>
                     </div>
                     <!-- 상위 그룹 선택 다이얼 로그 -->
-                    <div th:replace="~{/data-group/parent-data-group-dialog :: #dataGroupDialog}"></div>
+                    <div th:replace="~{/data-group/data-group-dialog :: #dataGroupDialog}"></div>
 				</div>
 			</div>
 		</div>
@@ -193,16 +192,16 @@
 	});
 
 	// 입력값이 변경되면 중복체크, 영문+숫자
-	/* $("#dataGroupKey").on("keyup", function(event) {
-		$("#duplication").val(null);
+	$("#dataGroupKey").on("keyup", function(event) {
+		$("#duplicationValue").val(null);
 		if (!(event.keyCode >=37 && event.keyCode<=40)) {
 			var inputValue = $(this).val();
 			$(this).val(inputValue.replace(/[^a-z0-9]/gi,''));
 		}
-	}); */
+	});
 	
 	// 데이터 그룹 중복 확인
-	$( "#duplicationButtion" ).on( "click", function() {
+	$( "#duplicationButton" ).on( "click", function() {
 		var dataGroupKey = $("#dataGroupKey").val();
 		if (dataGroupKey == "") {
 			alert("데이터 그룹키(한글불가)를 입력해 주세요.");
@@ -228,10 +227,10 @@
 					if(msg.duplication == true) {
 						alert(JS_MESSAGE["data.group.key.duplication"]);
 						$("#dataGroupKey").focus();
-						return false;
+						$("#duplicationValue").val("");
 					} else {
 						alert(JS_MESSAGE["data.group.key.enable"]);
-						$("#duplication").val(msg.duplication);
+						$("#duplicationValue").val(msg.duplication);
 					}
 				} else {
 					alert(JS_MESSAGE[msg.errorCode]);
@@ -252,11 +251,12 @@
 			$("#dataGroupName").focus();
 			return false;
 		}
-		if($("#duplication").val() === null || $("#duplication").val() === "") {
+		var duplicationValue = $("#duplicationValue").val();
+		if (duplicationValue === null || duplicationValue === "") {
 			alert(JS_MESSAGE["data.group.key.duplication.check"]);
 			$("#dataGroupKey").focus();
 			return false;
-		} else if($("#duplication").val() === "true") {
+		} else if (duplicationValue === "true") {
 			alert(JS_MESSAGE["data.group.key.duplication"]);
 			$("#dataGroupKey").focus();
 			return false;
@@ -313,7 +313,6 @@
 			});
 		} else {
 			alert(JS_MESSAGE["button.dobule.click"]);
-			return;
 		}
 	}
 
@@ -327,17 +326,13 @@
 	});
 
 	// 상위 데이터 그룹 찾기
-	$( "#dataGroupButtion" ).on( "click", function() {
+	$( "#dataGroupButton" ).on( "click", function() {
 		dataGroupDialog.dialog( "open" );
 		dataGroupDialog.dialog( "option", "title", "데이터 그룹 선택");
 	});
 
 	// 다이얼로그에서 선택
 	function confirmParent(parent, parentName, parentDepth) {
-		if(parentDepth >= 3) {
-			alert("사용자 데이터 그룹은 3Depth 이상 계층으로 입력할 수 없습니다.");
-			return;
-		}
 		$("#parent").val(parent);
 		$("#parentName").val(parentName);
 		dataGroupDialog.dialog( "close" );
@@ -350,7 +345,7 @@
 	});
 
 	// 지도에서 찾기
-	$( "#mapButtion" ).on( "click", function() {
+	$( "#mapButton" ).on( "click", function() {
 		var url = "/map/find-point?referrer=data-group-input";
 		var width = 800;
 		var height = 700;

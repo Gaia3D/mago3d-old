@@ -317,7 +317,7 @@ function MapControll(viewer, option) {
     $('#mapCtrlAll').click(function (){
     	that._scene.camera.flyTo({
 			destination: new Cesium.Cartesian3(-3158185.8634899906, 4713784.056940694, 4516771.367915208), //대략적인 한반도 좌표..
-			duration: parseInt(Mago3D.MagoConfig.getPolicy().initDuration)
+			duration: parseInt(MAGO3D_INSTANCE.getMagoManager().config.getPolicy().initDuration)
 		});
     });
     
@@ -373,7 +373,6 @@ function MapControll(viewer, option) {
             viewer.resolutionScale = targetResolutionScale;
             scene.preRender.removeEventListener(prepareScreenshot);
             // take snapshot after defined timeout to allow scene update (ie. loading data)
-            startLoading();
             setTimeout(function(){
                 scene.postRender.addEventListener(takeScreenshot);
             }, timeout);
@@ -387,7 +386,6 @@ function MapControll(viewer, option) {
                 downloadURI(url, "snapshot-" + moment().format("YYYYMMDDHHmmss") + ".png");
                 // reset resolutionScale
                 viewer.resolutionScale = 1.0;
-                stopLoading();
             });
         }
 
@@ -430,7 +428,7 @@ function MapControll(viewer, option) {
     function startDrawPolyLine() {
         handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
         var dynamicPositions = new Cesium.CallbackProperty(function () {
-            return new Cesium.PolygonHierarchy(activeShapePoints);
+            return drawingMode === 'polygon' ? new Cesium.PolygonHierarchy(activeShapePoints) : activeShapePoints;
         }, false);
         
         handler.setInputAction(function (event) {

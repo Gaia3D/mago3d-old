@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gaia3d.persistence.HealthCheckLogMapper">
+
+	<!-- HealthCheckLog 이력 총 건수 -->
+	<select id="getHealthCheckLogTotalCount" parameterType="healthCheckLog" resultType="long">
+		/* getHealthCheckLogTotalCount */
+		SELECT COUNT(A.health_check_log_id)
+		FROM health_check_log A
+		LEFT JOIN micro_service B
+		ON A.micro_service_id = B.micro_service_id
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
+				AND B.${searchWord} = #{searchValue}
+			</if>
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
+				AND B.${searchWord} LIKE '%' || #{searchValue} || '%'
+			</if>
+			<if test="startDate != null and startDate != ''">
+				<![CDATA[
+			AND A.insert_date >= TO_TIMESTAMP(#{startDate}, 'YYYYMMDDHH24MISSUS')
+			]]>
+			</if>
+			<if test="endDate != null and endDate != ''">
+				<![CDATA[
+			AND A.insert_date <= TO_TIMESTAMP(#{endDate}, 'YYYYMMDDHH24MISSUS')
+			]]>
+			</if>
+		</trim>
+	</select>
+
+	<!-- HealthCheckLog 이력 목록 -->
+	<select id="getListHealthCheckLog" parameterType="healthCheckLog" resultType="healthCheckLog">
+		/* getListHealthCheckLog */
+		SELECT
+			A.health_check_log_id, A.micro_service_id, A.status, A.insert_date, B.micro_service_name
+		FROM health_check_log A
+		LEFT JOIN micro_service B
+		ON A.micro_service_id = B.micro_service_id
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
+				AND B.${searchWord} = #{searchValue}
+			</if>
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
+				AND B.${searchWord} LIKE '%' || #{searchValue} || '%'
+			</if>
+			<if test="startDate != null and startDate != ''">
+				<![CDATA[
+			AND A.insert_date >= TO_TIMESTAMP(#{startDate}, 'YYYYMMDDHH24MISSUS')
+			]]>
+			</if>
+			<if test="endDate != null and endDate != ''">
+				<![CDATA[
+			AND A.insert_date <= TO_TIMESTAMP(#{endDate}, 'YYYYMMDDHH24MISSUS')
+			]]>
+			</if>
+		</trim>
+		<choose>
+			<when test="orderWord != null and orderWord != '' and orderValue != null and orderValue != ''">
+				ORDER BY ${orderWord} ${orderValue}
+			</when>
+			<otherwise>
+				ORDER BY A.insert_date DESC
+			</otherwise>
+		</choose>
+		OFFSET #{offset} LIMIT #{limit}
+	</select>
+
+	<!-- 다음년도 파티션 테이블 자동 생성 -->
+	<select id="createPartitionTable" parameterType="partitionTable" resultType="int">
+		SELECT create_micro_service_log( '${tableName}', '${startTime}', '${endTime}' )
+	</select>
+
+	<!-- HealthCheckLog 저장 -->
+	<insert id="insertHealthCheckLog" parameterType="healthCheckLog" >
+		/* insertHealthCheckLog */
+		<selectKey keyProperty="healthCheckLogId" resultType="long" order="BEFORE">
+			SELECT NEXTVAL('health_check_log_seq')
+		</selectKey>
+		INSERT INTO health_check_log (
+			health_check_log_id, micro_service_id, status
+		) values(
+			#{healthCheckLogId}, #{microServiceId}, #{status}
+		)
+	</insert>
+</mapper>

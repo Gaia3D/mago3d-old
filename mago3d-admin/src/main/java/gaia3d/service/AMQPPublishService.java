@@ -11,7 +11,7 @@ public interface AMQPPublishService {
 	 * @param routingKey
 	 * @param queueMessage
 	 */
-	public void converterMessageSend(String exchange, String routingKey, QueueMessage queueMessage);
+	public void send(String exchange, String routingKey, QueueMessage queueMessage);
 
 	/**
 	 * 메시지 전송

@@ -31,3 +31,15 @@ out/
 ### VS Code ###
 .vscode/
 /bin/
+mago3d-admin/src/main/java/gaia3d/geospatial/ShapeFileParser.java.bak
+mago3d-admin/src/main/java/gaia3d/interceptor/ConfigInterceptor.java.bak
+mago3d-admin/src/main/java/gaia3d/interceptor/LogInterceptor.java.bak
+mago3d-admin/src/main/java/gaia3d/interceptor/SecurityInterceptor.java.bak
+mago3d-admin/src/main/java/gaia3d/parser/impl/DataSmartTilingFileJsonParser.java.bak
+mago3d-admin/src/main/java/gaia3d/persistence/LayerFileInfoMapper.java.bak
+mago3d-admin/src/main/java/gaia3d/persistence/RoleMapper.java.bak
+mago3d-admin/src/main/java/gaia3d/persistence/UserGroupMapper.java.bak
+mago3d-admin/src/main/java/gaia3d/service/impl/AccessLogServiceImpl.java.bak
+mago3d-admin/src/main/java/gaia3d/service/impl/AMQPPublishServiceImpl.java.bak
+mago3d-admin/src/main/java/gaia3d/service/impl/ConverterServiceImpl.java.bak
+mago3d-admin/src/main/java/gaia3d/service/impl/DataAttributeServiceImpl.java.bak

@@ -49,7 +49,7 @@ public class DataGroupController {
 		dataGroup.setOrderWord(SQLInjectSupport.replaceSqlInection(dataGroup.getOrderWord()));
 		
 		log.info("@@ dataGroup = {}", dataGroup);
-		
+
 		// basic 디렉토리를 실수로 지웠거나 만들지 않았는지 확인
 		File basicDirectory = new File(propertiesConfig.getAdminDataServiceDir() + "basic");
 		if(!basicDirectory.exists()) {
@@ -73,7 +73,7 @@ public class DataGroupController {
 	@GetMapping(value = "/input")
 	public String input(HttpServletRequest request, Model model) {
 		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
-		
+
 		// basic 디렉토리를 실수로 지웠거나 만들지 않았는지 확인
 		File basicDirectory = new File(propertiesConfig.getAdminDataServiceDir() + "basic");
 		if(!basicDirectory.exists()) {

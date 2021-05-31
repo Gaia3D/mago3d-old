@@ -1,5 +1,15 @@
 package gaia3d.parser.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import gaia3d.domain.data.DataGroup;
+import gaia3d.domain.data.DataInfo;
+import gaia3d.domain.data.DataSmartTilingFileInfo;
+import gaia3d.parser.DataSmartTilingFileParser;
+import gaia3d.support.LogMessageSupport;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
+
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -8,17 +18,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.springframework.util.StringUtils;
-
-import gaia3d.domain.data.DataGroup;
-import gaia3d.domain.data.DataInfo;
-import gaia3d.domain.data.DataSmartTilingFileInfo;
-import gaia3d.parser.DataSmartTilingFileParser;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class DataSmartTilingFileJsonParser implements DataSmartTilingFileParser {
@@ -75,7 +74,7 @@ public class DataSmartTilingFileJsonParser implements DataSmartTilingFileParser 
 				dataInfoList.addAll(parseChildren(null, 0, childrenNode));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			LogMessageSupport.printMessage(e);
 			throw new RuntimeException("SmartTiling json 파일 파싱 오류. message = " + e.getMessage());
 		}
 		
@@ -116,15 +115,15 @@ public class DataSmartTilingFileJsonParser implements DataSmartTilingFileParser 
 			DataInfo dataInfo = new DataInfo();
 			dataInfo.setDataName(dataName);
 			dataInfo.setDataKey(dataKey);
-			if(longitude != null && !"".equals(longitude)) dataInfo.setLongitude(new BigDecimal(longitude));
-			if(latitude != null && !"".equals(latitude)) dataInfo.setLatitude(new BigDecimal(latitude));
-			if(altitude != null && !"".equals(altitude)) dataInfo.setAltitude(new BigDecimal(altitude));
+			if(!"".equals(longitude)) dataInfo.setLongitude(new BigDecimal(longitude));
+			if(!"".equals(latitude)) dataInfo.setLatitude(new BigDecimal(latitude));
+			if(!"".equals(altitude)) dataInfo.setAltitude(new BigDecimal(altitude));
 			if(dataInfo.getLongitude() != null && dataInfo.getLatitude() != null) {
 				dataInfo.setLocation("POINT(" + dataInfo.getLongitude() + " " + dataInfo.getLatitude() + ")");
 			}
-			if(heading != null && !"".equals(heading)) dataInfo.setHeading(new BigDecimal(heading));
-			if(pitch != null && !"".equals(pitch)) dataInfo.setPitch(new BigDecimal(pitch));
-			if(roll != null && !"".equals(roll)) dataInfo.setRoll(new BigDecimal(roll));
+			if(!"".equals(heading)) dataInfo.setHeading(new BigDecimal(heading));
+			if(!"".equals(pitch)) dataInfo.setPitch(new BigDecimal(pitch));
+			if(!"".equals(roll)) dataInfo.setRoll(new BigDecimal(roll));
 			
 			dataInfo.setMappingType(mappingType);
 			dataInfo.setMetainfo(metainfo.toString());

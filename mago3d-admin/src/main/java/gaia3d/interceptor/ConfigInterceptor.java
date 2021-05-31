@@ -41,12 +41,12 @@ public class ConfigInterceptor extends HandlerInterceptorAdapter {
     	// TODO 너무 비 효율 적이다. 좋은 방법을 찾자.
     	// 세션이 존재하지 않는 경우
     	UserSession userSession = (UserSession)session.getAttribute(Key.USER_SESSION.name());
-    	if(userSession != null && userSession.getUserId() != null && !"".equals(userSession.getUserId())) {
+		if(userSession != null && userSession.getUserId() != null && !"".equals(userSession.getUserId())) {
 	    	List<UserGroupMenu> userGroupMenuList = CacheManager.getUserGroupMenuList(userSession.getUserGroupId());
 	    	Integer clickParentId = null;
 			Integer clickMenuId = null;
 			Integer clickDepth = null;
-			
+
 			for(UserGroupMenu userGroupMenu : userGroupMenuList) {
 				if(uri.equals(userGroupMenu.getUrl())) {
 					clickMenuId = userGroupMenu.getMenuId();
@@ -84,7 +84,7 @@ public class ConfigInterceptor extends HandlerInterceptorAdapter {
 			
 //			Integer contentLoadBalancingIntervalValue = policy.getContent_load_balancing_interval().intValue() * 1000;
 //			request.setAttribute("contentLoadBalancingInterval", contentLoadBalancingIntervalValue);
-			
+
 			if(uri.indexOf("/main/index") < 0) {
 				Menu originMenu = CacheManager.getMenuByUrl(uri);
 //				log.info("+++++++++++++++++++++++ originMenu = {}", originMenu);

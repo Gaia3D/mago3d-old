@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
 <head>
-	<meta charset="utf-8">
-	<meta name="referrer" content="origin">
-	<meta name="viewport" content="width=device-width">
-	<meta name="robots" content="index,nofollow">
-	<title>위젯 수정 | mago3D</title>
+	<title>위젯 수정</title>
 	<th:block layout:fragment="pageCustomStyle">
 		<link rel="shortcut icon" th:href="@{/images/favicon.ico(cacheVersion=${contentCacheVersion})}">
 		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
@@ -34,7 +30,7 @@
 						<form id="widget" th:object="${widget}" method="post" th:action="@{#}" onsubmit="return false;">
 							<input type="hidden" id="widgetOrder" name="widgetOrder" th:field="*{widgetOrder}" />
 							<div id="sortable" class="widgets row">
-								<th:block th:unless="${widgetList.empty}" th:each="dbWidget : ${widgetList}">
+								<th:block th:unless="${#lists.isEmpty(widgetList)}" th:each="dbWidget : ${widgetList}">
 									<th:block th:if="${#strings.equals(dbWidget.widgetKey, 'userWidget')}">
 										<!-- 위젯 1: 사용자 현황-->
 										<div th:id="${dbWidget.widgetId}" class="widget one-third column" style="font-size: 16px;">
@@ -92,42 +88,42 @@
 											</div>
 										</div>
 									</th:block>
-									<th:block th:if="${#strings.equals(dbWidget.widgetKey, 'issueWidget')}">
-										<!-- 위젯 4: 최근 이슈 목록(1달) -->
-										<div th:id="${dbWidget.widgetId}" class="widget one-third column">
-											<div class="widget-header row">
-												<div class="widget-heading u-pull-left">
-													<h3 class="widget-title"><th:block th:text="${dbWidget.widgetName}"></th:block></h3>
-												</div>
-												<div class="widget-functions u-pull-right">
-													<a href="/issue/list" title="#{config.widget.issue.more}"><span class="icon-glyph glyph-plus"></span></a>
-												</div>
-											</div>
-											<div id="issueArea" class="widget-content row">
-												<div style="text-align: center; padding-top: 60px; padding-left: 150px;">
-													<div id="issueSpinner" style="width: 150px; height: 70px;"></div>
-												</div>
-											</div>
-										</div>
-									</th:block>
-									<th:block th:if="${#strings.equals(dbWidget.widgetKey, 'dataAdjustLogWidget')}">
-										<!-- 위젯 5: 최근 데이터 위치 변경 요청 이력 -->
-										<div th:id="${dbWidget.widgetId}" class="widget one-third column">
-											<div class="widget-header row">
-												<div class="widget-heading u-pull-left">
-													<h3 class="widget-title"><th:block th:text="${dbWidget.widgetName}"></th:block></h3>
-												</div>
-												<div class="widget-functions u-pull-right">
-													<a href="/data-adjust-log/list" title="데이터 위치 변경 요청 이력 더보기"><span class="icon-glyph glyph-plus"></span></a>
-												</div>
-											</div>
-											<div id="dataAdjustLogArea" class="widget-content row">
-												<div style="text-align: center; padding-top: 60px; padding-left: 150px;">
-													<div id="dataAdjustLogSpinner" style="width: 150px; height: 70px;"></div>
-												</div>
-											</div>
-										</div>
-									</th:block>
+<!--									<th:block th:if="${#strings.equals(dbWidget.widgetKey, 'issueWidget')}">-->
+<!--										&lt;!&ndash; 위젯 4: 최근 이슈 목록(1달) &ndash;&gt;-->
+<!--										<div th:id="${dbWidget.widgetId}" class="widget one-third column">-->
+<!--											<div class="widget-header row">-->
+<!--												<div class="widget-heading u-pull-left">-->
+<!--													<h3 class="widget-title"><th:block th:text="${dbWidget.widgetName}"></th:block></h3>-->
+<!--												</div>-->
+<!--												<div class="widget-functions u-pull-right">-->
+<!--													<a href="/issue/list" title="#{config.widget.issue.more}"><span class="icon-glyph glyph-plus"></span></a>-->
+<!--												</div>-->
+<!--											</div>-->
+<!--											<div id="issueArea" class="widget-content row">-->
+<!--												<div style="text-align: center; padding-top: 60px; padding-left: 150px;">-->
+<!--													<div id="issueSpinner" style="width: 150px; height: 70px;"></div>-->
+<!--												</div>-->
+<!--											</div>-->
+<!--										</div>-->
+<!--									</th:block>-->
+<!--									<th:block th:if="${#strings.equals(dbWidget.widgetKey, 'dataAdjustLogWidget')}">-->
+<!--										&lt;!&ndash; 위젯 5: 최근 데이터 위치 변경 요청 이력 &ndash;&gt;-->
+<!--										<div th:id="${dbWidget.widgetId}" class="widget one-third column">-->
+<!--											<div class="widget-header row">-->
+<!--												<div class="widget-heading u-pull-left">-->
+<!--													<h3 class="widget-title"><th:block th:text="${dbWidget.widgetName}"></th:block></h3>-->
+<!--												</div>-->
+<!--												<div class="widget-functions u-pull-right">-->
+<!--													<a href="/data-adjust-log/list" title="데이터 위치 변경 요청 이력 더보기"><span class="icon-glyph glyph-plus"></span></a>-->
+<!--												</div>-->
+<!--											</div>-->
+<!--											<div id="dataAdjustLogArea" class="widget-content row">-->
+<!--												<div style="text-align: center; padding-top: 60px; padding-left: 150px;">-->
+<!--													<div id="dataAdjustLogSpinner" style="width: 150px; height: 70px;"></div>-->
+<!--												</div>-->
+<!--											</div>-->
+<!--										</div>-->
+<!--									</th:block>-->
 									<th:block th:if="${#strings.equals(dbWidget.widgetKey, 'systemResourceWidget')}">
 										<!-- 위젯 6: 리소스 현황 -->
 										<div th:id="${dbWidget.widgetId}" class="widget one-third column">
@@ -144,38 +140,68 @@
 											</div>
 										</div>
 									</th:block>
-									<th:block th:if="${#strings.equals(dbWidget.widgetKey, 'scheduleWidget')}">
-										<!-- 위젯 7: 최근 스케줄 실행 결과 -->
+<!--									<th:block th:if="${#strings.equals(dbWidget.widgetKey, 'scheduleWidget')}">-->
+<!--										&lt;!&ndash; 위젯 7: 최근 스케줄 실행 결과 &ndash;&gt;-->
+<!--										<div th:id="${dbWidget.widgetId}" class="widget one-third column">-->
+<!--											<div class="widget-header row">-->
+<!--												<div class="widget-heading u-pull-left">-->
+<!--													<h3 class="widget-title"><th:block th:text="${dbWidget.widgetName}"></th:block></h3>-->
+<!--												</div>-->
+<!--												<div class="widget-functions u-pull-right">-->
+<!--													<a href="/schedule/list" title="스케줄 실행 결과 더보기"><span class="icon-glyph glyph-plus"></span></a>-->
+<!--												</div>-->
+<!--											</div>-->
+<!--											<div id="scheduleArea" class="widget-content row">-->
+<!--												<div style="text-align: center; padding-top: 60px; padding-left: 150px;">-->
+<!--													<div id="scheduleSpinner" style="width: 150px; height: 70px;"></div>-->
+<!--												</div>-->
+<!--											</div>-->
+<!--										</div>-->
+<!--									</th:block>-->
+<!--									<th:block th:if="${#strings.equals(dbWidget.widgetKey, 'apiLogWidget')}">-->
+<!--										&lt;!&ndash; 위젯 8: API 요청 이력 &ndash;&gt;-->
+<!--										<div th:id="${dbWidget.widgetId}" class="widget one-third column">-->
+<!--											<div class="widget-header row">-->
+<!--												<div class="widget-heading u-pull-left">-->
+<!--													<h3 class="widget-title"><th:block th:text="${dbWidget.widgetName}"></th:block></h3>-->
+<!--												</div>-->
+<!--												<div class="widget-functions u-pull-right">-->
+<!--													<a href="/api-log/list" title="api 요청 이력 더보기"><span class="icon-glyph glyph-plus"></span></a>-->
+<!--												</div>-->
+<!--											</div>-->
+<!--											<div id="apiLogArea" class="widget-content row">-->
+<!--												<div style="text-align: center; padding-top: 60px; padding-left: 150px;">-->
+<!--													<div id="apiLogSpinner" style="width: 150px; height: 70px;"></div>-->
+<!--												</div>-->
+<!--											</div>-->
+<!--										</div>-->
+<!--									</th:block>-->
+									<th:block th:if="${#strings.equals(dbWidget.widgetKey, 'digitalTwinServiceWidget')}">
+										<!-- 디지털트윈 서비스 현황 -->
 										<div th:id="${dbWidget.widgetId}" class="widget one-third column">
 											<div class="widget-header row">
 												<div class="widget-heading u-pull-left">
 													<h3 class="widget-title"><th:block th:text="${dbWidget.widgetName}"></th:block></h3>
 												</div>
-												<div class="widget-functions u-pull-right">
-													<a href="/schedule/list" title="스케줄 실행 결과 더보기"><span class="icon-glyph glyph-plus"></span></a>
-												</div>
 											</div>
-											<div id="scheduleArea" class="widget-content row">
+											<div id="digitalTwinServiceDHTML" class="widget-content row">
 												<div style="text-align: center; padding-top: 60px; padding-left: 150px;">
-													<div id="scheduleSpinner" style="width: 150px; height: 70px;"></div>
+													<div id="digitalTwinServiceSpinner" style="width: 150px; height: 70px;"></div>
 												</div>
 											</div>
 										</div>
 									</th:block>
-									<th:block th:if="${#strings.equals(dbWidget.widgetKey, 'apiLogWidget')}">
-										<!-- 위젯 8: API 요청 이력 -->
+									<th:block th:if="${#strings.equals(dbWidget.widgetKey, 'healthCheckWidget')}">
+										<!-- 디지털트윈 서비스 현황 -->
 										<div th:id="${dbWidget.widgetId}" class="widget one-third column">
 											<div class="widget-header row">
 												<div class="widget-heading u-pull-left">
 													<h3 class="widget-title"><th:block th:text="${dbWidget.widgetName}"></th:block></h3>
 												</div>
-												<div class="widget-functions u-pull-right">
-													<a href="/api-log/list" title="api 요청 이력 더보기"><span class="icon-glyph glyph-plus"></span></a>
-												</div>
 											</div>
-											<div id="apiLogArea" class="widget-content row">
+											<div id="healthCheckWidgetDHTML" class="widget-content row">
 												<div style="text-align: center; padding-top: 60px; padding-left: 150px;">
-													<div id="apiLogSpinner" style="width: 150px; height: 70px;"></div>
+													<div id="healthCheckSpinner" style="width: 150px; height: 70px;"></div>
 												</div>
 											</div>
 										</div>
@@ -194,14 +220,15 @@
 		</div>
 	</div>
 
-	<div th:replace="~{/widget/issue-template :: #issueListSource}"></div>
+	<div th:replace="~{/widget/digital-twin-service-template :: #digitalTwinServiceListSource}"></div>
+	<div th:replace="~{/widget/health-check-template :: #healthCheckListSource}"></div>
 
 </th:block>
 <th:block layout:fragment="pageCustomScript">
 	<script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
 	<script type="text/javascript" th:src="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.js(cacheVersion=${contentCacheVersion})}"></script>
 	<script type="text/javascript" th:src="@{/externlib/chart-js-2.9.3/Chart.min.js(cacheVersion=${contentCacheVersion})}"></script>
-	<script type="text/javascript" th:src="@{/externlib/handlebars-4.7.7/handlebars.js(cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/externlib/handlebars-4.1.2/handlebars.js(cacheVersion=${contentCacheVersion})}"></script>
 	<script type="text/javascript" th:src="@{/js/{lang}/handlebars-helper.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 	<script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 	<script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
@@ -230,16 +257,20 @@
 			dataTypeWidget();
 			startSpinner("converterSpinner");
 			converterWidget();
-			startSpinner("issueSpinner");
-			issueWidget();
-			startSpinner("dataAdjustLogSpinner");
-			dataAdjustLogWidget();
+			startSpinner("digitalTwinServiceSpinner");
+			digitalTwinServiceWidget();
+			startSpinner("healthCheckSpinner");
+			healthCheckWidget();
+			// startSpinner("issueSpinner");
+			// issueWidget();
+			// startSpinner("dataAdjustLogSpinner");
+			// dataAdjustLogWidget();
 			startSpinner("systemResourceSpinner");
 			systemResourceWidget();
-			startSpinner("scheduleSpinner");
-			scheduleWidget();
-			startSpinner("apiLogSpinner");
-			apiLogWidget();
+			// startSpinner("scheduleSpinner");
+			// scheduleWidget();
+			// startSpinner("apiLogSpinner");
+			// apiLogWidget();
 		});
 
 		/* 사용자 상태별 현황 */
@@ -508,9 +539,22 @@
 				options: {
 					title: {
 						display: true,
+						fontSize: 14,
+						fontStyle: 'bold',
 						text: 'Disk 사용량'
 					},
-					responsive: true
+					legend: false,
+					plugins: {
+						labels: {
+							// render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'
+							render: 'label',
+							fontSize: 13,
+							fontStyle: 'bold',
+							position: 'outside',
+							outsidePadding: 4,
+							textMargin: 4
+						}
+					}
 				}
 			});
 		}
@@ -598,8 +642,49 @@
 				});
 			} else {
 				alert(JS_MESSAGE["button.dobule.click"]);
-				return;
 			}
+		}
+
+		function digitalTwinServiceWidget() {
+			$.ajax({
+				url : "/widgets/micro-service-logs",
+				type: "GET",
+				headers: {"X-Requested-With": "XMLHttpRequest"},
+				dataType: "json",
+				success: function(msg) {
+					if(msg.statusCode <= 200) {
+						var template = Handlebars.compile($("#digitalTwinServiceListSource").html());
+						var html = template(msg);
+						$("#digitalTwinServiceDHTML").html("").append(html);
+					} else {
+						$("#digitalTwinServiceDHTML").html(JS_MESSAGE[msg.errorCode]);
+					}
+				},
+				error:function(request,status,error){
+					alert(JS_MESSAGE["ajax.error.message"]);
+				}
+			});
+		}
+
+		function healthCheckWidget() {
+			$.ajax({
+				url : "/widgets/health-check-logs",
+				type: "GET",
+				headers: {"X-Requested-With": "XMLHttpRequest"},
+				dataType: "json",
+				success: function(msg) {
+					if(msg.statusCode <= 200) {
+						var template = Handlebars.compile($("#healthCheckListSource").html());
+						var html = template(msg);
+						$("#healthCheckWidgetDHTML").html("").append(html);
+					} else {
+						$("#healthCheckWidgetDHTML").html(JS_MESSAGE[msg.errorCode]);
+					}
+				},
+				error:function(request,status,error){
+					alert(JS_MESSAGE["ajax.error.message"]);
+				}
+			});
 		}
 	</script>
 </th:block>

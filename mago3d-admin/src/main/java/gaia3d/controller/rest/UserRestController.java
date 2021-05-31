@@ -129,10 +129,10 @@ public class UserRestController implements AuthorizationController {
 		int statusCode = HttpStatus.OK.value();
 
 		result.put("statusCode", statusCode);
-			result.put("errorCode", errorCode);
-			result.put("message", message);
-            return result;
-		}
+		result.put("errorCode", errorCode);
+		result.put("message", message);
+		return result;
+	}
 
 	/**
 	 * 사용 대기자 사용 승인

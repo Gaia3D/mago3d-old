@@ -1,14 +1,14 @@
 package gaia3d.service.impl;
 
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.common.QueueMessage;
 import gaia3d.domain.common.TileMessage;
 import gaia3d.service.AMQPPublishService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Cheon JeongDae
@@ -17,12 +17,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class AMQPPublishServiceImpl implements AMQPPublishService {
+
+	@Autowired
+	private PropertiesConfig propertiesConfig;
+	
 	@Autowired
 	private RabbitTemplate rabbitTemplate;
 	
 	@Transactional
-	public void converterMessageSend(String exchange, String routingKey, QueueMessage queueMessage) {
+	public void send(String exchange, String routingKey, QueueMessage queueMessage) {
 		log.info("@@ Publish send message >>> {}", queueMessage);
+//		rabbitTemplate.convertAndSend(propertiesConfig.getQueueName(), queueMessage);
 		rabbitTemplate.convertAndSend(exchange, routingKey, queueMessage);
 	}
 
@@ -35,6 +40,7 @@ public class AMQPPublishServiceImpl implements AMQPPublishService {
 	@Transactional
 	public void tileMessageSend(String exchange, String routingKey, TileMessage tileMessage) {
 		log.info("@@ Publish send tileMessage >>> {}", tileMessage);
+//		rabbitTemplate.convertAndSend(propertiesConfig.getQueueName(), queueMessage);
 		rabbitTemplate.convertAndSend(exchange, routingKey, tileMessage);
 }
 }

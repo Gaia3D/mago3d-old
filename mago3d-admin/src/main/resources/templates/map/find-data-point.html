@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <head>
-	<meta charset="utf-8">
-    <meta name="referrer" content="origin">
-    <meta name="viewport" content="width=device-width">
-    <meta name="robots" content="index,nofollow">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
 	<title>지도에서 찾기 | mago3D</title>
 	<link rel="shortcut icon" th:href="@{/images/favicon.ico(cacheVersion=${contentCacheVersion})}">
 	<link rel="stylesheet" th:href="@{/externlib/cesium/Widgets/widgets.css(cacheVersion=${contentCacheVersion})}">
@@ -98,8 +96,8 @@
 						</li>
 					</ul>
 				</div>
-				<form id="dcRotLocForm" class="layerDiv marB0" th:action="@{#}">
-					<input type="hidden" name="dataId" th:value="${dataInfo.dataId}" />
+				<form id="dcRotLocForm" class="layerDiv marB0">
+					<input type="hidden" name="dataId" value="${dataInfo.dataId}" />
 					<h4 class="category">위치 변경</h4>
 					<ul class="layerDiv">
 						<li>
@@ -155,7 +153,6 @@
 		</div>
 	</div>
     <div id="magoContainer" style="height: 100%;"></div>
-    <canvas id="objectLabel"></canvas>
     <button class="mapSelectButton" onclick="window.close();">닫기</button>
 </body>
 <script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
@@ -166,13 +163,11 @@
 <script type="text/javascript" th:src="@{/externlib/decodeTextAlternative/encoding-indexes.js(cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/externlib/decodeTextAlternative/encoding.js(cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/externlib/moment-2.22.2/moment-with-locales.min.js(cacheVersion=${contentCacheVersion})}"></script>
-<script type="text/javascript" th:src="@{/js/mago3d.js(cacheVersion=${contentCacheVersion})}"></script>
-<script type="text/javascript" th:src="@{/js/mago3d_lx.js(cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/mago3d/mago3d.min.js(cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang}, cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang}, cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/map-controll.js(lang=${lang}, cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/ui-controll.js(lang=${lang}, cacheVersion=${contentCacheVersion})}"></script>
-<script type="text/javascript" th:src="@{/js/{lang}/wps-request.js(lang=${lang}, cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/data-info.js(lang=${lang}, cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/user-policy.js(lang=${lang}, cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/map-data-controll.js(lang=${lang}, cacheVersion=${contentCacheVersion})}"></script>
@@ -187,7 +182,6 @@
 	//Cesium.Ion.defaultAccessToken = '';
 	//var viewer = new Cesium.Viewer('magoContainer');
 	var MAGO3D_INSTANCE;
-	// ndtp 전역 네임스페이스
 	let dataGroupMap = new Map();
 	dataGroupMap.set(parseInt('${dataInfo.dataGroupId}'), '[[${dataInfo.dataGroupName}]]');
 	var NDTP = NDTP ||{
@@ -208,15 +202,24 @@
 
 		var geoPolicyJson = NDTP.policy;
 
-		var cesiumViewerOption = {};
-		cesiumViewerOption.infoBox = false;
-		cesiumViewerOption.navigationHelpButton = false;
-		cesiumViewerOption.selectionIndicator = false;
-		cesiumViewerOption.homeButton = false;
-		cesiumViewerOption.fullscreenButton = false;
-		cesiumViewerOption.geocoder = false;
-		cesiumViewerOption.baseLayerPicker = false;
-		cesiumViewerOption.sceneModePicker = false;
+		var option = {};
+		option.infoBox = false;
+		option.navigationHelpButton = false;
+		option.selectionIndicator = false;
+		option.homeButton = false;
+		option.fullscreenButton = false;
+		option.geocoder = false;
+		option.baseLayerPicker = false;
+		option.sceneModePicker = false;
+		
+		option.defaultControl = {};
+		option.defaultControl.zoom = false;
+		option.defaultControl.initCamera = false;
+		option.defaultControl.fullScreen = false;
+		option.defaultControl.measure = false;
+		option.defaultControl.tools = false;
+		option.defaultControl.attribution = false;
+		option.defaultControl.overviewMap = false;
 
 		/**
 		 * @param {Stirng} containerId container div id. required.
@@ -225,7 +228,7 @@
 		 * @param {object} options Cesium viewer parameter. option.
 		 * @param {Cesium.Viewer} legacyViewer 타 시스템과의 연동의 경우 view 객체가 생성되어서 넘어 오는 경우가 있음. option.
 		*/
-		MAGO3D_INSTANCE = new Mago3D.Mago3d('magoContainer', geoPolicyJson, {loadend : magoLoadEnd}, cesiumViewerOption);
+		MAGO3D_INSTANCE = new Mago3D.Mago3d('magoContainer', geoPolicyJson, {loadend : magoLoadEnd}, option);
 	}
 
 	var beforePointId = null;
@@ -240,12 +243,6 @@
 		// TODO : 세슘 MAP 선택 UI 제거,엔진에서 처리로 변경 예정.
 		if(viewer.baseLayerPicker) viewer.baseLayerPicker.destroy();
 		viewer.scene.globe.depthTestAgainstTerrain = true;
-		/* magoManager.on(gaia3d.MagoManager.EVENT_TYPE.CLICK, function(result) {
-			console.info(result);
-		}); */
-
-		// mago3d logo 추가
-		Mago3D.tempCredit(viewer);
 
 		//우측 상단 지도 컨트롤러
 		MapControll(viewer);
@@ -254,8 +251,14 @@
         UserPolicy(magoInstance);
 
      	// 선택 및 이동 all 로 선택
-		changeObjectMoveAPI(magoInstance, "0");
 		$('#objectAllMove').prop("checked", true);
+		var translateInteraction = magoManager.defaultTranslateInteraction;
+		var selectInteraction = magoManager.defaultSelectInteraction;
+
+		//선택된 데이터 이동 시 결과 리턴
+		translateInteraction.on(Mago3D.TranslateInteraction.EVENT_TYPE.MOVING_F4D, function(moved) {
+			moving(moved.result);
+		});
 
 		//지도상에 데이터 다루는거
 		MapDataControll(magoInstance);
@@ -266,23 +269,39 @@
 	    	initData(dataInfo);
 	    });
 
-	    // 기본 레이어 랜더링
-// 		setTimeout(function(){
-// 			var ndtpMap = new mapInit(magoInstance, NDTP.baseLayers, geoPolicyJson);
-// 			ndtpMap.initLayer();
-//         }, geoPolicyJson.initDuration * 1000);
+		function moving(target) {
+			var movedGeolocationData = target.getCurrentGeoLocationData();
+			var positionInfo = getPositionInfoFromGeolocationData(movedGeolocationData);
+			var heightReference = getHeightReferenceFromData(target);
 
-		/* setTimeout(function(){
-			changeObjectMove();
-        }, 5000); */
+			$('#dcLongitude').val(positionInfo.longitude);
+			$('#dcLatitude').val(positionInfo.latitude);
+			$('#dcAltitude').val(positionInfo.altitude);
+
+			$('#dcPitch,#dcPitchRange').val(positionInfo.pitch);
+			$('#dcHeading,#dcHeadingRange').val(positionInfo.heading);
+			$('#dcRoll,#dcRollRange').val(positionInfo.roll);
+		}
+
+		function getPositionInfoFromGeolocationData(geoLocData) {
+			var geoCoord = geoLocData.geographicCoord;
+
+			return {
+				longitude: geoCoord.longitude,
+				latitude: geoCoord.latitude,
+				altitude: geoCoord.altitude,
+				heading: geoLocData.heading,
+				pitch: geoLocData.pitch,
+				roll: geoLocData.roll,
+			}
+		}
+
+		function getHeightReferenceFromData(target) {
+			var store = target.data.attributes;
+			return store.heightReference || Mago3D.HeightReference.NONE;
+		}
 
 	}
-	/*
-	function changeObjectMove() {
-		// 선택 및 이동 all 로 선택
-		changeObjectMoveAPI(MAGO3D_INSTANCE, "0");
-	} */
-
 	// 데이터 그룹 목록
 	function dataGroupList(magoInstance) {
 		$.ajax({
@@ -335,20 +354,22 @@
 				} else {
 					flyTo(magoInstance);
 				}
+				
+				setTimeout(function() {
+					var magoManager = magoInstance.getMagoManager();
+					var translateInteraction = magoManager.defaultTranslateInteraction;
+					var selectInteraction = magoManager.defaultSelectInteraction;
+					
+					selectInteraction.setActive(true);
+					translateInteraction.setActive(true);
+					
+					selectF4dAPI(magoInstance, [[${dataInfo.dataGroupId}]], [[${dataInfo.dataKey}]]);
+					var node = magoManager.hierarchyManager.getNodeByDataKey([[${dataInfo.dataGroupId}]], [[${dataInfo.dataKey}]]);
+					magoInstance.getMagoManager().defaultSelectInteraction.selected = node;
+					node.setVisible(true);
+				},3000);
 			});
-
-			// 화면에 표출할 준비가 된 시점
-			magoInstance.getMagoManager().on(Mago3D.MagoManager.EVENT_TYPE.F4DRENDERREADY, function(e){
-				var data = e.f4d.data;
-				if (data.dataGroupId === parseInt([[${dataInfo.dataGroupId}]]) && data.nodeId === [[${dataInfo.dataKey}]]) {
-					selectF4dAPI(magoInstance, data.dataGroupId, data.nodeId);
-				}
-			});
-
 		}
-		/* setTimeout(function() {
-			flyTo(magoInstance);
-		}, 500); */
 	}
 
 	// smart tiling data flyTo
@@ -366,10 +387,6 @@
 	}
 
 	function initData(dataInfo) {
-
-		//clearDataControl();
-		//$('#dcColor').hide();
-
 		var $dataControlWrap = $('#dataControllWrap');
 		//$dataControlWrap.find('.layerDivTit').hide();
 		//var $header = $('#mago3DSettingLabelLayer .layerHeader h3');
@@ -439,7 +456,7 @@
 			//startLoading();
 			var formData = $('#dcRotLocForm').serialize();
 			$.ajax({
-				url: "/datas/[[${dataInfo.dataId}]]",
+				url: "/datas/" + dataId,
 				type: "POST",
 				headers: {"X-Requested-With": "XMLHttpRequest"},
 				data: formData,

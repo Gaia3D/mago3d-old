@@ -11,7 +11,7 @@
 
     <typeAliases>
     	<typeAlias type="gaia3d.domain.accesslog.AccessLog" alias="accessLog" />
-		<typeAlias type="gaia3d.domain.apilog.APILog" alias="apiLog" />
+		<typeAlias type="gaia3d.domain.apilog.ApiLog" alias="apiLog" />
     	<typeAlias type="gaia3d.domain.converter.ConverterJob" alias="converterJob" />
     	<typeAlias type="gaia3d.domain.converter.ConverterJobFile" alias="converterJobFile" />
 		<typeAlias type="gaia3d.domain.common.PartitionTable" alias="partitionTable" />
@@ -29,11 +29,14 @@
 		<typeAlias type="gaia3d.domain.data.DataInfoSimple" alias="dataInfoSimple" />
 		<typeAlias type="gaia3d.domain.data.DataInfoLog" alias="dataInfoLog" />
 		<typeAlias type="gaia3d.domain.policy.GeoPolicy" alias="geoPolicy" />
+		<typeAlias type="gaia3d.domain.healthcheck.HealthCheckLog" alias="healthCheckLog" />
 		<typeAlias type="gaia3d.domain.issue.Issue" alias="issue" />
     	<typeAlias type="gaia3d.domain.layer.Layer" alias="layer" />
     	<typeAlias type="gaia3d.domain.layer.LayerGroup" alias="layerGroup" />
     	<typeAlias type="gaia3d.domain.layer.LayerFileInfo" alias="layerFileInfo" />
     	<typeAlias type="gaia3d.domain.menu.Menu" alias="menu" />
+		<typeAlias type="gaia3d.domain.microservice.MicroService" alias="microService" />
+		<typeAlias type="gaia3d.domain.microservice.MicroServiceLog" alias="microServiceLog" />
     	<typeAlias type="gaia3d.domain.policy.Policy" alias="policy" />
     	<typeAlias type="gaia3d.domain.role.Role" alias="role" />
 		<typeAlias type="gaia3d.domain.tile.TileDataGroup" alias="tileDataGroup" />
@@ -47,8 +50,8 @@
     	<typeAlias type="gaia3d.domain.user.UserGroupRole" alias="userGroupRole" />
     	<typeAlias type="gaia3d.domain.user.UserPolicy" alias="userPolicy"/>
     	<typeAlias type="gaia3d.domain.user.UserSession" alias="userSession" />
+		<typeAlias type="gaia3d.domain.terrain.Terrain" alias="terrain" />
     	<typeAlias type="gaia3d.domain.widget.Widget" alias="widget" />
-		<typeAlias type="gaia3d.domain.data.DataRelationInfo" alias="dataRelationInfo" />
     </typeAliases>
 
 	<typeHandlers>

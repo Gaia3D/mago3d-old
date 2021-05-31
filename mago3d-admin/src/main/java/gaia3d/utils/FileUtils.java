@@ -1,18 +1,14 @@
 package gaia3d.utils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.List;
-
+import gaia3d.domain.common.FileInfo;
+import gaia3d.domain.UploadDirectoryType;
+import gaia3d.support.LogMessageSupport;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
-import gaia3d.domain.common.FileInfo;
-import gaia3d.domain.uploaddata.UploadDirectoryType;
-import lombok.extern.slf4j.Slf4j;
+import java.io.*;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * TODO N중화 처리를 위해 FTP 로 다른 PM 으로 전송해 줘야 하는데....
@@ -149,7 +145,7 @@ public class FileUtils {
 			return fileInfo;
 		}
 		String extension = fileNameValues[1];
-		List<String> extList = null;
+		List<String> extList;
 		if(USER_FILE_UPLOAD.equals(fileInfo.getJobType())) {
 			extList = Arrays.asList(USER_FILE_TYPE);
 		} else if(DATA_FILE_UPLOAD.equals(fileInfo.getJobType())) {
@@ -240,7 +236,7 @@ public class FileUtils {
 		try (	InputStream inputStream = multipartFile.getInputStream();
 				OutputStream outputStream = new FileOutputStream(sourceDirectory + saveFileName)) {
 		
-			int bytesRead = 0;
+			int bytesRead;
 			byte[] buffer = new byte[BUFFER_SIZE];
 			while ((bytesRead = inputStream.read(buffer, 0, BUFFER_SIZE)) != -1) {
 				size += bytesRead;
@@ -251,10 +247,10 @@ public class FileUtils {
 			fileInfo.setFileSize(String.valueOf(size));
 			fileInfo.setFilePath(sourceDirectory);
 		} catch(IOException e) {
-			log.info("@@@@@@@@@@@@ io exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ io exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 			fileInfo.setErrorCode("io.exception");
 		} catch(Exception e) {
-			log.info("@@@@@@@@@@@@ file copy exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ file copy exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 			fileInfo.setErrorCode("file.copy.exception");
 		}
 
@@ -375,7 +371,7 @@ public class FileUtils {
 	
 	public static String getFilePath(String dataGroupPath) {
 		String[] names = dataGroupPath.split("/");
-		
+
 		// TODO SpringBuilder
 		String filePath = "";
 		for(String name : names) {

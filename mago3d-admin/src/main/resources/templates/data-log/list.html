@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
 <head>
-	<meta charset="utf-8">
-    <meta name="referrer" content="origin">
-    <meta name="viewport" content="width=device-width">
-    <meta name="robots" content="index,nofollow">
-    <title>데이터 변경 요청 이력 | mago3D</title>
-    <link rel="shortcut icon" th:href="@{/images/favicon.ico(cacheVersion=${contentCacheVersion})}">
-	<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang},cacheVersion=${contentCacheVersion})}">
-	<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang},cacheVersion=${contentCacheVersion})}">
-	<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}">
-	<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}">
-    <link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang},cacheVersion=${contentCacheVersion})}">
-	
+    <title>데이터 변경 요청 이력</title>
+	<th:block layout:fragment="pageCustomStyle">
+		<link rel="shortcut icon" th:href="@{/images/favicon.ico(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang},cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang},cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang},cacheVersion=${contentCacheVersion})}">
+	</th:block>
 </head>
 <body>
 <th:block layout:fragment="pageCustomContent">
@@ -116,25 +113,29 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:if="${dataInfoLogList.empty}">
+<th:block th:if="${#lists.isEmpty(dataInfoLogList)}">
+										<tr>
 											<td colspan="10" class="col-none">데이터 변경 이력이 존재하지 않습니다.</td>
 										</tr>
-										<tr th:if="${!dataInfoLogList.empty}" th:each="dataInfoLog : ${dataInfoLogList}">
+</th:block>
+<th:block th:unless="${#lists.isEmpty(dataInfoLogList)}" th:each="dataInfoLog : ${dataInfoLogList}">
+										<tr>
 											<td class="col-checkbox">
 												<input type="checkbox" id="dataInfoLogId_${dataInfoLog.dataLogId}" name="dataLogId" th:value="${dataInfoLog.dataLogId}" />
 											</td>
 											<td class="col-number" th:text="${pagination.rowNumber - dataInfoLogStat.index}"></td>
-											<td class="col-name ellipsis" th:text="${dataInfoLog.dataGroupName}" style="min-width:100px;max-width:100px;"></td>
-											<td class="col-name ellipsis" th:text="${dataInfoLog.dataName}" style="min-width:160px;max-width:160px;"></td>
+											<td class="col-name ellipsis" th:text="${dataInfoLog.dataGroupName}" style="min-width:100px; max-width:100px;"></td>
+											<td class="col-name ellipsis" th:text="${dataInfoLog.dataName}" style="min-width:160px; max-width:160px;"></td>
 											<td class="col-type" th:text="${dataInfoLog.userId}"></td>
 											<td class="col-type" th:text="${dataInfoLog.dataType}"></td>
 											<td class="col-type" th:text="${dataInfoLog.sharing}"></td>
-											<td class="col-type ellipsis"  th:text="${dataInfoLog.mappingType}"style="min-width:80px;max-width:80px;"></td>
+											<td class="col-type ellipsis" th:text="${dataInfoLog.mappingType}" style="min-width:80px; max-width:80px;"></td>
 											<td class="col-type" th:text="${dataInfoLog.changeType}"></td>
 											<td class="col-date">
-												<th:block th:text="${#temporals.format(dataInfoLog.insertDate,'yyyy-MM-dd HH:mm')}"></th:block>
+												<th:block th:text="${#temporals.format(dataInfoLog.insertDate, 'yyyy-MM-dd HH:mm')}"></th:block>
 											</td>
 										</tr>
+</th:block>
 									</tbody>
 								</table>
 								<!-- E: 데이터 변경 이력 목록 -->

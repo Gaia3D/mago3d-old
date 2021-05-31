@@ -1,21 +1,5 @@
 package gaia3d.controller.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import gaia3d.controller.AuthorizationController;
 import gaia3d.domain.Key;
 import gaia3d.domain.PageType;
@@ -26,6 +10,7 @@ import gaia3d.domain.user.UserGroup;
 import gaia3d.domain.user.UserInfo;
 import gaia3d.domain.user.UserSession;
 import gaia3d.domain.user.UserStatus;
+import gaia3d.security.Crypt;
 import gaia3d.service.PolicyService;
 import gaia3d.service.UserGroupService;
 import gaia3d.service.UserService;
@@ -34,6 +19,16 @@ import gaia3d.support.SQLInjectSupport;
 import gaia3d.utils.DateUtils;
 import gaia3d.utils.FormatUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 사용자
@@ -64,6 +59,8 @@ public class UserController implements AuthorizationController {
 	 */
 	@GetMapping(value = "/list")
 	public String list(HttpServletRequest request, @RequestParam(defaultValue="1") String pageNo, UserInfo userInfo, Model model) {
+		log.info("@@ userInfo = {}", userInfo);
+
 		userInfo.setSearchWord(SQLInjectSupport.replaceSqlInection(userInfo.getSearchWord()));
 		userInfo.setOrderWord(SQLInjectSupport.replaceSqlInection(userInfo.getOrderWord()));
 		
@@ -71,16 +68,16 @@ public class UserController implements AuthorizationController {
     	if(roleValidate(request) != null) return roleCheckResult;
 
     	String today = DateUtils.getToday(FormatUtils.YEAR_MONTH_DAY);
-		if(StringUtils.isEmpty(userInfo.getStartDate())) {
-			userInfo.setStartDate(today.substring(0,4) + DateUtils.START_DAY_TIME);
-		} else {
-			userInfo.setStartDate(userInfo.getStartDate().substring(0, 8) + DateUtils.START_TIME);
-		}
-		if(StringUtils.isEmpty(userInfo.getEndDate())) {
-			userInfo.setEndDate(today + DateUtils.END_TIME);
-		} else {
-			userInfo.setEndDate(userInfo.getEndDate().substring(0, 8) + DateUtils.END_TIME);
-		}
+//		if(StringUtils.isEmpty(userInfo.getStartDate())) {
+//			userInfo.setStartDate(today.substring(0,4) + DateUtils.START_DAY_TIME);
+//		} else {
+//			userInfo.setStartDate(userInfo.getStartDate().substring(0, 8) + DateUtils.START_TIME);
+//		}
+//		if(StringUtils.isEmpty(userInfo.getEndDate())) {
+//			userInfo.setEndDate(today + DateUtils.END_TIME);
+//		} else {
+//			userInfo.setEndDate(userInfo.getEndDate().substring(0, 8) + DateUtils.END_TIME);
+//		}
 
     	long totalCount = userService.getUserTotalCount(userInfo);
     	Pagination pagination = new Pagination(request.getRequestURI(), getSearchParameters(PageType.LIST, userInfo),
@@ -146,8 +143,15 @@ public class UserController implements AuthorizationController {
 
         Policy policy = policyService.getPolicy();
         UserInfo userInfo = userService.getUser(userId);
+        if(!StringUtils.isEmpty(userInfo.getEmail())) {
+			userInfo.setEmail(Crypt.decrypt(userInfo.getEmail()));
+		}
 		List<UserGroup> userGroupList = userGroupService.getListUserGroup();
 
+		String type = request.getParameter("type");
+		log.info("@@ type = {}", type);
+
+		model.addAttribute("type", type);
         model.addAttribute("policy", policy);
         model.addAttribute("userInfo", userInfo);
         model.addAttribute("userGroupList", userGroupList);
@@ -178,7 +182,7 @@ public class UserController implements AuthorizationController {
 	public String modifyPassword(HttpServletRequest request, Model model) {
 		
 		Policy policy = policyService.getPolicy();
-		
+
 		model.addAttribute("policy", policy);
 		model.addAttribute("userInfo", new UserInfo());
 		return "/user/modify-password";
@@ -248,7 +252,7 @@ public class UserController implements AuthorizationController {
 
 	/**
 	 * 검색 조건
-	 * @param search
+	 * @param userInfo
 	 * @return
 	 */
 	private String getSearchParameters(PageType pageType, UserInfo userInfo) {
@@ -258,11 +262,9 @@ public class UserController implements AuthorizationController {
 			isListPage = false;
 		}
 
-//		if(!isListPage) {
-//			buffer.append("pageNo=" + request.getParameter("pageNo"));
-//			buffer.append("&");
-//			buffer.append("list_count=" + uploadData.getList_counter());
-//		}
+		if(!StringUtils.isEmpty(userInfo.getStatus())) {
+			buffer.append("&status=").append(userInfo.getStatus());
+		}
 
 		return buffer.toString();
 	}

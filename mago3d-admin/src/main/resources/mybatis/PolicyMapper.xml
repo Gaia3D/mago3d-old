@@ -27,7 +27,8 @@
 			user_signin_type = #{userSigninType},
 			<!-- user_update_check = #{userUpdateCheck},
 			user_delete_check = #{userDeleteCheck}, -->
-			user_delete_type = #{userDeleteType}
+			user_delete_type = #{userDeleteType},
+		    signup_type = #{signupType}
 		WHERE policy_id = #{policyId}
 	</update>
 

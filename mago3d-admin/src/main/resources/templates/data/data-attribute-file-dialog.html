@@ -2,7 +2,7 @@
 <html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org">
 <body>
 	<div id="uploadDataAttributeDialog" class="uploadDataAttributeDialog" title="Data Attribute">
-		<form id="dataAttributeInfo" name="dataAttributeInfo" th::action="@{/datas/attributes}" method="post" enctype="multipart/form-data">
+		<form id="dataAttributeInfo" name="dataAttributeInfo" action="/datas/attributes" method="post" enctype="multipart/form-data">
 			<input type="hidden" id="attributeFileDataId" name="attributeFileDataId" value="" />
 			<table class="inner-table scope-row" style="width: 95%;" summary="데이터 속성정보 ">
 			<caption class="hiddenTag">데이터 속성정보</caption>

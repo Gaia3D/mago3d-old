@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
 <head>
-	<meta charset="utf-8">
-    <meta name="referrer" content="origin">
-    <meta name="viewport" content="width=device-width">
-    <meta name="robots" content="index,nofollow">
-	<title>사용자 수정 | mago3D</title>
-	<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/externlib/dropzone/dropzone.min.css(cacheVersion=${contentCacheVersion})}">
-	<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
+	<title>사용자 수정</title>
+	<th:block layout:fragment="pageCustomStyle">
+		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/dropzone-5.7.0/dropzone.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
+	</th:block>
 </head>
 <body>
 <th:block layout:fragment="pageCustomContent">
@@ -32,6 +30,8 @@
                         
 						<!-- S: 사용자 수정 -->
 						<form id="userInfo" th:object="${userInfo}" method="post" th:action="@{#}" onsubmit="return false;">
+							<input type="hidden" name="_method" value="PUT" />
+							<input type="hidden" name="type" th:value="${type}" />
 							<table class="input-table scope-row" summary="사용자 정보 등록 테이블">
 								<caption class="hiddenTag">사용자 등록</caption>
 								<colgroup>
@@ -51,11 +51,11 @@
 								</tr>
 								<tr>
 									<th class="col-label" scope="row">
-										<label for="userId" th:text="#{user.id}"></label>
+										아이디
 										<span class="icon-glyph glyph-emark-dot color-warning"></span>
 									</th>
 									<td class="col-input">
-										<input type="text" id="userId" name="userId" th:field="*{userId}" class="m" readonly="true" />
+										<th:block th:text="${userInfo.userId}"></th:block>
 									</td>
 								</tr>
 								<tr>
@@ -66,12 +66,8 @@
 									<td class="col-input">
 										<input type="text" id="userName" name="userName" th:field="*{userName}" class="m"/>
 									</td>
-									<!-- <td class="col-input radio-set">
-										<input type="radio" id="sharingPublic"  name="sharing" th:field="*{sharing}" value="public" label="공개" />
-										<input type="radio" id="sharingPrivate" name="sharing" th:field="*{sharing}" value="private" label="비공개" />
-										<input type="radio" id="sharingGroup" name="sharing" th:field="*{sharing}" value="group" label="그룹" />
-									</td> -->
 								</tr>
+<th:block th:if="${#strings.equals(type, 'password')}">
 								<tr>
 									<th class="col-label" scope="row">
 										<label for="password" th:text="#{password}"></label>
@@ -85,7 +81,7 @@
 											<th:block th:text="#{user.input.number}"></th:block><th:block th:text="|${policy.passwordNumberCount}, |"></th:block>
 											<th:block th:text="#{user.input.special.characters}"></th:block><th:block th:text="|${policy.passwordSpecialCharCount} |"></th:block>
 											<th:block th:text="#{user.input.special.characters.need}"></th:block><th:block th:text="|${policy.passwordMinLength} ~ ${policy.passwordMaxLength} |"></th:block>
-											<th:block th:text="#{user.input.do}">
+											<th:block th:text="#{user.input.do}"></th:block>
 										</span>
 									</td>
 								</tr>
@@ -96,6 +92,32 @@
 									</th>
 									<td class="col-input">
 										<input type="password" id="passwordConfirm" name="passwordConfirm" th:field="*{passwordConfirm}"  class="m" />
+									</td>
+								</tr>
+</th:block>
+								<tr>
+									<th class="col-label" scope="row">
+										<label for="department">부서명</label>
+									</th>
+									<td class="col-input">
+										<input type="text" id="department" name="department" th:field="*{department}" class="m" maxlength="30" />
+									</td>
+								</tr>
+								<tr>
+									<th class="col-label" scope="row">
+										<label for="position">직위</label>
+									</th>
+									<td class="col-input">
+										<input type="text" id="position" name="position" th:field="*{position}" class="m" maxlength="50" />
+									</td>
+								</tr>
+								<tr>
+									<th class="col-label" scope="row">
+										<label for="email" th:text="#{email}"></label>
+										<span class="icon-glyph glyph-emark-dot color-warning"></span>
+									</th>
+									<td class="col-input">
+										<input type="text" id="email" name="email" th:field="*{email}" class="l" />
 									</td>
 								</tr>
 							</table>
@@ -114,7 +136,7 @@
         </div>
 	</div>
 	<!-- 사용자 그룹 -->
-    <div th:replace="~{/user-group/user-group-list-dialog :: #userGroupListDialog}"></div> 
+    <div th:replace="~{/user-group/user-group-dialog :: #userGroupListDialog}"></div>
 </th:block>
 <th:block layout:fragment="pageCustomScript">	
 <script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
@@ -163,21 +185,30 @@
 			$("#userName").focus();
 			return false;
 		}
-		if (!$("#password").val()) {
-			alert(JS_MESSAGE["password.empty"]);
-			$("#password").focus();
-			return false;
-		} else if(!passwordValidation.test($("#password").val())) {
-			alert(JS_MESSAGE["user.password.invalid"]);
-			$("#password").focus();
-			return false;
-		} else if($("#passwordConfirm").val() == "") {
-			alert(JS_MESSAGE["password.correct.empty"]);
-			$("#passwordConfirm").focus();
-			return false;
-		} else if($("#password").val() !== $("#passwordConfirm").val()) {
-			alert("입력한 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-			$("#passwordConfirm").focus();
+
+		var type = [[${type}]];
+		if(type === "password") {
+			if (!$("#password").val()) {
+				alert(JS_MESSAGE["password.empty"]);
+				$("#password").focus();
+				return false;
+			} else if (!passwordValidation.test($("#password").val())) {
+				alert(JS_MESSAGE["user.password.invalid"]);
+				$("#password").focus();
+				return false;
+			} else if ($("#passwordConfirm").val() == "") {
+				alert(JS_MESSAGE["password.correct.empty"]);
+				$("#passwordConfirm").focus();
+				return false;
+			} else if ($("#password").val() !== $("#passwordConfirm").val()) {
+				alert("입력한 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+				$("#passwordConfirm").focus();
+				return false;
+			}
+		}
+		if ($("#email").val() === "") {
+			alert("이메일을 입력하여 주세요.");
+			$("#email").focus();
 			return false;
 		}
 	}
@@ -192,7 +223,7 @@
 			updateUserFlag = false;
 			var formData = $("#userInfo").serialize();
 			$.ajax({
-				url: "/users/update",
+				url: "/users/" + [[${userInfo.userId}]],
 				type: "POST",
 				headers: {"X-Requested-With": "XMLHttpRequest"},
 		        data: formData,
@@ -213,7 +244,6 @@
 			});
 		} else {
 			alert(JS_MESSAGE["button.dobule.click"]);
-			return;
 		}
 	}
 </script>

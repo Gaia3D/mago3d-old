@@ -1,5 +1,7 @@
 package gaia3d.controller.view;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.Key;
 import gaia3d.domain.YOrN;
 import gaia3d.domain.cache.CacheManager;
@@ -11,6 +13,7 @@ import gaia3d.domain.user.UserStatus;
 import gaia3d.listener.Gaia3dHttpSessionBindingListener;
 import gaia3d.service.PolicyService;
 import gaia3d.service.SigninService;
+import gaia3d.service.SignupService;
 import gaia3d.support.PasswordSupport;
 import gaia3d.support.RoleSupport;
 import gaia3d.support.SessionUserSupport;
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -39,12 +43,20 @@ import java.util.List;
 @Controller
 @RequestMapping("/sign")
 public class SigninController {
-	
+
+	@Autowired
+	private ObjectMapper objectMapper;
 	@Autowired
 	private PolicyService policyService;
 	@Autowired
+	private PropertiesConfig propertiesConfig;
+	@Autowired
 	private SigninService signinService;
-	
+	@Autowired
+	private SignupService signupService;
+	@Autowired
+	private RestTemplate restTemplate;
+
 	/**
 	 * Sign in 페이지
 	 * @param request
@@ -60,7 +72,7 @@ public class SigninController {
 		model.addAttribute("signinForm", signinForm);
 		model.addAttribute("policy", policy);
 		model.addAttribute("contentCacheVersion", policy.getContentCacheVersion());
-		
+
 		return "/sign/signin";
 	}
 
@@ -107,6 +119,7 @@ public class SigninController {
 			signinForm.setErrorCode(errorCode);
 			signinForm.setUserId(null);
 			signinForm.setPassword(null);
+			signinForm.setStatus(userSession.getStatus());
 			model.addAttribute("signinForm", signinForm);
 			model.addAttribute("policy", policy);
 			
@@ -114,7 +127,7 @@ public class SigninController {
 		}
 		
 		// 사용자 정보를 갱신
-		userSession.setFailSigninCount(0);
+		userSession.setFailSigninCount(Integer.valueOf(0));
 		signinService.updateSigninUserSession(userSession);
 		
 		// TODO 고민을 하자. 사인인 시점에 토큰을 발행해서 사용하고.... 비밀번호와 SALT는 초기화 해서 세션에 저장할지
@@ -165,13 +178,13 @@ public class SigninController {
 		}
 		
 		// 사인인 실패 횟수
-		if(userSession.getFailSigninCount().intValue() >= policy.getUserFailSigninCount()) {
+		if(userSession.getFailSigninCount() >= policy.getUserFailSigninCount()) {
 			signinForm.setFailSigninCount(userSession.getFailSigninCount());
 			return "usersession.failsignincount.invalid";
 		}
 		
 		// 마지막 접속일(접속 정책이 3개월 미접속인 경우 접속 금지의 경우)
-		if(userSession.getUserLastSigninLockOver()) {	
+		if(userSession.getUserLastSigninLockOver()) {
 			signinForm.setLastSigninDate(userSession.getLastSigninDate());
 			signinForm.setUserLastSigninLock(policy.getUserLastSigninLock());
 			return "usersession.lastsignin.invalid";

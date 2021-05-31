@@ -1,27 +1,23 @@
 package gaia3d.service.impl;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import gaia3d.domain.ServerTarget;
 import gaia3d.domain.SharingType;
-import gaia3d.domain.data.DataGroup;
-import gaia3d.domain.data.DataInfo;
-import gaia3d.domain.data.DataSmartTilingFileInfo;
-import gaia3d.domain.data.DataSmartTilingFileParseLog;
-import gaia3d.domain.data.DataStatus;
+import gaia3d.domain.data.*;
 import gaia3d.parser.DataSmartTilingFileParser;
 import gaia3d.parser.impl.DataSmartTilingFileJsonParser;
 import gaia3d.persistence.DataSmartTilingMapper;
 import gaia3d.service.DataGroupService;
 import gaia3d.service.DataService;
 import gaia3d.service.DataSmartTilingService;
+import gaia3d.support.LogMessageSupport;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 데이터 속성 관리
@@ -89,19 +85,19 @@ public class DataSmartTilingServiceImpl implements DataSmartTilingService {
 					updateSuccessCount++;
 				}
 			} catch(DataAccessException e) {
-				log.info("@@@@@@@@@@@@ dataAccess exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+				LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ dataAccess exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 				dataSmartTilingFileParseLog.setIdentifierValue(dataSmartTilingFileInfo.getUserId());
 				dataSmartTilingFileParseLog.setErrorCode(e.getMessage());
 				dataSmartTilingMapper.insertDataSmartTilingFileParseLog(dataSmartTilingFileParseLog);
 				insertErrorCount++;
 			} catch(RuntimeException e) {
-				log.info("@@@@@@@@@@@@ runtime exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+				LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ runtime exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 				dataSmartTilingFileParseLog.setIdentifierValue(dataSmartTilingFileInfo.getUserId());
 				dataSmartTilingFileParseLog.setErrorCode(e.getMessage());
 				dataSmartTilingMapper.insertDataSmartTilingFileParseLog(dataSmartTilingFileParseLog);
 				insertErrorCount++;
 			} catch(Exception e) {
-				log.info("@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+				LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 				dataSmartTilingFileParseLog.setIdentifierValue(dataSmartTilingFileInfo.getUserId());
 				dataSmartTilingFileParseLog.setErrorCode(e.getMessage());
 				dataSmartTilingMapper.insertDataSmartTilingFileParseLog(dataSmartTilingFileParseLog);

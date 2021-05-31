@@ -1,12 +1,11 @@
 package gaia3d.persistence;
 
-import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
 import gaia3d.domain.user.UserGroup;
 import gaia3d.domain.user.UserGroupMenu;
 import gaia3d.domain.user.UserGroupRole;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface UserGroupMapper {
@@ -79,7 +78,7 @@ public interface UserGroupMapper {
 	 */
 	List<String> getListUserGroupRoleKey(UserGroupRole userGroupRole);
 
-    /**
+	/**
 	 * 트리 구조의 하위 사용자 그룹 목록
 	 * @param userGroup
 	 * @return

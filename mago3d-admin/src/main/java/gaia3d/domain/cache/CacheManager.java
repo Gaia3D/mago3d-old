@@ -10,7 +10,7 @@ import gaia3d.domain.policy.Policy;
 import gaia3d.domain.user.UserGroupMenu;
 
 /**
- * TODO: 귀찮고, 전부 select 성 데이터고 관리자가 혼자라서 getInstance를 사용하지 않았음. 바람직 하지는 않음
+ * TODO 귀찮고, 전부 select 성 데이터고 관리자가 혼자라서 getInstance를 사용하지 않았음. 바람직 하지는 않음
  * 환경 설정 관련 모든 요소를 캐시 처리
  *
  * @author jeongdae
@@ -22,7 +22,7 @@ public class CacheManager {
 
     private CacheManager() {
     }
-    
+
 	// 운영환경인지, 로컬 환경인지 확인
 	private String profile;
     // 2D, 3D 운영 정책
@@ -34,7 +34,7 @@ public class CacheManager {
  	private Map<Integer, Menu> menuMap = null;
  	// url과 menu_id를 매핑
  	private Map<String, Integer> menuUrlMap = null;
- 	
+
 	public static String getProfile() {
 		return cacheManager.profile;
 	}
@@ -58,7 +58,7 @@ public class CacheManager {
 	public static void setPolicy(Policy policy) {
 		cacheManager.policy = policy;
 	}
- 	
+
 	/**
 	 * 대메뉴(1 Depth) Map, 화면 왼쪽 메뉴 표시용
 	 * @return
@@ -73,7 +73,7 @@ public class CacheManager {
 	public static void setMenuMap(Map<Integer, Menu> menuMap) {
 		cacheManager.menuMap = menuMap;
 	}
-	
+
 	/**
 	 * url과  menuId를 매핑
 	 * @return

@@ -1,11 +1,5 @@
 package gaia3d.service.impl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import gaia3d.domain.Move;
 import gaia3d.domain.YOrN;
 import gaia3d.domain.menu.Menu;
@@ -17,6 +11,11 @@ import gaia3d.service.MenuService;
 import gaia3d.service.UserGroupService;
 import gaia3d.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -86,16 +85,16 @@ public class UserGroupServiceImpl implements UserGroupService {
 		return userGroupMapper.getListUserGroupRoleKey(userGroupRole);
 	}
 
-    /**
-     * 사용자 그룹 Key 중복 확인
-     * @param userGroup
-     * @return
-     */
+	/**
+	 * 사용자 그룹 Key 중복 확인
+	 * @param userGroup
+	 * @return
+	 */
 	@Transactional(readOnly = true)
 	public Boolean isUserGroupKeyDuplication(UserGroup userGroup) {
 		return userGroupMapper.isUserGroupKeyDuplication(userGroup);
 	}
-	
+
     /**
      * 사용자 그룹 등록
      * @param userGroup
@@ -294,7 +293,7 @@ public class UserGroupServiceImpl implements UserGroupService {
     @Transactional
 	public int deleteUserGroup(UserGroup userGroup) {
 
-    	int result = 0;
+		int result = 0;
 		UserGroup deleteUserGroup = userGroupMapper.getUserGroup(userGroup);
 		log.info("--- delete userGroup = {}", deleteUserGroup);
     	List<UserGroup> userGroups = userGroupMapper.getListUserGroupTree(deleteUserGroup);
@@ -305,19 +304,20 @@ public class UserGroupServiceImpl implements UserGroupService {
     	if (parentUserGroup != null) {
 			parentUserGroup.setChildren(parentUserGroup.getChildren() - (userGroups.size() - 1));
 			userGroupMapper.updateUserGroup(parentUserGroup);
-    			}
+		}
 		
     	userGroups.forEach(userGroupNode -> {
 
     		int userGroupId = userGroupNode.getUserGroupId();
 
-    		// 메뉴, 권한 삭제
+    		// 마이크로서비스, 메뉴, 권한 삭제
+//			userGroupMapper.deleteUserGroupMicroService(userGroupId);
 			userGroupMapper.deleteUserGroupMenu(userGroupId);
 			userGroupMapper.deleteUserGroupRole(userGroupId);
-    		
+
 			// 사용자 삭제
 			List<String> userList = userService.getListUserByGroupId(userGroupId);
-			for(String userId : userList) {
+			for (String userId : userList) {
 				userService.deleteUser(userId);
 			}
 
@@ -326,7 +326,7 @@ public class UserGroupServiceImpl implements UserGroupService {
 
 		});
 
-    	return result;
+		return result;
     }
 
 }

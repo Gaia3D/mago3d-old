@@ -10,7 +10,7 @@ import lombok.ToString;
 import java.io.Serializable;
 
 /**
- * TODO: converter 로 합쳐야 함
+ * TODO converter 로 합쳐야 함
  */
 @ToString(callSuper = true)
 @Getter

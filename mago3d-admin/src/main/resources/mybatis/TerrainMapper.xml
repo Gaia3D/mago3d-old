@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gaia3d.persistence.TerrainMapper">
+
+	<!-- Terrain 목록 -->
+	<select id="getListTerrain" resultType="terrain">
+		SELECT * 
+		FROM terrain 
+		ORDER BY view_order, insert_date DESC
+	</select>
+	
+	<!-- terrain_id 최대값 -->
+	<select id="getTerrain" parameterType="int" resultType="terrain">
+		/* getTerrain */
+		SELECT * FROM terrain WHERE terrain_id = #{terrainId}
+	</select>
+
+	<!-- Terrain 등록 -->
+	<insert id="insertTerrain" parameterType="terrain">
+		/* insertTerrain */
+		<selectKey keyProperty="terrainId" resultType="int" order="BEFORE">
+			SELECT NEXTVAL('terrain_seq')
+		</selectKey>
+		INSERT INTO terrain(
+			terrain_id, terrain_name, terrain_type, geoserver_terrainprovider_layer_name, url, icon_path, basic, view_order, description
+		) values(
+			#{terrainId}, #{terrainName}, #{terrainType}, #{geoserverTerrainproviderLayerName}, #{url}, #{iconPath}, #{basic}, #{viewOrder}, #{description}
+		)
+	</insert>
+	
+	<!-- Terrain 수정 -->	
+	<update id="updateTerrain" parameterType="terrain">
+		/* updateTerrain */
+		UPDATE terrain
+		SET 
+			<if test="terrainName != null and terrainName != ''">
+			terrain_name = #{terrainName},
+			</if>
+			<if test="terrainType != null and terrainType != ''">
+				terrain_type = #{terrainType},
+			</if>
+			<if test="geoserverTerrainproviderLayerName != null and geoserverTerrainproviderLayerName != ''">
+				geoserver_terrainprovider_layer_name = #{geoserverTerrainproviderLayerName},
+			</if>
+			<if test="url != null and url != ''">
+				url = #{url},
+			</if>
+			<if test="iconPath != null and iconPath != ''">
+				icon_path = #{iconPath},
+			</if>
+			<if test="basic != null">
+				basic = #{basic},
+			</if>
+			<if test="description != null and description != ''">
+				description = #{description},
+			</if>
+			view_order = #{viewOrder}
+		WHERE terrain_id = #{terrainId}
+	</update>
+
+	<!-- Terrain 비활성화 -->
+	<update id="updateAllTerrainDisable">
+		/* updateAllTerrainDisable */
+		UPDATE terrain SET basic = false
+	</update>
+
+	<!-- Terrain 삭제-->
+	<delete id="deleteTerrain" parameterType="int">
+		/* deleteTerrain */
+		DELETE FROM terrain WHERE terrain_id = #{terrainId}
+	</delete>
+
+</mapper>

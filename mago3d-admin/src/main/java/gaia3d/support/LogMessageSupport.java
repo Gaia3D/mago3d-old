@@ -54,15 +54,12 @@ public class LogMessageSupport {
 	 * @param value
 	 */
 	public static void printMessage(Exception e, String message, Object... value) {
-		log.info("---------------------------------------------- stackTraceEnable = {}", stackTraceEnable);
 		if(stackTraceEnable) {
 			e.printStackTrace();
 		} else {
-			log.info("---------------------------------------------- logDisplay = {}", logDisplay);
 			if(logDisplay) {
 				e.printStackTrace();
 			} else {
-				log.info("---------------------------------------------- message = {}, value = {}", message, value);
 				log.info(message, value);
 			}
 		}

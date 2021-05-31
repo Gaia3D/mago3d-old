@@ -132,7 +132,7 @@ public class Search {
 				+ "&orderValue=" + getDefaultValue(this.orderValue)
 				+ "&listCounter=" + this.listCounter;
 	}
-
+	
 	public String getSearchParameters() {
 		// TODO append 사용해서 변경
 		return "&searchWord=" + getDefaultValue(this.searchWord)
@@ -146,7 +146,7 @@ public class Search {
 	}
 
 	private String getDefaultValue(String value) {
-		if(value == null || "".equals(value.trim())) {
+		if (value == null || "".equals(value.trim())) {
 			return "";
 		}
 		return value;

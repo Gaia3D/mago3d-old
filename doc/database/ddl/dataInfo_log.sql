@@ -22,7 +22,7 @@ create table data_info_log(
 	heading							numeric(8,5),
 	pitch							numeric(8,5),
 	roll							numeric(8,5),
-	change_type						varchar(30) default 'insert',
+	change_type						varchar(30) 						default 'insert',
 	metainfo						jsonb,
 	year							char(4)								default to_char(now(), 'yyyy'),
 	month							varchar(2)							default to_char(now(), 'MM'),

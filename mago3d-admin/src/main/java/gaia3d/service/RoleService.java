@@ -1,8 +1,8 @@
 package gaia3d.service;
 
-import java.util.List;
-
 import gaia3d.domain.role.Role;
+
+import java.util.List;
 
 public interface RoleService {
 	
@@ -12,12 +12,6 @@ public interface RoleService {
 	 * @return
 	 */
 	Long getRoleTotalCount(Role role);
-	
-	/**
-	 * role 사용자 수
-	 * @return
-	 */
-	// List<UserStatistics> getRoleUserCount();
 
 	/**
 	 * Role 목록
