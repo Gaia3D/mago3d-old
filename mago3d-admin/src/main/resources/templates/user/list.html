@@ -126,8 +126,6 @@
                                         <col class="col-name"></col>
                                         <col class="col-name"></col>
                                         <col class="col-name"></col>
-                                        <col class="col-name"></col>
-                                        <col class="col-name"></col>
                                         <col class="col-type"></col>
                                         <col class="col-functions"></col>
                                         <col class="col-functions"></col>
@@ -142,8 +140,6 @@
                                             <th scope="col" th:text="#{user.group.name}"></th>
                                             <th scope="col">아이디</th>
                                             <th scope="col">이름</th>
-                                            <th scope="col">부서명</th>
-                                            <th scope="col">직위</th>
                                             <th scope="col">상태</th>
                                             <th scope="col">비밀번호 수정</th>
                                             <th scope="col">수정</th>
@@ -155,7 +151,7 @@
                                     <tbody>
 <th:block th:if="${#lists.isEmpty(userList)}">
                                         <tr>
-                                            <td colspan="13" class="col-none">사용자 목록이 존재하지 않습니다.</td>
+                                            <td colspan="11" class="col-none">사용자 목록이 존재하지 않습니다.</td>
                                         </tr>
 </th:block>
 <th:block th:unless="${#lists.isEmpty(userList)}" th:each="user : ${userList}">
@@ -172,8 +168,6 @@
                                             <td class="col-name">
                                                 <a th:href="@{/user/detail(userId=${user.userId}, pageNo=${pagination.pageNo}, ${pagination.searchParameters})}" class="linkButton" th:text="${user.userName}"></a>
                                             </td>
-                                            <td class="col-name" th:text="${user.department}"></td>
-                                            <td class="col-name" th:text="${user.position}"></td>
                                             <td class="col-type" th:switch="${user.status}">
                                                 <span class="icon-glyph glyph-on on" style="margin-right:3px;"></span>
                                                 <th:block th:case="0">

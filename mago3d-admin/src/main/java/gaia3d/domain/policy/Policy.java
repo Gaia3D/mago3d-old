@@ -1,17 +1,10 @@
 package gaia3d.domain.policy;
 
-import java.time.LocalDateTime;
-
-import javax.validation.constraints.NotNull;
-
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 /**
  * 운영 정책
@@ -133,6 +126,8 @@ public class Policy {
  	private String contentLayerGroupRoot;
  	// data 그룹 최상위 그룹명
  	private String contentDataGroupRoot;
+	// 행정구역 사용여부
+	private Boolean contentDistrictAvailable;
  	
  	// 업로딩 가능 확장자. 3ds,obj,dae,collada,ifc,las,gml,citygml,indoorgml,jpg,jpeg,gif,png,bmp,zip
  	private String userUploadType;

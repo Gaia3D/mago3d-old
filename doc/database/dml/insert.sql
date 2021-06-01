@@ -74,9 +74,9 @@ insert into menu(menu_id, menu_type, menu_target, name, name_en, ancestor, paren
 values
     (1001, '1', '0', '데이터', 'DATA', 1001, 0, 1, 0, 1, '/data/map', null, 'dataMenu', 'dataContent', 'data', 'Y', 'Y', 'Y'),
     (1002, '1', '0', '변환', 'CONVERTER', 1002, 0, 1, 1, 2, '/upload-data/list', null, 'converterMenu', 'converterContent', 'converter', 'Y', 'Y', 'Y'),
-    (1003, '1', '0', '시뮬레이션', 'SIMULATION', 1003, 0, 1, 3, '/simulation', null, 'simulationMenu', 'simulationContent', 'simulation', 'Y', 'Y', 'Y'),
-    (1004, '1', '0', 'IOT', 'IOT', 1004, 0, 1, 4, '/simulation', null, 'simulationMenu', 'simulationContent', 'simulation', 'Y', 'Y', 'Y'),
-    (1005, '1', '0', '분석', 'ANALYSIS', 1005, 0, 1, 5, '/spatial', null, 'spatialMenu', 'spatialContent', 'spatial', 'Y', 'Y', 'Y'),
+    (1003, '1', '0', '시뮬레이션', 'SIMULATION', 1003, 0, 1, 1, 3, '/simulation', null, 'simulationMenu', 'simulationContent', 'simulation', 'Y', 'Y', 'Y'),
+    (1004, '1', '0', 'IOT', 'IOT', 1004, 0, 1, 1, 4, '/simulation', null, 'simulationMenu', 'simulationContent', 'simulation', 'Y', 'Y', 'Y'),
+    (1005, '1', '0', '분석', 'ANALYSIS', 1005, 0, 1, 1, 5, '/spatial', null, 'spatialMenu', 'spatialContent', 'spatial', 'Y', 'Y', 'Y'),
     (1006, '1', '0', '레이어', 'LAYER', 1006, 0, 1, 1, 6, '/layer/list', null, 'layerMenu', 'layerContent', 'layer', 'Y', 'Y', 'Y'),
     (1007, '1', '0', 'MyPage', 'MYPAGE', 1007, 0, 1, 1, 7, '/user-policy/modify', null, 'userPolicyMenu', 'userPolicyContent', 'userPolicy', 'Y', 'Y', 'Y');
 

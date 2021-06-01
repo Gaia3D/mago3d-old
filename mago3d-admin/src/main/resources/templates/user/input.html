@@ -98,22 +98,6 @@
                                 </tr>
                                 <tr>
                                     <th class="col-label" scope="row">
-                                        <label for="department">부서명</label>
-                                    </th>
-                                    <td class="col-input">
-                                        <input type="text" id="department" name="department" th:field="*{department}" class="m" maxlength="30" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="col-label" scope="row">
-                                        <label for="position">직위</label>
-                                    </th>
-                                    <td class="col-input">
-                                        <input type="text" id="position" name="position" th:field="*{position}" class="m" maxlength="50" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="col-label" scope="row">
                                         <label for="email" th:text="#{email}"></label>
                                         <span class="icon-glyph glyph-emark-dot color-warning"></span>
                                     </th>
@@ -311,8 +295,6 @@
 		$("#password").val("");
 		$("#passwordConfirm").val("");
 		$("#duplicationValue").val("");
-        $("#department").val("");
-        $("#position").val("");
         $("#email").val("");
 	}
 

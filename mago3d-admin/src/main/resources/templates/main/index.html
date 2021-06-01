@@ -272,6 +272,8 @@
 		</div>
 	</div>
 
+	<div th:replace="~{/widget/issue-template :: #issueListSource}"></div>
+	<div th:replace="~{/widget/data-adjust-log-template :: #dataAdjustLogListSource}"></div>
 	<div th:replace="~{/widget/digital-twin-service-template :: #digitalTwinServiceListSource}"></div>
 	<div th:replace="~{/widget/health-check-template :: #healthCheckListSource}"></div>
 
@@ -352,7 +354,7 @@
 			var autoRefresh = [[${autoRefresh}]];
 			if(autoRefresh) {
 				// Active 일때만 화면을 갱신함
-				setInterval(refreshMain, refreshTime);
+				//setInterval(refreshMain, refreshTime);
 			}
 		});
 
@@ -645,8 +647,6 @@
 				dataType: "json",
 				success: function(msg) {
 					$("#dataAdjustLogArea").empty();
-					return;
-
 					if(msg.statusCode <= 200) {
 						var template = Handlebars.compile($("#dataAdjustLogListSource").html());
 						var html = template(msg.dataAdjustLogList);
@@ -868,3 +868,4 @@
 	</script>
 </th:block>
 </body>
+</html>

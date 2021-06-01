@@ -43,8 +43,7 @@
 									<col class="col-id"></col>
 									<col class="col-toggle"></col>
 									<col class="col-toggle"></col>
-									<col class="col-functions"></col>
-									<col class="col-functions"></col>
+									<!--<col class="col-functions"></col>-->
 									<col class="col-functions"></col>
 									<col class="col-functions"></col>
 									<col class="col-functions"></col>
@@ -56,8 +55,7 @@
 					                    <th scope="col">기본 여부</th>
 					                    <th scope="col">사용 여부</th>
 					                    <th scope="col">사용자</th>
-										<th scope="col">도시</th>
-										<th scope="col">디지털 트윈</th>
+										<!--<th scope="col">디지털 트윈</th>-->
 					                    <th scope="col">메뉴</th>
 					                    <th scope="col">Role</th>
 					                    <th scope="col">편집</th>
@@ -67,7 +65,7 @@
 								<tbody>
 <th:block th:if="${#lists.isEmpty(userGroupList)}">
 									<tr>
-										<td colspan="10" class="col-none"><th:block th:text="#{user.group.empty}"></th:block></td>
+										<td colspan="8" class="col-none"><th:block th:text="#{user.group.empty}"></th:block></td>
 									</tr>
 </th:block>
 <th:block th:unless="${#lists.isEmpty(userGroupList)}" th:each="userGroup : ${userGroupList}">
@@ -111,12 +109,9 @@
 										<td class="col-type">
 											<a th:href="@{/user/list(searchOption=0, searchWord=user_group_name, searchValue=${userGroup.userGroupName})}" class="linkButton">보기</a>
 										</td>
-										<td class="col-type">
-											<a th:href="@{/user-group/urban-group(userGroupId=${userGroup.userGroupId})}" class="linkButton">수정</a>
-										</td>
-										<td class="col-type">
+										<!--<td class="col-type">
 											<a th:href="@{/user-group/micro-service(userGroupId=${userGroup.userGroupId})}" class="linkButton">수정</a>
-										</td>
+										</td>-->
 										<td class="col-type">
 											<a th:href="@{/user-group/menu(userGroupId=${userGroup.userGroupId})}" class="linkButton">수정</a>
 										</td>
