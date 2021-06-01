@@ -30,8 +30,8 @@
 		<div class="rotate">
 			<button type="button" class="rotateReset on" id="rotateReset" title="방향초기화"></button>
 			<!-- <input type="text" placeholder="0" id="rotateInput"/>&deg; -->
-			<input type="text" id="rotateInput" placeholder="0" readonly>&deg;
-	        <input type="text" id="pitchInput" placeholder="-90" readonly>&deg;
+			<input type="text" id="rotateInput" placeholder="0" readonly="readonly">&deg;
+	        <input type="text" id="pitchInput" placeholder="-90" readonly="readonly">&deg;
 			<button type="button" class="rotateLeft" id="rotateLeft" title="왼쪽으로 회전">왼쪽으로 회전</button>
 			<button type="button" class="rotateRight" id="rotateRight" title="오른쪽으로 회전">오른쪽으로 회전</button>
 	<!-- 		<button type="button" class="mapPolicy" id="mapPolicy" title="지도 설정">지도 설정</button> -->
@@ -90,7 +90,7 @@
 						<li>
 							<label for="dcColorPicker">색상</label>
 							<input type="color" id="dcColorPicker">
-							<input type="text" id="dcColorInput" value="#000000" size="6" readonly style="color: rgb(0, 0, 0);">
+							<input type="text" id="dcColorInput" value="#000000" size="6" readonly="readonly" style="color: rgb(0, 0, 0);">
 							<button type="button" id="dcColorApply" class="btnTextF">적용</button>
 							<button type="button" id="dcColorCancle" class="btnText">되돌리기</button>
 						</li>
@@ -102,15 +102,15 @@
 					<ul class="layerDiv">
 						<li>
 							<label for="dcLongitude">경도</label>
-							<input type="text" id="dcLongitude" name="longitude" readonly>
+							<input type="text" id="dcLongitude" name="longitude" readonly="readonly">
 						</li>
 						<li>
 							<label for="dcLatitude">위도</label>
-							<input type="text" id="dcLatitude" name="latitude" readonly>
+							<input type="text" id="dcLatitude" name="latitude" readonly="readonly">
 						</li>
 						<li>
 							<label for="dcAltitude">높이</label>
-							<input type="text" id="dcAltitude" name="altitude" size="10" readonly>
+							<input type="text" id="dcAltitude" name="altitude" size="10" readonly="readonly">
 							<button id="dcAltUp" data-type="up" type="button" class="up"></button>
 							<button id="dcAltDown" data-type="down" type="button" class="down"></button>
 							<label for="dcAltitudeOffset" style="width: 40px;">offset</label>

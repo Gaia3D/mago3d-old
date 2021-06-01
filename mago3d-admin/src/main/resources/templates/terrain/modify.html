@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
+<head>
+	<title>Terrain 수정</title>
+	<th:block layout:fragment="pageCustomStyle">
+		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+	</th:block>
+</head>
+<body>
+<th:block layout:fragment="pageCustomContent">
+	<div id="siteBody" class="site-body">
+		<div class="container">
+			<div class="site-content">
+				<div th:replace="~{/fragments/sub-menu :: #subMenuWrap}"></div>
+				<div class="page-area">
+					<div th:replace="~{/fragments/page-header :: #pageHeaderWrap}"></div>
+					<div class="page-content">
+						<form id="terrain" th:object="${terrain}" method="post" th:action="@{#}" onsubmit="return false;">
+							<input type="hidden" name="_method" value="PUT" />
+						<table class="input-table scope-row" summary="Terrain 수정 테이블">
+						<caption class="hiddenTag">Terrain 수정</caption>
+							<col class="col-label l" />
+							<col class="col-input" />
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="terrainName">Terrain 명</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input"><input type="text" id="terrainName" name="terrainName" th:field="*{terrainName}" class="l" size="70" /></td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label>Terrain 유형</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input radio-set">
+									<input type="radio" id="terrainType1" name="terrainType" th:field="*{terrainType}" value="cesium-default" checked />
+									<label for="terrainType1">Cesium 기본</label>
+									<input type="radio" id="terrainType2" name="terrainType" th:field="*{terrainType}" value="geoserver" />
+									<label for="terrainType2">GeoServer</label>
+									<input type="radio" id="terrainType3" name="terrainType" th:field="*{terrainType}" value="cesium-ion-default" />
+									<label for="terrainType3">Cesium Ion 기본</label>
+									<input type="radio" id="terrainType4" name="terrainType" th:field="*{terrainType}" value="cesium-ion-cdn" />
+									<label for="terrainType4">Cesium Ion CDN</label>
+									<input type="radio" id="terrainType5" name="terrainType" th:field="*{terrainType}" value="cesium-customer" />
+									<label for="terrainType5">Cesium Docker Provider</label>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="geoserverTerrainproviderLayerName">TerrainProvider 레이어 명</label>
+								</th>
+								<td class="col-input">
+									<input type="text" id="geoserverTerrainproviderLayerName" name="geoserverTerrainproviderLayerName" th:field="*{geoserverTerrainproviderLayerName}" class="l" maxlength="60" />
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="url">URL</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input"><input type="text" id="url" name="url" th:field="*{url}" class="xl" /></td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="iconPath">아이콘 경로</label>
+								</th>
+								<td class="col-input"><input type="text" id="iconPath" name="iconPath" th:field="*{iconPath}" class="xl" /></td>
+							</tr>
+							<tr>
+								<th class="col-label" scope="row">
+									<label for="viewOrder">표시 순서</label>
+								</th>
+								<td class="col-input">
+									<input type="text" id="viewOrder" name="viewOrder" th:field="*{viewOrder}" class="s"/>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									활성화 여부
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input radio-set">
+									<input type="radio" id="basicTrue" name="basic" value="true" checked />
+									<label for="basicTrue">활성화</label>
+									<input type="radio" id="basicFalse" name="basic" value="false" />
+									<label for="basicFalse">비활성화</label>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row"><label for="description">설명</label></th>
+								<td class="col-input"><input type="text" id="description" name="description" th:field="*{description}" class="xl" size="100" /></td>
+							</tr>
+						</table>
+						<div class="button-group">
+							<div id="insertRoleLink" class="center-buttons">
+								<button class="point" type="submit" onclick="update();">저장</button>
+								<a href="/terrain/list" class="button">목록</a>
+							</div>
+						</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</th:block>
+<th:block layout:fragment="pageCustomScript">
+
+	<script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.js(cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/navigation.js(cacheVersion=${contentCacheVersion})}"></script>
+
+<script th:inline="javascript">
+	$(document).ready(function() {
+		var isBasic = "[[${terrain.basic}]]";
+		if(isBasic === "false") {
+			// 기본 그룹이 아닐 경우만 사용 유무 수정 가능
+			$("[name=basic]").filter("[value='[[${terrain.basic}]]']").prop("checked",true);
+		}
+	});
+
+	function validate() {
+		if( $("#terrainName").val().trim() === "" ) {
+			alert("Terrain 명을 입력하여 주십시오.");
+			$("#terrainName").focus();
+			return false;
+		}
+		else if( $("#url").val().trim() === "" ) {
+			alert("url을 입력하여 주십시오.");
+			$("#url").focus();
+			return false;
+		}
+
+		if($("#viewOrder").val() !== null && $("#viewOrder").val() !== "") {
+			if(!isNumber($("#viewOrder").val())) {
+				$("#viewOrder").focus();
+				return false;
+			}
+		}
+	}
+
+	// 저장
+	var updateFlag = true;
+	function update() {
+		if (validate() == false) {
+			return false;
+		}
+		if(updateFlag) {
+			updateFlag = false;
+			var formData = $("#terrain").serialize();
+			$.ajax({
+				url: "/terrains/[[${terrain.terrainId}]]",
+				type: "POST",
+				headers: {"X-Requested-With": "XMLHttpRequest"},
+				data: formData,
+				success: function(msg){
+					if(msg.statusCode <= 200) {
+						alert(JS_MESSAGE["update"]);
+					} else {
+						alert(JS_MESSAGE[msg.errorCode]);
+						console.log("---- " + msg.message);
+					}
+					updateFlag = true;
+				},
+				error:function(request, status, error){
+					alert(JS_MESSAGE["ajax.error.message"]);
+					updateFlag = true;
+				}
+			});
+		} else {
+			alert(JS_MESSAGE["button.dobule.click"]);
+		}
+	}
+</script>
+</th:block>
+</body>
+</html>

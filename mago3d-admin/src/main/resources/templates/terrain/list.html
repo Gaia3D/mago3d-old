@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
+<head>
+	<title>Terrain</title>
+	<th:block layout:fragment="pageCustomStyle">
+		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+	</th:block>
+</head>
+<body>
+<th:block layout:fragment="pageCustomContent">
+	<div id="siteBody" class="site-body">
+		<div class="container">
+			<div class="site-content">
+				<div th:replace="~{/fragments/sub-menu :: #subMenuWrap}"></div>
+				<div class="page-area">
+					<div th:replace="~{/fragments/page-header :: #pageHeaderWrap}"></div>
+					<div class="page-content">
+<!--						<div class="filters">-->
+<!--						</div>-->
+						<div class="list" style="margin-top: 10px;">
+					    	<div class="list-header row">
+								<div class="list-functions u-pull-right">
+									<div style="padding-bottom: 3px;" class="button-group">
+										<a href="/terrain/input" class="button" title="Terrain 등록">Terrain 등록</a>
+									</div>
+								</div>
+							</div>
+							<table class="list-table scope-col" summary="Terrain 목록 테이블">
+							<caption class="hiddenTag">Terrain 목록</caption>
+								<thead>
+								<tr>
+									<th scope="col">Terrain 명</th>
+									<th scope="col">Terrain 유형</th>
+									<th scope="col">URL</th>
+									<th scope="col">아이콘 경로</th>
+									<th scope="col">활성화 유무</th>
+									<th scope="col">표시 순서</th>
+									<th scope="col">수정</th>
+									<th scope="col">삭제</th>
+									<th scope="col">등록일</th>
+								</tr>
+								</thead>
+<th:block th:if="${#lists.isEmpty(terrainList)}">
+									<tr>
+										<td colspan="9" class="col-none">Terrain이 존재하지 않습니다.</td>
+									</tr>
+</th:block>
+<th:block th:unless="${#lists.isEmpty(terrainList)}" th:each="terrain : ${terrainList}">
+									<tr>
+										<td class="col-name" th:text="${terrain.terrainName}" style="text-align: left;"></td>
+										<td class="col-type">
+											<th:block th:if="${#strings.equals(terrain.terrainType, 'cesium-default')}">Cesium 기본</th:block>
+											<th:block th:if="${#strings.equals(terrain.terrainType, 'geoserver')}">GeoServer</th:block>
+											<th:block th:if="${#strings.equals(terrain.terrainType, 'cesium-ion-default')}">Cesium Ion 기본</th:block>
+											<th:block th:if="${#strings.equals(terrain.terrainType, 'cesium-ion-cdn')}">Cesium Ion CDN</th:block>
+											<th:block th:if="${#strings.equals(terrain.terrainType, 'cesium-customer')}">Cesium Docker Provider</th:block>
+										</td>
+										<td class="col-key" th:text="${terrain.url}" style="text-align: left;"></td>
+										<td class="col-key" style="text-align: left;">
+											<th:block th:text="${terrain.iconPath}"></th:block>
+										</td>
+										<td class="col-toggle">
+											<th:block th:if="${#bools.isTrue(terrain.basic)}">활성화</th:block>
+											<th:block th:unless="${#bools.isTrue(terrain.basic)}">비 활성화</th:block>
+										</td>
+										<td class="col-key" style="text-align: left;">
+											<th:block th:text="${terrain.viewOrder}"></th:block>
+										</td>
+										<td class="col-functions">
+											<a th:href="@{/terrain/modify(terrainId=${terrain.terrainId})}" class="linkButton">수정</a>
+										</td>
+										<td class="col-functions">
+											<a th:href="@{/terrain/delete(terrainId=${terrain.terrainId})}" class="image-button button-delete" th:text="#{delete}"
+											   onclick="return deleteWarning();"></a>
+										</td>
+										<td class="col-date-time">
+											<th:block th:text="${#temporals.format(terrain.insertDate, 'yyyy-MM-dd HH:mm:ss')}"></th:block>
+										</td>
+									</tr>
+</th:block>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+<th:block layout:fragment="pageCustomScript">
+
+<script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.js(cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/navigation.js(cacheVersion=${contentCacheVersion})}"></script>
+
+<script th:inline="javascript">
+$(document).ready(function() {
+
+});
+
+</script>
+</th:block>
+</body>
+</html>
