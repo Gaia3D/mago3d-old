@@ -81,6 +81,15 @@
 			cesiumViewerOption.fullscreenButton = false;
 			cesiumViewerOption.geocoder = false;
 			cesiumViewerOption.baseLayerPicker = false;
+
+            cesiumViewerOption.defaultControl = {};
+            cesiumViewerOption.defaultControl.zoom = false;
+            cesiumViewerOption.defaultControl.initCamera = false;
+            cesiumViewerOption.defaultControl.fullScreen = false;
+            cesiumViewerOption.defaultControl.measure = false;
+            cesiumViewerOption.defaultControl.tools = false;
+            cesiumViewerOption.defaultControl.attribution = false;
+            cesiumViewerOption.defaultControl.overviewMap = false;
 			
 		/**
 		 * @param {Stirng} containerId container div id. required.
@@ -106,20 +115,19 @@
 		if(viewer.baseLayerPicker) viewer.baseLayerPicker.destroy();
 		
 		// mago3d logo 추가
-		Mago3D.tempCredit(viewer);
-		
+
 		magoManager.on(Mago3D.MagoManager.EVENT_TYPE.CLICK, function(result) {
 			if(beforePointId !== undefined && beforePointId !== null) {
 				remove(beforePointId);
 			}
 			
-			var longitude = result.clickCoordinate.geographicCoordinate.longitude;
-			var latitude = result.clickCoordinate.geographicCoordinate.latitude;
-			var altitude = result.clickCoordinate.geographicCoordinate.altitude;
+			var longitude = result.point.geographicCoordinate.longitude;
+			var latitude = result.point.geographicCoordinate.latitude;
+			var altitude = result.point.geographicCoordinate.altitude;
 			
-			var x = result.clickCoordinate.worldCoordinate.x;
-			var y = result.clickCoordinate.worldCoordinate.y;
-			var z = result.clickCoordinate.worldCoordinate.z;
+			var x = result.point.worldCoordinate.x;
+			var y = result.point.worldCoordinate.y;
+			var z = result.point.worldCoordinate.z;
 			
 			var pointGraphic = new Cesium.PointGraphics({
 				pixelSize : 10,

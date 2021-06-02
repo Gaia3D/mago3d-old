@@ -7,6 +7,6 @@ update geopolicy set
 
 -- 적절한 위치로 수정해야 함
 update geopolicy
-set init_longitude = '127.00598139968887',
-    init_latitude = '37.44829387479118';
+set init_longitude = '126.71899000749444',
+    init_latitude = '37.36771484526041';
 commit;
