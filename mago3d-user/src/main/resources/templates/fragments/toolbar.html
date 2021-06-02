@@ -1,29 +1,20 @@
-<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
+﻿<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <body>
-<div id="toolbarWrap">
-	<div class="ctrlWrap">
-		<div class="zoom">
-			<button type="button" id="mapCtrlReset" class="reset" th:title="#{toolbar.initialize.location}"><th:block th:text="#{toolbar.initialize.location}"></th:block></button>
-			<button type="button" id="mapCtrlAll" class="zoomall" th:title="#{toolbar.zoom.all}"><th:block th:text="#{toolbar.zoom.all}"></th:block></button>
-			<button type="button" id="mapCtrlZoomIn" class="zoomin" th:title="#{toolbar.zoom.in}"><th:block th:text="#{toolbar.zoom.in}"></th:block></button>
-			<button type="button" id="mapCtrlZoomOut" class="zoomout" th:title="#{toolbar.zoom.out}"><th:block th:text="#{toolbar.zoom.out}"></th:block></button>
-			<button type="button" id="mapCtrlDistance" class="measures distance" data-type="LineString" th:title="#{toolbar.distance}"><th:block th:text="#{toolbar.distance}"></th:block></button>
-			<button type="button" id="mapCtrlArea" class="measures area" data-type="Polygon" th:title="#{toolbar.area}"><th:block th:text="#{toolbar.area}"></th:block></button>
-			<button type="button" id="mapCapture" class="save" data-type="" th:title="#{common.save}"><th:block th:text="#{common.save}"></th:block></button>
+<div id="toolbarWrap">	
+		<div class="toolbox-menu">
+			<button type="button" id="mapCtrlReset">처음</button>
+			<button type="button" id="mapCtrlAll">전체화면</button>
+			<button type="button" id="">레이어</button>
+			<button type="button" id="mapCtrlDistance" data-type="LineString">측정</button>
+			<button type="button" id="">화면분할</button>
+			<button type="button" id="">시점고정</button>
+			<button type="button" id="">위치조회</button>
+			<button type="button" id="mapPolicy">설정</button>
 		</div>
-		<div class="rotate">
-			<button type="button" class="rotateReset on" id="rotateReset" th:title="#{toolbar.initialize.direction}"><th:block th:text="#{toolbar.initialize.direction}"></th:block></button>
-			<label for="rotateInput" class="hiddenTag">rotate</label>
-			<input type="text" id="rotateInput" placeholder="0" readonly="readonly">&deg;
-			<label for="pitchInput" class="hiddenTag">pitch</label>
-			<input type="text" id="pitchInput" placeholder="-90" readonly="readonly">&deg;
-			<button type="button" class="rotateLeft" id="rotateLeft" th:title="#{toolbar.rotate.camera.left}"><th:block th:text="#{toolbar.rotate.camera.left}"></th:block></button>
-			<button type="button" class="rotateRight" id="rotateRight" th:title="#{toolbar.rotate.camera.right}"><th:block th:text="#{toolbar.rotate.camera.right}"></th:block></button>
+		<div class="toolbox-zooming">
+			<button type="button" id="mapCtrlZoomIn"><span class="blind">확대</span></button>
+			<button type="button" id="mapCtrlZoomOut"><span class="blind">축소</span></button>
 		</div>
-		<div class="index">
-			<button type="button" class="magoSet" id="mapPolicy" th:title="#{toolbar.mago3d.settings}"><th:block th:text="#{toolbar.mago3d.settings}"></th:block></button>
-		</div>
-	</div>
 	<div id="mago3DSettingLabelLayer" class="labelLayer" style="display:none;">
 		<div class="layerHeader">
 			<h3><th:block th:text="#{toolbar.mago3d.settings}"></th:block></h3>
@@ -107,7 +98,7 @@
 							<label for="dcColorPicker"><th:block th:text="#{common.color}"></th:block></label>
 							<input type="color" id="dcColorPicker">
 							<label for="dcColorInput" class="hiddenTag"><th:block th:text="#{toolbar.rgb.color.table}"></th:block></label>
-							<input type="text" id="dcColorInput" value="#000000" size="6" readonly="readonly" style="color: rgb(0, 0, 0);">
+							<input type="text" id="dcColorInput" value="#000000" size="6" readonly style="color: rgb(0, 0, 0);">
 							<button type="button" id="dcColorApply" class="btnTextF"><th:block th:text="#{common.apply}"></th:block></button>
 							<button type="button" id="dcColorCancle" class="btnText"><th:block th:text="#{common.revert}"></th:block></button>
 						</li>
@@ -119,15 +110,15 @@
 					<ul class="layerDiv">
 						<li>
 							<label for="dcLongitude"><th:block th:text="#{common.longitude}"></th:block></label>
-							<input type="text" id="dcLongitude" name="longitude" readonly="readonly">
+							<input type="text" id="dcLongitude" name="longitude" readonly>
 						</li>
 						<li>
 							<label for="dcLatitude"><th:block th:text="#{common.latitude}"></th:block></label>
-							<input type="text" id="dcLatitude" name="latitude" readonly="readonly">
+							<input type="text" id="dcLatitude" name="latitude" readonly>
 						</li>
 						<li>
 							<label for="dcAltitude"><th:block th:text="#{common.altitude}"></th:block></label>
-							<input type="text" id="dcAltitude" name="altitude" size="10" readonly="readonly">
+							<input type="text" id="dcAltitude" name="altitude" size="10" readonly>
 							<button id="dcAltUp" data-type="up" type="button" class="up"></button>
 							<button id="dcAltDown" data-type="down" type="button" class="down"></button>
 							<label for="dcAltitudeOffset" style="width: 40px;">offset</label>
@@ -139,7 +130,7 @@
 					<ul class="layerDiv">
 						<li>
 							<label for="dcPitch">x(pitch)</label>
-							<input type="text" id="dcPitch" name="pitch" size="2" readonly="readonly">
+							<input type="text" id="dcPitch" name="pitch" size="2" readonly>
 							<button type="button" class="dcRangeBtn rangePrev" data-type="prev" id="rcPitchPrev"></button>
 							<label for="dcPitchRange" class="hiddenTag">x(pitch) <th:block th:text="#{toolbar.slide}"></th:block></label>
 							<input id="dcPitchRange" data-type="Pitch" style="width: 140px;" type="range" min="-360" max="360" step="1" value="1">
@@ -148,7 +139,7 @@
 
 						<li>
 							<label for="dcRoll">y(roll)</label>
-							<input type="text" id="dcRoll" name="roll" size="2" readonly="readonly">
+							<input type="text" id="dcRoll" name="roll" size="2" readonly>
 							<button type="button" class="dcRangeBtn rangePrev" data-type="prev" id="rcRollPrev"></button>
 							<label for="dcRollRange" class="hiddenTag">y(roll) <th:block th:text="#{toolbar.slide}"></th:block></label>
 							<input id="dcRollRange" data-type="Roll" style="width: 140px;" type="range" min="-360" max="360" step="1" value="1">
@@ -157,7 +148,7 @@
 
 						<li>
 							<label for="dcHeading">z(heading)</label>
-							<input type="text" id="dcHeading" name="heading" size="2" readonly="readonly">
+							<input type="text" id="dcHeading" name="heading" size="2" readonly>
 							<button type="button" class="dcRangeBtn rangePrev" data-type="prev" id="rcHeadingPrev"></button>
 							<label for="dcHeadingRange" class="hiddenTag">z(heading) <th:block th:text="#{toolbar.slide}"></th:block></label>
 							<input id="dcHeadingRange" data-type="Heading" style="width: 140px;" type="range" min="-360" max="360" step="1" value="1">
