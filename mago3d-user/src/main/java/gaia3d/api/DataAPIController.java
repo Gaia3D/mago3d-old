@@ -22,7 +22,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/api/datas", produces = MediaTypes.HAL_JSON_VALUE)
-public class DataApiController {
+public class DataAPIController {
 
     private final DataService dataService;
     private final ModelMapper modelMapper;
@@ -53,7 +53,7 @@ public class DataApiController {
 
         List<EntityModel<DataInfoDto>> dataInfoDtoList = dataInfoList.stream()
                 .map(f -> EntityModel.of(modelMapper.map(f, DataInfoDto.class))
-                        .add(linkTo(DataApiController.class).slash(f.getDataId()).withSelfRel()))
+                        .add(linkTo(DataAPIController.class).slash(f.getDataId()).withSelfRel()))
                 .collect(Collectors.toList());
 
 //        CollectionModel<EntityModel<DataInfoDto>> model = CollectionModel.of(dataInfoDtoList);
@@ -66,7 +66,7 @@ public class DataApiController {
         );
         PagedModel<EntityModel<DataInfoDto>> pagedModel = PagedModel.of(dataInfoDtoList, metadata);
 
-        pagedModel.add(linkTo(DataApiController.class).withSelfRel());
+        pagedModel.add(linkTo(DataAPIController.class).withSelfRel());
         pagedModel.add(Link.of("/docs/index.html#resources-data-info-list").withRel("profile"));
 
         return ResponseEntity.ok(pagedModel);
@@ -84,7 +84,7 @@ public class DataApiController {
 		dInfo.setDataId(id);
         DataInfoDto dto = modelMapper.map(dataService.getData(dInfo), DataInfoDto.class);
         EntityModel<DataInfoDto> dataInfo = EntityModel.of(dto);
-        dataInfo.add(linkTo(DataApiController.class).slash(id).withSelfRel());
+        dataInfo.add(linkTo(DataAPIController.class).slash(id).withSelfRel());
         dataInfo.add(Link.of("/docs/index.html#resources-data-info-get").withRel("profile"));
 
         return ResponseEntity.ok(dataInfo);
