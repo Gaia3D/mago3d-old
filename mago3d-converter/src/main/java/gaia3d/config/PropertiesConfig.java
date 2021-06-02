@@ -22,6 +22,8 @@ public class PropertiesConfig {
 	private String serverIp;
 	private String serverPort;
 	private String restAuthKey;
+	// 운영 서버용. 로그 표시 유무 설정
+	private boolean logDisplay;
 	
 	// 사용자 서버
 	private String cmsUserRestServer;
@@ -32,7 +34,6 @@ public class PropertiesConfig {
 	private String rabbitmqServerPort;
 	private String rabbitmqUser;
 	private String rabbitmqPassword;
-	
 	private String rabbitmqConverterQueue;
 	private String rabbitmqConverterExchange;
 	private String rabbitmqConverterRoutingKey;
