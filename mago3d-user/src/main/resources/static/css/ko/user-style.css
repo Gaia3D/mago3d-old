@@ -200,23 +200,23 @@ ul.nav li.converter {background-position: 24px -60px;}
 ul.nav li.layer {background-position: 24px -136px;}
 ul.nav li.userPolicy {background-position: 24px -217px;}
 ul.nav li.simulation {background-position: 22px -310px;}
-ul.nav li.iot {background-position: 24px -403px;}
-ul.nav li.spatial {background-position: 24px -490px;}
+ul.nav li.iot {background-position: 22px -403px;}
+ul.nav li.spatial {background-position: 22px -490px;}
 ul.nav li:hover.data {background-position: -78px 20px;}
 ul.nav li:hover.converter {background-position: -78px -60px;}
 ul.nav li:hover.layer {background-position: -78px -136px;}
 ul.nav li:hover.userPolicy {background-position: -78px -217px;}
 ul.nav li:hover.simulation {background-position: -77px -310px;}
-ul.nav li:hover.iot {background-position: -77px -403px;}
-ul.nav li:hover.spatial {background-position: -77px -490px;}
+ul.nav li:hover.iot {background-position: -76px -403px;}
+ul.nav li:hover.spatial {background-position: -76px -490px;}
 ul.nav li:first-child {border-top: 1px solid #54a3ed;} 
 ul.nav li.data.on {background-position: -78px 20px; background-color: #2f94f3;color:white;} 
 ul.nav li.converter.on {background-position: -78px -60px; background-color: #2f94f3;color:white;}
 ul.nav li.layer.on {background-position: -78px -136px; background-color: #2f94f3;color:white;}
 ul.nav li.userPolicy.on {background-position: -78px -17px; background-color: #2f94f3;color:white;}
 ul.nav li.simulation.on {background-position: -77px -310px; background-color: #2f94f3;color:white;}
-ul.nav li.iot.on {background-position: -77px -403px; background-color: #2f94f3;color:white;}
-ul.nav li.spatial.on {background-position: -78px -490px; background-color: #2f94f3;color:white;}
+ul.nav li.iot.on {background-position: -76px -403px; background-color: #2f94f3;color:white;}
+ul.nav li.spatial.on {background-position: -76px -490px; background-color: #2f94f3;color:white;}
 
 
 /* CONTENTSBTN */
@@ -2397,31 +2397,31 @@ button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusri
 h1.magologo {display:block; width:250px; height:30px; background:url(/images/ko/logo_mago3d.png) no-repeat 10px 1px;}
 
 /* toolbox */
-.toolbox-menu {clear:both; position: absolute; top: 12px; right: 10px; z-index: 1; width:43px; font-family: 'NotoKrL'; Height:350px; margin:0; padding:0; border-top-left-radius:5px; border-top-right-radius:5px;}
-.toolbox-menu > button {cursor:pointer; display:block; font-size:10px; color:#d8d7d7; letter-spacing:-0.5px; vertical-align:bottom; }
-.toolbox-menu > button::before {content:""; display:inline-block; width:0; height:75%; margin-right:0; vertical-align:bottom;} 
-.toolbox-menu > button:first-child {margin:0; padding:0; height:50px; width:43px; background: #1b1b1b url(/images/ko/ic_toolbox.png) no-repeat -57px -3px; border-bottom-left-radius:0; border-bottom-right-radius:0; border-top-left-radius:5px; border-top-right-radius:5px; border-top:1px solid #3e3e3e; border-left:1px solid #3e3e3e; border-right:1px solid #3e3e3e;}
-.toolbox-menu > button:nth-child(2) {margin:0; padding:0; height:50px; width:43px; background: #1b1b1b url(/images/ko/ic_toolbox.png) no-repeat -57px -54px; border-radius:0; border-top:1px solid #3e3d3d; border-left:1px solid #3e3e3e; border-right:1px solid #3e3e3e;}
-.toolbox-menu > button:nth-child(3) {margin:0; padding:0; height:50px; width:43px; background: #1b1b1b url(/images/ko/ic_toolbox.png) no-repeat -57px -108px; border-radius:0; border-top:1px solid #3e3d3d; border-left:1px solid #3e3e3e; border-right:1px solid #3e3e3e;}
-.toolbox-menu > button:nth-child(4) {margin:0; padding:0; height:50px; width:43px; background: #1b1b1b url(/images/ko/ic_toolbox.png) no-repeat -57px -152px; border-radius:0; border-top:1px solid #3e3d3d; border-left:1px solid #3e3e3e; border-right:1px solid #3e3e3e;}
-.toolbox-menu > button:nth-child(5) {margin:0; padding:0; height:50px; width:43px; background: #1b1b1b url(/images/ko/ic_toolbox.png) no-repeat -57px -199px; border-radius:0; border-top:1px solid #3e3d3d; border-left:1px solid #3e3e3e; border-right:1px solid #3e3e3e;}
-.toolbox-menu > button:nth-child(6) {margin:0; padding:0; height:50px; width:43px; background: #1b1b1b url(/images/ko/ic_toolbox.png) no-repeat -57px -252px; border-radius:0; border-top:1px solid #3e3d3d; border-left:1px solid #3e3e3e; border-right:1px solid #3e3e3e;}
-.toolbox-menu > button:nth-child(7) {margin:0; padding:0; height:50px; width:43px; background: #1b1b1b url(/images/ko/ic_toolbox.png) no-repeat -57px -303px; border-radius:0; border-top:1px solid #3e3d3d; border-left:1px solid #3e3e3e; border-right:1px solid #3e3e3e;}
-.toolbox-menu > button:last-child {margin:0; padding:0; height:50px; width:43px; background: #1b1b1b url(/images/ko/ic_toolbox.png) no-repeat -57px -354px; border-radius:0; border-top-left-radius:0; border-top-right-radius:0; border-bottom-left-radius:7px; border-bottom-right-radius:7px; border-top:1px solid #3e3d3d; border-bottom:1px solid #3e3e3e; border-left:1px solid #3e3e3e; border-right:1px solid #3e3e3e;}
-.toolbox-menu > button:first-child:hover {color:white; background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -57px -3px; border-top-left-radius:5px; border-top-right-radius:5px; border-top:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
-.toolbox-menu > button:nth-child(2):hover {color:white; background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -57px -54px; border-top:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
-.toolbox-menu > button:nth-child(3):hover {color:white; background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -57px -108px; border-top:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
-.toolbox-menu > button:nth-child(4):hover {color:white; background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -57px -152px; border-top:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
-.toolbox-menu > button:nth-child(5):hover {color:white; background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -57px -199px; border-top:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
-.toolbox-menu > button:nth-child(6):hover {color:white; background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -57px -252px; border-top:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
-.toolbox-menu > button:nth-child(7):hover {color:white; background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -57px -303px; border-top:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
-.toolbox-menu > button:last-child:hover {color:white; background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -57px -354px; border-bottom:1px solid #126cdb; border-top:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
-.toolbox-zooming {position:absolute; right:10px; top:450px; z-index: 1; width:43px; height:auto; margin:0; padding:0; border-top-left-radius:7px; border-top-right-radius:7px; border-bottom-left-radius:7px; border-bottom-right-radius:7px;}
+.toolbox-menu {clear:both; position: absolute; top: 12px; right: 15px; z-index: 1; width:43px; font-family: 'NotoKrR'; Height:350px; margin:0; padding:0; border-top-left-radius:5px; border-top-right-radius:5px;}
+.toolbox-menu > button {cursor:pointer; display:block; font-size:11px; color:black; letter-spacing:-0.5px; vertical-align:bottom; }
+.toolbox-menu > button::before {content:""; display:inline-block; width:0; height:66%; margin-right:0; vertical-align:bottom;} 
+.toolbox-menu > button:first-child {margin:0; padding:0; height:54px; width:48px; background: white url(/images/ko/ic_toolbox.png) no-repeat 0 -1px; border-bottom-left-radius:0; border-bottom-right-radius:0; border-top-left-radius:5px; border-top-right-radius:5px; border-top:1px solid #d9d8d8; border-left:1px solid #a9a9a9; border-right:1px solid #a9a9a9;}
+.toolbox-menu > button:nth-child(2) {margin:0; padding:0; height:54px; width:48px; background: white url(/images/ko/ic_toolbox.png) no-repeat 0 -52px; border-radius:0; border-top:1px solid #d9d8d8; border-left:1px solid #a9a9a9; border-right:1px solid #a9a9a9;}
+.toolbox-menu > button:nth-child(3) {margin:0; padding:0; height:54px; width:48px; background: white url(/images/ko/ic_toolbox.png) no-repeat 0 -106px; border-radius:0; border-top:1px solid #d9d8d8; border-left:1px solid #a9a9a9; border-right:1px solid #a9a9a9;}
+.toolbox-menu > button:nth-child(4) {margin:0; padding:0; height:54px; width:48px; background: white url(/images/ko/ic_toolbox.png) no-repeat 0 -150px; border-radius:0; border-top:1px solid #d9d8d8; border-left:1px solid #a9a9a9; border-right:1px solid #a9a9a9;}
+.toolbox-menu > button:nth-child(5) {margin:0; padding:0; height:54px; width:48px; background: white url(/images/ko/ic_toolbox.png) no-repeat 0 -197px; border-radius:0; border-top:1px solid #d9d8d8; border-left:1px solid #a9a9a9; border-right:1px solid #a9a9a9;}
+.toolbox-menu > button:nth-child(6) {margin:0; padding:0; height:54px; width:48px; background: white url(/images/ko/ic_toolbox.png) no-repeat 0 -250px; border-radius:0; border-top:1px solid #d9d8d8; border-left:1px solid #a9a9a9; border-right:1px solid #a9a9a9;}
+.toolbox-menu > button:nth-child(7) {margin:0; padding:0; height:54px; width:48px; background: white url(/images/ko/ic_toolbox.png) no-repeat 0 -301px; border-radius:0; border-top:1px solid #d9d8d8; border-left:1px solid #a9a9a9; border-right:1px solid #a9a9a9;}
+.toolbox-menu > button:last-child {margin:0; padding:0; height:54px; width:48px; background: white url(/images/ko/ic_toolbox.png) no-repeat 0 -352px; border-radius:0; border-top-left-radius:0; border-top-right-radius:0; border-bottom-left-radius:7px; border-bottom-right-radius:7px; border-top:1px solid #a9a9a9; border-bottom:1px solid #a9a9a9; border-left:1px solid #a9a9a9; border-right:1px solid #a9a9a9;}
+.toolbox-menu > button:first-child:hover {color:white; background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -55px -1px; border-top-left-radius:5px; border-top-right-radius:5px; border-top:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
+.toolbox-menu > button:nth-child(2):hover {color:white; background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -55px -52px; border-top:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
+.toolbox-menu > button:nth-child(3):hover {color:white; background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -55px -106px; border-top:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
+.toolbox-menu > button:nth-child(4):hover {color:white; background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -55px -150px; border-top:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
+.toolbox-menu > button:nth-child(5):hover {color:white; background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -55px -197px; border-top:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
+.toolbox-menu > button:nth-child(6):hover {color:white; background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -55px -250px; border-top:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
+.toolbox-menu > button:nth-child(7):hover {color:white; background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -55px -301px; border-top:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
+.toolbox-menu > button:last-child:hover {color:white; background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -55px -352px; border-bottom:1px solid #126cdb; border-top:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
+.toolbox-zooming {position:absolute; right:15px; top:480px; z-index: 1; width:43px; height:auto; margin:0; padding:0; border-top-left-radius:7px; border-top-right-radius:7px; border-bottom-left-radius:7px; border-bottom-right-radius:7px;}
 .toolbox-zooming > button {cursor:pointer; font-size:10px; color:black; letter-spacing:-0.5px; vertical-align:bottom;}
-.toolbox-zooming > button:first-child {margin:0; padding:0; height:40px; width:43px; background: #1b1b1b url(/images/ko/ic_toolbox.png) no-repeat -57px -438px; border-top-left-radius:5px; border-bottom-left-radius:0; border-bottom-right-radius:0; border-top-right-radius:5px; border-top:1px solid #3e3d3d; border-left:1px solid #3e3e3e; border-right:1px solid #3e3e3e;}
-.toolbox-zooming > button:last-child {margin:0 0 0 0; padding:0; height:40px; width:43px; background: #1b1b1b url(/images/ko/ic_toolbox.png) no-repeat -57px -478px; border-top-left-radius:0; border-top-right-radius:0; border-bottom-left-radius:5px; border-bottom-right-radius:5px; border-top:1px solid #3e3d3d; border-bottom:1px solid #3e3e3e; border-left:1px solid #3e3e3e; border-right:1px solid #3e3e3e;}
-.toolbox-zooming > button:first-child:hover {background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -57px -438px; border-top-left-radius:7px; border-top-right-radius:7px; border-top:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
-.toolbox-zooming > button:last-child:hover {background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -57px -478px; border-bottom-left-radius:7px; border-bottom-right-radius:7px; border-top:1px solid #126cdb; border-bottom:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
+.toolbox-zooming > button:first-child {margin:0; padding:0; height:42px; width:48px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -438px; border-top-left-radius:5px; border-bottom-left-radius:0; border-bottom-right-radius:0; border-top-right-radius:5px; border-top:1px solid white; border-left:1px solid #a9a9a9; border-right:1px solid #a9a9a9;}
+.toolbox-zooming > button:last-child {margin:0 0 0 0; padding:0; height:42px; width:48px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -478px; border-top-left-radius:0; border-top-right-radius:0; border-bottom-left-radius:5px; border-bottom-right-radius:5px; border-top:1px solid #d9d8d8; border-bottom:1px solid #a9a9a9; border-left:1px solid #a9a9a9; border-right:1px solid #a9a9a9;}
+.toolbox-zooming > button:first-child:hover {background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -53px -438px; border-top-left-radius:7px; border-top-right-radius:7px; border-top:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
+.toolbox-zooming > button:last-child:hover {background:#126cdb url(/images/ko/ic_toolbox.png) no-repeat -53px -478px; border-bottom-left-radius:7px; border-bottom-right-radius:7px; border-top:1px solid #126cdb; border-bottom:1px solid #126cdb; border-left:1px solid #126cdb; border-right:1px solid #126cdb;}
 
 /* scrollbar */
 ::-webkit-scrollbar-track { background: #f4f2f2; }
