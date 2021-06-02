@@ -26,21 +26,8 @@ public class AMQPPublishServiceImpl implements AMQPPublishService {
 	private RabbitTemplate rabbitTemplate;
 	
 	@Transactional
-	public void send(String exchange, String routingKey, QueueMessage queueMessage) throws AmqpException {
+	public void send(String exchange, String routingKey, QueueMessage queueMessage) {
 		log.info("@@ Publish send message >>> {}", queueMessage);
-//		rabbitTemplate.convertAndSend(propertiesConfig.getQueueName(), queueMessage);
-
-//		Message message = null;
-//		try {
-//			message = MessageBuilder
-//					.withBody(queueMessage.toString().getBytes("UTF-8"))
-//					.setContentType(MessageProperties.CONTENT_TYPE_JSON)
-//					.build();
-//		} catch(UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//			throw new AmqpException("QueueMessage GetBytes Exception");
-//		}
-
-		rabbitTemplate.convertAndSend(propertiesConfig.getRabbitmqConverterExchange(), propertiesConfig.getRabbitmqConverterRoutingKey(), queueMessage);
+		rabbitTemplate.convertAndSend(exchange, routingKey, queueMessage);
 	}
 }

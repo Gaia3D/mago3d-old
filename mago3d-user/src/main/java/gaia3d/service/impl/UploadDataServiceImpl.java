@@ -6,6 +6,7 @@ import gaia3d.domain.uploaddata.UploadDataFile;
 import gaia3d.domain.uploaddata.UploadDataType;
 import gaia3d.persistence.UploadDataMapper;
 import gaia3d.service.UploadDataService;
+import gaia3d.support.LogMessageSupport;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -195,11 +196,11 @@ public class UploadDataServiceImpl implements UploadDataService {
 				}
 			}
 		} catch(DataAccessException e) {
-			log.info("@@ DataAccessException. message = {}", e.getMessage());
+			LogMessageSupport.printMessage(e, "@@ DataAccessException. message = {}", e.getMessage());
 		} catch(RuntimeException e) {
-			log.info("@@ RuntimeException. message = {}", e.getMessage());
+			LogMessageSupport.printMessage(e, "@@ RuntimeException. message = {}", e.getMessage());
 		} catch(Exception e) {
-			log.info("@@ Exception. message = {}", e.getMessage());
+			LogMessageSupport.printMessage(e, "@@ Exception. message = {}", e.getMessage());
 		}
 		return result;
 	}

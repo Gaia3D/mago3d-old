@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gaia3d.persistence.UserInterestMapper">
+
+    <select id="getListUserInterestTotalCount" parameterType="userInterest" resultType="long">
+        /* getListUserInterestTotalCount */
+        SELECT COUNT(user_interest_id)
+        FROM user_interest
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="userId != null and userId != ''">
+                user_id = #{userId}
+            </if>
+            <if test="urbanId != null">
+                AND urban_id = #{urbanId}
+            </if>
+            <if test="urban_order != null">
+                AND urban_order = #{urbanOrder}
+            </if>
+            <if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
+                AND ${searchWord} = #{searchValue}
+            </if>
+            <if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
+                AND ${searchWord} LIKE '%' || #{searchValue} || '%'
+            </if>
+            <if test="startDate != null and startDate != ''">
+                <![CDATA[
+                    AND insert_date >= TO_TIMESTAMP(#{startDate}, 'YYYYMMDDHH24MISSUS')
+                ]]>
+            </if>
+            <if test="endDate != null and endDate != ''">
+                <![CDATA[
+                    AND insert_date <= TO_TIMESTAMP(#{endDate}, 'YYYYMMDDHH24MISSUS')
+                ]]>
+            </if>
+        </trim>
+    </select>
+
+    <select id="getListUserInterest" parameterType="userInterest" resultType="userInterest">
+        /* getListUserInterest */
+        SELECT *
+        FROM user_interest
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="userId != null and userId != ''">
+                user_id = #{userId}
+            </if>
+            <if test="urbanId != null">
+                AND urban_id = #{urbanId}
+            </if>
+            <if test="urban_order != null">
+                AND urban_order = #{urbanOrder}
+            </if>
+            <if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
+                AND ${searchWord} = #{searchValue}
+            </if>
+            <if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
+                AND ${searchWord} LIKE '%' || #{searchValue} || '%'
+            </if>
+            <if test="startDate != null and startDate != ''">
+                <![CDATA[
+                    AND insert_date >= TO_TIMESTAMP(#{startDate}, 'YYYYMMDDHH24MISSUS')
+                ]]>
+            </if>
+            <if test="endDate != null and endDate != ''">
+                <![CDATA[
+                    AND insert_date <= TO_TIMESTAMP(#{endDate}, 'YYYYMMDDHH24MISSUS')
+                ]]>
+            </if>
+        </trim>
+        <choose>
+            <when test="orderWord != null and orderWord != '' and orderValue != null and orderValue != ''">
+                ORDER BY ${orderWord} ${orderValue}
+            </when>
+            <otherwise>
+                ORDER BY insert_date DESC, user_interest_id DESC
+            </otherwise>
+        </choose>
+        OFFSET #{offset} LIMIT #{limit}
+    </select>
+
+    <select id="getUserInterest" parameterType="userInterest" resultType="userInterest">
+        /* getUserInterest */
+        SELECT *
+        FROM user_interest
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="userId != null and userId != ''">
+                AND user_id = #{userId}
+            </if>
+            <if test="urbanId != null">
+                AND urban_id = #{urbanId}
+            </if>
+            <if test="urbanOrder != null">
+                AND urban_order = #{urbanOrder}
+            </if>
+        </trim>
+    </select>
+
+    <insert id="insertUserInterest" parameterType="userInterest" useGeneratedKeys="true" keyProperty="userInterestId">
+        /* insertUserInterest */
+        <selectKey keyProperty="userInterestId" resultType="int" order="BEFORE">
+            SELECT NEXTVAL('user_interest_seq')
+        </selectKey>
+        INSERT INTO user_interest (
+            user_interest_id,
+            <if test="contents != null and contents != ''">
+                contents,
+            </if>
+            urban_id, urban_order, user_id
+        ) VALUES (
+            #{userInterestId},
+            <if test="contents != null and contents != ''">
+                #{contents}::jsonb,
+            </if>
+            #{urbanId}, #{urbanOrder}, #{userId}
+        )
+    </insert>
+
+    <update id="updateUserInterest" parameterType="userInterest">
+        /* updateUserInterest */
+        UPDATE user_interest
+        SET
+        <if test="contents != null and contents != ''">
+            contents = #{contents}::jsonb,
+        </if>
+        update_date = NOW()
+        WHERE user_interest_id = #{userInterestId}
+        <if test="userId != null and userId != ''">
+            AND user_id = #{userId}
+        </if>
+        <if test="urbanId != null">
+            AND urban_id = #{urbanId}
+        </if>
+        <if test="urbanOrder != null">
+            AND urban_order = #{urbanOrder}
+        </if>
+    </update>
+
+    <delete id="deleteUserInterest" parameterType="userInterest">
+        /* deleteUserInterest */
+        DELETE
+        FROM user_interest
+        WHERE user_interest_id = #{userInterestId}
+        <if test="userId != null and userId != ''">
+            AND user_id = #{userId}
+        </if>
+        <if test="urbanId != null">
+            AND urban_id = #{urbanId}
+        </if>
+        <if test="urbanOrder != null">
+            AND urban_order = #{urbanOrder}
+        </if>
+    </delete>
+
+</mapper>

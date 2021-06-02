@@ -114,7 +114,7 @@ public class DataServiceImpl implements DataService {
 	
 	/**
 	 * Data 정보 취득
-	 * @param data_id
+	 * @param dataInfo
 	 * @return
 	 */
 	@Transactional(readOnly=true)
@@ -134,7 +134,7 @@ public class DataServiceImpl implements DataService {
 	
 	/**
 	 * 최상위 root dataInfo 정보 취득
-	 * @param projectId
+	 * @param dataGroupId
 	 * @return
 	 */
 	@Transactional(readOnly=true)

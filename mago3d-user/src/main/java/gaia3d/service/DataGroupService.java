@@ -121,4 +121,6 @@ public interface DataGroupService {
 	 * @return
 	 */
 	int deleteDataGroupByParent(DataGroup dataGroup);
+
+	List<DataGroup> getAllListDataGroupForSensorThings(DataGroup dataGroup);
 }

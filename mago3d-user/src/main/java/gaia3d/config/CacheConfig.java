@@ -1,14 +1,5 @@
 package gaia3d.config;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import gaia3d.domain.ProfileType;
 import gaia3d.domain.ServerTarget;
 import gaia3d.domain.cache.CacheManager;
@@ -19,20 +10,23 @@ import gaia3d.domain.data.DataGroup;
 import gaia3d.domain.data.DataInfoSimple;
 import gaia3d.domain.menu.Menu;
 import gaia3d.domain.menu.MenuTarget;
+import gaia3d.domain.microservice.MicroService;
 import gaia3d.domain.policy.GeoPolicy;
 import gaia3d.domain.policy.Policy;
 import gaia3d.domain.role.RoleTarget;
 import gaia3d.domain.user.UserGroup;
 import gaia3d.domain.user.UserGroupMenu;
 import gaia3d.domain.user.UserGroupRole;
-import gaia3d.service.DataGroupService;
-import gaia3d.service.DataService;
-import gaia3d.service.GeoPolicyService;
-import gaia3d.service.MenuService;
-import gaia3d.service.PolicyService;
-import gaia3d.service.UserGroupService;
+import gaia3d.service.*;
 import gaia3d.support.LogMessageSupport;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Component
@@ -51,6 +45,8 @@ public class CacheConfig {
 	@Autowired
 	private MenuService menuService;
 	@Autowired
+	private MicroServiceService microServiceService;
+	@Autowired
     private UserGroupService userGroupService;
 
     @PostConstruct
@@ -63,7 +59,8 @@ public class CacheConfig {
     	if(ProfileType.LOCAL == ProfileType.valueOf(CacheManager.getProfile())) {
         	LogMessageSupport.stackTraceEnable = true;
         }
-        log.info("************ User Profile = {}, stackTraceEnable = {} *************", propertiesConfig.getProfile(), LogMessageSupport.stackTraceEnable);
+    	LogMessageSupport.logDisplay = propertiesConfig.isLogDisplay();
+        log.info("*** User Profile = {}, stackTraceEnable = {}, logDisplay = {}", propertiesConfig.getProfile(), LogMessageSupport.stackTraceEnable, LogMessageSupport.logDisplay);
 
         CacheParams cacheParams = new CacheParams();
 		cacheParams.setCacheType(CacheType.SELF);
@@ -76,9 +73,13 @@ public class CacheConfig {
         menu(cacheParams);
         // 사용자 그룹별 메뉴, Role
         role(cacheParams);
+        // micro service
+		microService(cacheParams);
         
         // Smart Tiling 데이터 그룹별 데이터 목록
 //        smartTilingData(cacheParams);
+        
+		terrain(cacheParams);
         
         log.info("*************************************************");
         log.info("************* User Cache Init End **************");
@@ -91,9 +92,11 @@ public class CacheConfig {
 		if(cacheName == CacheName.POLICY) policy(cacheParams);
 		else if(cacheName == CacheName.GEO_POLICY) geoPolicy(cacheParams);
 		else if(cacheName == CacheName.MENU) menu(cacheParams);
+		else if(cacheName == CacheName.MICRO_SERVICE) microService(cacheParams);
 		else if(cacheName == CacheName.ROLE) role(cacheParams);
 		else if(cacheName == CacheName.USER_GROUP) userGroup(cacheParams);
 		else if(cacheName == CacheName.SMART_TILING_DATA) smartTilingData(cacheParams);
+		else if(cacheName == CacheName.TERRAIN) terrain(cacheParams);
 	}
     
     /**
@@ -196,6 +199,22 @@ public class CacheConfig {
     }
     
     /**
+	 * Micro Service
+	 */
+	private void microService(CacheParams cacheParams) {
+		log.info("************ Cache Reload microService ************");
+
+		List<MicroService> microServiceList = microServiceService.getListMicroService(new MicroService());
+
+		Map<String, MicroService> microServiceMap = new HashMap<>();
+		for(MicroService microService : microServiceList) {
+			microServiceMap.put(microService.getMicroServiceKey(), microService);
+		}
+
+		CacheManager.setMicroServiceMap(microServiceMap);
+	}
+    
+    /**
      * Smart Tiling 데이터
      * @param cacheParams
      */
@@ -218,10 +237,12 @@ public class CacheConfig {
     }
     
     /**
-	 * Remote Cache 갱신 요청
-	 * @param cacheName
+	 * terrain
+	 * @param cacheParams
 	 */
-	private void callRemoteCache(CacheParams cacheParams) {
-		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@ callRemoteCache start! ");
+	private void terrain(CacheParams cacheParams) {
+		log.info("************ Cache Reload terrain ************");
+//		Policy policy = policyService.getPolicy();
+//		CacheManager.setPolicy(policy);
 	}
 }

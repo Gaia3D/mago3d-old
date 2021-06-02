@@ -32,13 +32,13 @@
 				)
 			)
 	    </if>
-<!-- 		<trim prefix="WHERE" prefixOverrides="AND"> -->
+		<!-- 		<trim prefix="WHERE" prefixOverrides="AND"> -->
 		<if test="userId != null and userId != '' and userGroupId == null">
 		AND	A.user_id = #{userId}
 		</if>
-<!-- 			<if test="dataGroupId != null and dataGroupId > 0"> -->
-<!-- 			AND data_group_id = #{dataGroupId} -->
-<!-- 			</if> -->
+		<!-- 			<if test="dataGroupId != null and dataGroupId > 0"> -->
+		<!-- 			AND data_group_id = #{dataGroupId} -->
+		<!-- 			</if> -->
 		<if test="sharing != null and sharing != ''">
 		AND A.sharing = #{sharing}
 		</if>
@@ -61,7 +61,7 @@
 		AND A.insert_date <= TO_TIMESTAMP(#{endDate}, 'YYYYMMDDHH24MISSUS')
 		]]>
 		</if>
-<!-- 		</trim> -->
+		<!-- 		</trim> -->
 	</select>
 
 	<!-- 사용자 데이터 그룹 목록 조회 -->
@@ -659,4 +659,12 @@
 		WHERE data_group_id = #{dataGroupId} 
 			AND user_id = #{userId}
 	</delete>
+
+	<!-- 고치세요. 이 무슨 헤괴 망측한 코드가 -->
+	<select id="getAllListDataGroupForSensorThings" resultType="dataGroup">
+		/* getAllListDataGroupForSensorThings */
+		SELECT *
+		FROM data_group
+		WHERE data_group_id = 50000 OR data_group_id = 50001
+	</select>
 </mapper>

@@ -21,9 +21,9 @@ public class PasswordSupport {
 			encodePassword = bCryptPasswordEncoder.encode(password);
 		
 		} catch(RuntimeException e) {
-			log.info("@@ RuntimeException. message = {}", e.getMessage());
+			LogMessageSupport.printMessage(e, "@@ RuntimeException. message = {}", e.getMessage());
 		} catch(Exception e) {
-			log.info("@@ 사인인 체크 암호화 처리 모듈에서 오류가 발생 했습니다. message = {}", e.getMessage());
+			LogMessageSupport.printMessage(e, "@@ 사인인 체크 암호화 처리 모듈에서 오류가 발생 했습니다. message = {}", e.getMessage());
 		}
 		
 		return encodePassword;
@@ -38,9 +38,9 @@ public class PasswordSupport {
 				result = true;
 			}
 		} catch(RuntimeException e) {
-			log.info("@@ RuntimeException. message = {}", e.getMessage());
+			LogMessageSupport.printMessage(e, "@@ RuntimeException. message = {}", e.getMessage());
 		} catch(Exception e) {
-			log.info("@@ 사인인 체크 암호화 처리 모듈에서 오류가 발생 했습니다. message = {}", e.getMessage());
+			LogMessageSupport.printMessage(e, "@@ 사인인 체크 암호화 처리 모듈에서 오류가 발생 했습니다. message = {}", e.getMessage());
 		}
 		return result;
 	}

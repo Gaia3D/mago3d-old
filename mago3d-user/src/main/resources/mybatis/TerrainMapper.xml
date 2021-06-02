@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gaia3d.persistence.TerrainMapper">
+
+	<!-- Terrain 목록 -->
+	<select id="getListTerrain" resultType="terrain">
+		SELECT * 
+		FROM terrain 
+		ORDER BY view_order
+	</select>
+	
+	<!-- terrain_id 최대값 -->
+	<select id="getTerrain" parameterType="int" resultType="terrain">
+		/* getTerrain */
+		SELECT * FROM terrain WHERE terrain_id = #{terrainId}
+	</select>
+
+</mapper>

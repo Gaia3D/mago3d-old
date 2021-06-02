@@ -191,6 +191,7 @@ public class DataController {
 		model.addAttribute("dataList", dataList);
 		model.addAttribute("dataGroupList", dataGroupList);
 		model.addAttribute("userPolicy", userPolicy);
+		model.addAttribute("districtAvailable", policy.getContentDistrictAvailable());
 		model.addAttribute("owner", userSession.getUserId());
 
 		return "/data/map";

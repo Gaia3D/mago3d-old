@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gaia3d.persistence.MicroServiceMapper">
+
+	<!-- 서비스 목록 -->
+	<select id="getListMicroService" parameterType="microService" resultType="microService">
+		/* getListMicroService */
+		SELECT *
+		FROM micro_service
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="status != null and status != ''">
+				AND status = #{status}
+			</if>
+			<if test="microServiceName != null and microServiceName != ''">
+				AND micro_service_name = #{microServiceName}
+			</if>
+			<if test="microServiceType != null and microServiceType != ''">
+				AND micro_service_type = #{microServiceType}
+			</if>
+		</trim>
+		ORDER BY micro_service_id, insert_date DESC
+	</select>
+
+	<!-- 서비스 요청 이력 등록 -->
+	<insert id="insertMicroServiceLog" parameterType="microServiceLog" >
+		/* insertMicroServiceLog */
+		<selectKey keyProperty="microServiceLogId" resultType="long" order="BEFORE">
+			SELECT NEXTVAL('micro_service_log_seq')
+		</selectKey>
+		INSERT INTO micro_service_log(
+			micro_service_log_id, micro_service_id, micro_service_name, micro_service_type, url_path, status, error_message
+		) VALUES (
+			#{microServiceLogId}, #{microServiceId}, #{microServiceName}, #{microServiceType}, #{urlPath}, #{status}, #{errorMessage}
+		)
+	</insert>
+</mapper>

@@ -103,7 +103,9 @@ function dataGroupList() {
 					for(var i in tilingDataGroupList)
 					{
 						var tilingDataGroup = tilingDataGroupList[i];
-						tilingDataGroup.smartTileIndexPath = tilingDataGroup.tilePath;
+						if(i == tilingDataGroupList.length-1) {
+							tilingDataGroup.smartTileIndexPath = 'infra/_TILE';
+						}
 						f4dController.addSmartTileGroup(tilingDataGroup);
 					}
 				}

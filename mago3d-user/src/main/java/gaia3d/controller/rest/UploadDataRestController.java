@@ -223,7 +223,7 @@ public class UploadDataRestController {
 				try (	InputStream inputStream = multipartFile.getInputStream();
 						OutputStream outputStream = new FileOutputStream(makedDirectory + tempDirectory + File.separator + saveFileName)) {
 				
-					int bytesRead = 0;
+					int bytesRead;
 					byte[] buffer = new byte[BUFFER_SIZE];
 					while ((bytesRead = inputStream.read(buffer, 0, BUFFER_SIZE)) != -1) {
 						size += bytesRead;
