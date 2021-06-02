@@ -228,6 +228,15 @@
 		cesiumViewerOption.baseLayerPicker = false;
 		cesiumViewerOption.sceneModePicker = false;
 
+		cesiumViewerOption.defaultControl = {};
+		cesiumViewerOption.defaultControl.zoom = false;
+		cesiumViewerOption.defaultControl.initCamera = false;
+		cesiumViewerOption.defaultControl.fullScreen = false;
+		cesiumViewerOption.defaultControl.measure = false;
+		cesiumViewerOption.defaultControl.tools = false;
+		cesiumViewerOption.defaultControl.attribution = false;
+		cesiumViewerOption.defaultControl.overviewMap = false;
+
 		/**
 		 * @param {Stirng} containerId container div id. required.
 		 * @param {object} serverPolicy mage3d geopolicy. required.
@@ -255,7 +264,6 @@
 		}); */
 
 		// mago3d logo 추가
-		Mago3D.tempCredit(viewer);
 
 		//우측 상단 지도 컨트롤러
 		MapControll(viewer);
