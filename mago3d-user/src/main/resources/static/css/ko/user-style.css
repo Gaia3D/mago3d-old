@@ -1,4 +1,5 @@
-﻿@charset "utf-8";
+﻿﻿@charset "utf-8";
+
 /* 웹폰트-노토산스 */
 @font-face {
 font-family: 'NotoKrL';
@@ -2431,6 +2432,31 @@ h1.magologo {display:block; width:250px; height:30px; background:url(/images/ko/
 ::-webkit-scrollbar-thumb { -webkit-border-radius: 8px; background-color: rgba(153, 153, 153, 0.4); }
 
 /* simulation */
+ul.simulation-menu {padding:0; width:330px; margin:50px auto 0 auto; margin-bottom:30px; display:flex; flex-wrap:wrap; border-bottom:1px solid #e6e4e4;}
+ul.simulation-menu li {width:100px; list-style:none; float:left; margin:0; padding:0; display:inline-block; font-size:15px; padding:10px 5px; word-break:normal; border-bottom:1px solid #e6e4e4; border-top:1px solid #e6e4e4; display:table-cell; text-align:center; cursor: pointer;}
+ul.simulation-menu li:nth-child(4),  ul.simulation-menu li:nth-child(5) {border-top:none; border-bottom:none;}
+ul.simulation-menu li.on, ul.simulation-menu li:hover {border-top:2px solid #2f94f3; background:#edf4fb;}
 
+.smlt_contents {display:none;}
 
-
+.smlt-item {float:left; width:330px; margin:0 auto; cursor:pointer; height:32px; margin-bottom:10px; border:1px solid #e6e4e4;}
+.smlt-item > .smlt-blt {display:inline-block; float:left; width:30px; height:32px; background:#f4f4f4 url(/images/ko/ic_sbmenu02.png) -230px -125px;}
+.smlt-item > .smlt-tit {display:inline-block; float:left; text-indent:7px; height:32px; font-size:14px; line-height:32px;}
+.smlt {width:330px; margin:0 auto; display:block;}
+.smlt .sub {display : none;}
+.sub > .sublist {clear:both; height:28px; margin-left:20px; font-size:12px; margin-top:5px; width:310px; line-height:28px; margin-bottom:0px;}
+.sub > .sublist > label.smlt-sub {clear:both; float:left; display:inline-block; width:80px; height:28px; line-height:28px; }
+.sub > .sublist > .smlt-value {width:220px;}
+.sub > .sublist > .inputtype {display:inline-block; border-radius:0; height:28px; border: 1px solid #d8d8d8; font-size:12px; color:#464646;}
+.sub > .sublist > .checkbox {margin-top:-2px; vertical-align:middle;}
+.sub > .sublist > .radiobox {text-align:left; margin-top:-2px; vertical-align:middle;}
+.sub > .sublist > .checkbox::after {content:"  "}
+.sub > .sublist > select.selecttype {width:auto; font-size:12px; color:#464646; padding-left:5px; padding-right:30px; font-size:12px; background: #fff url("/images/ko/ic_select.png") no-repeat right 50%; border-radius:0; border:1px solid #d8d8d8; -webkit-appearance: none; -moz-appearance: none; appearance: none;}
+select {width:auto; height: 28px; color:#464646; padding-left:5px; padding-right:20px; font-size:12px; background: #fff url("/images/ko/ic_select.png") no-repeat right 50%; border-radius:0; border:1px solid #d8d8d8; -webkit-appearance: none; -moz-appearance: none; appearance: none;}
+select::-ms-expand {display: none;}
+.smlt-item:hover, .smlt-item:focus, .smlt-item.on {border:1px solid #2f94f3;}
+.smlt-item:hover >  .smlt-blt, .smlt-item:focus >  .smlt-blt, .smlt-item.on >  .smlt-blt  {display:inline-block; float:left; width:30px; height:32px; background:#2f94f3 url(/images/ko/ic_sbmenu02.png) -230px -82px;}
+.mg-l20 {margin-left:20px;}
+.btn-right {float:right; margin-top:5px; margin-bottom:10px;}
+.btn-ok {font-size:12px; cursor:pointer; color:white; height:25px; padding:0 15px; border-radius:0; border:1px solid #878787; background:#878787;}
+.btn-cancel {font-size:12px; cursor:pointer; color:#878787; height:25px; padding:0 15px; border-radius:0; border:1px solid #878787; margin-left:5px; background:white;}
