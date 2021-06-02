@@ -30,8 +30,13 @@
     	<typeAlias type="gaia3d.domain.layer.LayerGroup" alias="layerGroup" />
     	<typeAlias type="gaia3d.domain.layer.LayerFileInfo" alias="layerFileInfo" />
     	<typeAlias type="gaia3d.domain.menu.Menu" alias="menu" />
+		<typeAlias type="gaia3d.domain.microservice.MicroService" alias="microService" />
+		<typeAlias type="gaia3d.domain.microservice.MicroServiceLog" alias="microServiceLog" />
     	<typeAlias type="gaia3d.domain.policy.Policy" alias="policy" />
     	<typeAlias type="gaia3d.domain.role.Role" alias="role" />
+		<typeAlias type="gaia3d.domain.rule.Rule" alias="rule" />
+		<typeAlias type="gaia3d.domain.simulation.SimulationTimeSeries" alias="SimulationTimeSeries" />
+		<typeAlias type="gaia3d.domain.simulation.SimulationLog" alias="SimulationLog" />
     	
 		<typeAlias type="gaia3d.domain.uploaddata.UploadData" alias="uploadData" />
 		<typeAlias type="gaia3d.domain.uploaddata.UploadDataFile" alias="uploadDataFile" />
@@ -41,6 +46,8 @@
 		<typeAlias type="gaia3d.domain.user.UserInfo" alias="userInfo" />
 		<typeAlias type="gaia3d.domain.user.UserPolicy" alias="userPolicy"/>
     	<typeAlias type="gaia3d.domain.user.UserSession" alias="userSession" />
+
+		<typeAlias type="gaia3d.domain.terrain.Terrain" alias="terrain" />
     	
  		<typeAlias type="gaia3d.domain.country.District" alias="district"/>
  		<typeAlias type="gaia3d.domain.country.SkSdo" alias="skSdo"/>
@@ -50,6 +57,7 @@
  		<typeAlias type="gaia3d.domain.AttributeRepository" alias="attributeRepository"/>
 
 		<typeAlias type="gaia3d.domain.data.DataRelationInfo" alias="dataRelationInfo" />
+		<typeAlias type="gaia3d.domain.interest.UserInterest" alias="userInterest" />
     </typeAliases>
 
 	<typeHandlers>

@@ -33,6 +33,8 @@ public class PropertiesConfig {
     private String restTemplateMode;
     private String restAuthKey;
     private String gisRestServer;
+    // 운영 서버용. 로그 표시 유무 설정
+    private boolean logDisplay;
 
     // layer 파일 업로딩 디렉토리
     private String layerUploadDir;
@@ -44,11 +46,9 @@ public class PropertiesConfig {
 	private String rabbitmqUser;
 	private String rabbitmqPassword;
     private String rabbitmqConverterQueue;
+    private String rabbitmqTilerQueue;
     private String rabbitmqConverterExchange;
     private String rabbitmqConverterRoutingKey;
-    
-    private String rabbitmqTilerQueue;
-    private String rabbitmqTilerExchange;
     private String rabbitmqTilerRoutingKey;
     
     // F4D 파일이 변환되는 Root 경로 이자, mago3DJS 에서 요청되는 파일의 Root 경로. ServletConfig 에서 매핑
@@ -75,5 +75,23 @@ public class PropertiesConfig {
     private String dataObjectAttributeUploadDir;
     
     private String guideDataServiceDir;
+
+    private String adminWindServiceDir;
+    private String adminWindServicePath;
+    private String adminPm25ServiceDir;
+    private String adminPm25ServicePath;
+    private String adminPm25WithEmisServiceDir;
+    private String adminPm25WithEmisServicePath;
+    private String adminStinkServiceDir;
+    private String adminStinkServicePath;
+
+    private String userWindServiceDir;
+    private String userWindServicePath;
+    private String userPm25ServiceDir;
+    private String userPm25ServicePath;
+    private String userPm25WithEmisServiceDir;
+    private String userPm25WithEmisServicePath;
+    private String userStinkServiceDir;
+    private String userStinkServicePath;
 
 }

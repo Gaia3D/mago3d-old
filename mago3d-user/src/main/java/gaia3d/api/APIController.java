@@ -5,11 +5,11 @@ import gaia3d.domain.apilog.ApiLog;
 import gaia3d.service.ApiLogService;
 
 public interface APIController {
-	
-	default void insertLog() {
-		// TODO 귀찮아.
-	}
-	
+
+    default void insertLog() {
+        // TODO 귀찮아.
+    }
+
     default void insertLog(ApiLogService apiLogService, String requestIp, String url, Integer statusCode, String message) {
         try {
             apiLogService.insertApiLog(ApiLog.builder()
@@ -23,23 +23,23 @@ public interface APIController {
         }
     }
 
-	/**
-	 * 검증
+    /**
+     * 검증
      *
-	 * @return
-	 */
-	default String validate(APIHeader aPIHeader) {
-		// TODO 확장 때문에 남겨둠
-		return null;
-	}
-	
-	/**
-	 * header 복호화
+     * @return
+     */
+    default String validate(APIHeader aPIHeader) {
+        // TODO 확장 때문에 남겨둠
+        return null;
+    }
+
+    /**
+     * header 복호화
      *
-	 * @return
-	 */
-	default APIHeader getHeader() {
-		// TODO 확장 때문에 남겨둠
-		return null;
-	}
+     * @return
+     */
+    default APIHeader getHeader() {
+        // TODO 확장 때문에 남겨둠
+        return null;
+    }
 }

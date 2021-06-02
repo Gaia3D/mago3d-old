@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 public class LogMessageSupport {
 	
 	public static boolean stackTraceEnable = false;
+	public static boolean logDisplay = false;
 	private static final String DEFAULT_MESSAGE = "Default Message = {}";
 	
 	/**
@@ -21,8 +22,12 @@ public class LogMessageSupport {
 		if(stackTraceEnable) {
 			e.printStackTrace();
 		} else {
+			if(logDisplay) {
+				e.printStackTrace();
+			} else {
 			log.info(DEFAULT_MESSAGE, e.getMessage());
 		}
+	}
 	}
 	
 	/**
@@ -34,8 +39,12 @@ public class LogMessageSupport {
 		if(stackTraceEnable) {
 			e.printStackTrace();
 		} else {
+			if(logDisplay) {
+				e.printStackTrace();
+			} else {
 			log.info(message, e.getMessage());
 		}
+	}
 	}
 	
 	/**
@@ -48,7 +57,11 @@ public class LogMessageSupport {
 		if(stackTraceEnable) {
 			e.printStackTrace();
 		} else {
+			if(logDisplay) {
+				e.printStackTrace();
+			} else {
 			log.info(message, value);
+			}
 		}
 	}
 }

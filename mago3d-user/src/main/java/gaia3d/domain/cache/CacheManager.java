@@ -1,14 +1,15 @@
 package gaia3d.domain.cache;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import gaia3d.domain.data.DataInfoSimple;
 import gaia3d.domain.menu.Menu;
+import gaia3d.domain.microservice.MicroService;
 import gaia3d.domain.policy.GeoPolicy;
 import gaia3d.domain.policy.Policy;
 import gaia3d.domain.user.UserGroupMenu;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * TODO 귀찮고, 전부 select 성 데이터고 관리자가 혼자라서 getInstance를 사용하지 않았음. 바람직 하지는 않음
@@ -43,6 +44,10 @@ public class CacheManager {
     // Smart Tiling 데이터 정보
   	private Map<Integer, List<DataInfoSimple>> smartTilingDataMap = null;
   	
+	// 디지털 트윈 서비스 설정 정보
+	// TODO 이건 api 호출 시 너무 빈번하게 access 를 하므로 Map에서 get 하는 오버헤드를 줄여, static 변수 처리 하는게 맞을거 같음
+	private Map<String, MicroService> microServiceMap = null;
+
 	public static String getProfile() {
 		return cacheManager.profile;
 	}
@@ -50,6 +55,7 @@ public class CacheManager {
 	public static void setProfile(String profile) {
 		cacheManager.profile = profile;
 	}
+
   	public static GeoPolicy getGeoPolicy() {
 		return cacheManager.geoPolicy;
 	}
@@ -119,8 +125,25 @@ public class CacheManager {
 	public static List<DataInfoSimple> getSmartTilingDataGroupList(Integer dataGroupid) {
 		return cacheManager.smartTilingDataMap.get(dataGroupid);
 	}
-
 	public static void setSmartTilingDataMap(Map<Integer, List<DataInfoSimple>> smartTilingDataMap) {
 		cacheManager.smartTilingDataMap = smartTilingDataMap;
+	}
+
+	/**
+	 * key 로 서비스 정보를 얻어, 상태를 확인 후 요청
+	 * 디지털 트윈 서비스 설정 정보
+	 * @return
+	 */
+	public static MicroService getMicroService(String microServiceKey) {
+		return cacheManager.microServiceMap.get(microServiceKey);
+	}
+	public static Map<String, MicroService> getMicroServiceMap() {
+		if(cacheManager.microServiceMap == null) {
+			return new HashMap<>();
+		}
+		return cacheManager.microServiceMap;
+	}
+	public static void setMicroServiceMap(Map<String, MicroService> microServiceMap) {
+		cacheManager.microServiceMap = microServiceMap;
 	}
 }

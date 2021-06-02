@@ -139,4 +139,6 @@ public interface DataGroupMapper {
 	 * @return
 	 */
 	int deleteDataGroupByParent(DataGroup dataGroup);
+
+    List<DataGroup> getAllListDataGroupForSensorThings();
 }

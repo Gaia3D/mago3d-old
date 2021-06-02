@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gaia3d.persistence.SignupMapper">
+
+	<!-- 사용자 기본 정보 중 세션 관련 정보 수정 -->
+	<insert id="insert" parameterType="userInfo">
+		/* insert */
+		INSERT INTO user_info (
+			user_id, user_group_id, user_name, password, status, user_role_check_yn, last_signin_date
+		) VALUES (
+			#{userId}, #{userGroupId}, #{userName}, #{userId}, #{status}, 'N', now())
+	</insert>
+</mapper>

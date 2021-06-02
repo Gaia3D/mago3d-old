@@ -280,4 +280,9 @@ public class DataGroupServiceImpl implements DataGroupService {
 	public int deleteDataGroupByParent(DataGroup dataGroup) {
 		return dataGroupMapper.deleteDataGroupByParent(dataGroup);
 	}
+
+	@Override
+	public List<DataGroup> getAllListDataGroupForSensorThings(DataGroup dataGroup) {
+		return dataGroupMapper.getAllListDataGroupForSensorThings();
+	}
 }

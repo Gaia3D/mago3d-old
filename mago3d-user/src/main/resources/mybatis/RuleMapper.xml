@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gaia3d.persistence.RuleMapper">
+
+	<!-- 룰 총 건수 -->
+	<select id="getRuleTotalCount" parameterType="rule" resultType="long">
+		/* getRuleTotalCount */
+		SELECT COUNT(rule_id)
+		FROM rule
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
+				${searchWord} = #{searchValue}
+			</if>
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
+				AND ${searchWord} LIKE '%' || #{searchValue} || '%'
+			</if>
+			<if test="startDate != null and startDate != ''">
+				<![CDATA[
+			AND insert_date >= TO_TIMESTAMP(#{startDate}, 'YYYYMMDDHH24MISSUS')
+			]]>
+			</if>
+			<if test="endDate != null and endDate != ''">
+				<![CDATA[
+			AND insert_date <= TO_TIMESTAMP(#{endDate}, 'YYYYMMDDHH24MISSUS')
+			]]>
+			</if>
+		</trim>
+	</select>
+
+	<!-- 룰 목록 -->
+	<select id="getListRule" parameterType="rule" resultType="rule">
+		/* getListRule */
+		SELECT A.*, B.rule_group_name, B.rule_group_key, B.rule_type
+		FROM rule A
+			LEFT JOIN rule_group B
+			ON A.rule_group_id = B.rule_group_id
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
+				AND ${searchWord} = #{searchValue}
+			</if>
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
+				AND ${searchWord} LIKE '%' || #{searchValue} || '%'
+			</if>
+			<if test="startDate != null and startDate != ''">
+				<![CDATA[
+				AND A.insert_date >= TO_TIMESTAMP(#{startDate}, 'YYYYMMDDHH24MISSUS')
+				]]>
+			</if>
+			<if test="endDate != null and endDate != ''">
+				<![CDATA[
+				AND A.insert_date <= TO_TIMESTAMP(#{endDate}, 'YYYYMMDDHH24MISSUS')
+				]]>
+			</if>
+		</trim>
+		<choose>
+			<when test="orderWord != null and orderWord != '' and orderValue != null and orderValue != ''">
+				ORDER BY ${orderWord} ${orderValue}
+			</when>
+			<otherwise>
+				ORDER BY A.insert_date DESC, A.rule_id DESC
+			</otherwise>
+		</choose>
+		OFFSET #{offset} LIMIT #{limit}
+	</select>
+
+	<!-- 룰 정보 -->
+	<select id="getRule" parameterType="int" resultType="rule">
+		/* getRule */
+		SELECT A.*, B.rule_group_name, B.rule_group_key, B.rule_type
+		FROM rule A LEFT JOIN rule_group B
+			ON A.rule_group_id = B.rule_group_id
+		WHERE A.rule_id = #{value}
+	</select>
+</mapper>

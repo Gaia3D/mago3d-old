@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gaia3d.persistence.SimulationLogMapper">
+    <select id="getSimulationLogTotalCount" parameterType="SimulationLog"  resultType="Long">
+        /* getSimulationLogTotalCount */
+        SELECT COUNT(simulation_log_id)
+        FROM simulation_log
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="userId != null and userId != ''">
+                user_id = #{userId}
+            </if>
+            <if test="simulationSearchType.getType() == 'timeseries' and simulationTimeSeriesId != null and simulationTimeSeriesId != 0">
+                AND simulation_time_series_id = #{simulationTimeSeriesId}
+            </if>
+            <if test="simulationSearchType != null and simulationSearchType.getType() == 'simulation'">
+                AND simulation_time_series_id is null
+            </if>
+            <if test="simulationType != null and simulationType != ''">
+                AND simulation_type = #{simulationType}
+            </if>
+            <if test="simulationName != null and simulationName != ''">
+                AND simulation_name = #{simulationName}
+            </if>
+            <if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
+                AND ${searchWord} = #{searchValue}
+            </if>
+            <if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
+                AND ${searchWord} LIKE '%' || #{searchValue} || '%'
+            </if>
+            <if test="startDate != null and startDate != ''">
+                <![CDATA[
+                AND insert_date >= TO_TIMESTAMP(#{startDate}, 'YYYYMMDDHH24MISSUS')
+                ]]>
+            </if>
+            <if test="endDate != null and endDate != ''">
+                <![CDATA[
+                AND insert_date <= TO_TIMESTAMP(#{endDate}, 'YYYYMMDDHH24MISSUS')
+                ]]>
+            </if>
+        </trim>
+    </select>
+
+    <select id="getListSimulationLog" parameterType="SimulationLog" resultType="SimulationLog">
+        /* getListSimulationLog */
+        SELECT *
+        FROM simulation_log
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="userId != null and userId != ''">
+                user_id = #{userId}
+            </if>
+            <if test="simulationSearchType.getType() == 'timeseries' and simulationTimeSeriesId != null and simulationTimeSeriesId != 0">
+                AND simulation_time_series_id = #{simulationTimeSeriesId}
+            </if>
+            <if test="simulationSearchType != null and simulationSearchType.getType() == 'simulation'">
+                AND simulation_time_series_id is null
+            </if>
+            <if test="simulationType != null and simulationType != ''">
+                AND simulation_type = #{simulationType}
+            </if>
+            <if test="simulationName != null and simulationName != ''">
+                AND simulation_name = #{simulationName}
+            </if>
+            <if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
+                AND ${searchWord} = #{searchValue}
+            </if>
+            <if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
+                AND ${searchWord} LIKE '%' || #{searchValue} || '%'
+            </if>
+            <if test="startDate != null and startDate != ''">
+                <![CDATA[
+                AND insert_date >= TO_TIMESTAMP(#{startDate}, 'YYYYMMDDHH24MISSUS')
+                ]]>
+            </if>
+            <if test="endDate != null and endDate != ''">
+                <![CDATA[
+                AND insert_date <= TO_TIMESTAMP(#{endDate}, 'YYYYMMDDHH24MISSUS')
+                ]]>
+            </if>
+        </trim>
+        <choose>
+            <when test="orderWord != null and orderWord != '' and orderValue != null and orderValue != ''">
+                ORDER BY ${orderWord} ${orderValue}
+            </when>
+            <otherwise>
+                ORDER BY insert_date DESC, simulation_log_id DESC
+            </otherwise>
+        </choose>
+        OFFSET #{offset} LIMIT #{limit}
+    </select>
+
+    <select id="getSimulationLog" parameterType="Long" resultType="SimulationLog">
+        /* getSimulationLog */
+        SELECT A.*, B.contents
+        FROM simulation_log A INNER JOIN simulation_detail_log B ON (A.simulation_log_id = B.simulation_log_id)
+        WHERE A.simulation_log_id = #{simulationLogId}
+    </select>
+
+    <insert id="insertSimulationLog" parameterType="SimulationLog">
+        /* insertSimulationLog */
+        <selectKey keyProperty="simulationLogId" resultType="long" order="BEFORE">
+            SELECT NEXTVAL('simulation_log_seq')
+        </selectKey>
+        INSERT INTO simulation_log (
+            simulation_log_id, simulation_time_series_id,
+            <if test="simulationType != null and simulationType != ''">
+            simulation_type,
+            </if>
+            <if test="simulationDate != null">
+            simulation_date,
+            </if>
+            simulation_name, user_id
+        ) VALUES (
+            #{simulationLogId}, #{simulationTimeSeriesId},
+            <if test="simulationType != null and simulationType != ''">
+            #{simulationType},
+            </if>
+            <if test="simulationDate != null">
+            #{simulationDate},
+            </if>
+            #{simulationName}, #{userId}
+        )
+    </insert>
+
+    <insert id="insertSimulationDetailLog" parameterType="SimulationLog">
+        /* insertSimulationDetailLog */
+        <selectKey keyProperty="simulationDetailId" resultType="long" order="BEFORE">
+            SELECT NEXTVAL('simulation_detail_log_seq')
+        </selectKey>
+        INSERT INTO simulation_detail_log (
+            simulation_detail_id,
+            <if test="contents != null and contents != ''">
+            contents,
+            </if>
+            simulation_log_id
+        ) VALUES (
+            #{simulationDetailId},
+            <if test="contents != null and contents != ''">
+            #{contents}::jsonb,
+            </if>
+            #{simulationLogId}
+        )
+    </insert>
+
+    <update id="updateSimulationLog" parameterType="SimulationLog">
+        /* updateSimulationLog */
+        UPDATE simulation_log
+        SET
+        <if test="simulationType != null and simulationType != ''">
+            simulation_type = #{simulationType},
+        </if>
+        <if test="simulationName != null and simulationName != ''">
+            simulation_name = #{simulationName},
+        </if>
+        <if test="userId != null and userId != ''">
+            user_id = #{userId},
+        </if>
+        <if test="simulationDate != null">
+            simulation_date = #{simulationDate},
+        </if>
+            update_date = NOW()
+        WHERE simulation_log_id = #{simulationLogId}
+        <if test="userId != null and userId != ''">
+            AND user_id = #{userId}
+        </if>
+    </update>
+
+    <update id="updateSimulationDetailLog" parameterType="SimulationLog">
+        /* updateSimulationDetailLog */
+        UPDATE simulation_detail_log
+        SET
+        <if test="contents != null and contents != ''">
+            contents = #{contents}::jsonb,
+        </if>
+            update_date = NOW()
+        WHERE simulation_log_id = #{simulationLogId}
+    </update>
+
+    <delete id="deleteSimulationLog" parameterType="SimulationLog">
+        /* deleteSimulationLog */
+        DELETE
+        FROM simulation_log
+        WHERE simulation_log_id = #{simulationLogId}
+        <if test="userId != null and userId != ''">
+            AND user_id = #{userId}
+        </if>
+    </delete>
+
+    <delete id="deleteSimulationDetailLog" parameterType="SimulationLog">
+        /* deleteSimulationDetailLog */
+        DELETE
+        FROM simulation_detail_log
+        WHERE simulation_log_id = #{simulationLogId}
+    </delete>
+
+</mapper>
