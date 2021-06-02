@@ -99,14 +99,14 @@
 				<tr>
 					<th class="col-label" scope="row">
 						<label for="dataName"><th:block th:text="#{common.data.name}"></th:block></label>
-						<span class="essentail">*</span>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
 					<td class="col-input">
 						<input type="text" id="dataName" name="dataName" class="l" maxlength="255" />
 					</td>
 					<th class="col-label" scope="row">
 						<label for="dataGroupName"><th:block th:text="#{common.data.group.name}"></th:block></label>
-						<span class="essentail">*</span>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
 					<td class="col-input">
 						<input type="hidden" id="dataGroupId" name="dataGroupId" />
@@ -117,7 +117,7 @@
 				<tr>
 					<th class="col-label" scope="row">
 						<label for="sharing"><th:block th:text="#{common.sharing}"></th:block></label>
-						<span class="essentail">*</span>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
 					<td class="col-input">
 						<select id="sharing" name="sharing" class="selectBoxClass">
@@ -129,7 +129,7 @@
 					</td>
 					<th class="col-label m" scope="row">
 						<label for="dataType"><th:block th:text="#{common.data.type}"></th:block></label>
-						<span class="essentail">*</span>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
 					<td class="col-input">
 						<select id="dataType" name="dataType" class="selectBoxClass">

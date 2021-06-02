@@ -83,7 +83,7 @@
 					</select>
 				</div>
 				<div class="input-set">
-					<input type="submit" class="focusA" th:value="#{common.search}" />
+					<input type="submit" th:value="#{common.search}" />
 				</div>
 			</div>
 			</form>
