@@ -1,18 +1,5 @@
 package gaia3d.interceptor;
 
-import java.util.Enumeration;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
 import gaia3d.domain.Key;
 import gaia3d.domain.accesslog.AccessLog;
 import gaia3d.domain.user.UserSession;
@@ -20,6 +7,17 @@ import gaia3d.service.AccessLogService;
 import gaia3d.support.URLSupport;
 import gaia3d.utils.WebUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
+import java.util.Map;
 
 /**
  * 모든 요청에 대한 이력을 남김
@@ -31,12 +29,12 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Component
-public class LogInterceptor extends HandlerInterceptorAdapter {
+public class LogInterceptor implements HandlerInterceptor {
 	
 	@Autowired
 	private AccessLogService accessLogService;
-	
-    @Override
+
+	@Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
     	String uri = request.getRequestURI();

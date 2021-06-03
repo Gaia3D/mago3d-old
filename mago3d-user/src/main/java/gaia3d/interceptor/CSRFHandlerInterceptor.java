@@ -1,22 +1,19 @@
 package gaia3d.interceptor;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.extern.slf4j.Slf4j;
 import gaia3d.config.CSRFRequestDataValueProcessor;
 import gaia3d.config.CSRFTokenManager;
 import gaia3d.support.URLSupport;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * http POST, PUT, DELETE 요청의 경우 CSRF 토큰 검사
@@ -34,11 +31,11 @@ import gaia3d.support.URLSupport;
  */
 @Slf4j
 @Component
-public class CSRFHandlerInterceptor extends HandlerInterceptorAdapter{
+public class CSRFHandlerInterceptor implements HandlerInterceptor {
 	
 	@Autowired
 	private ObjectMapper objectMapper;
-	
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 

@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -27,19 +27,15 @@ import java.util.Map;
  */
 @Slf4j
 @Component
-public class SecurityInterceptor extends HandlerInterceptorAdapter {
+public class SecurityInterceptor implements HandlerInterceptor {
 
 	@Autowired
 	private PropertiesConfig propertiesConfig;
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	private int count = 0;
-	
-    @Override
+	@Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		log.info("**** 버그 추적용 SecurityInterceptor count = {}", count);
-		count++;
 
     	String uri = request.getRequestURI();
     	String requestIp = WebUtils.getClientIp(request);

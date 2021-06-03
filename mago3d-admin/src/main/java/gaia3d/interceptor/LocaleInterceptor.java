@@ -3,7 +3,7 @@ package gaia3d.interceptor;
 import gaia3d.domain.Key;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,9 +18,9 @@ import java.util.Locale;
  */
 @Slf4j
 @Component
-public class LocaleInterceptor extends HandlerInterceptorAdapter {
+public class LocaleInterceptor implements HandlerInterceptor {
 
-    @Override
+	@Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     	String lang = (String)request.getSession().getAttribute(Key.LANG.name());
 		if(lang == null || "".equals(lang)) {

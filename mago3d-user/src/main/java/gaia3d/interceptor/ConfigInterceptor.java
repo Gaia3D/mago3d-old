@@ -1,15 +1,5 @@
 package gaia3d.interceptor;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
 import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.Key;
 import gaia3d.domain.YOrN;
@@ -18,6 +8,14 @@ import gaia3d.domain.menu.Menu;
 import gaia3d.domain.user.UserGroupMenu;
 import gaia3d.domain.user.UserSession;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * 사이트 전체 설정 관련 처리를 담당
@@ -27,11 +25,11 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Component
-public class ConfigInterceptor extends HandlerInterceptorAdapter {
+public class ConfigInterceptor implements HandlerInterceptor {
 	@Autowired
 	private PropertiesConfig propertiesConfig;
 
-    @Override
+	@Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     	
     	String uri = request.getRequestURI();

@@ -1,12 +1,11 @@
 package gaia3d.interceptor;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 세션 하이재킹 처리, login 처리 부분과 ajax 부분을 통과
@@ -15,11 +14,11 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Component
-public class SessionHijackingInterceptor extends HandlerInterceptorAdapter {
+public class SessionHijackingInterceptor implements HandlerInterceptor {
 
     private static final String[] EXCEPTION_URI = { "signin", "signout", "call-api", "/guide/help" };
     private static final String POPUP_URL = "popup";
-    
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 

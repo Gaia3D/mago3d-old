@@ -1,19 +1,6 @@
 package gaia3d.interceptor;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
 import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.Key;
 import gaia3d.domain.user.UserSession;
@@ -21,6 +8,16 @@ import gaia3d.domain.user.UserStatus;
 import gaia3d.support.URLSupport;
 import gaia3d.utils.WebUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 보안 관련 체크 인터셉터
@@ -29,14 +26,14 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Component
-public class SecurityInterceptor extends HandlerInterceptorAdapter {
+public class SecurityInterceptor implements HandlerInterceptor {
 
 	@Autowired
 	private PropertiesConfig propertiesConfig;
 	@Autowired
 	private ObjectMapper objectMapper;
-	
-    @Override
+
+	@Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
     	String uri = request.getRequestURI();
