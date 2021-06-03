@@ -1,24 +1,5 @@
 package gaia3d.controller.rest;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import gaia3d.domain.Key;
 import gaia3d.domain.PageType;
 import gaia3d.domain.ServerTarget;
@@ -33,6 +14,17 @@ import gaia3d.service.DataService;
 import gaia3d.support.SQLInjectSupport;
 import gaia3d.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -99,10 +91,10 @@ public class DataRestController {
 		
 		dataInfo.setUserGroupId(userSession.getUserGroupId());
 		dataInfo.setUserId(userSession.getUserId());
-		if(!StringUtils.isEmpty(dataInfo.getStartDate())) {
+		if(!ObjectUtils.isEmpty(dataInfo.getStartDate())) {
 			dataInfo.setStartDate(dataInfo.getStartDate().substring(0, 8) + DateUtils.START_TIME);
 		}
-		if(!StringUtils.isEmpty(dataInfo.getEndDate())) {
+		if(!ObjectUtils.isEmpty(dataInfo.getEndDate())) {
 			dataInfo.setEndDate(dataInfo.getEndDate().substring(0, 8) + DateUtils.END_TIME);
 		}
 		

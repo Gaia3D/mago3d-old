@@ -1,5 +1,13 @@
 package gaia3d.parser.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import gaia3d.domain.data.DataFileInfo;
+import gaia3d.domain.data.DataGroup;
+import gaia3d.domain.data.DataInfo;
+import gaia3d.parser.DataFileParser;
+import org.springframework.util.ObjectUtils;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
@@ -9,16 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.springframework.util.StringUtils;
-
-import gaia3d.domain.data.DataFileInfo;
-import gaia3d.domain.data.DataGroup;
-import gaia3d.domain.data.DataInfo;
-import gaia3d.parser.DataFileParser;
 
 public class DataFileJsonParser implements DataFileParser {
 
@@ -51,17 +49,17 @@ public class DataFileJsonParser implements DataFileParser {
 			dataGroup.setDataGroupId(dataGroupId);
 //			dataGroup.setDataGroupName(dataName);
 //			dataGroup.setDataGroupKey(dataKey);
-			if(!StringUtils.isEmpty(longitude)) {
+			if(!ObjectUtils.isEmpty(longitude)) {
 				longitude = longitude.replace("null", "");
-				if(!StringUtils.isEmpty(longitude)) dataGroup.setLongitude(new BigDecimal(longitude));
+				if(!ObjectUtils.isEmpty(longitude)) dataGroup.setLongitude(new BigDecimal(longitude));
 			}
-			if(!StringUtils.isEmpty(latitude)) {
+			if(!ObjectUtils.isEmpty(latitude)) {
 				latitude = latitude.replace("null", "");
-				if(!StringUtils.isEmpty(latitude)) dataGroup.setLatitude(new BigDecimal(latitude));
+				if(!ObjectUtils.isEmpty(latitude)) dataGroup.setLatitude(new BigDecimal(latitude));
 			}
-			if(!StringUtils.isEmpty(altitude)) {
+			if(!ObjectUtils.isEmpty(altitude)) {
 				altitude = altitude.replace("null", "");
-				if(!StringUtils.isEmpty(altitude)) dataGroup.setAltitude(new BigDecimal(altitude));
+				if(!ObjectUtils.isEmpty(altitude)) dataGroup.setAltitude(new BigDecimal(altitude));
 			}
 			if(dataGroup.getLongitude() != null && dataGroup.getLatitude() != null) {
 				dataGroup.setLocation("POINT(" + dataGroup.getLongitude() + " " + dataGroup.getLatitude() + ")");
@@ -117,15 +115,15 @@ public class DataFileJsonParser implements DataFileParser {
 			dataInfo.setDataId(dataId);
 			dataInfo.setDataName(dataName);
 			dataInfo.setDataKey(dataKey);
-			if(!StringUtils.isEmpty(longitude)) dataInfo.setLongitude(new BigDecimal(longitude));
-			if(!StringUtils.isEmpty(latitude)) dataInfo.setLatitude(new BigDecimal(latitude));
-			if(!StringUtils.isEmpty(altitude)) dataInfo.setAltitude(new BigDecimal(altitude));
+			if(!ObjectUtils.isEmpty(longitude)) dataInfo.setLongitude(new BigDecimal(longitude));
+			if(!ObjectUtils.isEmpty(latitude)) dataInfo.setLatitude(new BigDecimal(latitude));
+			if(!ObjectUtils.isEmpty(altitude)) dataInfo.setAltitude(new BigDecimal(altitude));
 			if(dataInfo.getLongitude() != null && dataInfo.getLatitude() != null) {
 				dataInfo.setLocation("POINT(" + dataInfo.getLongitude() + " " + dataInfo.getLatitude() + ")");
 			}
-			if(!StringUtils.isEmpty(heading)) dataInfo.setHeading(new BigDecimal(heading));
-			if(!StringUtils.isEmpty(pitch)) dataInfo.setPitch(new BigDecimal(pitch));
-			if(!StringUtils.isEmpty(roll)) dataInfo.setRoll(new BigDecimal(roll));
+			if(!ObjectUtils.isEmpty(heading)) dataInfo.setHeading(new BigDecimal(heading));
+			if(!ObjectUtils.isEmpty(pitch)) dataInfo.setPitch(new BigDecimal(pitch));
+			if(!ObjectUtils.isEmpty(roll)) dataInfo.setRoll(new BigDecimal(roll));
 			
 			dataInfo.setMappingType(mappingType);
 			dataInfo.setMetainfo(metainfo.toString());

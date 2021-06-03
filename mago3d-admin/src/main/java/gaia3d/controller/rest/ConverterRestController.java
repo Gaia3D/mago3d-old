@@ -1,22 +1,20 @@
 package gaia3d.controller.rest;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import gaia3d.domain.Key;
 import gaia3d.domain.converter.ConverterJob;
 import gaia3d.domain.user.UserSession;
 import gaia3d.service.ConverterService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Data Converter
@@ -52,7 +50,7 @@ public class ConverterRestController {
 			result.put("message", message);
             return result;
 		}
-		if(StringUtils.isEmpty(converterJob.getTitle())) {
+		if(ObjectUtils.isEmpty(converterJob.getTitle())) {
 			result.put("statusCode", HttpStatus.BAD_REQUEST.value());
 			result.put("errorCode", "converter.title.empty");
 			result.put("message", message);

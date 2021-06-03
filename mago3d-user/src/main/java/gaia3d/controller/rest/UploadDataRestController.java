@@ -1,35 +1,5 @@
 package gaia3d.controller.rest;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.FileType;
 import gaia3d.domain.Key;
@@ -46,6 +16,21 @@ import gaia3d.utils.DateUtils;
 import gaia3d.utils.FileUtils;
 import gaia3d.utils.FormatUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.util.ObjectUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.io.*;
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * 3D 데이터 파일 업로더
@@ -94,7 +79,7 @@ public class UploadDataRestController {
 		List<String> converterTypeList = Arrays.asList(converterTypes);
 		
 		errorCode = dataValidate(request);
-		if(!StringUtils.isEmpty(errorCode)) return getResultMap(result, HttpStatus.BAD_REQUEST.value(), errorCode, message);
+		if(!ObjectUtils.isEmpty(errorCode)) return getResultMap(result, HttpStatus.BAD_REQUEST.value(), errorCode, message);
 		
 		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
 		String userId = userSession.getUserId();
@@ -156,7 +141,7 @@ public class UploadDataRestController {
 				
 				// 파일 기본 validation 체크
 				errorCode = fileValidate(policy, uploadTypeList, multipartFile);
-				if(!StringUtils.isEmpty(errorCode)) {
+				if(!ObjectUtils.isEmpty(errorCode)) {
 					return getResultMap(result, HttpStatus.BAD_REQUEST.value(), errorCode, message);
 				}
 				
@@ -316,7 +301,7 @@ public class UploadDataRestController {
 		int converterTargetCount = 0;
 		
 		String errorCode = fileValidate(policy, uploadTypeList, multipartFile);
-		if(!StringUtils.isEmpty(errorCode)) {
+		if(!ObjectUtils.isEmpty(errorCode)) {
 			result.put("errorCode", errorCode);
 			return result;
 		}
@@ -635,16 +620,16 @@ public class UploadDataRestController {
             return result;
 		}
 		
-		if(StringUtils.isEmpty(uploadData.getDataName())) {
+		if(ObjectUtils.isEmpty(uploadData.getDataName())) {
 			errorCode = "data.name.empty";
 		}
-		if(StringUtils.isEmpty(uploadData.getDataGroupId())) {
+		if(ObjectUtils.isEmpty(uploadData.getDataGroupId())) {
 			errorCode = "data.group.id.empty";
 		}
-		if(StringUtils.isEmpty(uploadData.getSharing())) {
+		if(ObjectUtils.isEmpty(uploadData.getSharing())) {
 			errorCode = "data.sharing.empty";
 		}
-		/*if(StringUtils.isEmpty(uploadData.getDataType())) {
+		/*if(ObjectUtils.isEmpty(uploadData.getDataType())) {
 			errorCode = "data.type.empty";
 		}*/
 		
@@ -662,7 +647,7 @@ public class UploadDataRestController {
 		}
 //			}
 		
-		if(!StringUtils.isEmpty(errorCode)) {
+		if(!ObjectUtils.isEmpty(errorCode)) {
 			log.info("@@@@@ errorCode = {}", errorCode);
 			result.put("statusCode", HttpStatus.BAD_REQUEST.value());
 			result.put("errorCode", errorCode);
@@ -720,29 +705,29 @@ public class UploadDataRestController {
 	 * @return
 	 */
 	private String dataValidate(MultipartHttpServletRequest request) {
-		if(StringUtils.isEmpty(request.getParameter("dataName"))) {
+		if(ObjectUtils.isEmpty(request.getParameter("dataName"))) {
 			return "data.name.empty";
 		}
-		if(StringUtils.isEmpty(request.getParameter("dataGroupId"))) {
+		if(ObjectUtils.isEmpty(request.getParameter("dataGroupId"))) {
 			return "data.group.id.empty";
 		}
-		if(StringUtils.isEmpty(request.getParameter("sharing"))) {
+		if(ObjectUtils.isEmpty(request.getParameter("sharing"))) {
 			return "data.sharing.empty";
 		}
 		
 		String dataType = request.getParameter("dataType");
-		if(StringUtils.isEmpty(dataType)) {
+		if(ObjectUtils.isEmpty(dataType)) {
 			return "data.type.empty";
 		}
 		
 		if(	UploadDataType.CITYGML != UploadDataType.findBy(dataType) && UploadDataType.LAS != UploadDataType.findBy(dataType)) {
-			if(StringUtils.isEmpty(request.getParameter("longitude"))) {
+			if(ObjectUtils.isEmpty(request.getParameter("longitude"))) {
 				return "data.longitude.empty";
 			}
-			if(StringUtils.isEmpty(request.getParameter("latitude"))) {
+			if(ObjectUtils.isEmpty(request.getParameter("latitude"))) {
 				return "data.latitude.empty";
 			}
-			if(StringUtils.isEmpty(request.getParameter("altitude"))) {
+			if(ObjectUtils.isEmpty(request.getParameter("altitude"))) {
 				return "data.altitude.empty";
 			}
 		}

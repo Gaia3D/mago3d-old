@@ -24,7 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -132,7 +132,7 @@ public class LayerRestController implements AuthorizationController {
 
 		try {
 			errorCode = layerValidate(request);
-			if (!StringUtils.isEmpty(errorCode)) {
+			if (!ObjectUtils.isEmpty(errorCode)) {
 				result.put("statusCode", HttpStatus.BAD_REQUEST.value());
 				result.put("errorCode", errorCode);
 				return result;
@@ -215,7 +215,7 @@ public class LayerRestController implements AuthorizationController {
 
 					// 파일 기본 validation 체크
 					errorCode = fileValidate(policy, multipartFile);
-					if (!StringUtils.isEmpty(errorCode)) {
+					if (!ObjectUtils.isEmpty(errorCode)) {
 						result.put("statusCode", HttpStatus.BAD_REQUEST.value());
 						result.put("errorCode", errorCode);
 						return result;
@@ -265,7 +265,7 @@ public class LayerRestController implements AuthorizationController {
 
 			// shape 필수 파일 확인
 			errorCode = shapeFileValidate(layerFileInfoList);
-			if(!StringUtils.isEmpty(errorCode)) {
+			if(!ObjectUtils.isEmpty(errorCode)) {
 				log.info("@@@@@@@@@@@@ errorCode = {}", errorCode);
 				result.put("statusCode", HttpStatus.BAD_REQUEST.value());
 				result.put("errorCode", errorCode);
@@ -394,7 +394,7 @@ public class LayerRestController implements AuthorizationController {
 
         try {
             errorCode = layerValidate(request);
-            if(!StringUtils.isEmpty(errorCode)) {
+            if(!ObjectUtils.isEmpty(errorCode)) {
             	result.put("statusCode", HttpStatus.BAD_REQUEST.value());
                 result.put("errorCode", errorCode);
                 return result;
@@ -449,7 +449,7 @@ public class LayerRestController implements AuthorizationController {
 
                     // 파일 기본 validation 체크
                     errorCode = fileValidate(policy, multipartFile);
-                    if(!StringUtils.isEmpty(errorCode)) {
+                    if(!ObjectUtils.isEmpty(errorCode)) {
                     	result.put("statusCode", HttpStatus.BAD_REQUEST.value());
                         result.put("errorCode", errorCode);
                         return result;
@@ -500,7 +500,7 @@ public class LayerRestController implements AuthorizationController {
 
             // shape 필수 파일 확인
  			errorCode = shapeFileValidate(layerFileInfoList);
- 			if(!StringUtils.isEmpty(errorCode)) {
+ 			if(!ObjectUtils.isEmpty(errorCode)) {
  				log.info("@@@@@@@@@@@@ errorCode = {}", errorCode);
  				result.put("statusCode", HttpStatus.BAD_REQUEST.value());
  				result.put("errorCode", errorCode);
@@ -786,7 +786,7 @@ public class LayerRestController implements AuthorizationController {
     private Map<String, Object> unzip(Policy policy, String groupFileName, MultipartFile multipartFile, String shapeEncoding, String targetDirectory) throws Exception {
         Map<String, Object> result = new HashMap<>();
         String errorCode = fileValidate(policy, multipartFile);
-        if(!StringUtils.isEmpty(errorCode)) {
+        if(!ObjectUtils.isEmpty(errorCode)) {
             result.put("errorCode", errorCode);
             return result;
         }
@@ -952,7 +952,7 @@ public class LayerRestController implements AuthorizationController {
     * @return
     */
     private String layerValidate(MultipartHttpServletRequest request) {
-        if(StringUtils.isEmpty(request.getParameter("layerName"))) {
+        if(ObjectUtils.isEmpty(request.getParameter("layerName"))) {
             return "layer.name.empty";
         }
         

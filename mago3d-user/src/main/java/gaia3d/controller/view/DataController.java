@@ -1,18 +1,5 @@
 package gaia3d.controller.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import gaia3d.domain.Key;
 import gaia3d.domain.PageType;
 import gaia3d.domain.cache.CacheManager;
@@ -31,6 +18,17 @@ import gaia3d.support.RoleSupport;
 import gaia3d.support.SQLInjectSupport;
 import gaia3d.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -70,10 +68,10 @@ public class DataController {
 		dataInfo.setUserGroupId(userSession.getUserGroupId());
 		dataInfo.setUserId(userSession.getUserId());
 
-		if(!StringUtils.isEmpty(dataInfo.getStartDate())) {
+		if(!ObjectUtils.isEmpty(dataInfo.getStartDate())) {
 			dataInfo.setStartDate(dataInfo.getStartDate().substring(0, 8) + DateUtils.START_TIME);
 		}
-		if(!StringUtils.isEmpty(dataInfo.getEndDate())) {
+		if(!ObjectUtils.isEmpty(dataInfo.getEndDate())) {
 			dataInfo.setEndDate(dataInfo.getEndDate().substring(0, 8) + DateUtils.END_TIME);
 		}
 
@@ -148,10 +146,10 @@ public class DataController {
 		dataInfo.setUserId(userSession.getUserId());
 		*/
 
-		if(!StringUtils.isEmpty(dataInfo.getStartDate())) {
+		if(!ObjectUtils.isEmpty(dataInfo.getStartDate())) {
 			dataInfo.setStartDate(dataInfo.getStartDate().substring(0, 8) + DateUtils.START_TIME);
 		}
-		if(!StringUtils.isEmpty(dataInfo.getEndDate())) {
+		if(!ObjectUtils.isEmpty(dataInfo.getEndDate())) {
 			dataInfo.setEndDate(dataInfo.getEndDate().substring(0, 8) + DateUtils.END_TIME);
 		}
 

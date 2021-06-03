@@ -1,30 +1,21 @@
 package gaia3d.controller.rest;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import gaia3d.controller.AuthorizationController;
 import gaia3d.domain.Key;
 import gaia3d.domain.tile.TileInfo;
 import gaia3d.domain.user.UserSession;
 import gaia3d.service.TileService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.util.ObjectUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 타일링
@@ -52,7 +43,7 @@ public class TileRestController implements AuthorizationController {
 		String message = null;
 
 		// TODO @Valid 로 구현해야 함
-		if(StringUtils.isEmpty(tileInfo.getTileKey())) {
+		if(ObjectUtils.isEmpty(tileInfo.getTileKey())) {
 			result.put("statusCode", HttpStatus.BAD_REQUEST.value());
 			result.put("errorCode", "tile.key.empty");
 			result.put("message", message);

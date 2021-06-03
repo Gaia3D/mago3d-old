@@ -40,7 +40,7 @@ public class ShapeFileParser {
 //    public List<DesignLayer> getExtrusionModelList(ObjectMapper objectMapper, String extrusionColumns) throws ParseException {
 //        log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ extrusionColumns = {}", extrusionColumns);
 //        List<DesignLayer> extrusionModelList = new ArrayList<>();
-//        if(StringUtils.isEmpty(extrusionColumns)) return extrusionModelList;
+//        if(ObjectUtils.isEmpty(extrusionColumns)) return extrusionModelList;
 //
 //        List<String> columnList = Arrays.asList(extrusionColumns.trim().toLowerCase().split(","));
 //        try {

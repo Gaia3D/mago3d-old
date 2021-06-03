@@ -52,7 +52,7 @@ public class CustomMessageListener {
 			command.add(queueMessage.getOutputFolder());
 			command.add(PREFIX + "meshType");
 			command.add(queueMessage.getMeshType());
-			if (!StringUtils.isEmpty(queueMessage.getSkinLevel())) {
+			if (!ObjectUtils.isEmpty(queueMessage.getSkinLevel())) {
 				command.add(PREFIX + "skinLevel");
 				command.add(queueMessage.getSkinLevel());
 			}

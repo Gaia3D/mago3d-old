@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -68,12 +69,12 @@ public class UserController implements AuthorizationController {
     	if(roleValidate(request) != null) return roleCheckResult;
 
     	String today = DateUtils.getToday(FormatUtils.YEAR_MONTH_DAY);
-//		if(StringUtils.isEmpty(userInfo.getStartDate())) {
+//		if(ObjectUtils.isEmpty(userInfo.getStartDate())) {
 //			userInfo.setStartDate(today.substring(0,4) + DateUtils.START_DAY_TIME);
 //		} else {
 //			userInfo.setStartDate(userInfo.getStartDate().substring(0, 8) + DateUtils.START_TIME);
 //		}
-//		if(StringUtils.isEmpty(userInfo.getEndDate())) {
+//		if(ObjectUtils.isEmpty(userInfo.getEndDate())) {
 //			userInfo.setEndDate(today + DateUtils.END_TIME);
 //		} else {
 //			userInfo.setEndDate(userInfo.getEndDate().substring(0, 8) + DateUtils.END_TIME);
@@ -143,7 +144,7 @@ public class UserController implements AuthorizationController {
 
         Policy policy = policyService.getPolicy();
         UserInfo userInfo = userService.getUser(userId);
-        if(!StringUtils.isEmpty(userInfo.getEmail())) {
+        if(!ObjectUtils.isEmpty(userInfo.getEmail())) {
 			userInfo.setEmail(Crypt.decrypt(userInfo.getEmail()));
 		}
 		List<UserGroup> userGroupList = userGroupService.getListUserGroup();
@@ -262,7 +263,7 @@ public class UserController implements AuthorizationController {
 			isListPage = false;
 		}
 
-		if(!StringUtils.isEmpty(userInfo.getStatus())) {
+		if(!ObjectUtils.isEmpty(userInfo.getStatus())) {
 			buffer.append("&status=").append(userInfo.getStatus());
 		}
 

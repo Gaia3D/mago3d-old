@@ -1,18 +1,5 @@
 package gaia3d.controller.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import gaia3d.domain.PageType;
 import gaia3d.domain.common.Pagination;
 import gaia3d.domain.converter.ConverterJob;
@@ -21,6 +8,17 @@ import gaia3d.service.ConverterService;
 import gaia3d.support.SQLInjectSupport;
 import gaia3d.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Data Converter
@@ -52,10 +50,10 @@ public class ConverterController {
 //		converterJob.setUserId(userSession.getUserId());
 		log.info("@@ converterJob = {}", converterJob);
 
-		if(!StringUtils.isEmpty(converterJob.getStartDate())) {
+		if(!ObjectUtils.isEmpty(converterJob.getStartDate())) {
 			converterJob.setStartDate(converterJob.getStartDate().substring(0, 8) + DateUtils.START_TIME);
 		}
-		if(!StringUtils.isEmpty(converterJob.getEndDate())) {
+		if(!ObjectUtils.isEmpty(converterJob.getEndDate())) {
 			converterJob.setEndDate(converterJob.getEndDate().substring(0, 8) + DateUtils.END_TIME);
 		}
 
@@ -93,10 +91,10 @@ public class ConverterController {
 //		converterJobFile.setUserId(userSession.getUserId());
 		log.info("@@ converterJobFile = {}", converterJobFile);
 
-		if(!StringUtils.isEmpty(converterJobFile.getStartDate())) {
+		if(!ObjectUtils.isEmpty(converterJobFile.getStartDate())) {
 			converterJobFile.setStartDate(converterJobFile.getStartDate().substring(0, 8) + DateUtils.START_TIME);
 		}
-		if(!StringUtils.isEmpty(converterJobFile.getEndDate())) {
+		if(!ObjectUtils.isEmpty(converterJobFile.getEndDate())) {
 			converterJobFile.setEndDate(converterJobFile.getEndDate().substring(0, 8) + DateUtils.END_TIME);
 		}
 

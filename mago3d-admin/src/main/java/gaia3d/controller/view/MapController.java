@@ -11,12 +11,12 @@ import gaia3d.service.DataService;
 import gaia3d.service.GeoPolicyService;
 import gaia3d.service.UserPolicyService;
 import gaia3d.support.LogMessageSupport;
-import io.micrometer.core.instrument.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -97,10 +97,10 @@ public class MapController {
         UserPolicy userPolicy = userPolicyService.getUserPolicy(userSession.getUserId());
         GeoPolicy geoPolicy = geoPolicyService.getGeoPolicy();
         try {
-        	if(!StringUtils.isEmpty(longitude)) {
+        	if(!ObjectUtils.isEmpty(longitude)) {
             	geoPolicy.setInitLongitude(longitude);
         	}
-        	if(!StringUtils.isEmpty(latitude)) {
+        	if(!ObjectUtils.isEmpty(latitude)) {
             	geoPolicy.setInitLatitude(latitude);
         	}
         	if(readOnly == null) {

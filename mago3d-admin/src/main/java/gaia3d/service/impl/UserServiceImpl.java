@@ -1,13 +1,5 @@
 package gaia3d.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-
 import gaia3d.domain.cache.CacheManager;
 import gaia3d.domain.role.RoleKey;
 import gaia3d.domain.user.UserInfo;
@@ -19,6 +11,13 @@ import gaia3d.service.DataService;
 import gaia3d.service.UserService;
 import gaia3d.support.PasswordSupport;
 import gaia3d.support.RoleSupport;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 사용자
@@ -110,7 +109,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Transactional
 	public int updateUser(UserInfo userInfo) {
-		if(!StringUtils.isEmpty(userInfo.getPassword())) {
+		if(!ObjectUtils.isEmpty(userInfo.getPassword())) {
 			userInfo.setPassword(PasswordSupport.encodePassword(userInfo.getPassword()));
 		}
 		userInfo.setEmail(Crypt.encrypt(userInfo.getEmail()));
@@ -145,7 +144,7 @@ public class UserServiceImpl implements UserService {
 		String[] userIds = checkIds.split(",");
 
 		for(String userId : userIds) {
-			if(StringUtils.isEmpty(userId)) continue;
+			if(ObjectUtils.isEmpty(userId)) continue;
 
 			UserInfo userInfo = new UserInfo();
 			userInfo.setUserId(userId);

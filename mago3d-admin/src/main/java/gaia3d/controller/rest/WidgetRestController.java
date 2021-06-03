@@ -16,12 +16,12 @@ import gaia3d.domain.widget.Widget;
 import gaia3d.service.*;
 import gaia3d.support.LogMessageSupport;
 import gaia3d.utils.LocaleUtils;
-import io.micrometer.core.instrument.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -425,7 +425,7 @@ public class WidgetRestController {
 		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
 		String userId = userSession.getUserId();
 
-		if(StringUtils.isEmpty(widget.getWidgetOrder())) {
+		if(ObjectUtils.isEmpty(widget.getWidgetOrder())) {
 			result.put("statusCode", HttpStatus.BAD_REQUEST.value());
 			result.put("errorCode", "widget.invalid");
 			result.put("message", message);

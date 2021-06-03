@@ -1,19 +1,5 @@
 package gaia3d.controller.view;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import gaia3d.domain.Key;
 import gaia3d.domain.PageType;
 import gaia3d.domain.common.Pagination;
@@ -27,6 +13,18 @@ import gaia3d.service.DataService;
 import gaia3d.support.SQLInjectSupport;
 import gaia3d.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * 데이터 geometry 변경 이력
@@ -90,10 +88,10 @@ public class DataAdjustLogController {
 		dataGroup.setUserId(userSession.getUserId());
 		List<DataGroup> dataGroupList = dataGroupService.getListDataGroup(dataGroup);
 		
-		if(!StringUtils.isEmpty(dataAdjustLog.getStartDate())) {
+		if(!ObjectUtils.isEmpty(dataAdjustLog.getStartDate())) {
 			dataAdjustLog.setStartDate(dataAdjustLog.getStartDate().substring(0, 8) + DateUtils.START_TIME);
 		}
-		if(!StringUtils.isEmpty(dataAdjustLog.getEndDate())) {
+		if(!ObjectUtils.isEmpty(dataAdjustLog.getEndDate())) {
 			dataAdjustLog.setEndDate(dataAdjustLog.getEndDate().substring(0, 8) + DateUtils.END_TIME);
 		}
 

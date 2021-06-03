@@ -8,7 +8,7 @@ import gaia3d.domain.data.DataSmartTilingFileInfo;
 import gaia3d.parser.DataSmartTilingFileParser;
 import gaia3d.support.LogMessageSupport;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
@@ -52,17 +52,17 @@ public class DataSmartTilingFileJsonParser implements DataSmartTilingFileParser 
 //			dataGroup.setDataGroupName(dataName);
 //			dataGroup.setDataGroupKey(dataKey);
 			
-			if(!StringUtils.isEmpty(longitude)) {
+			if(!ObjectUtils.isEmpty(longitude)) {
 				longitude = longitude.replace("null", "");
-				if(!StringUtils.isEmpty(longitude)) dataGroup.setLongitude(new BigDecimal(longitude));
+				if(!ObjectUtils.isEmpty(longitude)) dataGroup.setLongitude(new BigDecimal(longitude));
 			}
-			if(!StringUtils.isEmpty(latitude)) {
+			if(!ObjectUtils.isEmpty(latitude)) {
 				latitude = latitude.replace("null", "");
-				if(!StringUtils.isEmpty(latitude)) dataGroup.setLatitude(new BigDecimal(latitude));
+				if(!ObjectUtils.isEmpty(latitude)) dataGroup.setLatitude(new BigDecimal(latitude));
 			}
-			if(!StringUtils.isEmpty(altitude)) {
+			if(!ObjectUtils.isEmpty(altitude)) {
 				altitude = altitude.replace("null", "");
-				if(!StringUtils.isEmpty(altitude)) dataGroup.setAltitude(new BigDecimal(altitude));
+				if(!ObjectUtils.isEmpty(altitude)) dataGroup.setAltitude(new BigDecimal(altitude));
 			}
 			if(dataGroup.getLongitude() != null && dataGroup.getLatitude() != null) {
 				dataGroup.setLocation("POINT(" + dataGroup.getLongitude() + " " + dataGroup.getLatitude() + ")");

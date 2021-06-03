@@ -1,27 +1,21 @@
 package gaia3d.controller.rest;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import gaia3d.domain.accesslog.AccessLog;
 import gaia3d.domain.common.Pagination;
 import gaia3d.service.AccessLogService;
 import gaia3d.utils.DateUtils;
 import gaia3d.utils.FormatUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -48,12 +42,12 @@ public class AccessLogRestController {
 		List<AccessLog> accessLogList = new ArrayList<>();
 		
 		String today = DateUtils.getToday(FormatUtils.YEAR_MONTH_DAY);
-		if(StringUtils.isEmpty(accessLog.getStartDate())) {
+		if(ObjectUtils.isEmpty(accessLog.getStartDate())) {
 			accessLog.setStartDate(today.substring(0,4) + DateUtils.START_DAY_TIME);
 		} else {
 			accessLog.setStartDate(accessLog.getStartDate().substring(0, 8) + DateUtils.START_TIME);
 		}
-		if(StringUtils.isEmpty(accessLog.getEndDate())) {
+		if(ObjectUtils.isEmpty(accessLog.getEndDate())) {
 			accessLog.setEndDate(today + DateUtils.END_TIME);
 		} else {
 			accessLog.setEndDate(accessLog.getEndDate().substring(0, 8) + DateUtils.END_TIME);

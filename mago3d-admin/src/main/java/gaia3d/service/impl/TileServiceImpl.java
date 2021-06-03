@@ -24,7 +24,7 @@ import org.springframework.amqp.AmqpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -110,7 +110,7 @@ public class TileServiceImpl implements TileService {
 
 		// TODO 스트림 처리 해야 함
 		for(String dataGroupId : dataGroups) {
-			if(StringUtils.isEmpty(dataGroupId)) continue;
+			if(ObjectUtils.isEmpty(dataGroupId)) continue;
 
 			TileDataGroup tileDataGroup = new TileDataGroup();
 			tileDataGroup.setTileId(tileId);
@@ -227,7 +227,7 @@ public class TileServiceImpl implements TileService {
 		String tilePath = tileInfo.getTilePath();
 
 		for(String dataGroupId : dataGroups) {
-			if(StringUtils.isEmpty(dataGroupId)) continue;
+			if(ObjectUtils.isEmpty(dataGroupId)) continue;
 
 			TileDataGroup tileDataGroup = new TileDataGroup();
 			tileDataGroup.setTileId(tileId);

@@ -1,24 +1,7 @@
 package gaia3d.service.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.springframework.amqp.AmqpException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-
 import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.ConverterType;
 import gaia3d.domain.LocationUdateType;
@@ -33,26 +16,31 @@ import gaia3d.domain.converter.ConverterJob;
 import gaia3d.domain.converter.ConverterJobFile;
 import gaia3d.domain.converter.ConverterJobStatus;
 import gaia3d.domain.converter.ConverterTemplate;
-import gaia3d.domain.data.DataAttribute;
-import gaia3d.domain.data.DataGroup;
-import gaia3d.domain.data.DataInfo;
-import gaia3d.domain.data.DataRelationInfo;
-import gaia3d.domain.data.DataStatus;
+import gaia3d.domain.data.*;
 import gaia3d.domain.uploaddata.UploadData;
 import gaia3d.domain.uploaddata.UploadDataFile;
 import gaia3d.domain.uploaddata.UploadDataType;
 import gaia3d.domain.uploaddata.UploadDirectoryType;
 import gaia3d.persistence.ConverterMapper;
-import gaia3d.service.AMQPPublishService;
-import gaia3d.service.ConverterService;
-import gaia3d.service.DataAttributeService;
-import gaia3d.service.DataGroupService;
-import gaia3d.service.DataRelationService;
-import gaia3d.service.DataService;
-import gaia3d.service.UploadDataService;
+import gaia3d.service.*;
 import gaia3d.support.LogMessageSupport;
 import gaia3d.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.AmqpException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * converter manager
@@ -695,7 +683,7 @@ public class ConverterServiceImpl implements ConverterService {
 				//String dataKey = jsonNode.path("data_key").asText();
 				String longitude = jsonNode.path("longitude").asText().trim();
 				String latitude = jsonNode.path("latitude").asText().trim();
-				if(!StringUtils.isEmpty(longitude)) {
+				if(!ObjectUtils.isEmpty(longitude)) {
 					updateDataInfo.setLongitude(new BigDecimal(longitude) );
 					updateDataInfo.setLatitude(new BigDecimal(latitude) );
 					updateDataInfo.setLocation("POINT(" + longitude + " " + latitude + ")");

@@ -1,19 +1,5 @@
 package gaia3d.controller.view;
 
-import java.io.File;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.Key;
 import gaia3d.domain.data.DataGroup;
@@ -23,6 +9,18 @@ import gaia3d.service.DataGroupService;
 import gaia3d.service.PolicyService;
 import gaia3d.support.SQLInjectSupport;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -109,7 +107,7 @@ public class DataGroupController {
 		dataGroup.setDataGroupId(dataGroupId);
 		dataGroup = dataGroupService.getDataGroup(dataGroup);
 		
-		if(StringUtils.isEmpty(dataGroup.getParentName())) {
+		if(ObjectUtils.isEmpty(dataGroup.getParentName())) {
 			Policy policy = policyService.getPolicy();
 			dataGroup.setParentName(policy.getContentDataGroupRoot());
 		}

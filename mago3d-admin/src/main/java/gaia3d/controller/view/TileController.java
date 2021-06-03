@@ -1,18 +1,5 @@
 package gaia3d.controller.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.Key;
 import gaia3d.domain.PageType;
@@ -27,6 +14,17 @@ import gaia3d.support.SQLInjectSupport;
 import gaia3d.utils.DateUtils;
 import gaia3d.utils.FormatUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -56,12 +54,12 @@ public class TileController {
 		tileInfo.setOrderWord(SQLInjectSupport.replaceSqlInection(tileInfo.getOrderWord()));
 
 		String today = DateUtils.getToday(FormatUtils.YEAR_MONTH_DAY);
-		if(StringUtils.isEmpty(tileInfo.getStartDate())) {
+		if(ObjectUtils.isEmpty(tileInfo.getStartDate())) {
 			tileInfo.setStartDate(today.substring(0,4) + DateUtils.START_DAY_TIME);
 		} else {
 			tileInfo.setStartDate(tileInfo.getStartDate().substring(0, 8) + DateUtils.START_TIME);
 		}
-		if(StringUtils.isEmpty(tileInfo.getEndDate())) {
+		if(ObjectUtils.isEmpty(tileInfo.getEndDate())) {
 			tileInfo.setEndDate(today + DateUtils.END_TIME);
 		} else {
 			tileInfo.setEndDate(tileInfo.getEndDate().substring(0, 8) + DateUtils.END_TIME);

@@ -1,25 +1,5 @@
 package gaia3d.controller.rest;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import gaia3d.domain.Key;
 import gaia3d.domain.LocationUdateType;
 import gaia3d.domain.PageType;
@@ -30,6 +10,18 @@ import gaia3d.service.DataGroupService;
 import gaia3d.support.SQLInjectSupport;
 import gaia3d.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.util.ObjectUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 사용자 데이터 그룹 관리
@@ -99,10 +91,10 @@ public class DataGroupRestController {
 		
 		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
 		
-		if(!StringUtils.isEmpty(dataGroup.getStartDate())) {
+		if(!ObjectUtils.isEmpty(dataGroup.getStartDate())) {
 			dataGroup.setStartDate(dataGroup.getStartDate().substring(0, 8) + DateUtils.START_TIME);
 		}
-		if(!StringUtils.isEmpty(dataGroup.getEndDate())) {
+		if(!ObjectUtils.isEmpty(dataGroup.getEndDate())) {
 			dataGroup.setEndDate(dataGroup.getEndDate().substring(0, 8) + DateUtils.END_TIME);
 		}
 		dataGroup.setUserId(userSession.getUserId());
@@ -149,7 +141,7 @@ public class DataGroupRestController {
 		String message = null;
 		
 		// TODO @Valid 로 구현해야 함
-		if(StringUtils.isEmpty(dataGroup.getDataGroupKey())) {
+		if(ObjectUtils.isEmpty(dataGroup.getDataGroupKey())) {
 			result.put("statusCode", HttpStatus.BAD_REQUEST.value());
 			result.put("errorCode", "data.group.key.empty");
 			result.put("message", message);

@@ -16,6 +16,7 @@ import gaia3d.support.LogMessageSupport;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -54,7 +55,7 @@ public class DataGroupRestController {
 		String message = null;
 		
 		// TODO @Valid 로 구현해야 함
-		if(StringUtils.isEmpty(dataGroup.getDataGroupKey())) {
+		if(ObjectUtils.isEmpty(dataGroup.getDataGroupKey())) {
 			result.put("statusCode", HttpStatus.BAD_REQUEST.value());
 			result.put("errorCode", "data.group.key.empty");
 			result.put("message", message);

@@ -12,7 +12,7 @@ import gaia3d.service.UserGroupService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,7 +45,7 @@ public class UserGroupRestController implements AuthorizationController {
 		String message = null;
 
 		// TODO @Valid 로 구현해야 함
-		if(StringUtils.isEmpty(userGroup.getUserGroupKey())) {
+		if(ObjectUtils.isEmpty(userGroup.getUserGroupKey())) {
 			result.put("statusCode", HttpStatus.BAD_REQUEST.value());
 			result.put("errorCode", "user.group.key.empty");
 			result.put("message", message);
