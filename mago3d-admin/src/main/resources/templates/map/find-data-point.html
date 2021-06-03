@@ -184,7 +184,7 @@
 	var MAGO3D_INSTANCE;
 	let dataGroupMap = new Map();
 	dataGroupMap.set(parseInt('${dataInfo.dataGroupId}'), '[[${dataInfo.dataGroupName}]]');
-	var NDTP = NDTP ||{
+	var MAGO3D = MAGO3D ||{
 		policy : {},
 		dataGroup : dataGroupMap,
 		baseLayers : {}
@@ -193,14 +193,14 @@
 	var entities = null;
 	
 	initPolicy(function(policy, baseLayers){
-		NDTP.policy = policy;
-		NDTP.baseLayers = baseLayers;
+		MAGO3D.policy = policy;
+		MAGO3D.baseLayers = baseLayers;
 		magoInit();
 	},'[[${dataInfo.dataId}]]');
 
 	function magoInit() {
 
-		var geoPolicyJson = NDTP.policy;
+		var geoPolicyJson = MAGO3D.policy;
 
 		var option = {};
 		option.infoBox = false;
