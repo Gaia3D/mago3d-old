@@ -1,18 +1,5 @@
 package gaia3d.controller.rest;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import gaia3d.domain.Key;
 import gaia3d.domain.cache.CacheManager;
 import gaia3d.domain.data.DataInfo;
@@ -25,6 +12,17 @@ import gaia3d.service.LayerGroupService;
 import gaia3d.service.UserPolicyService;
 import gaia3d.support.LayerDisplaySupport;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 초기 로딩 policy init
@@ -64,7 +62,7 @@ public class GeoPolicyRestController {
 	
 	@GetMapping("/user")
 	public Map<String, Object> getUserGeoPolicy(HttpServletRequest request, @RequestParam String dataId) {
-		log.info("@@ default Policy");
+		log.info("@@ dataId = {}", dataId);
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
 		String message = null;
@@ -72,7 +70,8 @@ public class GeoPolicyRestController {
 		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
 		String userId = userSession.getUserId();
 		GeoPolicy geoPolicy = CacheManager.getGeoPolicy();
-		UserPolicy userPolicy = userPolicyService.getUserPolicy(userSession.getUserId());
+		UserPolicy userPolicy = userPolicyService.getUserPolicy(userId);
+		log.info("@@ userPolicy = {}", userPolicy);
 		if(userId != null) {
 			if(dataId != null && !"".equals(dataId.trim())) {
 				// dataId가 있을경우 data 위치로 가기 위해 위치값을 변경해줌 
