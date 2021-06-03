@@ -886,10 +886,10 @@ Compass.prototype.setSvgRotate = function() {
 var mapControllEvent = function(magoInstance) {
 	var magoManager = magoInstance.getMagoManager();
 	var configInformation = magoManager.configInformation;
-	var Shape = _Shape(magoInstance);
+	//var Shape = _Shape(magoInstance);
 	
-	MAGO.measureTools.lineShape = new Shape(2, false);
-	MAGO.measureTools.polygonShape = new Shape(3, false);
+	//MAGO.measureTools.lineShape = new Shape(2, false);
+	//MAGO.measureTools.polygonShape = new Shape(3, false);
 	
 	var shapeInfo = document.getElementById("measureInfo");
 	
@@ -1023,7 +1023,7 @@ var mapControllEvent = function(magoInstance) {
 		$('#controlMeasureWrap').hide();
 	});
 
-	// 측정
+	/*// 측정
 	$('#mapCtrlMeasure').click(function() {
 		$(this).toggleClass('on');
 		$('#controlMeasureWrap').toggle();
@@ -1081,7 +1081,7 @@ var mapControllEvent = function(magoInstance) {
 		};
 		deleteHeigtEntities();
 		MAGO.measureTools.polygonShape.setEventHandler();
-	});
+	});*/
 
 	// 높이 측정
 	var heigtEntities = [];
@@ -1230,7 +1230,8 @@ var mapControllEvent = function(magoInstance) {
 	
 	// 설정
 	$('#mapCtrlSetting').click(function() {
-		$(this).toggleClass('on');
+		$('#mago3DSettingLabelLayer').toggle();
+		/*$(this).toggleClass('on');
 		if ($(this).hasClass('on')) {
 			if(MAGO.selectedDataController.isActive()) {
 				$('#dataControlWrap').css('width', '340px');
@@ -1261,7 +1262,7 @@ var mapControllEvent = function(magoInstance) {
 				right : '270px'
 			});
 			$('#buildingInfoWrap').css('right', '60px');
-		}
+		}*/
 	});
 
 	// BBOX

@@ -141,6 +141,7 @@
 <script type="text/javascript" th:src="@{/js/{lang}/issue-controller.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/map-data.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/map-data-group.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+
 <script type="text/javascript">
 
 	var MAGO3D_INSTANCE;
@@ -208,8 +209,8 @@
 		// mago3d logo 추가
 		// Mago3D.tempCredit(viewer);
 
-		//우측 상단 지도 컨트롤러
-		MapControll(viewer);
+		//툴바
+		mapControllEvent(magoInstance);
 		//공간분석 기능 수행
 		SpatialAnalysis(magoInstance);
 		// 행정 구역 이동
