@@ -82,7 +82,7 @@
 </th:block>
 <th:block th:unless="${#lists.isEmpty(dataGroupList)}" th:each="dataGroup : ${dataGroupList}">
 					<tr th:class="|rowId-${dataGroup.dataGroupId} rowDepth-${dataGroup.depth} rowAncestor-${dataGroup.ancestor} rowParent-${dataGroup.parent}|">
-						<td class="col-key ellipsis" style="padding: 0px 10px;  max-width: 300px; text-align: left;">
+						<td class="col-key ellipsis" style="padding: 0px 10px;  max-width: 300px; text-align: left; line-height:20px;">
 	<th:block th:with="paddingLeftValue = ${(dataGroup.depth -1) * 40}">
 							<span th:onclick="childrenDisplayToggle([[${dataGroup.dataGroupId}]], [[${dataGroup.depth}]]);"
 								  th:style="|padding-left: ${paddingLeftValue}px; font-size: 1.6em;|">
@@ -91,19 +91,19 @@
 							</span>&nbsp;
 	</th:block>
 	<th:block th:if="${dataGroup.depth == 1}">
-							<span style="font-size: 1.5em; color: Dodgerblue;">
+							<span style="font-size: 1.5em; color: Dodgerblue; line-height:20px;">
 	</th:block>
 	<th:block th:if="${dataGroup.depth == 2}">
-							<span style="font-size: 1.5em; color: Mediumslateblue;">
+							<span style="font-size: 1.5em; color: Mediumslateblue; line-height:20px;">
 	</th:block>
 	<th:block th:if="${dataGroup.depth == 3}">
-							<span style="font-size: 1.5em; color: Tomato;">
+							<span style="font-size: 1.5em; color: Tomato; line-height:20px;">
 	</th:block>
 	<th:block th:if="${dataGroup.depth == 4}">
-							<span style="font-size: 1.5em; color: #82c91e;">
+							<span style="font-size: 1.5em; color: #82c91e; line-height:20px;">
 	</th:block>
 	<th:block th:if="${dataGroup.depth == 5}">
-							<span style="font-size: 1.5em; color: #f783ac;">
+							<span style="font-size: 1.5em; color: #f783ac; line-height:20px;">
 	</th:block>
 								<i th:id="|myFolder-${dataGroup.dataGroupId}|"
 								   th:class="|fa fa-folder depthFolder-${dataGroup.depth} parentFolder-${dataGroup.parent}|" aria-hidden="true"></i>
