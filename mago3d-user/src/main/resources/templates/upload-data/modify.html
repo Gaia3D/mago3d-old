@@ -12,9 +12,7 @@
     <link rel="stylesheet" th:href="@{/css/{lang}/user-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
     <link rel="stylesheet" th:href="@{/css/{lang}/style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
 	<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
-	<link rel="stylesheet" th:href="@{/externlib/dropzone/dropzone.min.css(cacheVersion=${contentCacheVersion})}">
-    <script type="text/javascript" th:src="@{/externlib/dropzone/dropzone.min.js(cacheVersion=${contentCacheVersion})}"></script>
-    <script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
 	<script type="text/javascript" th:src="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.js(cacheVersion=${contentCacheVersion})}"></script>
 	<style type="text/css">
         .dropzone .dz-preview.lp-preview {
@@ -151,7 +149,9 @@
 				</th>
 				<td class="col-input">
 					<input type="text" id="longitude" name="longitude" th:field="*{longitude}" class="m" placeholder="longitude" />
+					<label for="latitude" class="hiddenTag">대표 위치 (위도)</label>
 					<input type="text" id="latitude" name="latitude" th:field="*{latitude}" class="m" placeholder="latitude" />
+					<label for="altitude" class="hiddenTag">대표 위치 (높이)</label>
 					<input type="text" id="altitude" name="altitude" th:field="*{altitude}" class="m" placeholder="altitude" />
 					<input type="button" id="mapButtion" th:value="#{common.map}" />
 				</td>
@@ -196,21 +196,21 @@
 				
 				<td colspan="3" class="col-input">
 					<ul style="list-style: none; margin-bottom: 20px;">
-	<th:block th:unless="${uploadDataFileList.empty}" th:each="uploadDataFile : ${uploadDataFileList}">
+	<th:block th:unless="${#lists.isEmpty(uploadDataFileList)}" th:each="uploadDataFile : ${uploadDataFileList}">
 		<th:block th:with="paddingLeftValue = ${(uploadDataFile.depth -1)  * 50}">
 			<th:block th:if="${#strings.equals(uploadDataFile.fileType, 'DIRECTORY')}">
-						<li th:style="|padding-left: ${paddingLeftValue}px; height: 25px;|" th:text="|[ ${uploadDataFile.fileType} ] ${uploadDataFile.fileSubPath}|"></li>
+				<li th:style="|padding-left: ${paddingLeftValue}px; height: 25px;|" th:text="|[ ${uploadDataFile.fileType} ] ${uploadDataFile.fileSubPath}|"></li>
 			</th:block>
 			<th:block th:if="${#strings.equals(uploadDataFile.fileType, 'FILE')}">
 				<th:block th:if="${#strings.equals(uploadDataFile.converterTarget, 'true')}">
-						<li th:style="|padding-left: ${paddingLeftValue}px; height: 25px; color:blue; font-weight: bold;|" th:text="|[ ${uploadDataFile.fileType } ] ${uploadDataFile.fileName }(${uploadDataFile.viewFileSizeUnitKB})KB|"></li>	
+					<li th:style="|padding-left: ${paddingLeftValue}px; height: 25px; color:blue; font-weight: bold;|" th:text="|[ ${uploadDataFile.fileType } ] ${uploadDataFile.fileName }(${uploadDataFile.viewFileSizeUnitKB})KB|"></li>
 				</th:block>
 				<th:block th:if="${#strings.equals(uploadDataFile.converterTarget, 'false')}">
-						<li th:style="|padding-left: ${paddingLeftValue}px; height: 25px;|" th:text="|[ ${uploadDataFile.fileType } ] ${uploadDataFile.fileName }(${uploadDataFile.viewFileSizeUnitKB})KB|"></li>	
+					<li th:style="|padding-left: ${paddingLeftValue}px; height: 25px;|" th:text="|[ ${uploadDataFile.fileType } ] ${uploadDataFile.fileName }(${uploadDataFile.viewFileSizeUnitKB})KB|"></li>
 				</th:block>
 			</th:block>
-        </th:block>
-	</th:block>				
+		</th:block>
+	</th:block>
 					</ul>
 				</td>
 			</tr>
@@ -219,9 +219,11 @@
 		
 	</div>
 	<!-- 상위 그룹 선택 다이얼 로그 -->
-	<div th:replace="~{/data-group/parent-data-group-dialog :: #dataGroupDialog}"></div>
+	<div th:replace="~{/upload-data/data-group-dialog :: #dataGroupDialog}"></div>
 </div>
 <!-- E: WRAP -->
+</th:block>
+<th:block layout:fragment="pageCustomScript">
 <script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/map-controll.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
@@ -331,5 +333,6 @@
 	    //popWin.document.title = layerName;
 	});
 </script>
+</th:block>
 </body>
 </html>
