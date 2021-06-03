@@ -76,6 +76,9 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-amqp'
+
+	implementation("org.springframework:spring-core:5.3.7")
+
 	implementation 'commons-codec:commons-codec'
 	implementation 'org.apache.commons:commons-exec:1.3'
 
