@@ -2397,16 +2397,16 @@ button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusri
 h1.magologo {display:block; width:250px; height:30px; background:url(/images/ko/logo_mago3d.png) no-repeat 5px 1px;}
 
 /* toolbox */
-.toolbox-menu {clear:both; position: absolute; top: 12px; right: 18px; z-index: 1; width:43px; font-family: 'NotoKrR'; Height:350px; margin:0; padding:0; border-top-left-radius:4px; border-top-right-radius:4px;}
+.toolbox-menu {clear:both; position: absolute; top: 12px; right: 18px; z-index: 1; width:50px; font-family: 'NotoKrR'; Height:350px; box-shadow: 0 0 2px rgba(132,132,132,0.6); margin:0; padding:0; border-top-left-radius:4px; border-top-right-radius:6px;}
 .toolbox-menu > button {cursor:pointer; display:block; font-size:11px; color:black; letter-spacing:-0.5px; vertical-align:bottom; }
 .toolbox-menu > button::before {content:""; display:inline-block; width:0; height:66%; margin-right:0; vertical-align:bottom;} 
-.toolbox-menu > button:first-child {margin:0; padding:0; height:52px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -2px; border-bottom-left-radius:0; border-bottom-right-radius:0; border-top-left-radius:4px; border-top-right-radius:4px; }
+.toolbox-menu > button:first-child {margin:0; padding:0; height:52px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -2px; border-bottom-left-radius:0; border-bottom-right-radius:0; border-top-left-radius:6px; border-top-right-radius:6px; }
 .toolbox-menu > button:nth-child(2) {margin:0; padding:0; height:52px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 1px -53px; border-radius:0; border-top:1px solid #d9d8d8; }
 .toolbox-menu > button:nth-child(3) {margin:0; padding:0; height:52px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -107px; border-radius:0; border-top:1px solid #d9d8d8;}
 .toolbox-menu > button:nth-child(4) {margin:0; padding:0; height:52px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -151px; border-radius:0; border-top:1px solid #d9d8d8;}
 .toolbox-menu > button:nth-child(5) {margin:0; padding:0; height:52px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -198px; border-radius:0; border-top:1px solid #d9d8d8;}
 .toolbox-menu > button:nth-child(6) {margin:0; padding:0; height:52px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -251px; border-radius:0; border-top:1px solid #d9d8d8;}
-.toolbox-menu > button:last-child {margin:0; padding:0; height:52px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -304px; border-radius:0; border-top-left-radius:0; border-top-right-radius:0; border-bottom-left-radius:4px; border-bottom-right-radius:4px; border-top:1px solid #d9d8d8; }
+.toolbox-menu > button:last-child {margin:0; padding:0; height:52px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -304px; border-radius:0; border-top-left-radius:0; border-top-right-radius:0; border-bottom-left-radius:6px; border-bottom-right-radius:6px; border-top:1px solid #d9d8d8; }
 .toolbox-menu > button:first-child:hover {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -2px; border-top-left-radius:6px; border-top-right-radius:6px; }
 .toolbox-menu > button:nth-child(2):hover {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -54px -53px; }
 .toolbox-menu > button:nth-child(3):hover {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -107px; }
@@ -2414,14 +2414,15 @@ h1.magologo {display:block; width:250px; height:30px; background:url(/images/ko/
 .toolbox-menu > button:nth-child(5):hover {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -198px; }
 .toolbox-menu > button:nth-child(6):hover {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -251px;}
 .toolbox-menu > button:last-child:hover {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -304px; }
-.toolbox-zooming {position:absolute; right:18px; top:410px; z-index: 1; width:43px; height:auto; margin:0; padding:0; border-top-left-radius:8px; border-top-right-radius:8px; border-bottom-left-radius:8px; border-bottom-right-radius:8px;}
+.toolbox-zooming {position:absolute; right:18px; top:390px; z-index: 1; width:50px; height:auto; margin:0; padding:0; box-shadow: 0 0 2px rgba(132,132,132,0.6); border-top-left-radius:6px; border-top-right-radius:6px; border-bottom-left-radius:6px; border-bottom-right-radius:6px;}
 .toolbox-zooming > button {cursor:pointer; font-size:10px; color:black; letter-spacing:-0.5px; vertical-align:bottom;}
 .toolbox-zooming > button:first-child {margin:0; padding:0; height:42px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -438px; border-top-left-radius:6px; border-bottom-left-radius:0; border-bottom-right-radius:0; border-top-right-radius:6px;}
-.toolbox-zooming > button:last-child {margin:0 0 0 0; padding:0; height:42px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -478px; border-top-left-radius:0; border-top-right-radius:0; border-bottom-left-radius:6px; border-bottom-right-radius:4px; border-top:1px solid #d9d8d8;}
-.toolbox-zooming > button:first-child:hover {background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -438px; border-top-left-radius:6px; border-top-right-radius:6px;}
+.toolbox-zooming > button:last-child {margin:0 0 0 0; padding:0; height:42px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -478px; border-top-left-radius:0; border-top-right-radius:0; border-bottom-left-radius:6px; border-bottom-right-radius:6px; border-top:1px solid #d9d8d8;}
+.toolbox-zooming > button:first-child:hover {background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -438px; border-top-left-radius:6px; border-bottom-left-radius:0; border-bottom-right-radius:0; border-top-right-radius:6px;}
 .toolbox-zooming > button:last-child:hover {background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -478px; border-bottom-left-radius:6px; border-bottom-right-radius:6px;}
-.toolbox-3d {clear:both; position: absolute; top: 12px; right: 80px; z-index: 1; width:43px; font-family: 'NotoKrR'; Height:52px; margin:0; padding:0; border-radius:4px;}
-.toolbox-3d > button {cursor:pointer; display:block; font-size:11px; color:black; letter-spacing:-0.5px; vertical-align:bottom; }
+.toolbox-3d {clear:both; position: absolute; top: 12px; right: 100px; z-index: 1; width:50px; font-family: 'NotoKrR'; Height:52px; margin:0; padding:0; border-radius:6px; box-shadow: 0 0 2px rgba(132,132,132,0.6);}
+.toolbox-3d > button {cursor:pointer; display:block; font-size:11px; color:black; letter-spacing:-0.5px; vertical-align:bottom;  border-radius:6px;}
+.toolbox-3d > button::before {content:""; display:inline-block; width:0; height:66%; margin-right:0; vertical-align:bottom;} 
 .toolbox-3d > button {margin:0; padding:0; height:52px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -527px;}
 .toolbox-3d > button:hover {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -527px; }
 
