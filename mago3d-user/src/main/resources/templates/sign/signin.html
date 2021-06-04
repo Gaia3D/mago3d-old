@@ -1,76 +1,107 @@
-<!DOCTYPE html>
+﻿<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width">
+	<meta name="Description" content="실내외 3차원 통합 플랫폼, mago3D" />
+	<meta name="Keywords" content="" />
+	<meta name="author" content="Gaia3D" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
 	<title><th:block th:text="#{signin.page.title}"></th:block></title>
 	<link rel="shortcut icon" th:href="@{/images/favicon.ico(cacheVersion=${contentCacheVersion})}" />
 	<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
 	<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
-	<link rel="stylesheet" th:href="@{/css/{lang}/style.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+	<link rel="stylesheet" th:href="@{/css/{lang}/display.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
 	<script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
 	<script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 	<script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
-	<style type="text/css">
-		::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-			color: white;
-			opacity: 1; /* Firefox */
-		}
-		:-ms-input-placeholder { /* Internet Explorer 10-11 */
-			color: white;
-		}
-		::-ms-input-placeholder { /* Microsoft Edge */
-			color: white;
-		}
-	</style>
 </head>
-<body class="sign">
-<div class="site-body">
-	<div class="row">
-		<div class="container">
-			<div th:if="${signinForm.errorCode}" style="margin-bottom: 10px;">
-				<div style="float:left; padding-left: 10px; "><img th:src="@{/images/{lang}/exclam_32.png(lang=${lang})}" /></div>
-				<div style="display: inline-block; padding-left: 10px; padding-top: 5px; color: #ff0000; font-size: 16px;"
-					 th:text="#{${signinForm.errorCode}}"></div>
+<body class="bggray">
+	<div id="login">
+		<form class="select-lang">
+		<select class="language">
+			<option value="ko"><th:block th:text="#{common.korea}"></th:block></option>
+			<option value="en"><th:block th:text="#{common.english}"></th:block></option>
+		</select>
+		</form>
+		<div class="login-wrapper">
+			<img th:src="@{/images/{lang}/mago3d_logo.png(lang=${lang})}" alt="디지털트윈 플랫폼, mago3D 로고" />
+			<p class="stitle">실내외 3차원 통합 플랫폼, <span class="mago">mago3D</span>와 함께 디지털 트윈 세상으로!</p>
+			<form autocomplete="off" id="signinForm" th:object="${signinForm}" method="post" action="/sign/process-signin">
+				<fieldset>
+					<legend>mago3D 로그인</legend>
+					<label for="userId"><span class="blind">아이디</span></label><input type="text" id="userId" name="userId" class="inputid" th:title="#{common.id}" th:placeholder="#{common.id}" required="required" autofocus="autofocus" />
+					<label for="password"><span class="blind">비밀번호</span></label><input type="password" id="password" name="password" class="inputpwd" th:title="#{common.password}" th:placeholder="#{common.password}" required="required" />
+					<button type="submit" class="btn-login">로그인</button>
+				</fieldset>
+			</form>
+			<ul class="join">
+				<li class="on"><a href="/sign/signup">회원가입</a></li>
+				<li><a href="#">비밀번호 찾기</a></li>
+			</ul>
+			<hr class="h30">
+			<div class="autologin">
+				<span>쇼셜계정으로 로그인</span>
+				<ul>
+					<li><a id="googleBtn" class="login-google" title="구글 아이디로 로그인"></a></li>
+					<li><a id="fbBtn" class="login-facebook" title="페이스북 아이디로 로그인"></a></li>
+					<li><a id="naverBtn" class="login-naver" title="네이버 아아디로 로그인"></a></li>
+					<li><a id="kakaoBtn" class="login-kakao" title="카카오 아이디로 로그인"></a></li>
+				</ul>
 			</div>
-			<div class="row" style="height: 60px; margin-top: 0px;">
-				<h1 style="font-size:38px; font-family:Lousianne; color:#573592;">mago3D</h1>
-			</div>
-			<div class="panel row">
-				<h2 class="sign-title"><span class="text-sub"><th:block th:text="#{common.user}"></th:block></span><br /><span class="text-main">SIGN IN</span></h2>
-				<div class="sign-inputs">
-					<div class="sign-desc" style="font-size: 16px; margin-top: 10px; margin-right: 25px;">
-						<span>Digital Twin Platform</span>&nbsp;
-						<select id="userLocale" name="userLocale" onchange="changeLanguage(this.value);"
-								style="background: #9065dc; color: white; height: 25px;">
-							<option value="ko"><th:block th:text="#{common.korea}"></th:block></option>
-							<option value="en"><th:block th:text="#{common.english}"></th:block></option>
-						</select>
-					</div>
-					<form id="signinForm" th:object="${signinForm}" method="post" action="/sign/process-signin">
-						<label for="userId"><span class="icon-glyph glyph-users"></span></label>
-						<input type="text" id="userId" name="userId" maxlength="32" th:title="#{common.id}" th:placeholder="#{common.id}" required="required" autofocus="autofocus" />
-						<label for="password"><span class="icon-glyph glyph-lock"></span></label>
-						<input type="password" id="password" name="password" maxlength="32" th:title="#{common.password}" th:placeholder="#{common.password}" required="required" />
-						<input type="submit" value="Sign In" class="sign-submit" />
-					</form>
-					<div class="sign-links" style="font-size: 16px;">
-                        Don't have an account? &nbsp;<a href="#" onclick="alert('준비중 입니다.'); return false;">Sign up</a>
-                    </div>
-				</div>
-			</div>
+			<div class="copyright">ⓒ Gaia3d Corp. All Rights Reserved.</div>
 		</div>
-		<div class="" style="text-align: center; margin-top: 50px; font-size: 16px;">
-			mago3D ⓒ Gaia3d Corp. All Rights Reserved
-		</div>
+		<!-- /.login -->	
 	</div>
-</div>
+	<!-- /.login -->	
 </body>
+
+<script type="text/javascript">
+	function onClickLogin (url){
+		//인증 서버로 인증코드 발급 요청
+		window.location.replace(url)
+	}
+
+	const googleLoginBtn = document.getElementById("googleBtn");
+	const fbLoginBtn = document.getElementById("fbBtn");
+	const naverLoginBtn = document.getElementById("naverBtn");
+	const kakaoLoginBtn = document.getElementById("kakaoBtn");
+
+	const googleUrl = "https://accounts.google.com/o/oauth2/v2/auth?" +
+			"client_id=441453727719-u2i244q6lnvc3vpl7csno7hdabi71e83.apps.googleusercontent.com" +
+			"&redirect_uri=http://localhost/sign/process-signin/GOOGLE" +
+			"&response_type=code" +
+			"&scope=email%20profile%20openid" +
+			"&access_type=offline";
+
+	const naverUrl = "https://nid.naver.com/oauth2.0/authorize?" +
+			"client_id=te6KttPWNCiXwWdXVGI6"+
+			"&redirect_uri=http://localhost/sign/process-signin/NAVER" +
+			"&response_type=code" +
+			"&scope=account_email";
+
+	const kakaoUrl = "https://kauth.kakao.com/oauth/authorize?" +
+			"client_id=038101f62718f9e63150e1ceb1d0e3b1"+
+			"&redirect_uri=http://localhost/sign/process-signin/KAKAO" +
+			"&response_type=code" +
+			"&scope=profile,account_email";
+
+
+	googleLoginBtn.addEventListener("click", function(){onClickLogin(googleUrl)});
+	fbLoginBtn.addEventListener("click", function(){onClickLogin(googleUrl)});
+	naverLoginBtn.addEventListener("click", function(){onClickLogin(naverUrl)});
+	kakaoLoginBtn.addEventListener("click", function(){onClickLogin(kakaoUrl)});
+
+</script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		var lang = "[[${lang}]]";
 		$("#userLocale").val(lang);
+		if("[[${signinForm.errorCode}]]"){
+			var errorCode = "[[${signinForm.errorCode}]]";
+			alert(JS_MESSAGE[errorCode]);
+		}
 	});
 
 	function changeLanguage(lang) {
@@ -83,7 +114,7 @@
 				if(msg.statusCode <= 200) {
 					alert(JS_MESSAGE["change"]);
 					location.reload();
-				} else {
+0				} else {
 					alert(JS_MESSAGE[msg.errorCode]);
 				}
 			},

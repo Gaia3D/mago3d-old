@@ -56,6 +56,8 @@ JS_MESSAGE["ajax.error.message"] = "잠시 후 이용해 주시기 바랍니다.
 JS_MESSAGE["button.dobule.click"] = "진행 중입니다.";
 JS_MESSAGE["cache.reloaded"] = "캐시를 갱신 하였습니다.";
 JS_MESSAGE["usersession.grant.invalid"] = "사용 권한이 유효하지 않습니다.";
+JS_MESSAGE["usersession.password.invalid"] = "비밀번호가 일치하지 않습니다.";
+JS_MESSAGE["usersession.status.wait"] = "승인 대기중입니다. 관리자에게 문의하여 주십시오.";
 
 //사용자
 JS_MESSAGE["user.id.empty"] = "아이디를 입력하여 주십시오.";

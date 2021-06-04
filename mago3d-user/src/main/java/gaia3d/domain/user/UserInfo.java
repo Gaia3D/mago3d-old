@@ -1,19 +1,12 @@
 package gaia3d.domain.user;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
-import javax.validation.constraints.NotBlank;
-
+import gaia3d.domain.common.Search;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import gaia3d.domain.common.Search;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @ToString(callSuper = true)
 @Builder
@@ -102,6 +95,8 @@ public class UserInfo extends Search implements Serializable {
 	private String userRoleCheckYn;
 	// 사용자 상태. 0:사용중, 1:사용중지(관리자), 2:잠금(비밀번호 실패횟수 초과), 3:휴면(사인인 기간), 4:만료(사용기간 종료), 5:삭제(화면 비표시, policy.user_delete_method=0), 6:임시비밀번호, 7:승인대기
 	private String status;
+	// 로그인 타입. 1:일반(플랫폼), 2:소셜 로그인(구글, 페이스북, 네이버, 카카오)
+	private String signinType;
 	// 현재 사용자 상태값
 	private String dbStatus;
 	// 새로운 비밀번호

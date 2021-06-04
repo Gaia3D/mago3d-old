@@ -1,19 +1,5 @@
 package gaia3d.controller.view;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import gaia3d.domain.Key;
 import gaia3d.domain.YOrN;
 import gaia3d.domain.cache.CacheManager;
@@ -23,13 +9,22 @@ import gaia3d.domain.user.UserInfo;
 import gaia3d.domain.user.UserSession;
 import gaia3d.domain.user.UserStatus;
 import gaia3d.listener.Gaia3dHttpSessionBindingListener;
-import gaia3d.service.RoleService;
 import gaia3d.service.SigninService;
+import gaia3d.service.SigninSocialService;
 import gaia3d.support.PasswordSupport;
 import gaia3d.support.RoleSupport;
 import gaia3d.support.SessionUserSupport;
 import gaia3d.utils.WebUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Sign in 처리
@@ -40,12 +35,13 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/sign")
 public class SigninController {
-	
-	@Autowired
-	private RoleService roleService;
+
 	@Autowired
 	private SigninService signinService;
-	
+
+	@Autowired
+	private SigninSocialService signinSocialService;
+
 	/**
 	 * Sign in 페이지
 	 * @param request
@@ -75,12 +71,13 @@ public class SigninController {
 	 */
 	@PostMapping(value = "/process-signin")
 	public String processSignin(HttpServletRequest request, @Valid @ModelAttribute("signinForm") UserInfo signinForm, BindingResult bindingResult, Model model) {
-		
+
 		Policy policy = CacheManager.getPolicy();
 
 		signinForm.setPasswordChangeTerm(policy.getPasswordChangeTerm());
 		signinForm.setUserLastSigninLock(policy.getUserLastSigninLock());
 		UserSession userSession = signinService.getUserSession(signinForm);
+		log.info("@@ Password = {} ", userSession.getPassword());
 		log.info("@@ userSession = {} ", userSession);
 		
 		String errorCode = validate(request, policy, signinForm, userSession);
@@ -104,8 +101,6 @@ public class SigninController {
 			} else {
 				bindingResult.rejectValue("userId", errorCode);
 			}
-			
-			log.error("@@ errorCode = {} ", errorCode);
 			signinForm.setErrorCode(errorCode);
 			signinForm.setUserId(null);
 			signinForm.setPassword(null);
@@ -140,6 +135,31 @@ public class SigninController {
 		
 		return "redirect:/data/map";
 	}
+
+
+	/**
+	 * Sign in 처리(소셜 로그인)
+	 * @param request
+	 * @param model
+	 * @param authCode
+	 * @return
+	 */
+	@GetMapping(value = "/process-signin/{socialType}")
+	public String processSigninSocial(HttpServletRequest request, Model model, @PathVariable(name = "socialType") String socialType, @RequestParam(value = "code") String authCode) {
+
+		if (socialType.equals("GOOGLE"))
+			return signinSocialService.processSigninGoogle(request, model, authCode);
+		else if (socialType.equals("FACEBOOK"))
+			return signinSocialService.processSigninGoogle(request, model, authCode);
+		else if (socialType.equals("NAVER"))
+			return signinSocialService.processSigninNaver(request, model, authCode);
+		else if (socialType.equals("KAKAO"))
+			return signinSocialService.processSigninKakao(request, model, authCode);
+
+		return null;
+
+	}
+
 	
 	/**
 	 * 사용자 정보 유효성을 체크하여 에러 코드를 리턴
@@ -150,6 +170,7 @@ public class SigninController {
 	 * @return
 	 */
 	private String validate(HttpServletRequest request, Policy policy, UserInfo signinForm, UserSession userSession) {
+
 		// 사용자 정보가 존재하지 않을 경우
 		if(userSession == null) {
 			return "user.session.empty";
@@ -157,15 +178,20 @@ public class SigninController {
 		
 		// 비밀번호 불일치
 		if(!PasswordSupport.isEquals(userSession.getPassword(), signinForm.getPassword())) {
+			log.info("====="+userSession.getPassword());
+			log.info("====="+signinForm.getPassword());
 			return "usersession.password.invalid";
 		}
 		
 		// 회원 상태 체크
-		if(UserStatus.USE != UserStatus.findBy(userSession.getStatus()) && UserStatus.TEMP_PASSWORD != UserStatus.findBy(userSession.getStatus())) {
+		if(UserStatus.USE != UserStatus.findBy(userSession.getStatus()) && UserStatus.TEMP_PASSWORD != UserStatus.findBy(userSession.getStatus()) && UserStatus.WAITING_APPROVAL != UserStatus.findBy(userSession.getStatus())) {
 			// 0:사용중, 1:사용중지(관리자), 2:잠금(비밀번호 실패횟수 초과), 3:휴면(사인인 기간), 4:만료(사용기간 종료), 5:삭제(화면 비표시)
 			signinForm.setStatus(userSession.getStatus());
 			return "usersession.status.invalid";
 		}
+
+		if(UserStatus.WAITING_APPROVAL == UserStatus.findBy(userSession.getStatus()))
+			return "usersession.status.wait";
 		
 		// 사인인 실패 횟수
 		if(userSession.getFailSigninCount() >= policy.getUserFailSigninCount()) {

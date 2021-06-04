@@ -1,0 +1,57 @@
+﻿<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
+<head>
+	<meta charset="UTF-8">
+	<meta name="Description" content="실내외 3차원 통합 플랫폼, mago3D" />
+	<meta name="Keywords" content="" />
+	<meta name="author" content="Gaia3D" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+	<title>실내외 3차원 통합 플랫폼, mago3D</title>
+	<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+	<link rel="stylesheet" th:href="@{/css/{lang}/display.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+	<script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+</head>
+<body class="bggray">	
+	<div id="join">		
+		<h2 class="join">회원가입</h2>
+		<form class="join-select " id="signupForm" th:object="${signupForm}" method="post" action="/sign/process-signup">
+			<fieldset>
+				<legend>회원가입</legend>
+				<label for="userId">아이디<span class="join-key">*</span></label><input type="text" id="userId" name="userId" class="inputid" />
+				<span class="txt-guide"></span>
+				<label for="userName">이름<span class="join-key">*</span></label><input type="text" id="userName" name="userName" class="inputname" />
+				<span class="txt-guide"></span>
+				<label for="password">비밀번호<span class="join-key">*</span></label><input type="password" id="password" name="newPassword" class="inputpwd" />
+				<span class="txt-guide">특수문자, 대소문자, 영문포함 8자 이상 32자 이하</span>
+				<label for="passwordConfirm">비밀번호 확인<span class="join-key">*</span></label><input type="password" id="passwordConfirm" name="newPasswordConfirm" class="inputpwd" />
+				<span class="txt-guide">특수문자, 대소문자, 영문포함 8글자 이상</span>
+				<label for="email">이메일<span class="join-key">*</span></label><input type="email" id="email" name="email" class="inputemail" />
+				<span class="emailtxt">@</span>				
+				<form>
+					<select class="slct-email">
+						<option>naver.com</option>
+						<option>daum.net</option>
+						<option>gmail.com</option>
+						<option>직접입력</option>
+					</select>
+				</form>
+				<button type="submit" class="btn-join">가입하기</button>
+			</fieldset>
+		</form>
+		<div class="copyright">ⓒ Gaia3d Corp. All Rights Reserved.</div>
+	</div>				
+	<!-- /.join -->	
+</body>
+<script type="text/javascript">
+	$(document).ready(function() {
+		if("[[${signupForm.errorCode}]]"){
+			var errorCode = "[[${signupForm.errorCode}]]";
+			alert(JS_MESSAGE[errorCode]);
+		}
+	});
+</script>
+
+</html>

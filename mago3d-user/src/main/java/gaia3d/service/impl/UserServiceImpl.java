@@ -1,14 +1,13 @@
 package gaia3d.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import gaia3d.domain.user.UserInfo;
 import gaia3d.persistence.UserMapper;
 import gaia3d.security.Crypt;
 import gaia3d.service.UserService;
 import gaia3d.support.PasswordSupport;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 사용자
@@ -48,7 +47,13 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Transactional
 	public int insertUser(UserInfo userInfo) {
-		userInfo.setPassword(PasswordSupport.encodePassword(userInfo.getPassword()));
+		if(userInfo.getSigninType().equals("1")){
+			userInfo.setPassword(PasswordSupport.encodePassword(userInfo.getPassword()));
+		}
+		else{
+			userInfo.setPassword(PasswordSupport.encodePassword("PASSWORD"));
+			userInfo.setUserGroupId(2);
+		}
 		userInfo.setEmail(Crypt.encrypt(userInfo.getEmail()));
 		return userMapper.insertUser(userInfo);
 	}

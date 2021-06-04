@@ -13,7 +13,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import gaia3d.Mago3dUserApplication;
-import gaia3d.controller.view.SigninController;
 import gaia3d.service.AccessLogService;
 
 @WebMvcTest(SigninController.class)
