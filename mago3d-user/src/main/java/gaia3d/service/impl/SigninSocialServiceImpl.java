@@ -1,5 +1,6 @@
 package gaia3d.service.impl;
 
+import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.Key;
 import gaia3d.domain.YOrN;
 import gaia3d.domain.cache.CacheManager;
@@ -41,18 +42,23 @@ public class SigninSocialServiceImpl implements SigninSocialService {
 	@Autowired
 	private SigninService signinService;
 
+	@Autowired
+	private PropertiesConfig propertiesConfig;
+
 	public String processSigninGoogle(HttpServletRequest request, Model model, String authCode) {
 		MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
 		parameters.set("grantType", "authorization_code");
-		parameters.set("clientId", "441453727719-u2i244q6lnvc3vpl7csno7hdabi71e83.apps.googleusercontent.com");
-		parameters.set("redirectUri", "http://localhost/sign/process-signin/GOOGLE");
-		parameters.set("clientSecret", "PumSTaqaw_ZuqzPoibcSteXu");
+		parameters.set("clientId", propertiesConfig.getSocialGoogleClientId());
+		parameters.set("redirectUri", propertiesConfig.getSocialGoogleRedirectUri());
+		parameters.set("clientSecret", propertiesConfig.getSocialGoogleClientSecret());
 		parameters.set("code", authCode);
 
-		String url = "https://oauth2.googleapis.com/token";
+		System.out.println("-----------------" + propertiesConfig.toString()+"   /   " + propertiesConfig.getSocialGoogleClientId());
+
+		String url = propertiesConfig.getSocialGoogleAccessTokenUri();
 		String accessToken = getAccessToken(parameters, url);
 
-		Map responseBody = getUserInfo(accessToken, "https://www.googleapis.com/userinfo/v2/me?access_token=");
+		Map responseBody = getUserInfo(accessToken, propertiesConfig.getSocialGoogleUserInfoUri());
 
 		JSONObject jsonObject = new JSONObject((Map)responseBody);
 
@@ -69,17 +75,17 @@ public class SigninSocialServiceImpl implements SigninSocialService {
 
 		MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
 		parameters.set("grant_type", "authorization_code");
-		parameters.set("client_id", "te6KttPWNCiXwWdXVGI6");
-		parameters.set("redirect_uri", "http://localhost/sign/process-signin/NAVER");
-		parameters.set("client_secret", "Yj478xU4Mt");
+		parameters.set("client_id", propertiesConfig.getSocialNaverClientId());
+		parameters.set("redirect_uri", propertiesConfig.getSocialNaverRedirectUri());
+		parameters.set("client_secret", propertiesConfig.getSocialNaverClientSecret());
 		parameters.set("code", authCode);
 		parameters.set("session_state", "oauth_state");
 
-		String getTokenUrl = "https://nid.naver.com/oauth2.0/token";
+		String getTokenUrl = propertiesConfig.getSocialNaverAccessTokenUri();
 
 		String accessToken = getAccessToken(parameters, getTokenUrl);
 
-		Map responseBody = getUserInfo(accessToken, "https://openapi.naver.com/v1/nid/me");
+		Map responseBody = getUserInfo(accessToken, propertiesConfig.getSocialNaverUserInfoUri());
 
 		JSONObject jsonObject = new JSONObject((Map)responseBody.get("response"));
 
@@ -97,15 +103,15 @@ public class SigninSocialServiceImpl implements SigninSocialService {
 
 		MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
 		parameters.set("grant_type", "authorization_code");
-		parameters.set("client_id", "038101f62718f9e63150e1ceb1d0e3b1");
-		parameters.set("redirect_uri", "http://localhost/sign/process-signin/KAKAO");
+		parameters.set("client_id", propertiesConfig.getSocialKakaoClientId());
+		parameters.set("redirect_uri", propertiesConfig.getSocialKakaoRedirectUri());
 		parameters.set("code", authCode);
 
-		String getTokenUrl = "https://kauth.kakao.com/oauth/token";
+		String getTokenUrl = propertiesConfig.getSocialKakaoAccessTokenUri();
 
 		String accessToken = getAccessToken(parameters, getTokenUrl);
 
-		Map responseBody = getUserInfo(accessToken, "https://kapi.kakao.com/v2/user/me");
+		Map responseBody = getUserInfo(accessToken, propertiesConfig.getSocialKakaoUserInfoUri());
 
 		JSONObject jsonProperties = new JSONObject((Map)responseBody.get("properties"));
 		JSONObject jsonAccount = new JSONObject((Map)responseBody.get("kakao_account"));
