@@ -2,6 +2,7 @@ package gaia3d.service.impl;
 
 import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.Key;
+import gaia3d.domain.SigninType;
 import gaia3d.domain.YOrN;
 import gaia3d.domain.cache.CacheManager;
 import gaia3d.domain.policy.Policy;
@@ -142,7 +143,7 @@ public class SigninSocialServiceImpl implements SigninSocialService {
 			userInfo.setUserId(id);
 			userInfo.setEmail(email);
 			userInfo.setUserName(name);
-			userInfo.setSigninType("2");
+			userInfo.setSigninType(SigninType.SOCIAL.getValue());
 			userInfo.setStatus(UserStatus.WAITING_APPROVAL.getValue());
 			userService.insertUser(userInfo);
 		}else{

@@ -2,6 +2,7 @@ package gaia3d.controller.view;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gaia3d.config.PropertiesConfig;
+import gaia3d.domain.SigninType;
 import gaia3d.domain.cache.CacheManager;
 import gaia3d.domain.policy.Policy;
 import gaia3d.domain.user.UserGroupType;
@@ -105,7 +106,7 @@ public class SignupController {
 		}
 
 		// 회원 가입
-		signupForm.setSigninType("1");
+		signupForm.setSigninType(SigninType.BASIC.getValue());
 		signupForm.setUserGroupId(UserGroupType.USER.getValue());
 		signupForm.setStatus(UserStatus.WAITING_APPROVAL.getValue());
 		log.info(signupForm.getSigninType());
