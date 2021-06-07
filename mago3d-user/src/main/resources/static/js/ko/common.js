@@ -334,7 +334,7 @@ function initPolicy(callback, dataId) {
 		dataType: "json",
 		success: function(msg){
 			if(msg.statusCode <= 200) {
-				callback(msg.geoPolicy, msg.baseLayers);
+				callback(msg.geoPolicy, msg.baseLayers, msg.microService);
 			} else {
 				alert(JS_MESSAGE[msg.errorCode]);
 			}
@@ -366,4 +366,17 @@ function locationValidation(longitude, latitude, altitude) {
 		alert(JS_MESSAGE["location.constraint"]);
 		return false;
 	}
+}
+
+function getFormData($form) {
+	var unindexed_array = $form.find(':visible').serializeArray();
+	var indexed_array = {};
+	$.map(unindexed_array, function (n, i) {
+		if (indexed_array[n['name']]) {
+			indexed_array[n['name']] += ',' + n['value'];
+		} else {
+			indexed_array[n['name']] = n['value'];
+		}
+	});
+	return indexed_array;
 }
