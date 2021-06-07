@@ -4,6 +4,7 @@ import gaia3d.domain.Key;
 import gaia3d.domain.cache.CacheManager;
 import gaia3d.domain.data.DataInfo;
 import gaia3d.domain.layer.LayerGroup;
+import gaia3d.domain.microservice.MicroService;
 import gaia3d.domain.policy.GeoPolicy;
 import gaia3d.domain.user.UserPolicy;
 import gaia3d.domain.user.UserSession;
@@ -71,6 +72,8 @@ public class GeoPolicyRestController {
 		String userId = userSession.getUserId();
 		GeoPolicy geoPolicy = CacheManager.getGeoPolicy();
 		UserPolicy userPolicy = userPolicyService.getUserPolicy(userId);
+		Map<String, MicroService> microServiceMap = CacheManager.getMicroServiceMap();
+
 		log.info("@@ userPolicy = {}", userPolicy);
 		if(userId != null) {
 			if(dataId != null && !"".equals(dataId.trim())) {
@@ -105,6 +108,7 @@ public class GeoPolicyRestController {
 		
 		result.put("geoPolicy", geoPolicy);
 		result.put("baseLayers", baseLayers);
+		result.put("microService", microServiceMap);
 		result.put("statusCode", statusCode);
 		result.put("errorCode", errorCode);
 		result.put("message", message);

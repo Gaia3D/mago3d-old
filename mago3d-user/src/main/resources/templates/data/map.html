@@ -13,6 +13,8 @@
 	<link rel="stylesheet" th:href="@{/externlib/kotSlider/range.css(cacheVersion=${contentCacheVersion})}" />
 	<link rel="stylesheet" th:href="@{/externlib/tuidatepicker-4.0.3/tui-date-picker.min.css(cacheVersion=${contentCacheVersion})}" />
 	<link rel="stylesheet" th:href="@{/css/{lang}/user-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+	<link rel="stylesheet" th:href="@{/css/{lang}/iot-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+	<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.css(cacheVersion=${contentCacheVersion})}" />
 	<link rel="stylesheet" th:href="@{/externlib/json-viewer/json-viewer.css(cacheVersion=${contentCacheVersion})}" />
 	<link rel="stylesheet" th:href="@{/externlib/css-toggle-switch/toggle-switch.css(cacheVersion=${contentCacheVersion})}" />
 	<style type="text/css">
@@ -57,6 +59,8 @@
 
 			<div th:replace="~{/simulation/simulation :: #simulationContent}"></div>
 
+			<div th:replace="~{/iot/list :: #iotContent}"></div>
+
 			<div th:replace="~{/layer/list :: #layerContent}"></div>
 
 			<div th:replace="~{/user-policy/modify :: #userPolicyContent}"></div>
@@ -72,7 +76,7 @@
 	<!-- E: NAVWRAP -->
 
 	<!-- S: GNB WRAP -->
-	<div th:replace="~{/fragments/global-search :: #gnbWrap}"></div>
+	<!--<div th:replace="~{/fragments/global-search :: #gnbWrap}"></div>-->
 	<!-- E: GNB WRAP -->
 
 	<!-- CTRLWRAP -->
@@ -81,6 +85,10 @@
 
 	<!-- MAP -->
 	<div id="magoContainer" class="mapWrap">
+
+		<div id="overlayDHTML"></div>
+		<div id="buildingInfoDHTML"></div>
+
 		<div class="analysisGraphic">
 			<canvas id="analysisGraphic"></canvas>
 			<div class="closeGraphic">X</div>
@@ -107,6 +115,9 @@
 <div th:replace="~{/data/sample-data-attribute-template :: #sampleDataAttributeDialogWrap}"></div>
 <div th:replace="~{/issue/issue-dialog :: #issueForm}"></div>
 <div th:replace="~{/simulation/simul-solar-dialog :: #simulSolarDialog}"></div>
+<div th:replace="~{/common/overlay-template :: #overlaySource}"></div>
+<div th:replace="~{/iot/building-info-template :: #buildingInfoSource}"></div>
+<div th:replace="~{/iot/dust-info-template :: #dustInfoSource}"></div>
 
 <script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.js(cacheVersion=${contentCacheVersion})}"></script>
@@ -116,11 +127,11 @@
 <script type="text/javascript" th:src="@{/externlib/cesium/Cesium.js}"></script>
 <script type="text/javascript" th:src="@{/externlib/cesium-geoserver-terrain-provider/GeoserverTerrainProvider.js(cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/externlib/geostats/geostats.js(cacheVersion=${contentCacheVersion})}"></script>
-<script type="text/javascript" th:src="@{/externlib/chartjs/Chart.min.js(cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/externlib/kotSlider/range.js(cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/externlib/decodeTextAlternative/encoding-indexes.js(cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/externlib/decodeTextAlternative/encoding.js(cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/externlib/moment-2.22.2/moment-with-locales.min.js(cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/externlib/chartjs/Chart.min.js(cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/externlib/tuidatepicker-4.0.3/tui-date-picker.min.js(cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/mago3d/mago3d.js(cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/mago3d/mago3d_lx.js(cacheVersion=${contentCacheVersion})}"></script>
@@ -146,14 +157,16 @@
 
 	var MAGO3D_INSTANCE;
 	var MAGO = MAGO || {
-		policy : {},
-		dataGroup : {},
-		baseLayers : {}
+		policy: {},
+		dataGroup: {},
+		baseLayers: {},
+		microService: {}
 	};
 
-	initPolicy(function(policy, baseLayers){
+	initPolicy(function (policy, baseLayers, microService) {
 		MAGO.policy = policy;
 		MAGO.baseLayers = baseLayers;
+		MAGO.microService = microService;
 		magoInit();
 	});
 
@@ -169,7 +182,7 @@
 		cesiumViewerOption.geocoder = false;
 		cesiumViewerOption.baseLayerPicker = false;
 		cesiumViewerOption.sceneModePicker = false;
-		
+
 		cesiumViewerOption.defaultControl = {};
 		cesiumViewerOption.defaultControl.zoom = false;
 		cesiumViewerOption.defaultControl.initCamera = false;
@@ -197,7 +210,7 @@
 		var magoManager = magoInstance.getMagoManager();
 		var f4dController = magoInstance.getF4dController();
 
-		// TODO : 세슘 MAP 선택 UI 제거,엔진에서 처리로 변경 예정.
+		// TODO : 세슘 MAP 선택 UI 제거, 엔진에서 처리로 변경 예정.
 		if(viewer.baseLayerPicker) viewer.baseLayerPicker.destroy();
 		viewer.scene.globe.depthTestAgainstTerrain = true;
 		//viewer.scene.screenSpaceCameraController.minimumZoomDistance = 10;
@@ -209,34 +222,145 @@
 		// mago3d logo 추가
 		// Mago3D.tempCredit(viewer);
 
-		//툴바
+		// 기본 레이어 랜더링
+		setTimeout(function(){
+			MAGO.map = new mapInit(magoInstance, MAGO.baseLayers, geoPolicyJson);
+			MAGO.map.initLayer();
+			cesiumCreditAlt(); 		// 웹 접근성
+		}, geoPolicyJson.initDuration * 1000);
+
+		// 툴바
 		mapControllEvent(magoInstance);
-		//공간분석 기능 수행
-		SpatialAnalysis(magoInstance);
+
+		// 지도상에 데이터 다루는거
+		MapDataControll(magoInstance);
+
 		// 행정 구역 이동
         // DistrictControll(magoInstance);
 
+		// 데이터
         dataGroupList();
         mapDataGroupList(1, null);
         mapDataInfoList(1, null, null, null);
 
+		// 시뮬레이션
         Simulation(magoInstance);
-        // 환경 설정.
+
+        // 사물인터넷
+		if (MAGO.microService && MAGO.microService['SENSOR_THINGS']) {
+			MAGO.sensorThings = new SensorThings(magoInstance);
+			MAGO.sensorThings = MAGO.sensorThings.create();
+			MAGO.sensorThings.setCameraMoveEvent();
+			MAGO.sensorThings.initF4dData();
+		}
+
+
+		// 공간분석
+		SpatialAnalysis(magoInstance);
+
+        // 환경설정
         UserPolicy(magoInstance);
+
         // 시민참여
         // CivilVoice(magoInstance);
-        // 기본 레이어 랜더링
-        setTimeout(function(){
-        	MAGO.map = new mapInit(magoInstance, MAGO.baseLayers, geoPolicyJson);
-        	MAGO.map.initLayer();
-        	cesiumCreditAlt(); //웹접근성
-        }, geoPolicyJson.initDuration * 1000);
 
-		//지도상에 데이터 다루는거
-		MapDataControll(magoInstance);
-
+		// 이슈 등록
 		MAGO.issueController = new IssueController(magoInstance);
+
 	}
+
+	$(document).ready(function () {
+
+		let sensorThings = MAGO.sensorThings;
+		if (sensorThings) {
+			sensorThings.dataSearch(1);
+		}
+
+		// 검색 버튼 클릭
+		$('#iotSearch').click(function () {
+			sensorThings.dataSearch(1);
+		});
+
+		// 검색 엔터키
+		$('#iotSearch').keyup(function (e) {
+			if (e.keyCode == 13) {
+				sensorThings.dataSearch(1);
+			}
+		});
+
+		// 검색조건 변경
+		$('#iotContent input[name="searchWord"]').change(function (e) {
+			// TODO 레이어 온오프 형태로 변경
+			sensorThings.init();
+			sensorThings = sensorThings.create();
+			sensorThings.dataSearch(1);
+			sensorThings.clearOverlay();
+			sensorThings.addOverlay();
+		});
+
+		// 오버레이 클릭
+		$('#overlayDHTML').on('click', '.overlayWrap > ul', function () {
+			$('.dustStation').removeClass('on');
+			$(this).addClass('on');
+			const thingId = $(this).data('id');
+			sensorThings.getInformation(thingId);
+		});
+
+		let down = false;
+		$('#overlayDHTML').on('wheel mousedown mouseup mousemove pointerdown pointerup', '.overlayWrap > ul', function (e) {
+
+			const canvas = MAGO3D_INSTANCE.getViewer().scene.canvas;
+			const orgEvent = e.originalEvent;
+			const cloneEvent = new orgEvent.constructor(orgEvent.type, orgEvent);
+
+			if (orgEvent.type === 'wheel') {
+				canvas.dispatchEvent(cloneEvent);
+			} else if ((orgEvent.type === 'mousedown' || orgEvent.type === 'pointerdown') && orgEvent.which === 2) {
+				down = true;
+				cloneEvent.isTrusted = true;
+				canvas.dispatchEvent(cloneEvent);
+			} else if ((orgEvent.type === 'mouseup' || orgEvent.type === 'pointerup') && orgEvent.which === 2) {
+				down = false;
+			} else if (orgEvent.type === 'mousemove' && down) {
+				cloneEvent.isTrusted = true;
+				canvas.dispatchEvent(cloneEvent);
+			}
+
+		});
+
+		$('#magoContainer').on('click', '#closeDustInfo', function () {
+			sensorThings.closeInformation();
+		});
+
+		// 재실자 층 선택
+		$('#buildingInfoDHTML').on('click', '#buildingInfoWrap table tr', function () {
+
+			$(this).siblings().removeClass('on');
+			$(this).toggleClass('on');
+			const floor = $(this).data('floor');
+
+			sensorThings.observedProperty = 'occupancyFloor';
+			const selectedDataGroupId = sensorThings.selectedDataGroupId;
+			const selectedDataKey = sensorThings.selectedDataKey;
+
+			if (sensorThings.selectedFloorSensorList.length > 0) {
+				const rgbColorCode = "255,255,255,255";
+				for (const cellId of sensorThings.selectedFloorSensorList) {
+					changeColorAPI(sensorThings.magoInstance.getMagoManager(), selectedDataGroupId, selectedDataKey, [cellId], "isPhysical=true", rgbColorCode);
+				}
+			}
+
+			const buildingInfo = $('#buildingInfoDHTML').data('buildingInfo');
+			sensorThings.selectedDataGroupId = buildingInfo.dataGroupId;
+			sensorThings.selectedDataKey = buildingInfo.dataKey;
+
+			sensorThings.clearOverlay();
+			sensorThings.addSelectedFloorOverlay(floor, buildingInfo.name);
+			sensorThings.displaySelectedFloor(floor);
+
+		});
+
+	});
 
 	// smart tiling data flyTo
 	function gotoFly(longitude, latitude, altitude) {
