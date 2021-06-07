@@ -1,7 +1,9 @@
 package gaia3d.controller.view;
 
+import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.Key;
 import gaia3d.domain.SigninType;
+import gaia3d.domain.SocialType;
 import gaia3d.domain.YOrN;
 import gaia3d.domain.cache.CacheManager;
 import gaia3d.domain.policy.Policy;
@@ -13,6 +15,10 @@ import gaia3d.listener.Gaia3dHttpSessionBindingListener;
 import gaia3d.service.SigninService;
 import gaia3d.service.SigninSocialService;
 import gaia3d.service.UserService;
+import gaia3d.service.impl.SigninFacebookServiceImpl;
+import gaia3d.service.impl.SigninGoogleServiceImpl;
+import gaia3d.service.impl.SigninKakaoServiceImpl;
+import gaia3d.service.impl.SigninNaverServiceImpl;
 import gaia3d.support.PasswordSupport;
 import gaia3d.support.RoleSupport;
 import gaia3d.support.SessionUserSupport;
@@ -45,7 +51,8 @@ public class SigninController {
 	private SigninService signinService;
 
 	@Autowired
-	private SigninSocialService signinSocialService;
+	private PropertiesConfig propertiesConfig;
+
 
 	/**
 	 * Sign in 페이지
@@ -146,37 +153,23 @@ public class SigninController {
 	 * @param authCode
 	 * @return
 	 */
-	@GetMapping(value = "/process-signin/{socialType}")
+	@GetMapping(value = "/social-signin/{socialType}")
 	public String processSigninSocial(HttpServletRequest request, Model model, @PathVariable(name = "socialType") String socialType, @RequestParam(value = "code") String authCode) {
 
 		UserInfo userInfo;
 
-		if (socialType.equals("GOOGLE")){
-			userInfo = signinSocialService.authorizeGoogle(authCode);
+		SigninSocialService signinSocialService = null;
 
-			return checkSocialSignin(userInfo, request, model);
+		switch (SocialType.findBy(socialType)){
+			case GOOGLE -> signinSocialService = new SigninGoogleServiceImpl(propertiesConfig);
+			case FACEBOOK -> signinSocialService = new SigninFacebookServiceImpl(propertiesConfig);
+			case NAVER -> signinSocialService = new SigninNaverServiceImpl(propertiesConfig);
+			case KAKAO -> signinSocialService = new SigninKakaoServiceImpl(propertiesConfig);
 		}
 
-		else if (socialType.equals("FACEBOOK")){
-			userInfo = signinSocialService.authorizeGoogle(authCode);
+		userInfo = signinSocialService.socialAuthorize(authCode);
 
-			return checkSocialSignin(userInfo, request, model);
-		}
-
-		else if (socialType.equals("NAVER")){
-			userInfo = signinSocialService.authorizeNaver(authCode);
-
-			return checkSocialSignin(userInfo, request, model);
-		}
-
-		else if (socialType.equals("KAKAO")){
-			userInfo = signinSocialService.authorizeKakao(authCode);
-
-			return checkSocialSignin(userInfo, request, model);
-		}
-
-
-		return null;
+		return checkSocialSignin(userInfo, request, model);
 
 	}
 	
