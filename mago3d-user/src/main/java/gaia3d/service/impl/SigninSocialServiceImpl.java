@@ -27,7 +27,7 @@ public class SigninSocialServiceImpl implements SigninSocialService {
 	@Autowired
 	private PropertiesConfig propertiesConfig;
 
-	public UserInfo processSigninGoogle(String authCode) {
+	public UserInfo authorizeGoogle(String authCode) {
 		MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
 		parameters.set("grantType", "authorization_code");
 		parameters.set("clientId", propertiesConfig.getSocialGoogleClientId());
@@ -55,7 +55,7 @@ public class SigninSocialServiceImpl implements SigninSocialService {
 		return userInfo;
 	}
 
-	public UserInfo processSigninNaver(String authCode) {
+	public UserInfo authorizeNaver(String authCode) {
 
 		MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
 		parameters.set("grant_type", "authorization_code");
@@ -87,7 +87,7 @@ public class SigninSocialServiceImpl implements SigninSocialService {
 
 	}
 
-	public UserInfo processSigninKakao(String authCode) {
+	public UserInfo authorizeKakao(String authCode) {
 
 		MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
 		parameters.set("grant_type", "authorization_code");

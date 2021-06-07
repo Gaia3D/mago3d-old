@@ -82,11 +82,7 @@ public class SigninController {
 		signinForm.setUserLastSigninLock(policy.getUserLastSigninLock());
 		UserSession userSession = signinService.getUserSession(signinForm);
 
-		log.info("usersession :: " + userSession.getSigninType());
-		
 		String errorCode = validate(request, policy, signinForm, userSession);
-
-		log.info("errorCode :: " + errorCode);
 		if(errorCode != null) {
 			if("usersession.password.invalid".equals(errorCode)) {
 				userSession.setFailSigninCount(userSession.getFailSigninCount() + 1);
@@ -97,12 +93,12 @@ public class SigninController {
 					signinForm.setStatus(UserStatus.FAIL_SIGNIN_COUNT_OVER.getValue());
 				}
 				signinService.updateSigninUserSession(userSession);
-				
+
 				bindingResult.rejectValue("userId", "usersession.password.invalid");
 			} else if("usersession.lastsignin.invalid".equals(errorCode)) {
 				userSession.setStatus(UserStatus.SLEEP.getValue());
 				signinService.updateSigninUserSession(userSession);
-				
+
 				bindingResult.rejectValue("userId", "usersession.lastsignin.invalid");
 			} else {
 				bindingResult.rejectValue("userId", errorCode);
@@ -113,18 +109,18 @@ public class SigninController {
 			//signinForm.setStatus(userSession.getStatus());
 			model.addAttribute("signinForm", signinForm);
 			model.addAttribute("policy", policy);
-			
+
 			return "/sign/signin";
 		}
-		
+
 		// 사용자 정보를 갱신
 		userSession.setFailSigninCount(Integer.valueOf(0));
 		signinService.updateSigninUserSession(userSession);
-		
+
 		// TODO 고민을 하자. 사인인 시점에 토큰을 발행해서 사용하고.... 비밀번호와 SALT는 초기화 해서 세션에 저장할지
 //		userSession.setPassword(null);
 //		userSession.setSalt(null);
-		
+
 		userSession.setSigninIp(WebUtils.getClientIp(request));
 		Gaia3dHttpSessionBindingListener sessionListener = new Gaia3dHttpSessionBindingListener();
 		request.getSession().setAttribute(Key.USER_SESSION.name(), userSession);
@@ -156,25 +152,25 @@ public class SigninController {
 		UserInfo userInfo;
 
 		if (socialType.equals("GOOGLE")){
-			userInfo = signinSocialService.processSigninGoogle(authCode);
+			userInfo = signinSocialService.authorizeGoogle(authCode);
 
 			return checkSocialSignin(userInfo, request, model);
 		}
 
 		else if (socialType.equals("FACEBOOK")){
-			userInfo = signinSocialService.processSigninGoogle(authCode);
+			userInfo = signinSocialService.authorizeGoogle(authCode);
 
 			return checkSocialSignin(userInfo, request, model);
 		}
 
 		else if (socialType.equals("NAVER")){
-			userInfo = signinSocialService.processSigninNaver(authCode);
+			userInfo = signinSocialService.authorizeNaver(authCode);
 
 			return checkSocialSignin(userInfo, request, model);
 		}
 
 		else if (socialType.equals("KAKAO")){
-			userInfo = signinSocialService.processSigninKakao(authCode);
+			userInfo = signinSocialService.authorizeKakao(authCode);
 
 			return checkSocialSignin(userInfo, request, model);
 		}
@@ -183,7 +179,6 @@ public class SigninController {
 		return null;
 
 	}
-
 	
 	/**
 	 * 사용자 정보 유효성을 체크하여 에러 코드를 리턴
@@ -196,8 +191,7 @@ public class SigninController {
 	private String validate(HttpServletRequest request, Policy policy, UserInfo signinForm, UserSession userSession) {
 
 		// 사용자 정보가 존재하지 않을 경우
-
-		if(userSession == null) {
+		if(userSession == null || SigninType.findBy(userSession.getSigninType()) != SigninType.BASIC) {
 			return "user.session.empty";
 		}
 		// 비밀번호 불일치
@@ -303,7 +297,7 @@ public class SigninController {
 		}else{
 			userInfo = userService.getUser(userInfo.getUserId());
 		}
-
+//////
 		Policy policy = CacheManager.getPolicy();
 
 		setSession(request, userInfo, policy);
@@ -313,7 +307,7 @@ public class SigninController {
 			model.addAttribute("signinForm", userInfo);
 			return "/sign/signin";
 		}
-
+//////
 		return "redirect:/data/map";
 	}
 }

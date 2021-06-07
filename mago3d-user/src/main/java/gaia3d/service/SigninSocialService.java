@@ -15,20 +15,20 @@ public interface SigninSocialService {
 	 * @param authCode
 	 * @return
 	 */
-	UserInfo processSigninGoogle(@RequestParam(value = "code") String authCode);
+	UserInfo authorizeGoogle(@RequestParam(value = "code") String authCode);
 
 	/**
 	 * Signin naver(소셜 로그인)
 	 * @param authCode
 	 * @return
 	 */
-	UserInfo processSigninNaver(@RequestParam(value = "code") String authCode);
+	UserInfo authorizeNaver(@RequestParam(value = "code") String authCode);
 
 	/**
 	 * Signin kakao(소셜 로그인)
 	 * @param authCode
 	 * @return
 	 */
-	UserInfo processSigninKakao(@RequestParam(value = "code") String authCode);
+	UserInfo authorizeKakao(@RequestParam(value = "code") String authCode);
 	
 }
