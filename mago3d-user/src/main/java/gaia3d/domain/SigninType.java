@@ -1,5 +1,7 @@
 package gaia3d.domain;
 
+import gaia3d.domain.menu.MenuTarget;
+
 public enum SigninType {
 
 	// 플랫폼 가입 사용자
@@ -15,6 +17,13 @@ public enum SigninType {
 
 	public String getValue() {
 		return this.value;
+	}
+
+	public static SigninType findBy(String value) {
+		for(SigninType signinType : values()) {
+			if(signinType.getValue().equals(value)) return signinType;
+		}
+		return null;
 	}
 
 }

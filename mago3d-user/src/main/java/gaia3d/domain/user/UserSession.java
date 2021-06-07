@@ -1,15 +1,10 @@
 package gaia3d.domain.user;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 세션에 저장될 사용자 정보
@@ -48,6 +43,8 @@ public class UserSession implements Serializable {
 	private String userRoleCheckYn;
 	// 사용자 상태. 0:사용중, 1:사용중지(관리자), 2:잠금(비밀번호 실패횟수 초과), 3:휴면(로그인 기간), 4:만료(사용기간 종료), 5:삭제(화면 비표시, policy.user_delete_method=0), 6:임시비밀번호
 	private String status;
+	// 로그인 타입. 1:일반(플랫폼), 2:소셜 로그인(구글, 페이스북, 네이버, 카카오)
+	private String signinType;
 	
 	// 사인인 실패 횟수
 	private Integer failSigninCount;

@@ -1,19 +1,8 @@
 package gaia3d.service.impl;
 
 import gaia3d.config.PropertiesConfig;
-import gaia3d.domain.Key;
-import gaia3d.domain.SigninType;
-import gaia3d.domain.YOrN;
-import gaia3d.domain.cache.CacheManager;
-import gaia3d.domain.policy.Policy;
 import gaia3d.domain.user.UserInfo;
-import gaia3d.domain.user.UserSession;
-import gaia3d.domain.user.UserStatus;
-import gaia3d.listener.Gaia3dHttpSessionBindingListener;
-import gaia3d.service.SigninService;
 import gaia3d.service.SigninSocialService;
-import gaia3d.service.UserService;
-import gaia3d.utils.WebUtils;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -21,12 +10,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -38,23 +25,15 @@ import java.util.Map;
 public class SigninSocialServiceImpl implements SigninSocialService {
 
 	@Autowired
-	private UserService userService;
-
-	@Autowired
-	private SigninService signinService;
-
-	@Autowired
 	private PropertiesConfig propertiesConfig;
 
-	public String processSigninGoogle(HttpServletRequest request, Model model, String authCode) {
+	public UserInfo processSigninGoogle(String authCode) {
 		MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
 		parameters.set("grantType", "authorization_code");
 		parameters.set("clientId", propertiesConfig.getSocialGoogleClientId());
 		parameters.set("redirectUri", propertiesConfig.getSocialGoogleRedirectUri());
 		parameters.set("clientSecret", propertiesConfig.getSocialGoogleClientSecret());
 		parameters.set("code", authCode);
-
-		System.out.println("-----------------" + propertiesConfig.toString()+"   /   " + propertiesConfig.getSocialGoogleClientId());
 
 		String url = propertiesConfig.getSocialGoogleAccessTokenUri();
 		String accessToken = getAccessToken(parameters, url);
@@ -69,10 +48,14 @@ public class SigninSocialServiceImpl implements SigninSocialService {
 		String email = jsonObject.get("email").toString();
 		String name = jsonObject.get("name").toString();
 
-		return checkSocialSignin(userInfo, request, model, id, email, name);
+		userInfo.setUserId(id);
+		userInfo.setEmail(email);
+		userInfo.setUserName(name);
+
+		return userInfo;
 	}
 
-	public String processSigninNaver(HttpServletRequest request, Model model, String authCode) {
+	public UserInfo processSigninNaver(String authCode) {
 
 		MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
 		parameters.set("grant_type", "authorization_code");
@@ -96,11 +79,15 @@ public class SigninSocialServiceImpl implements SigninSocialService {
 		String email = jsonObject.get("email").toString();
 		String name = jsonObject.get("name").toString();
 
-		return checkSocialSignin(userInfo, request, model, id, email, name);
+		userInfo.setUserId(id);
+		userInfo.setEmail(email);
+		userInfo.setUserName(name);
+
+		return userInfo;
 
 	}
 
-	public String processSigninKakao(HttpServletRequest request, Model model, String authCode) {
+	public UserInfo processSigninKakao(String authCode) {
 
 		MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
 		parameters.set("grant_type", "authorization_code");
@@ -123,44 +110,12 @@ public class SigninSocialServiceImpl implements SigninSocialService {
 		String email = jsonAccount.get("email").toString();
 		String name = jsonProperties.get("nickname").toString();
 
-		return checkSocialSignin(userInfo, request, model, id, email, name);
+		userInfo.setUserId(id);
+		userInfo.setEmail(email);
+		userInfo.setUserName(name);
 
-	}
+		return userInfo;
 
-	/**
-	 * Social signin 사용자 체크(소셜 로그인)
-	 * @param userInfo
-	 * @param request
-	 * @param model
-	 * @param id
-	 * @param email
-	 * @param name
-	 * @return
-	 */
-	private String checkSocialSignin(UserInfo userInfo, HttpServletRequest request, Model model, String id, String email, String name){
-
-		if(userService.getUser(id) == null){
-			userInfo.setUserId(id);
-			userInfo.setEmail(email);
-			userInfo.setUserName(name);
-			userInfo.setSigninType(SigninType.SOCIAL.getValue());
-			userInfo.setStatus(UserStatus.WAITING_APPROVAL.getValue());
-			userService.insertUser(userInfo);
-		}else{
-			userInfo = userService.getUser(id);
-		}
-
-		Policy policy = CacheManager.getPolicy();
-
-		setSession(request, userInfo, policy);
-
-		if(UserStatus.findBy(userInfo.getStatus()) != UserStatus.USE){
-			userInfo.setErrorCode("usersession.status.wait");
-			model.addAttribute("signinForm", userInfo);
-			return "/sign/signin";
-		}
-
-		return "redirect:/data/map";
 	}
 
 	/**
@@ -209,27 +164,6 @@ public class SigninSocialServiceImpl implements SigninSocialService {
 
 	}
 
-	/**
-	 * session setting(소셜 로그인)
-	 * @param request
-	 * @param userInfo
-	 * @param policy
-	 * @return
-	 */
-	private void setSession(HttpServletRequest request, UserInfo userInfo, Policy policy){
-		userInfo.setPasswordChangeTerm(policy.getPasswordChangeTerm());
-		userInfo.setUserLastSigninLock(policy.getUserLastSigninLock());
-		UserSession userSession = signinService.getUserSession(userInfo);
-		signinService.updateSigninUserSession(userSession);
 
-		userSession.setSigninIp(WebUtils.getClientIp(request));
-		Gaia3dHttpSessionBindingListener sessionListener = new Gaia3dHttpSessionBindingListener();
-		request.getSession().setAttribute(Key.USER_SESSION.name(), userSession);
-		request.getSession().setAttribute(userSession.getUserId(), sessionListener);
-		if(YOrN.Y == YOrN.valueOf(policy.getSecuritySessionTimeoutYn())) {
-			// 세션 타임 아웃 시간을 초 단위로 변경해서 설정
-			request.getSession().setMaxInactiveInterval(Integer.valueOf(policy.getSecuritySessionTimeout()).intValue() * 60);
-		}
-	}
 
 }

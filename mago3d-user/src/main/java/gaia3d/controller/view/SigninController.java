@@ -1,6 +1,7 @@
 package gaia3d.controller.view;
 
 import gaia3d.domain.Key;
+import gaia3d.domain.SigninType;
 import gaia3d.domain.YOrN;
 import gaia3d.domain.cache.CacheManager;
 import gaia3d.domain.policy.Policy;
@@ -11,6 +12,7 @@ import gaia3d.domain.user.UserStatus;
 import gaia3d.listener.Gaia3dHttpSessionBindingListener;
 import gaia3d.service.SigninService;
 import gaia3d.service.SigninSocialService;
+import gaia3d.service.UserService;
 import gaia3d.support.PasswordSupport;
 import gaia3d.support.RoleSupport;
 import gaia3d.support.SessionUserSupport;
@@ -37,6 +39,9 @@ import java.util.List;
 public class SigninController {
 
 	@Autowired
+	private UserService userService;
+
+	@Autowired
 	private SigninService signinService;
 
 	@Autowired
@@ -51,8 +56,7 @@ public class SigninController {
 	@GetMapping("/signin")
 	public String signin(HttpServletRequest request, Model model) {
 		Policy policy = CacheManager.getPolicy();
-		log.info("@@ policy = {}", policy);
-		
+
 		UserInfo signinForm = new UserInfo();
 		model.addAttribute("signinForm", signinForm);
 		model.addAttribute("policy", policy);
@@ -77,10 +81,12 @@ public class SigninController {
 		signinForm.setPasswordChangeTerm(policy.getPasswordChangeTerm());
 		signinForm.setUserLastSigninLock(policy.getUserLastSigninLock());
 		UserSession userSession = signinService.getUserSession(signinForm);
-		log.info("@@ Password = {} ", userSession.getPassword());
-		log.info("@@ userSession = {} ", userSession);
+
+		log.info("usersession :: " + userSession.getSigninType());
 		
 		String errorCode = validate(request, policy, signinForm, userSession);
+
+		log.info("errorCode :: " + errorCode);
 		if(errorCode != null) {
 			if("usersession.password.invalid".equals(errorCode)) {
 				userSession.setFailSigninCount(userSession.getFailSigninCount() + 1);
@@ -104,7 +110,7 @@ public class SigninController {
 			signinForm.setErrorCode(errorCode);
 			signinForm.setUserId(null);
 			signinForm.setPassword(null);
-			signinForm.setStatus(userSession.getStatus());
+			//signinForm.setStatus(userSession.getStatus());
 			model.addAttribute("signinForm", signinForm);
 			model.addAttribute("policy", policy);
 			
@@ -147,14 +153,32 @@ public class SigninController {
 	@GetMapping(value = "/process-signin/{socialType}")
 	public String processSigninSocial(HttpServletRequest request, Model model, @PathVariable(name = "socialType") String socialType, @RequestParam(value = "code") String authCode) {
 
-		if (socialType.equals("GOOGLE"))
-			return signinSocialService.processSigninGoogle(request, model, authCode);
-		else if (socialType.equals("FACEBOOK"))
-			return signinSocialService.processSigninGoogle(request, model, authCode);
-		else if (socialType.equals("NAVER"))
-			return signinSocialService.processSigninNaver(request, model, authCode);
-		else if (socialType.equals("KAKAO"))
-			return signinSocialService.processSigninKakao(request, model, authCode);
+		UserInfo userInfo;
+
+		if (socialType.equals("GOOGLE")){
+			userInfo = signinSocialService.processSigninGoogle(authCode);
+
+			return checkSocialSignin(userInfo, request, model);
+		}
+
+		else if (socialType.equals("FACEBOOK")){
+			userInfo = signinSocialService.processSigninGoogle(authCode);
+
+			return checkSocialSignin(userInfo, request, model);
+		}
+
+		else if (socialType.equals("NAVER")){
+			userInfo = signinSocialService.processSigninNaver(authCode);
+
+			return checkSocialSignin(userInfo, request, model);
+		}
+
+		else if (socialType.equals("KAKAO")){
+			userInfo = signinSocialService.processSigninKakao(authCode);
+
+			return checkSocialSignin(userInfo, request, model);
+		}
+
 
 		return null;
 
@@ -172,10 +196,10 @@ public class SigninController {
 	private String validate(HttpServletRequest request, Policy policy, UserInfo signinForm, UserSession userSession) {
 
 		// 사용자 정보가 존재하지 않을 경우
+
 		if(userSession == null) {
 			return "user.session.empty";
 		}
-		
 		// 비밀번호 불일치
 		if(!PasswordSupport.isEquals(userSession.getPassword(), signinForm.getPassword())) {
 			log.info("====="+userSession.getPassword());
@@ -238,5 +262,58 @@ public class SigninController {
 		}
 		
 		return null;
+	}
+
+	/**
+	 * session setting(소셜 로그인)
+	 * @param request
+	 * @param userInfo
+	 * @param policy
+	 * @return
+	 */
+	private void setSession(HttpServletRequest request, UserInfo userInfo, Policy policy){
+		userInfo.setPasswordChangeTerm(policy.getPasswordChangeTerm());
+		userInfo.setUserLastSigninLock(policy.getUserLastSigninLock());
+		UserSession userSession = signinService.getUserSession(userInfo);
+		signinService.updateSigninUserSession(userSession);
+
+		userSession.setSigninIp(WebUtils.getClientIp(request));
+		Gaia3dHttpSessionBindingListener sessionListener = new Gaia3dHttpSessionBindingListener();
+		request.getSession().setAttribute(Key.USER_SESSION.name(), userSession);
+		request.getSession().setAttribute(userSession.getUserId(), sessionListener);
+		if(YOrN.Y == YOrN.valueOf(policy.getSecuritySessionTimeoutYn())) {
+			// 세션 타임 아웃 시간을 초 단위로 변경해서 설정
+			request.getSession().setMaxInactiveInterval(Integer.valueOf(policy.getSecuritySessionTimeout()).intValue() * 60);
+		}
+	}
+
+	/**
+	 * Social signin 사용자 체크(소셜 로그인)
+	 * @param userInfo
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	private String checkSocialSignin(UserInfo userInfo, HttpServletRequest request, Model model){
+
+		if(userService.getUser(userInfo.getUserId()) == null){
+			userInfo.setSigninType(SigninType.SOCIAL.getValue());
+			userInfo.setStatus(UserStatus.WAITING_APPROVAL.getValue());
+			userService.insertUser(userInfo);
+		}else{
+			userInfo = userService.getUser(userInfo.getUserId());
+		}
+
+		Policy policy = CacheManager.getPolicy();
+
+		setSession(request, userInfo, policy);
+
+		if(UserStatus.findBy(userInfo.getStatus()) != UserStatus.USE){
+			userInfo.setErrorCode("usersession.status.wait");
+			model.addAttribute("signinForm", userInfo);
+			return "/sign/signin";
+		}
+
+		return "redirect:/data/map";
 	}
 }
