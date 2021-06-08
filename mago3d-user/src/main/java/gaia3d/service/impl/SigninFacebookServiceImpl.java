@@ -7,6 +7,7 @@ import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
@@ -18,9 +19,11 @@ import java.util.Map;
 @Service
 public class SigninFacebookServiceImpl implements SigninSocialService {
 
-	private final PropertiesConfig propertiesConfig;
+	private RestTemplate restTemplate;
+	private PropertiesConfig propertiesConfig;
 
-	public SigninFacebookServiceImpl(PropertiesConfig propertiesConfig) {
+	public SigninFacebookServiceImpl(PropertiesConfig propertiesConfig, RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
 		this.propertiesConfig = propertiesConfig;
 	}
 
@@ -36,9 +39,9 @@ public class SigninFacebookServiceImpl implements SigninSocialService {
 
 		String getTokenUrl = propertiesConfig.getSocialNaverAccessTokenUri();
 
-		String accessToken = getAccessToken(parameters, getTokenUrl);
+		String accessToken = getAccessToken(restTemplate, parameters, getTokenUrl);
 
-		Map responseBody = getUserInfo(accessToken, propertiesConfig.getSocialNaverUserInfoUri());
+		Map responseBody = getSocialUserInfo(restTemplate, accessToken, propertiesConfig.getSocialNaverUserInfoUri());
 
 		JSONObject jsonObject = new JSONObject((Map)responseBody.get("response"));
 

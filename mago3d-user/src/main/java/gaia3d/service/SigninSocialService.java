@@ -1,6 +1,8 @@
 package gaia3d.service;
 
+import gaia3d.domain.SigninType;
 import gaia3d.domain.user.UserInfo;
+import gaia3d.domain.user.UserStatus;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -32,15 +34,12 @@ public interface SigninSocialService {
 	 * @param url
 	 * @return
 	 */
-	default String getAccessToken(MultiValueMap<String, Object> parameters, String url){
-
-		//HTTP Request를 위한 RestTemplate
-		RestTemplate restTemplate = new RestTemplate();
+	default String getAccessToken(RestTemplate restTemplate, MultiValueMap<String, Object> parameters, String url){
 
 		HttpHeaders headers = new HttpHeaders();
 
 		HttpEntity<MultiValueMap<String, Object>> restRequest = new HttpEntity<>(parameters, headers);
-		System.out.println("==========" + url);
+
 		ResponseEntity<JSONObject> apiResponse = restTemplate.postForEntity(url, restRequest, JSONObject.class);
 		JSONObject responseBody = apiResponse.getBody();
 
@@ -56,10 +55,7 @@ public interface SigninSocialService {
 	 * @param url
 	 * @return
 	 */
-	default Map getUserInfo(String accessToken, String url){
-
-		// 사용자 정보 가져오기
-		RestTemplate restTemplate = new RestTemplate();
+	default Map getSocialUserInfo(RestTemplate restTemplate, String accessToken, String url){
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization", "Bearer "+accessToken);
@@ -71,5 +67,18 @@ public interface SigninSocialService {
 
 		return responseBody;
 
+	}
+
+	default UserInfo checkUser(UserService userService, UserInfo userInfo){
+
+		if(userService.getUser(userInfo.getUserId()) == null){
+			userInfo.setSigninType(SigninType.SOCIAL.getValue());
+			userInfo.setStatus(UserStatus.WAITING_APPROVAL.getValue());
+			userService.insertUser(userInfo);
+		}else{
+			userInfo = userService.getUser(userInfo.getUserId());
+		}
+
+		return userInfo;
 	}
 }

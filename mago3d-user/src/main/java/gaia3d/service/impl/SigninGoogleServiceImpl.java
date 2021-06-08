@@ -7,6 +7,7 @@ import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
@@ -18,9 +19,11 @@ import java.util.Map;
 @Service
 public class SigninGoogleServiceImpl implements SigninSocialService {
 
-	private final PropertiesConfig propertiesConfig;
+	private RestTemplate restTemplate;
+	private PropertiesConfig propertiesConfig;
 
-	public SigninGoogleServiceImpl(PropertiesConfig propertiesConfig) {
+	public SigninGoogleServiceImpl(PropertiesConfig propertiesConfig, RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
 		this.propertiesConfig = propertiesConfig;
 	}
 
@@ -33,9 +36,11 @@ public class SigninGoogleServiceImpl implements SigninSocialService {
 		parameters.set("code", authCode);
 
 		String url = propertiesConfig.getSocialGoogleAccessTokenUri();
-		String accessToken = getAccessToken(parameters, url);
 
-		Map responseBody = getUserInfo(accessToken, propertiesConfig.getSocialGoogleUserInfoUri());
+		String accessToken = getAccessToken(restTemplate, parameters, url);
+
+		// getAuthUserInfo
+		Map responseBody = getSocialUserInfo(restTemplate, accessToken, propertiesConfig.getSocialGoogleUserInfoUri());
 
 		JSONObject jsonObject = new JSONObject((Map)responseBody);
 

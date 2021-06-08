@@ -3,29 +3,22 @@ package gaia3d.domain;
 public enum SocialType {
 
 	// 구글
-	GOOGLE("GOOGLE"),
+	GOOGLE("signinGoogleServiceImpl"),
 	// 페이스북
-	FACEBOOK("FACEBOOK"),
+	FACEBOOK("signinFacebookServiceImpl"),
 	// 네이버
-	NAVER("NAVER"),
+	NAVER("signinNaverServiceImpl"),
 	// 네카카오
-	KAKAO("KAKAO");
+	KAKAO("signinKakaoServiceImpl");
 
-	private final String value;
+	private String implementation;
 
-	SocialType(String value) {
-		this.value = value;
+	SocialType(String implementation) {
+		this.implementation = implementation;
 	}
 
-	public String getValue() {
-		return this.value;
-	}
-
-	public static SocialType findBy(String value) {
-		for(SocialType socialType : values()) {
-			if(socialType.getValue().equals(value)) return socialType;
-		}
-		return null;
+	public String getImplementation() {
+		return this.implementation;
 	}
 
 }

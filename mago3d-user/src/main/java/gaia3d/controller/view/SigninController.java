@@ -1,6 +1,5 @@
 package gaia3d.controller.view;
 
-import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.Key;
 import gaia3d.domain.SigninType;
 import gaia3d.domain.SocialType;
@@ -15,10 +14,7 @@ import gaia3d.listener.Gaia3dHttpSessionBindingListener;
 import gaia3d.service.SigninService;
 import gaia3d.service.SigninSocialService;
 import gaia3d.service.UserService;
-import gaia3d.service.impl.SigninFacebookServiceImpl;
-import gaia3d.service.impl.SigninGoogleServiceImpl;
-import gaia3d.service.impl.SigninKakaoServiceImpl;
-import gaia3d.service.impl.SigninNaverServiceImpl;
+import gaia3d.service.router.SigninSocialServiceRouter;
 import gaia3d.support.PasswordSupport;
 import gaia3d.support.RoleSupport;
 import gaia3d.support.SessionUserSupport;
@@ -51,8 +47,7 @@ public class SigninController {
 	private SigninService signinService;
 
 	@Autowired
-	private PropertiesConfig propertiesConfig;
-
+	private SigninSocialServiceRouter signinSocialServiceRouter;
 
 	/**
 	 * Sign in 페이지
@@ -153,26 +148,25 @@ public class SigninController {
 	 * @param authCode
 	 * @return
 	 */
-	@GetMapping(value = "/social-signin/{socialType}")
-	public String processSigninSocial(HttpServletRequest request, Model model, @PathVariable(name = "socialType") String socialType, @RequestParam(value = "code") String authCode) {
+	@GetMapping(value = "/social-process-signin/{socialType}")
+	public String socialProcessSignin(HttpServletRequest request, Model model, @PathVariable(name = "socialType") String socialType, @RequestParam(value = "code") String authCode) {
 
-		UserInfo userInfo;
+		SigninSocialService signinSocialService = signinSocialServiceRouter.getImplemetationByType(SocialType.valueOf(socialType));
 
-		SigninSocialService signinSocialService = null;
+		UserInfo userInfo = signinSocialService.socialAuthorize(authCode);
 
-		switch (SocialType.findBy(socialType)){
-			case GOOGLE -> signinSocialService = new SigninGoogleServiceImpl(propertiesConfig);
-			case FACEBOOK -> signinSocialService = new SigninFacebookServiceImpl(propertiesConfig);
-			case NAVER -> signinSocialService = new SigninNaverServiceImpl(propertiesConfig);
-			case KAKAO -> signinSocialService = new SigninKakaoServiceImpl(propertiesConfig);
+		UserInfo usersession = checkSocialSignin(signinSocialService, userInfo, request);
+
+		if(UserStatus.findBy(usersession.getStatus()) != UserStatus.USE){
+			usersession.setErrorCode("usersession.status.wait");
+			model.addAttribute("signinForm", usersession);
+			return "/sign/signin";
 		}
 
-		userInfo = signinSocialService.socialAuthorize(authCode);
-
-		return checkSocialSignin(userInfo, request, model);
+		return "redirect:/data/map";
 
 	}
-	
+
 	/**
 	 * 사용자 정보 유효성을 체크하여 에러 코드를 리턴
 	 * @param request
@@ -189,8 +183,6 @@ public class SigninController {
 		}
 		// 비밀번호 불일치
 		if(!PasswordSupport.isEquals(userSession.getPassword(), signinForm.getPassword())) {
-			log.info("====="+userSession.getPassword());
-			log.info("====="+signinForm.getPassword());
 			return "usersession.password.invalid";
 		}
 		
@@ -278,29 +270,16 @@ public class SigninController {
 	 * Social signin 사용자 체크(소셜 로그인)
 	 * @param userInfo
 	 * @param request
-	 * @param model
-	 * @return
 	 */
-	private String checkSocialSignin(UserInfo userInfo, HttpServletRequest request, Model model){
+	private UserInfo checkSocialSignin(SigninSocialService signinSocialService, UserInfo userInfo, HttpServletRequest request){
 
-		if(userService.getUser(userInfo.getUserId()) == null){
-			userInfo.setSigninType(SigninType.SOCIAL.getValue());
-			userInfo.setStatus(UserStatus.WAITING_APPROVAL.getValue());
-			userService.insertUser(userInfo);
-		}else{
-			userInfo = userService.getUser(userInfo.getUserId());
-		}
-//////
+		userInfo = signinSocialService.checkUser(userService, userInfo);
+
 		Policy policy = CacheManager.getPolicy();
 
 		setSession(request, userInfo, policy);
 
-		if(UserStatus.findBy(userInfo.getStatus()) != UserStatus.USE){
-			userInfo.setErrorCode("usersession.status.wait");
-			model.addAttribute("signinForm", userInfo);
-			return "/sign/signin";
-		}
-//////
-		return "redirect:/data/map";
+		return userInfo;
+
 	}
 }

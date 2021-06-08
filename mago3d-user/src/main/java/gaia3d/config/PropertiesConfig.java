@@ -119,4 +119,7 @@ public class PropertiesConfig {
     private String socialKakaoAccessTokenUri;
     private String socialKakaoUserInfoUri;
 
+    private String mailHost;
+    private String mailPort;
+
 }
