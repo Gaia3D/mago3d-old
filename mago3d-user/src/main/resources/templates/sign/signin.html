@@ -98,8 +98,8 @@
 	$(document).ready(function() {
 		var lang = "[[${lang}]]";
 		$("#userLocale").val(lang);
-		if("[[${signinForm.errorCode}]]"){
-			var errorCode = "[[${signinForm.errorCode}]]";
+		if("[[${errorCode}]]"){
+			var errorCode = "[[${errorCode}]]";
 			alert(JS_MESSAGE[errorCode]);
 		}
 	});

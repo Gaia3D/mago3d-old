@@ -2,6 +2,7 @@ package gaia3d.service;
 
 import gaia3d.domain.SigninType;
 import gaia3d.domain.user.UserInfo;
+import gaia3d.domain.user.UserSession;
 import gaia3d.domain.user.UserStatus;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
@@ -20,6 +21,7 @@ import java.util.Map;
  *
  */
 public interface SigninSocialService {
+
 
 	/**
 	 * social autorization(소셜 로그인 인증)
@@ -69,16 +71,17 @@ public interface SigninSocialService {
 
 	}
 
-	default UserInfo checkUser(UserService userService, UserInfo userInfo){
+	default UserSession checkUser(SigninService signinService, UserService userService, UserInfo userInfo){
+
+		UserSession userSession;
 
 		if(userService.getUser(userInfo.getUserId()) == null){
 			userInfo.setSigninType(SigninType.SOCIAL.getValue());
 			userInfo.setStatus(UserStatus.WAITING_APPROVAL.getValue());
 			userService.insertUser(userInfo);
-		}else{
-			userInfo = userService.getUser(userInfo.getUserId());
 		}
+		userSession = signinService.getUserSession(userInfo);
 
-		return userInfo;
+		return userSession;
 	}
 }

@@ -154,12 +154,22 @@ public class SigninController {
 		SigninSocialService signinSocialService = signinSocialServiceRouter.getImplemetationByType(SocialType.valueOf(socialType));
 
 		UserInfo userInfo = signinSocialService.socialAuthorize(authCode);
+		Policy policy = CacheManager.getPolicy();
 
-		UserInfo usersession = checkSocialSignin(signinSocialService, userInfo, request);
+		userInfo.setPasswordChangeTerm(policy.getPasswordChangeTerm());
+		userInfo.setUserLastSigninLock(policy.getUserLastSigninLock());
 
-		if(UserStatus.findBy(usersession.getStatus()) != UserStatus.USE){
-			usersession.setErrorCode("usersession.status.wait");
-			model.addAttribute("signinForm", usersession);
+		UserSession usersession = signinSocialService.checkUser(signinService, userService, userInfo);
+
+		userInfo.setPasswordChangeTerm(policy.getPasswordChangeTerm());
+		userInfo.setUserLastSigninLock(policy.getUserLastSigninLock());
+
+		String errorCode = validate(request, policy, userInfo, usersession);
+
+		setSession(request, userInfo, policy);
+
+		if(errorCode != null){
+			model.addAttribute("errorCode", errorCode);
 			return "/sign/signin";
 		}
 
@@ -178,12 +188,15 @@ public class SigninController {
 	private String validate(HttpServletRequest request, Policy policy, UserInfo signinForm, UserSession userSession) {
 
 		// 사용자 정보가 존재하지 않을 경우
-		if(userSession == null || SigninType.findBy(userSession.getSigninType()) != SigninType.BASIC) {
+		if(userSession == null) {
 			return "user.session.empty";
 		}
-		// 비밀번호 불일치
-		if(!PasswordSupport.isEquals(userSession.getPassword(), signinForm.getPassword())) {
-			return "usersession.password.invalid";
+
+		// 비밀번호 불일치(기본 로그인 사용자)
+		if(SigninType.findBy(userSession.getSigninType()) == SigninType.BASIC){
+			if(!PasswordSupport.isEquals(userSession.getPassword(), signinForm.getPassword())) {
+				return "usersession.password.invalid";
+			}
 		}
 		
 		// 회원 상태 체크
@@ -239,7 +252,6 @@ public class SigninController {
 				SessionUserSupport.invalidateSession(userSession.getUserId());
 			}
 		}
-		
 		return null;
 	}
 
@@ -266,20 +278,4 @@ public class SigninController {
 		}
 	}
 
-	/**
-	 * Social signin 사용자 체크(소셜 로그인)
-	 * @param userInfo
-	 * @param request
-	 */
-	private UserInfo checkSocialSignin(SigninSocialService signinSocialService, UserInfo userInfo, HttpServletRequest request){
-
-		userInfo = signinSocialService.checkUser(userService, userInfo);
-
-		Policy policy = CacheManager.getPolicy();
-
-		setSession(request, userInfo, policy);
-
-		return userInfo;
-
-	}
 }
