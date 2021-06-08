@@ -1,9 +1,11 @@
 package gaia3d.controller.view;
 
+import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.send.Mail;
 import gaia3d.service.SendService;
 import gaia3d.service.impl.MailServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/send")
 public class SendController {
 
+	@Autowired
+	PropertiesConfig propertiesConfig;
 
 	private SendService mailService = new MailServiceImpl();
 
@@ -38,7 +42,8 @@ public class SendController {
 	 */
 	@PostMapping("/mail")
 	public String execMail(Mail mail) {
-		mailService.mailSend(mail);
+
+		mailService.send(mail, propertiesConfig);
 
 		return "redirect:/send/mail";
 	}

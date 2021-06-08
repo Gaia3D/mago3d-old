@@ -1,5 +1,6 @@
 package gaia3d.controller.view;
 
+import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.Key;
 import gaia3d.domain.SigninType;
 import gaia3d.domain.SocialType;
@@ -49,6 +50,9 @@ public class SigninController {
 	@Autowired
 	private SigninSocialServiceRouter signinSocialServiceRouter;
 
+	@Autowired
+	private PropertiesConfig propertiesConfig;
+
 	/**
 	 * Sign in 페이지
 	 * @param request
@@ -60,6 +64,7 @@ public class SigninController {
 		Policy policy = CacheManager.getPolicy();
 
 		UserInfo signinForm = new UserInfo();
+		model.addAttribute("properties", propertiesConfig);
 		model.addAttribute("signinForm", signinForm);
 		model.addAttribute("policy", policy);
 		model.addAttribute("contentCacheVersion", policy.getContentCacheVersion());
@@ -109,6 +114,7 @@ public class SigninController {
 			signinForm.setUserId(null);
 			signinForm.setPassword(null);
 			//signinForm.setStatus(userSession.getStatus());
+			model.addAttribute("properties", propertiesConfig);
 			model.addAttribute("signinForm", signinForm);
 			model.addAttribute("policy", policy);
 
@@ -170,6 +176,8 @@ public class SigninController {
 
 		if(errorCode != null){
 			model.addAttribute("errorCode", errorCode);
+			model.addAttribute("properties", propertiesConfig);
+
 			return "/sign/signin";
 		}
 

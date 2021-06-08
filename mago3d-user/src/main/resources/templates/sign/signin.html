@@ -68,20 +68,20 @@
 	const kakaoLoginBtn = document.getElementById("kakaoBtn");
 
 	const googleUrl = "https://accounts.google.com/o/oauth2/v2/auth?" +
-			"client_id=441453727719-u2i244q6lnvc3vpl7csno7hdabi71e83.apps.googleusercontent.com" +
+			"client_id=" + "[[${properties.socialGoogleClientId}]]" +
 			"&redirect_uri=http://localhost/sign/social-process-signin/GOOGLE" +
 			"&response_type=code" +
 			"&scope=email%20profile%20openid" +
 			"&access_type=offline";
 
 	const naverUrl = "https://nid.naver.com/oauth2.0/authorize?" +
-			"client_id=te6KttPWNCiXwWdXVGI6"+
+			"client_id="+"[[${properties.socialNaverClientId}]]" +
 			"&redirect_uri=http://localhost/sign/social-process-signin/NAVER" +
 			"&response_type=code" +
 			"&scope=account_email";
 
 	const kakaoUrl = "https://kauth.kakao.com/oauth/authorize?" +
-			"client_id=038101f62718f9e63150e1ceb1d0e3b1"+
+			"client_id=" + "[[${properties.socialKakaoClientId}]]" +
 			"&redirect_uri=http://localhost/sign/social-process-signin/KAKAO" +
 			"&response_type=code" +
 			"&scope=profile,account_email";

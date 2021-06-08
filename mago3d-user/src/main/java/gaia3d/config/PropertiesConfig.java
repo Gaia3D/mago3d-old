@@ -121,5 +121,6 @@ public class PropertiesConfig {
 
     private String mailHost;
     private String mailPort;
+    private String mailAdminEmail;
 
 }

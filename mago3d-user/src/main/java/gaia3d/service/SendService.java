@@ -1,5 +1,6 @@
 package gaia3d.service;
 
+import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.send.Mail;
 
 /**
@@ -15,6 +16,6 @@ public interface SendService {
 	 * @return
 	 */
 
-	void mailSend(Mail mail);
+	void send(Mail mail, PropertiesConfig propertiesConfig);
 
 }
