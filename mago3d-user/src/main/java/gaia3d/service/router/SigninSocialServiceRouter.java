@@ -15,7 +15,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class SigninSocialServiceRouter {
 
-    //의존성 List로 주입(..)
+    //의존성 List로 주입(...)
     private final Map<String, SigninSocialService> sampleInterfaces;
 
     @Autowired

@@ -4,6 +4,7 @@ import gaia3d.domain.send.Mail;
 import gaia3d.service.SendService;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,7 +16,8 @@ import org.springframework.stereotype.Service;
 public class MailServiceImpl implements SendService {
 
 	//private JavaMailSender mailSender;
-	private JavaMailSender mailSender;
+
+
 	private static final String FROM_ADDRESS = "gkstkd000@gmail.com";
 
 	/**
@@ -24,6 +26,7 @@ public class MailServiceImpl implements SendService {
 	 * @return
 	 */
 	public void mailSend(Mail mail) {
+		JavaMailSender mailSender = new JavaMailSenderImpl();
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(mail.getAddress());
 		message.setFrom(MailServiceImpl.FROM_ADDRESS);

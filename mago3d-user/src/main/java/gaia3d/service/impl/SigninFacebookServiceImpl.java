@@ -28,7 +28,6 @@ public class SigninFacebookServiceImpl implements SigninSocialService {
 	}
 
 	public UserInfo socialAuthorize(String authCode) {
-
 		MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
 		parameters.set("grant_type", "authorization_code");
 		parameters.set("client_id", propertiesConfig.getSocialNaverClientId());

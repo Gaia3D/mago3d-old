@@ -37,7 +37,9 @@ public class SendController {
 	 * @return
 	 */
 	@PostMapping("/mail")
-	public void execMail(Mail mail) {
+	public String execMail(Mail mail) {
 		mailService.mailSend(mail);
+
+		return "redirect:/send/mail";
 	}
 }
