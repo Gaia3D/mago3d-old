@@ -2,7 +2,6 @@ package gaia3d.controller.view;
 
 import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.send.Mail;
-import gaia3d.service.SendService;
 import gaia3d.service.impl.MailServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,8 @@ public class SendController {
 	@Autowired
 	PropertiesConfig propertiesConfig;
 
-	private SendService mailService = new MailServiceImpl();
+	@Autowired
+	MailServiceImpl mailService;
 
 	/**
 	 * Sign in 페이지
@@ -43,7 +43,11 @@ public class SendController {
 	@PostMapping("/mail")
 	public String execMail(Mail mail) {
 
-		mailService.send(mail, propertiesConfig);
+		try {
+			mailService.send(mail, propertiesConfig);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return "redirect:/send/mail";
 	}
