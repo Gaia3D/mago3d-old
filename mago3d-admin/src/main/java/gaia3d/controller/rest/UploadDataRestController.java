@@ -16,8 +16,6 @@ import gaia3d.utils.DateUtils;
 import gaia3d.utils.FileUtils;
 import gaia3d.utils.FormatUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.ObjectUtils;
@@ -31,6 +29,8 @@ import javax.validation.Valid;
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * 3D 데이터 파일 업로더
@@ -318,21 +318,19 @@ public class UploadDataRestController {
 		List<UploadDataFile> uploadDataFileList = new ArrayList<>();
 		// zip 파일을 압축할때 한글이나 다국어가 포함된 경우 java.lang.IllegalArgumentException: malformed input off 같은 오류가 발생. 윈도우가 CP949 인코딩으로 파일명을 저장하기 때문.
 		// Charset CP949 = Charset.forName("UTF-8");
-		ZipFile zipFiless = new ZipFile(uploadedFile,"EUC-KR");
-		log.info("zipFiless : " + zipFiless);
 //		try ( ZipFile zipFile = new ZipFile(uploadedFile, CP949);) {
 		try ( ZipFile zipFile = new ZipFile(uploadedFile)) {
 			String directoryPath = targetDirectory;
 			String subDirectoryPath = "";
 			String directoryName = null;
 			int depth = 1;
-			Enumeration<? extends ZipArchiveEntry> entries = zipFile.getEntries();
+			Enumeration<? extends ZipEntry> entries = zipFile.entries();
 			log.info("entries : " + entries);
 			
 			while( entries.hasMoreElements() ) {
             	UploadDataFile uploadDataFile = new UploadDataFile();
             	
-            	ZipArchiveEntry entry = entries.nextElement();
+            	ZipEntry entry = entries.nextElement();
             	log.info("zip : " + entry);
             	String unzipfileName = targetDirectory + entry.getName();
             	boolean converterTarget = false;
@@ -509,7 +507,7 @@ public class UploadDataRestController {
 	/*
 	 * unzip 로직 안에서 파일 복사
 	 */
-	private UploadDataFile fileCopyInUnzip(UploadDataFile uploadDataFile, ZipFile zipFile, ZipArchiveEntry entry, String directoryPath, String saveFileName,
+	private UploadDataFile fileCopyInUnzip(UploadDataFile uploadDataFile, ZipFile zipFile, ZipEntry entry, String directoryPath, String saveFileName,
 										   String extension, String fileName, String subDirectoryPath, int depth) {
 		long size = 0L;
     	try ( 	InputStream inputStream = zipFile.getInputStream(entry);
