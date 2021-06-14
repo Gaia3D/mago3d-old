@@ -57,6 +57,7 @@ public class MailServiceImpl implements SendService {
 		String emailContent = getEmailContent(mail);
 		helper.setText(emailContent, true);
 
+
 		javaMailSender.send(helper.getMimeMessage());
 	}
 

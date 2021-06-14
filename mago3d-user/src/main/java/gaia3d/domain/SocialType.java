@@ -21,4 +21,5 @@ public enum SocialType {
 		return this.implementation;
 	}
 
+
 }

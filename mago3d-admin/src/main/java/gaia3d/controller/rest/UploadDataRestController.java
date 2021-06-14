@@ -120,7 +120,6 @@ public class UploadDataRestController {
 					// converter 변환 대상 파일 수
 					converterTargetCount = (Integer)uploadMap.get("converterTargetCount");
 					if(converterTargetCount <= 0) {
-						log.info("--------------------테스트");
 						errorCode = "converter.target.count.invalid";
 						return getResultMap(result, HttpStatus.BAD_REQUEST.value(), errorCode, message);
 					}

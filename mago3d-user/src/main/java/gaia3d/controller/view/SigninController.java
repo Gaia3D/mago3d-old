@@ -15,21 +15,23 @@ import gaia3d.listener.Gaia3dHttpSessionBindingListener;
 import gaia3d.service.SigninService;
 import gaia3d.service.SigninSocialService;
 import gaia3d.service.UserService;
-import gaia3d.service.router.SigninSocialServiceRouter;
 import gaia3d.support.PasswordSupport;
 import gaia3d.support.RoleSupport;
 import gaia3d.support.SessionUserSupport;
 import gaia3d.utils.WebUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Sign in 처리
@@ -48,10 +50,14 @@ public class SigninController {
 	private SigninService signinService;
 
 	@Autowired
-	private SigninSocialServiceRouter signinSocialServiceRouter;
+	Map<String, SigninSocialService> signinSocialServices;
 
 	@Autowired
 	private PropertiesConfig propertiesConfig;
+
+	@Autowired
+	RestTemplate restTemplate;
+
 
 	/**
 	 * Sign in 페이지
@@ -157,7 +163,13 @@ public class SigninController {
 	@GetMapping(value = "/social-process-signin/{socialType}")
 	public String socialProcessSignin(HttpServletRequest request, Model model, @PathVariable(name = "socialType") String socialType, @RequestParam(value = "code") String authCode) {
 
-		SigninSocialService signinSocialService = signinSocialServiceRouter.getImplemetationByType(SocialType.valueOf(socialType));
+		SigninSocialService signinSocialService = signinSocialServices.get(SocialType.valueOf(socialType).getImplementation());
+
+		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+		factory.setConnectTimeout(10*1000);
+		factory.setReadTimeout(10*1000);
+
+		restTemplate.setRequestFactory(factory);
 
 		UserInfo userInfo = signinSocialService.socialAuthorize(authCode);
 		Policy policy = CacheManager.getPolicy();
