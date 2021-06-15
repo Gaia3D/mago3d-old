@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	
-	$(".ui-slider-handle").slider({});
+	//$(".ui-slider-handle").slider({});
 	
 	//데이터 그룹 목록 초기화
 	//mapDataGroupList(1, null);

@@ -54,14 +54,19 @@ SensorThings.prototype.setCameraMoveEvent = function() {
     });
 };
 
+/**
+ * 알파돔 F4D 초기화
+ */
 SensorThings.prototype.initF4dData = function() {
 
     let add = false;
     const magoManager = this.magoInstance.getMagoManager();
     const f4dController = this.magoInstance.getF4dController();
 
+    // TODO 데이터 그룹 키 50000 하드코딩 제거 필요!
+    const dataGroupKey = '50000';
     let setIntervalInitF4dData = setInterval(function () {
-        if (magoManager.hierarchyManager.existProject('50000') && !add) {
+        if (magoManager.hierarchyManager.existProject(dataGroupKey) && !add) {
             add = true;
 
             $.ajax({
@@ -70,7 +75,7 @@ SensorThings.prototype.initF4dData = function() {
                 headers: {"X-Requested-With": "XMLHttpRequest"},
                 dataType: "json",
                 success: function (json) {
-                    f4dController.addF4dMember('50000', json.children);
+                    f4dController.addF4dMember(dataGroupKey, json.children);
                 },
                 error: function (request, status, error) {
                     alert(JS_MESSAGE["ajax.error.message"]);
@@ -83,6 +88,9 @@ SensorThings.prototype.initF4dData = function() {
 
 };
 
+/**
+ * 자료 갱신 이벤트 생성
+ */
 SensorThings.prototype.setInterval = function() {
     MAGO.updateSensorThings = setInterval(function () {
         let currentTime = MAGO.sensorThings.getCorrectTime(MAGO.sensorThings.getCurrentTime(), MAGO.sensorThings.callInterval);
@@ -106,9 +114,39 @@ SensorThings.prototype.setInterval = function() {
     }, 1000 * MAGO.sensorThings.callInterval);
 };
 
+/**
+ * 화면 오버레이 clear
+ */
 SensorThings.prototype.clearOverlay = function () {
     if ($('.overlayWrap').length >= 0) {
         $('#overlayDHTML').html("");
+    }
+};
+
+SensorThings.prototype.active = function (isVisible) {
+    if (isVisible) {
+        const newSensorThings = MAGO.sensorThings.create();
+        if (MAGO.sensorThings.type !== newSensorThings.type) {
+            MAGO.sensorThings = newSensorThings;
+            // TODO: 설정값으로 빼기
+            if (MAGO.sensorThings instanceof DustSensorThings) {
+                MAGO.sensorThings.addDustLayer();
+            }
+        }
+        MAGO.sensorThings.dataSearch(1);
+        MAGO.sensorThings.clearOverlay();
+        MAGO.sensorThings.addOverlay();
+        MAGO.sensorThings.created = true;
+        MAGO.sensorThings.setInterval();
+    } else {
+        MAGO.sensorThings.init();
+        MAGO.sensorThings.clearOverlay();
+        // TODO: 설정값으로 빼기
+        if (MAGO.sensorThings instanceof DustSensorThings) {
+            MAGO.sensorThings.clearDustLayer();
+        }
+        MAGO.sensorThings.created = false;
+        clearInterval(MAGO.updateSensorThings);
     }
 };
 
@@ -304,7 +342,7 @@ SensorThings.prototype.drawGaugeChart = function (range, total, percent) {
 };
 
 /**
- * 게이지 차트 없데이트
+ * 게이지 차트 업데이트
  * @param min
  * @param max
  * @param value

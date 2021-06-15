@@ -2,7 +2,7 @@ var pageNo = 1;
 
 $(document).ready(function() {
 	
-	$(".ui-slider-handle").slider({});
+	//$(".ui-slider-handle").slider({});
 	
 	//데이터 목록 초기화
 	//mapDataInfoList(1, null);
