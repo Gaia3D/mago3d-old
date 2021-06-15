@@ -139,6 +139,29 @@ public class Policy {
  	private Integer userUploadMaxCount;
  	// shape 파일 업로드 가능 확장자
  	private String shapeUploadType;
+
+ 	// 소셜 로그인 Google Client Id
+ 	private String socialSigninGoogleClientId;
+ 	// 소셜 로그인 Google Client Secret
+	private String socialSigninGoogleClientSecret;
+	// 소셜 로그인 Google Redirect URI
+	private String socialSigninGoogleRedirectUri;
+	// 소셜 로그인 Facebook Client Id
+	private String socialSigninFacebookClientId;
+	// 소셜 로그인 Facebook Client Secret
+	private String socialSigninFacebookClientSecret;
+	// 소셜 로그인 Facebook Redirect URI
+	private String socialSigninFacebookRedirectUri;
+	// 소셜 로그인 Naver Client Id
+	private String socialSigninNaverClientId;
+	// 소셜 로그인 Naver Client Secret
+	private String socialSigninNaverClientSecret;
+	// 소셜 로그인 Naver Redirect URI
+	private String socialSigninNaverRedirectUri;
+	// 소셜 로그인 Kakao Client Id
+	private String socialSigninKakaoClientId;
+	// 소셜 로그인 Kakao Redirect URI
+	private String socialSigninKakaoRedirectUri;
  	
  	// 등록일
  	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")

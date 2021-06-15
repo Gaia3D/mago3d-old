@@ -1,10 +1,7 @@
 package gaia3d.service;
 
-import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.notice.Mail;
-
-import javax.mail.MessagingException;
-import java.io.UnsupportedEncodingException;
+import gaia3d.domain.policy.Policy;
 
 /**
  * 사용자
@@ -19,6 +16,6 @@ public interface NoticeService {
 	 * @return
 	 */
 
-	void send(Mail mail, PropertiesConfig propertiesConfig) throws MessagingException, UnsupportedEncodingException, Exception;
+	void send(Mail mail, Policy policy) throws Exception;
 
 }

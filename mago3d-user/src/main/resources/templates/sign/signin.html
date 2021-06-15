@@ -67,21 +67,23 @@
 	const naverLoginBtn = document.getElementById("naverBtn");
 	const kakaoLoginBtn = document.getElementById("kakaoBtn");
 
+	console.log("[[${policy}]]");
+
 	const googleUrl = "https://accounts.google.com/o/oauth2/v2/auth?" +
-			"client_id=" + "[[${properties.socialGoogleClientId}]]" +
+			"client_id=" + "[[${policy.socialSigninGoogleClientId}]]" +
 			"&redirect_uri=http://localhost/sign/social-process-signin/GOOGLE" +
 			"&response_type=code" +
 			"&scope=email%20profile%20openid" +
 			"&access_type=offline";
 
 	const naverUrl = "https://nid.naver.com/oauth2.0/authorize?" +
-			"client_id="+"[[${properties.socialNaverClientId}]]" +
+			"client_id="+"[[${policy.socialSigninNaverClientId}]]" +
 			"&redirect_uri=http://localhost/sign/social-process-signin/NAVER" +
 			"&response_type=code" +
 			"&scope=account_email";
 
 	const kakaoUrl = "https://kauth.kakao.com/oauth/authorize?" +
-			"client_id=" + "[[${properties.socialKakaoClientId}]]" +
+			"client_id=" + "[[${policy.socialSigninKakaoClientId}]]" +
 			"&redirect_uri=http://localhost/sign/social-process-signin/KAKAO" +
 			"&response_type=code" +
 			"&scope=profile,account_email";

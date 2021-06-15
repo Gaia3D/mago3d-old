@@ -1,17 +1,10 @@
 package gaia3d.domain.policy;
 
-import java.time.LocalDateTime;
-
-import javax.validation.constraints.NotNull;
-
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 /**
  * 운영 정책
@@ -143,7 +136,53 @@ public class Policy {
  	// 최대 업로딩 사이즈(단위M). 기본값 10000M
  	private Long userUploadMaxFilesize;
  	// 1회, 최대 업로딩 파일 수. 기본값 500개
- 	private Integer userUploadMaxCount;	
+ 	private Integer userUploadMaxCount;
+
+	// 소셜 로그인 Google Client Id
+	private String socialSigninGoogleClientId;
+	// 소셜 로그인 Google Client Secret
+	private String socialSigninGoogleClientSecret;
+	// 소셜 로그인 Google Redirect URI
+	private String socialSigninGoogleRedirectUri;
+	// 소셜 로그인 Google AccessToken URI
+	private String socialSigninGoogleAccessTokenUri;
+	// 소셜 로그인 Google UserInfo URI
+	private String socialSigninGoogleUserInfoUri;
+	// 소셜 로그인 Facebook Client Id
+	private String socialSigninFacebookClientId;
+	// 소셜 로그인 Facebook Client Secret
+	private String socialSigninFacebookClientSecret;
+	// 소셜 로그인 Facebook Redirect URI
+	private String socialSigninFacebookRedirectUri;
+	// 소셜 로그인 Facebook AccessToken URI
+	private String socialSigninFacebookAccessTokenUri;
+	// 소셜 로그인 Facebook UserInfo URI
+	private String socialSigninFacebookUserInfoUri;
+	// 소셜 로그인 Naver Client Id
+	private String socialSigninNaverClientId;
+	// 소셜 로그인 Naver Client Secret
+	private String socialSigninNaverClientSecret;
+	// 소셜 로그인 Naver Redirect URI
+	private String socialSigninNaverRedirectUri;
+	// 소셜 로그인 Naver AccessToken URI
+	private String socialSigninNaverAccessTokenUri;
+	// 소셜 로그인 Naver UserInfo URI
+	private String socialSigninNaverUserInfoUri;
+	// 소셜 로그인 Kakao Client Id
+	private String socialSigninKakaoClientId;
+	// 소셜 로그인 Kakao Redirect URI
+	private String socialSigninKakaoRedirectUri;
+	// 소셜 로그인 Kakao AccessToken URI
+	private String socialSigninKakaoAccessTokenUri;
+	// 소셜 로그인 Kakao UserInfo URI
+	private String socialSigninKakaoUserInfoUri;
+
+	// 알림(메일) 호스트
+	private String noticeEmailHost;
+	// 알림(메일) 포트
+	private String noticeEmailPort;
+	// 알림(메일) 관리자
+	private String noticeEmailAdmin;
  	
  	// 등록일
  	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")

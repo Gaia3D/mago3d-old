@@ -1,7 +1,8 @@
 package gaia3d.controller.view;
 
-import gaia3d.config.PropertiesConfig;
+import gaia3d.domain.cache.CacheManager;
 import gaia3d.domain.notice.Mail;
+import gaia3d.domain.policy.Policy;
 import gaia3d.service.impl.MailServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 @Controller
 @RequestMapping("/notice")
-public class SendController {
-
-	@Autowired
-	PropertiesConfig propertiesConfig;
+public class NoticeController {
 
 	@Autowired
 	MailServiceImpl mailService;
@@ -43,8 +41,9 @@ public class SendController {
 	@PostMapping("/mail")
 	public String execMail(Mail mail) {
 
+		Policy policy = CacheManager.getPolicy();
 		try {
-			mailService.send(mail, propertiesConfig);
+			mailService.send(mail, policy);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

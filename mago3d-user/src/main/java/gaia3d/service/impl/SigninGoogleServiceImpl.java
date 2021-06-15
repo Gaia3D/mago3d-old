@@ -1,6 +1,7 @@
 package gaia3d.service.impl;
 
-import gaia3d.config.PropertiesConfig;
+import gaia3d.domain.cache.CacheManager;
+import gaia3d.domain.policy.Policy;
 import gaia3d.domain.user.UserInfo;
 import gaia3d.service.SigninSocialService;
 import lombok.AllArgsConstructor;
@@ -22,22 +23,24 @@ import java.util.Map;
 public class SigninGoogleServiceImpl implements SigninSocialService {
 
 	private RestTemplate restTemplate;
-	private PropertiesConfig propertiesConfig;
 
 	public UserInfo socialAuthorize(String authCode) {
+
+		Policy policy = CacheManager.getPolicy();
+
 		MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
 		parameters.set("grantType", "authorization_code");
-		parameters.set("clientId", propertiesConfig.getSocialGoogleClientId());
-		parameters.set("redirectUri", propertiesConfig.getSocialGoogleRedirectUri());
-		parameters.set("clientSecret", propertiesConfig.getSocialGoogleClientSecret());
+		parameters.set("clientId", policy.getSocialSigninGoogleClientId());
+		parameters.set("redirectUri", policy.getSocialSigninGoogleRedirectUri());
+		parameters.set("clientSecret", policy.getSocialSigninGoogleClientSecret());
 		parameters.set("code", authCode);
 
-		String url = propertiesConfig.getSocialGoogleAccessTokenUri();
+		String url = policy.getSocialSigninGoogleAccessTokenUri();
 
 		String accessToken = getAccessToken(restTemplate, parameters, url);
 
 		// getAuthUserInfo
-		Map responseBody = getSocialUserInfo(restTemplate, accessToken, propertiesConfig.getSocialGoogleUserInfoUri());
+		Map responseBody = getSocialUserInfo(restTemplate, accessToken, policy.getSocialSigninGoogleUserInfoUri());
 
 		JSONObject jsonObject = new JSONObject((Map)responseBody);
 

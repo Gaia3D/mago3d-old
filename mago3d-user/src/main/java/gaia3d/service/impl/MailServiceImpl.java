@@ -2,8 +2,8 @@ package gaia3d.service.impl;
 
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
-import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.notice.Mail;
+import gaia3d.domain.policy.Policy;
 import gaia3d.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -43,7 +43,7 @@ public class MailServiceImpl implements NoticeService {
 	 * @param mail
 	 * @return
 	 */
-	public void send(Mail mail, PropertiesConfig propertiesConfig) throws Exception {
+	public void send(Mail mail, Policy policy) throws Exception {
 
 		MimeMessage mimeMessage;
 

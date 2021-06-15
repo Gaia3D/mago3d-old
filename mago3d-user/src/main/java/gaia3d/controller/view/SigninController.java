@@ -1,6 +1,5 @@
 package gaia3d.controller.view;
 
-import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.Key;
 import gaia3d.domain.SigninType;
 import gaia3d.domain.YOrN;
@@ -64,9 +63,6 @@ public class SigninController {
 	private SigninKakaoServiceImpl signinKakaoService;
 
 	@Autowired
-	private PropertiesConfig propertiesConfig;
-
-	@Autowired
 	RestTemplate restTemplate;
 
 
@@ -81,7 +77,6 @@ public class SigninController {
 		Policy policy = CacheManager.getPolicy();
 
 		UserInfo signinForm = new UserInfo();
-		model.addAttribute("properties", propertiesConfig);
 		model.addAttribute("signinForm", signinForm);
 		model.addAttribute("policy", policy);
 		model.addAttribute("contentCacheVersion", policy.getContentCacheVersion());
@@ -131,7 +126,6 @@ public class SigninController {
 			signinForm.setUserId(null);
 			signinForm.setPassword(null);
 			//signinForm.setStatus(userSession.getStatus());
-			model.addAttribute("properties", propertiesConfig);
 			model.addAttribute("signinForm", signinForm);
 			model.addAttribute("policy", policy);
 
@@ -212,8 +206,7 @@ public class SigninController {
 
 		if(errorCode != null){
 			model.addAttribute("errorCode", errorCode);
-			//policy 로
-			model.addAttribute("properties", propertiesConfig);
+			model.addAttribute("policy", policy);
 
 			return "/sign/signin";
 		}

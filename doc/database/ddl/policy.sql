@@ -63,7 +63,31 @@ create table policy(
 	user_upload_max_filesize				integer				default 10000,
 	user_upload_max_count					integer				default 500,
 	shape_upload_type						varchar(256)		default 'cpg,dbf,idx,sbn,sbx,shp,shx,prj,qpj,zip',
-	
+
+    social_signin_google_client_id			varchar(256)        default '441453727719-u2i244q6lnvc3vpl7csno7hdabi71e83.apps.googleusercontent.com',
+    social_signin_google_client_secret		varchar(256)        default 'PumSTaqaw_ZuqzPoibcSteXu',
+    social_signin_google_redirect_uri		varchar(256)        default 'http://localhost/sign/social-process-signin/GOOGLE',
+    social_signin_google_access_token_uri	varchar(256)        default 'https://oauth2.googleapis.com/token',
+    social_signin_google_user_info_uri		varchar(256)        default 'https://www.googleapis.com/userinfo/v2/me?access_token=',
+    social_signin_facebook_client_id		varchar(256)        default '',
+    social_signin_facebook_client_secret	varchar(256)        default '',
+    social_signin_facebook_redirect_uri		varchar(256)        default '',
+    social_signin_facebook_access_token_uri	varchar(256)        default '',
+    social_signin_facebook_user_info_uri		varchar(256)        default '',
+    social_signin_naver_client_id			varchar(256)        default 'te6KttPWNCiXwWdXVGI6',
+    social_signin_naver_client_secret		varchar(256)        default 'Yj478xU4Mt',
+    social_signin_naver_redirect_uri		varchar(256)        default 'http://localhost/sign/social-process-signin/NAVER',
+    social_signin_naver_access_token_uri	varchar(256)        default 'https://nid.naver.com/oauth2.0/token',
+    social_signin_naver_user_info_uri		varchar(256)        default 'https://openapi.naver.com/v1/nid/me',
+    social_signin_kakao_client_id			varchar(256)        default '038101f62718f9e63150e1ceb1d0e3b1',
+    social_signin_kakao_redirect_uri		varchar(256)        default 'http://localhost/sign/social-process-signin/KAKAO',
+    social_signin_kakao_access_token_uri	varchar(256)        default 'https://kauth.kakao.com/oauth/token',
+    social_signin_kakao_user_info_uri		varchar(256)        default 'https://kapi.kakao.com/v2/user/me',
+
+    notice_email_host                       varchar(20)         default 'localhost',
+    notice_email_port                       varchar(10)         default '125',
+    notice_email_admin                      varchar(20)         default 'gkstkd000@gmail.com',
+
 	insert_date								timestamp with time zone			default now(),
 	constraint policy_pk primary key (policy_id)	
 );
@@ -124,5 +148,29 @@ comment on column policy.user_converter_type is '변환 가능 확장자. 3ds,ob
 comment on column policy.user_upload_max_filesize is '최대 업로딩 사이즈(단위M). 500M';
 comment on column policy.user_upload_max_count is '1회, 최대 업로딩 파일 수. 50개';
 comment on column policy.shape_upload_type is 'shape 파일 업로드 가능 확장자';
+
+comment on column policy.social_signin_google_client_id is '소셜 로그인 Google Client Id';
+comment on column policy.social_signin_google_client_secret is '소셜 로그인 Google Client Secret';
+comment on column policy.social_signin_google_redirect_uri is '소셜 로그인 Google Redirect URI';
+comment on column policy.social_signin_google_access_token_uri is '소셜 로그인 Google AccessToken URI';
+comment on column policy.social_signin_google_user_info_uri is '소셜 로그인 Google UserInfo URI';
+comment on column policy.social_signin_facebook_client_id is '소셜 로그인 Facebook Client Id';
+comment on column policy.social_signin_facebook_client_secret is '소셜 로그인 Facebook Client Secret';
+comment on column policy.social_signin_facebook_redirect_uri is '소셜 로그인 Facebook Redirect URI';
+comment on column policy.social_signin_facebook_access_token_uri is '소셜 로그인 Facebook AccessToken URI';
+comment on column policy.social_signin_facebook_user_info_uri is '소셜 로그인 Facebook UserInfo URI';
+comment on column policy.social_signin_naver_client_id is '소셜 로그인 Naver Client Id';
+comment on column policy.social_signin_naver_client_secret is '소셜 로그인 Naver Client Secret';
+comment on column policy.social_signin_naver_redirect_uri is '소셜 로그인 Naver Redirect URI';
+comment on column policy.social_signin_naver_access_token_uri is '소셜 로그인 Naver AccessToken URI';
+comment on column policy.social_signin_naver_user_info_uri is '소셜 로그인 Naver UserInfo URI';
+comment on column policy.social_signin_kakao_client_id is '소셜 로그인 Kakao Client Id';
+comment on column policy.social_signin_kakao_redirect_uri is '소셜 로그인 Kakao Redirect URI';
+comment on column policy.social_signin_kakao_access_token_uri is '소셜 로그인 Kakao AccessToken URI';
+comment on column policy.social_signin_kakao_user_info_uri is '소셜 로그인 Kakao UserInfo URI';
+
+comment on column policy.notice_email_host is '알림(메일) 호스트';
+comment on column policy.notice_email_port is '알림(메일) 포트';
+comment on column policy.notice_email_admin is '알림(메일) 관리자';
 
 comment on column policy.insert_date is '등록일';

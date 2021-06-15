@@ -94,33 +94,4 @@ public class PropertiesConfig {
     private String userStinkServiceDir;
     private String userStinkServicePath;
 
-
-    // 소셜 로그인 api
-    private String socialGoogleClientId;
-    private String socialGoogleClientSecret;
-    private String socialGoogleRedirectUri;
-    private String socialGoogleAccessTokenUri;
-    private String socialGoogleUserInfoUri;
-
-    private String socialFacebookClientId;
-    private String socialFacebookClientSecret;
-    private String socialFacebookRedirectUri;
-    private String socialFacebookAccessTokenUri;
-    private String socialFacebookUserInfoUri;
-
-    private String socialNaverClientId;
-    private String socialNaverClientSecret;
-    private String socialNaverRedirectUri;
-    private String socialNaverAccessTokenUri;
-    private String socialNaverUserInfoUri;
-
-    private String socialKakaoClientId;
-    private String socialKakaoRedirectUri;
-    private String socialKakaoAccessTokenUri;
-    private String socialKakaoUserInfoUri;
-
-    private String mailHost;
-    private String mailPort;
-    private String mailAdminEmail;
-
 }
