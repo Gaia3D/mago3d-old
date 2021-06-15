@@ -171,7 +171,7 @@ span.mago {color:#6649ca;}
 #join {width:500px; margin:0 auto; padding:0 50px; background:white; height:100%;}
 #join form, #join fieldset  {margin:0; padding:0;}
 #join label {clear:both; float:left; display:inline-block; float;left; width:150px; line-height:42px; margin:0; padding:0; font-size:16px;}
-#join .inputid {padding:0; margin:0 0 0 0; width:340px; text-align:left; height:42px; line-height:42px;font-size:16px; color:#444444; border:1px solid #e2e0e0;}
+#join .inputid, #join .inputMobilePhone {padding:0; margin:0 0 0 0; width:340px; text-align:left; height:42px; line-height:42px;font-size:16px; color:#444444; border:1px solid #e2e0e0;}
 #join .inputpwd {float:left;padding:0; margin:0 0 0 0; width:340px; text-align:left; height:42px; line-height:42px;font-size:16px; color:#444444; border:1px solid #e2e0e0;}
 #join .inputname {padding:0; margin:0 0 0 0; width:340px; text-align:left; height:42px; line-height:42px;font-size:16px; color:#444444; border:1px solid #e2e0e0;}
 #join .inputemail {float:left; padding:0; margin:0 0 0 0; width:180px; text-align:left; height:42px; line-height:42px;font-size:16px; color:#444444; border:1px solid #e2e0e0;}

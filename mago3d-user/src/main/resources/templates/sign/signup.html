@@ -20,24 +20,35 @@
 		<form class="join-select " id="signupForm" th:object="${signupForm}" method="post" action="/sign/process-signup">
 			<fieldset>
 				<legend>회원가입</legend>
-				<label for="userId">아이디<span class="join-key">*</span></label><input type="text" id="userId" name="userId" class="inputid" />
-				<span class="txt-guide"></span>
-				<label for="userName">이름<span class="join-key">*</span></label><input type="text" id="userName" name="userName" class="inputname" />
-				<span class="txt-guide"></span>
-				<label for="password">비밀번호<span class="join-key">*</span></label><input type="password" id="password" name="newPassword" class="inputpwd" />
+
+				<label for="userId">아이디<span class="join-key">*</span></label>
+				<input type="text" id="userId" name="userId" class="inputid" />
+
+				<label for="userName">이름<span class="join-key">*</span></label>
+				<input type="text" id="userName" name="userName" class="inputname" />
+
+				<label for="password">비밀번호<span class="join-key">*</span></label>
+				<input type="password" id="password" name="newPassword" class="inputpwd" />
 				<span class="txt-guide">특수문자, 대소문자, 영문포함 8자 이상 32자 이하</span>
-				<label for="passwordConfirm">비밀번호 확인<span class="join-key">*</span></label><input type="password" id="passwordConfirm" name="newPasswordConfirm" class="inputpwd" />
-				<span class="txt-guide">특수문자, 대소문자, 영문포함 8글자 이상</span>
-				<label for="email">이메일<span class="join-key">*</span></label><input type="email" id="email" name="email" class="inputemail" />
-				<span class="emailtxt">@</span>				
+
+				<!--<label for="passwordConfirm">비밀번호 확인<span class="join-key">*</span></label>
+				<input type="password" id="passwordConfirm" class="inputpwd" />
+				<span class="txt-guide">특수문자, 대소문자, 영문포함 8글자 이상</span>-->
+
+				<label for="mobilePhone">핸드폰 번호<span class="join-key">*</span></label>
+				<input type="text" id="mobilePhone" name="mobilePhone" class="inputMobilePhone" maxlength="13"/>
+
+				<label for="email">이메일<span class="join-key">*</span></label>
+				<input type="text" id="preEmail" class="inputemail"/>
 				<form>
-					<select class="slct-email">
-						<option>naver.com</option>
-						<option>daum.net</option>
-						<option>gmail.com</option>
-						<option>직접입력</option>
+					<select id="slctEmail" class="slct-email">
+						<option value="@naver.com">@naver.com</option>
+						<option value="@daum.net">@daum.net</option>
+						<option value="@gmail.com">@gmail.com</option>
+						<option value="">직접입력</option>
 					</select>
 				</form>
+				<input type="hidden" id="email" name="email" value="">
 				<button type="submit" class="btn-join">가입하기</button>
 			</fieldset>
 		</form>
@@ -52,6 +63,60 @@
 			alert(JS_MESSAGE[errorCode]);
 		}
 	});
+
+	function autoHypenPhone(str){
+		str = str.replace(/[^0-9]/g, '');
+		var tmp = '';
+		if( str.length < 4){
+			return str;
+		}else if(str.length < 7){
+			tmp += str.substr(0, 3);
+			tmp += '-';
+			tmp += str.substr(3);
+			return tmp;
+		}else if(str.length < 11){
+			tmp += str.substr(0, 3);
+			tmp += '-';
+			tmp += str.substr(3, 3);
+			tmp += '-';
+			tmp += str.substr(6);
+			return tmp;
+		}else{
+			tmp += str.substr(0, 3);
+			tmp += '-';
+			tmp += str.substr(3, 4);
+			tmp += '-';
+			tmp += str.substr(7);
+			return tmp;
+		}
+		return str;
+	}
+
+	var mobilePhone = document.getElementById('mobilePhone');
+	mobilePhone.onkeyup = function(event){
+		event = event || window.event;
+		var _val = this.value.trim();
+		this.value = autoHypenPhone(_val) ;
+	}
+
+	var preEmail = document.getElementById('preEmail');
+	var slctEmail = document.getElementById('slctEmail');
+	var email = document.getElementById('email');
+
+	preEmail.onkeyup = function(event){
+		event = event || window.event;
+		var _val = this.value.trim() ;
+		email.value = _val + slctEmail.value;
+	}
+
+	slctEmail.onchange = function(event){
+		event = event || window.event;
+		var _val = preEmail.value.trim() ;
+		email.value = _val + this.value;
+	}
+
+
+
 </script>
 
 </html>

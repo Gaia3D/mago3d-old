@@ -65,6 +65,7 @@ JS_MESSAGE["user.session.close"] = "선택하신 사용자의 세션을 종료 �
 JS_MESSAGE["user.insert"] = "사용자를 등록 하였습니다.";
 JS_MESSAGE["user.info.update"] = "사용자 정보를 수정 하였습니다.";
 JS_MESSAGE["user.id.notexist"] = "아이디가 존재하지 않습니다.";
+JS_MESSAGE["user.email.invalid"] = "이메일 형식이 유효하지 않습니다.";
 
 JS_MESSAGE["password.new"] = "새로운 비밀번호를 입력하여 주십시오.";
 JS_MESSAGE["password.match.current"] = "현재 비밀번호와 일치합니다.";

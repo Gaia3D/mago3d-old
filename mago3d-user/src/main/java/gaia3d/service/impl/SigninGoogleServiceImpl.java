@@ -3,6 +3,7 @@ package gaia3d.service.impl;
 import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.user.UserInfo;
 import gaia3d.service.SigninSocialService;
+import lombok.AllArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -17,15 +18,11 @@ import java.util.Map;
  *
  */
 @Service
+@AllArgsConstructor
 public class SigninGoogleServiceImpl implements SigninSocialService {
 
 	private RestTemplate restTemplate;
 	private PropertiesConfig propertiesConfig;
-
-	public SigninGoogleServiceImpl(PropertiesConfig propertiesConfig, RestTemplate restTemplate) {
-		this.restTemplate = restTemplate;
-		this.propertiesConfig = propertiesConfig;
-	}
 
 	public UserInfo socialAuthorize(String authCode) {
 		MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();

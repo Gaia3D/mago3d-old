@@ -28,9 +28,9 @@
 	<insert id="insertUser" parameterType="userInfo">
 		/* insertUser */
 		INSERT INTO user_info(
-			user_id, user_group_id, user_name, password, email, signin_type, status, update_date
+			user_id, user_group_id, user_name, password, email, mobile_phone, signin_type, status, update_date
 		) values(
-					#{userId}, #{userGroupId}, #{userName}, #{password}, #{email}, #{signinType}, COALESCE(#{status}, '0'), NOW()
+					#{userId}, #{userGroupId}, #{userName}, #{password}, #{email}, #{mobilePhone}, #{signinType}, COALESCE(#{status}, '0'), NOW()
 				)
 	</insert>
 

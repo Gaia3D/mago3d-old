@@ -3,7 +3,6 @@ package gaia3d.controller.view;
 import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.Key;
 import gaia3d.domain.SigninType;
-import gaia3d.domain.SocialType;
 import gaia3d.domain.YOrN;
 import gaia3d.domain.cache.CacheManager;
 import gaia3d.domain.policy.Policy;
@@ -15,6 +14,10 @@ import gaia3d.listener.Gaia3dHttpSessionBindingListener;
 import gaia3d.service.SigninService;
 import gaia3d.service.SigninSocialService;
 import gaia3d.service.UserService;
+import gaia3d.service.impl.SigninFacebookServiceImpl;
+import gaia3d.service.impl.SigninGoogleServiceImpl;
+import gaia3d.service.impl.SigninKakaoServiceImpl;
+import gaia3d.service.impl.SigninNaverServiceImpl;
 import gaia3d.support.PasswordSupport;
 import gaia3d.support.RoleSupport;
 import gaia3d.support.SessionUserSupport;
@@ -31,7 +34,6 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Sign in 처리
@@ -50,7 +52,16 @@ public class SigninController {
 	private SigninService signinService;
 
 	@Autowired
-	Map<String, SigninSocialService> signinSocialServices;
+	private SigninGoogleServiceImpl signinGoogleService;
+
+	@Autowired
+	private SigninFacebookServiceImpl signinFacebookService;
+
+	@Autowired
+	private SigninNaverServiceImpl signinNaverService;
+
+	@Autowired
+	private SigninKakaoServiceImpl signinKakaoService;
 
 	@Autowired
 	private PropertiesConfig propertiesConfig;
@@ -163,7 +174,20 @@ public class SigninController {
 	@GetMapping(value = "/social-process-signin/{socialType}")
 	public String socialProcessSignin(HttpServletRequest request, Model model, @PathVariable(name = "socialType") String socialType, @RequestParam(value = "code") String authCode) {
 
-		SigninSocialService signinSocialService = signinSocialServices.get(SocialType.valueOf(socialType).getImplementation());
+		//SigninSocialService signinSocialService = signinSocialServices.get(SocialType.valueOf(socialType).getImplementation());
+
+		SigninSocialService signinSocialService = null;
+
+		switch (socialType){
+			case "GOOGLE" : signinSocialService = signinGoogleService;
+				break;
+			case "FACEBOOK" : signinSocialService = signinFacebookService;
+				break;
+			case "NAVER" : signinSocialService = signinNaverService;
+				break;
+			case "KAKAO" : signinSocialService = signinKakaoService;
+				break;
+		}
 
 		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
 		factory.setConnectTimeout(10*1000);
@@ -184,10 +208,11 @@ public class SigninController {
 
 		String errorCode = validate(request, policy, userInfo, usersession);
 
-		setSession(request, userInfo, policy);
+		setSession(request, userInfo, usersession, policy);
 
 		if(errorCode != null){
 			model.addAttribute("errorCode", errorCode);
+			//policy 로
 			model.addAttribute("properties", propertiesConfig);
 
 			return "/sign/signin";
@@ -282,10 +307,9 @@ public class SigninController {
 	 * @param policy
 	 * @return
 	 */
-	private void setSession(HttpServletRequest request, UserInfo userInfo, Policy policy){
+	private void setSession(HttpServletRequest request, UserInfo userInfo, UserSession userSession, Policy policy){
 		userInfo.setPasswordChangeTerm(policy.getPasswordChangeTerm());
 		userInfo.setUserLastSigninLock(policy.getUserLastSigninLock());
-		UserSession userSession = signinService.getUserSession(userInfo);
 		signinService.updateSigninUserSession(userSession);
 
 		userSession.setSigninIp(WebUtils.getClientIp(request));

@@ -25,6 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Sign up 처리
@@ -132,6 +134,23 @@ public class SignupController {
 	 * @return
 	 */
 	private String userValidate(Policy policy, UserInfo userInfo) {
-		return PasswordSupport.validateUserPassword(policy, userInfo);
+		String errorCode = PasswordSupport.validateUserPassword(policy, userInfo);
+		if(errorCode != null)
+			return errorCode;
+		if(!isValidEmail(userInfo.getEmail()))
+			return "user.email.invalid";
+		return null;
 	}
+
+	private boolean isValidEmail(String email) {
+		boolean err = false;
+		String regex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(email);
+		if(m.matches()) {
+			err = true;
+		}
+		return err;
+	}
+
 }
