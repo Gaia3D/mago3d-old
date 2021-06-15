@@ -1,4 +1,4 @@
-package gaia3d.domain.send;
+package gaia3d.domain.notice;
 
 import lombok.*;
 

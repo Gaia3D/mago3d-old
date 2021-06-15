@@ -3,8 +3,8 @@ package gaia3d.service.impl;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import gaia3d.config.PropertiesConfig;
-import gaia3d.domain.send.Mail;
-import gaia3d.service.SendService;
+import gaia3d.domain.notice.Mail;
+import gaia3d.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -30,7 +30,7 @@ import java.util.Properties;
  *
  */
 @Service
-public class MailServiceImpl implements SendService {
+public class MailServiceImpl implements NoticeService {
 
 	@Autowired
 	JavaMailSender javaMailSender;
@@ -65,7 +65,7 @@ public class MailServiceImpl implements SendService {
 		StringWriter stringWriter = new StringWriter();
 		Map<String, Object> model = new HashMap<>();
 		model.put("mail", mail);
-		configuration.getTemplate("/send/mail-template.ftlh").process(model, stringWriter);
+		configuration.getTemplate("/notice/mail-template.ftlh").process(model, stringWriter);
 		return stringWriter.getBuffer().toString();
 	}
 
