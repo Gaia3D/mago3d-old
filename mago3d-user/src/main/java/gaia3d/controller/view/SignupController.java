@@ -46,9 +46,11 @@ public class SignupController {
 	public String signup(HttpServletRequest request, Model model) {
 		Policy policy = CacheManager.getPolicy();
 		log.info("@@ policy = {}", policy);
-		
-		UserInfo userInfo = new UserInfo();
-		model.addAttribute("signupForm", userInfo);
+
+		if(model.getAttribute("signupForm")==null){
+			UserInfo userInfo = new UserInfo();
+			model.addAttribute("signupForm", userInfo);
+		}
 		model.addAttribute("policy", policy);
 		model.addAttribute("contentCacheVersion", policy.getContentCacheVersion());
 

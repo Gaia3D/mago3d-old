@@ -173,7 +173,7 @@ public class SigninController {
 
 		SigninSocialService signinSocialService = setSocialSigninService(socialType);
 
-		setRestTemplate();
+		//setTimeoutRestTemplate();
 
 		UserInfo userInfo = signinSocialService.authorize(authCode, restTemplate);
 		Policy policy = CacheManager.getPolicy();
@@ -182,8 +182,11 @@ public class SigninController {
 		userInfo.setUserLastSigninLock(policy.getUserLastSigninLock());
 
 		if(userService.getUser(userInfo.getUserId()) == null){
+			//
 			userInfo.setSigninType(SigninType.SOCIAL.getValue());
 			userInfo.setStatus(UserStatus.WAITING_APPROVAL.getValue());
+			/*model.addAttribute("signupForm", userInfo);
+			return "/sign/signup";*/
 			userService.insertUser(userInfo);
 		}
 		UserSession userSession = signinService.getUserSession(userInfo);
@@ -334,7 +337,7 @@ public class SigninController {
 	 * RestTamplate 설정(소셜 로그인)
 	 * @return
 	 */
-	private void setRestTemplate(){
+	private void setTimeoutRestTemplate(){
 		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
 		factory.setConnectTimeout(10*1000);
 		factory.setReadTimeout(10*1000);
