@@ -69,7 +69,9 @@ public class GeoPolicyRestController {
 		String message = null;
 		
 		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
-		String userId = userSession.getUserId();
+		String userId = userSession != null ? userId = userSession.getUserId() : null;
+		Integer userGroupId = userSession != null ? userGroupId = userSession.getUserGroupId() : null;
+
 		GeoPolicy geoPolicy = CacheManager.getGeoPolicy();
 		UserPolicy userPolicy = userPolicyService.getUserPolicy(userId);
 		Map<String, MicroService> microServiceMap = CacheManager.getMicroServiceMap();
@@ -102,7 +104,7 @@ public class GeoPolicyRestController {
 			geoPolicy.setSsaoRadius(userPolicy.getSsaoRadius());
 		}
 		
-		LayerGroup layerGroup = LayerGroup.builder().userGroupId(userSession.getUserGroupId()).build();
+		LayerGroup layerGroup = LayerGroup.builder().userGroupId(userGroupId).build();
 		List<LayerGroup> baseLayers = LayerDisplaySupport.getListDisplayLayer(layerGroupService.getListLayerGroupAndLayer(layerGroup), userPolicy.getBaseLayers());
 		int statusCode = HttpStatus.OK.value();
 		

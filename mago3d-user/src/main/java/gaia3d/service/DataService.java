@@ -1,9 +1,9 @@
 package gaia3d.service;
 
-import java.util.List;
-
 import gaia3d.domain.data.DataInfo;
 import gaia3d.domain.data.DataInfoSimple;
+
+import java.util.List;
 
 /**
  * Data 관리
@@ -13,7 +13,7 @@ import gaia3d.domain.data.DataInfoSimple;
 public interface DataService {
 	
 	/**
-	 * Data 수
+	 * Data 총건 수
 	 * @param dataInfo
 	 * @return
 	 */

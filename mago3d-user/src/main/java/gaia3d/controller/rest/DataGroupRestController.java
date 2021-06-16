@@ -58,12 +58,15 @@ public class DataGroupRestController {
 		
 		log.info("@@@@@ list dataGroup = {}", dataGroup);
 		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
+		String userId = userSession != null ? userId = userSession.getUserId() : null;
+		Integer userGroupId = userSession != null ? userGroupId = userSession.getUserGroupId() : null;
+
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
 		String message = null;
 		
-		dataGroup.setUserId(userSession.getUserId());
-		dataGroup.setUserGroupId(userSession.getUserGroupId());
+		dataGroup.setUserId(userId);
+		dataGroup.setUserGroupId(userGroupId);
 		List<DataGroup> dataGroupList = dataGroupService.getAllListDataGroup(dataGroup);
 		int statusCode = HttpStatus.OK.value();
 		
@@ -90,6 +93,8 @@ public class DataGroupRestController {
 		String message = null;
 		
 		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
+		String userId = userSession != null ? userId = userSession.getUserId() : null;
+		Integer userGroupId = userSession != null ? userGroupId = userSession.getUserGroupId() : null;
 		
 		if(!ObjectUtils.isEmpty(dataGroup.getStartDate())) {
 			dataGroup.setStartDate(dataGroup.getStartDate().substring(0, 8) + DateUtils.START_TIME);
@@ -97,8 +102,8 @@ public class DataGroupRestController {
 		if(!ObjectUtils.isEmpty(dataGroup.getEndDate())) {
 			dataGroup.setEndDate(dataGroup.getEndDate().substring(0, 8) + DateUtils.END_TIME);
 		}
-		dataGroup.setUserId(userSession.getUserId());
-		dataGroup.setUserGroupId(userSession.getUserGroupId());
+		dataGroup.setUserId(userId);
+		dataGroup.setUserGroupId(userGroupId);
 		long totalCount = dataGroupService.getDataGroupTotalCount(dataGroup);
 		
 		Pagination pagination = new Pagination(	request.getRequestURI(), 
@@ -119,7 +124,7 @@ public class DataGroupRestController {
 		int statusCode = HttpStatus.OK.value();
 		
 		result.put("pagination", pagination);
-		result.put("owner", userSession.getUserId());
+		result.put("owner", userId != null ? userId : null);
 		result.put("dataGroupList", dataGroupList);
 		result.put("statusCode", statusCode);
 		result.put("errorCode", errorCode);

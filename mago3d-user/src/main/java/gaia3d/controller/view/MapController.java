@@ -61,7 +61,7 @@ public class MapController {
 		model.addAttribute("referrer", referrer);
 		model.addAttribute("dataInfo", dataInfo);
 		model.addAttribute("dataInfoJson", dataInfoJson);
-		model.addAttribute("owner", userId);
+        model.addAttribute("owner", userSession != null ? userSession.getUserId() : null);
         
         return "/map/find-data-point";
     }

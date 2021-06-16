@@ -12,7 +12,17 @@ public class URLSupport {
 	
 	// 로그 예외 URL, 사용이력, 이중화, 메인 위젯(main, ajax, widget 이건 너무 많아서 키워드로 Filter)
     public static final String[] LOG_EXCEPTION_URI = { "error", "access/list", "accesses" };
-    
+
+    // 인증 필요 url
+	public static final String[] AUTHENTICATION_REQUIRED_URL = {
+			"/data-group/list", "/data-group/input", "/data-group/modify", "/data-group/delete",
+			"/data/list", "/data/modify",
+			"/upload-data/list", "/upload-data/input", "/upload-data/modify",
+			"/converter/list", "/converter/converter-job-file-list", "/converter/modify",
+			"/data-adjust-log/list", "/data-adjust-log/modify",
+			"/data-log/list", "/data-log/modify"
+	};
+
     // 파일 업로딩 URL
  	public static final String[] MULTIPART_REQUEST_URI = { "/upload-datas", "/layers/" };
  	

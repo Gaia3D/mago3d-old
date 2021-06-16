@@ -1,12 +1,11 @@
 package gaia3d.persistence;
 
-import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
 import gaia3d.domain.data.DataGroup;
 import gaia3d.domain.data.DataInfo;
 import gaia3d.domain.data.DataInfoSimple;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Data
@@ -17,7 +16,14 @@ import gaia3d.domain.data.DataInfoSimple;
 public interface DataMapper {
 
 	/**
-	 * Data 수
+	 * 익명 사용자용, Data 총건 수
+	 * @param dataInfo
+	 * @return
+	 */
+	Long getDataTotalCountForAnonymous(DataInfo dataInfo);
+
+	/**
+	 * Data 총건 수
 	 * @param dataInfo
 	 * @return
 	 */
@@ -37,20 +43,20 @@ public interface DataMapper {
 	 */
 	Long getDataTotalCountByStatus(DataInfo dataInfo);
 	
-//	/**
-//	 * Data Object 총건수
-//	 * @param dataInfoObjectAttribute
-//	 * @return
-//	 */
-//	Long getDataObjectAttributeTotalCount(DataInfoObjectAttribute dataInfoObjectAttribute);
-	
 	/**
 	 * 데이터 그룹에 속하는 전체 데이터 목록
 	 * @param dataInfo
 	 * @return
 	 */
 	List<DataInfo> getAllListData(DataInfo dataInfo);
-	
+
+	/**
+	 * 익명 사용자용, Data 목록
+	 * @param dataInfo
+	 * @return
+	 */
+	List<DataInfo> getListDataForAnonymous(DataInfo dataInfo);
+
 	/**
 	 * Data 목록
 	 * @param dataInfo
@@ -114,20 +120,6 @@ public interface DataMapper {
 	 */
 	List<DataInfo> getDataByConverterJob(DataInfo dataInfo);
 	
-//	/**
-//	 * Data Attribute 정보 취득
-//	 * @param dataId
-//	 * @return
-//	 */
-//	DataAttribute getDataAttribute(Long dataId);
-//	
-//	/**
-//	 * Data Object Attribute 정보 취득
-//	 * @param data_object_attribute_id
-//	 * @return
-//	 */
-//	DataInfoObjectAttribute getDataObjectAttribute(Long data_object_attribute_id);
-	
 	/**
 	 * 표시 순서
 	 * @param dataInfo
@@ -141,42 +133,13 @@ public interface DataMapper {
 	 * @return
 	 */
 	Integer getRootParentCount(DataInfo dataInfo);
-	
-//	/**
-//	 * data_key 를 이용하여 data_attribute_id 를 얻음
-//	 * TODO 9.6 이후에 merge로 변경 예정 
-//	 * @param data_key
-//	 * @return
-//	 */
-//	DataAttribute getDataIdAndDataAttributeIDByDataKey(String data_key);
-//	
-//	/**
-//	 * Data Object 조회
-//	 * @param dataInfoObjectAttribute
-//	 * @return
-//	 */
-//	List<DataInfoObjectAttribute> getListDataObjectAttribute(DataInfoObjectAttribute dataInfoObjectAttribute);
-//	
+
 	/**
 	 * Data 등록
 	 * @param dataInfo
 	 * @return
 	 */
 	int insertData(DataInfo dataInfo);
-	
-//	/**
-//	 * Data 속성 등록
-//	 * @param dataAttribute
-//	 * @return
-//	 */
-//	int insertDataAttribute(DataAttribute dataAttribute);
-//	
-//	/**
-//	 * Data Object 속성 등록
-//	 * @param dataInfoObjectAttribute
-//	 * @return
-//	 */
-//	int insertDataObjectAttribute(DataInfoObjectAttribute dataInfoObjectAttribute);
 	
 	/**
 	 * Data 수정
@@ -185,13 +148,6 @@ public interface DataMapper {
 	 */
 	int updateData(DataInfo dataInfo);
 	
-//	/**
-//	 * Data 속성 수정
-//	 * @param dataAttribute
-//	 * @return
-//	 */
-//	int updateDataAttribute(DataAttribute dataAttribute);
-//	
 	/**
 	 * Data 테이블의 Data 그룹 정보 변경
 	 * @param dataInfo

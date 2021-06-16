@@ -64,7 +64,7 @@
 
 			<div th:replace="~{/layer/list :: #layerContent}"></div>
 
-			<div th:replace="~{/user-policy/modify :: #userPolicyContent}"></div>
+			<!--<div th:replace="~{/user-policy/modify :: #userPolicyContent}"></div>-->
 
 			<!-- E: CONTENTSBTN -->
 		</div>
@@ -165,6 +165,7 @@
 	initPolicy(function (policy, baseLayers, microService) {
 		MAGO.policy = policy;
 		MAGO.baseLayers = baseLayers;
+		// sensorThings  같은 서비스들이 활성화 되어 있는지 확인
 		MAGO.microService = microService;
 		magoInit();
 	});
@@ -259,9 +260,6 @@
 
         // 환경설정
         UserPolicy(magoInstance);
-
-        // 시민참여
-        // CivilVoice(magoInstance);
 
 		// 이슈 등록
 		MAGO.issueController = new IssueController(magoInstance);

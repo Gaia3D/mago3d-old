@@ -1,12 +1,5 @@
 package gaia3d.service.impl;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.Move;
 import gaia3d.domain.data.DataGroup;
@@ -16,6 +9,12 @@ import gaia3d.service.DataGroupService;
 import gaia3d.service.GeoPolicyService;
 import gaia3d.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -54,7 +53,13 @@ public class DataGroupServiceImpl implements DataGroupService {
 	 * @return
 	 */
 	public Long getDataGroupTotalCount(DataGroup dataGroup) {
-		return dataGroupMapper.getDataGroupTotalCount(dataGroup);
+		Long totalCount;
+		if(dataGroup.getUserId() == null) {
+			totalCount = dataGroupMapper.getDataGroupTotalCountForAnonymous(dataGroup);
+		} else {
+			totalCount = dataGroupMapper.getDataGroupTotalCount(dataGroup);
+		}
+		return totalCount;
 	}
 	
 	/**
@@ -63,7 +68,13 @@ public class DataGroupServiceImpl implements DataGroupService {
      */
 	@Transactional(readOnly = true)
 	public List<DataGroup> getAllListDataGroup(DataGroup dataGroup) {
-		return dataGroupMapper.getAllListDataGroup(dataGroup);
+		List<DataGroup> dataGroupList;
+		if(dataGroup.getUserId() == null) {
+			dataGroupList = dataGroupMapper.getAllListDataGroupForAnonymous(dataGroup);
+		} else {
+			dataGroupList = dataGroupMapper.getAllListDataGroup(dataGroup);
+		}
+		return dataGroupList;
 	}
 	
 	/**
@@ -72,7 +83,13 @@ public class DataGroupServiceImpl implements DataGroupService {
 	 * @return
 	 */
 	public List<DataGroup> getListDataGroup(DataGroup dataGroup) {
-		return dataGroupMapper.getListDataGroup(dataGroup);
+		List<DataGroup> dataGroupList;
+		if(dataGroup.getUserId() == null) {
+			dataGroupList = dataGroupMapper.getListDataGroupForAnonymous(dataGroup);
+		} else {
+			dataGroupList = dataGroupMapper.getListDataGroup(dataGroup);
+		}
+		return dataGroupList;
 	}
 	
 	/**

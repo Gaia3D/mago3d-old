@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -117,8 +116,7 @@ public class ServletConfig implements WebMvcConfigurer {
 	
 	@Override
     public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/").setViewName("forward:/sign/signin");
-        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+		registry.addRedirectViewController("/", "/data/map");
     }
 	
 	@Override

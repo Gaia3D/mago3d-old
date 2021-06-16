@@ -1,11 +1,5 @@
 package gaia3d.service.impl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import gaia3d.domain.MethodType;
 import gaia3d.domain.data.DataGroup;
 import gaia3d.domain.data.DataInfo;
@@ -16,6 +10,11 @@ import gaia3d.service.DataGroupService;
 import gaia3d.service.DataLogService;
 import gaia3d.service.DataRelationService;
 import gaia3d.service.DataService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Data
@@ -27,24 +26,28 @@ public class DataServiceImpl implements DataService {
 
 	@Autowired
 	private DataMapper dataMapper;
-	
 	@Autowired
 	private DataRelationService dataRelationService;
-	
 	@Autowired
 	private DataGroupService dataGroupService;
-	
 	@Autowired
 	private DataLogService dataLogService;
 	
 	/**
-	 * Data 수
+	 * Data 총건 수
+	 * 성능 최적화를 위해, SQL을 분리
 	 * @param dataInfo
 	 * @return
 	 */
 	@Transactional(readOnly=true)
 	public Long getDataTotalCount(DataInfo dataInfo) {
-		return dataMapper.getDataTotalCount(dataInfo);
+		Long totalCount;
+		if(dataInfo.getUserId() == null) {
+			totalCount = dataMapper.getDataTotalCountForAnonymous(dataInfo);
+		} else {
+			totalCount = dataMapper.getDataTotalCount(dataInfo);
+		}
+		return totalCount;
 	}
 	
 	@Transactional(readOnly = true)
@@ -61,16 +64,6 @@ public class DataServiceImpl implements DataService {
 	public Long getDataTotalCountByStatus(DataInfo dataInfo) {
 		return dataMapper.getDataTotalCountByStatus(dataInfo);
 	}
-	
-//	/**
-//	 * Data Object 총건수
-//	 * @param dataInfoObjectAttribute
-//	 * @return
-//	 */
-//	@Transactional(readOnly=true)
-//	public Long getDataObjectAttributeTotalCount(DataInfoObjectAttribute dataInfoObjectAttribute) {
-//		return dataMapper.getDataObjectAttributeTotalCount(dataInfoObjectAttribute);
-//	}
 	
 	/**
 	 * 데이터 그룹에 속하는 전체 데이터 목록
@@ -89,7 +82,13 @@ public class DataServiceImpl implements DataService {
 	 */
 	@Transactional(readOnly=true)
 	public List<DataInfo> getListData(DataInfo dataInfo) {
-		return dataMapper.getListData(dataInfo);
+		List<DataInfo> dataInfoList;
+		if(dataInfo.getUserId() == null) {
+			dataInfoList = dataMapper.getListDataForAnonymous(dataInfo);
+		} else {
+			dataInfoList = dataMapper.getListData(dataInfo);
+		}
+		return dataInfoList;
 	}
 	
 	/**
@@ -152,64 +151,6 @@ public class DataServiceImpl implements DataService {
 		return dataMapper.getDataByConverterJob(dataInfo);
 	}
 	
-//	/**
-//	 * Data Attribute 정보 취득
-//	 * @param dataId
-//	 * @return
-//	 */
-//	@Transactional(readOnly=true)
-//	public DataAttribute getDataAttribute(Long dataId) {
-//		return dataMapper.getDataAttribute(dataId);
-//	}
-	
-//	/**
-//	 * Data Object Attribute 정보 취득
-//	 * @param data_object_attribute_id
-//	 * @return
-//	 */
-//	@Transactional(readOnly=true)
-//	public DataInfoObjectAttribute getDataObjectAttribute(Long data_object_attribute_id) {
-//		return dataMapper.getDataObjectAttribute(data_object_attribute_id);
-//	}
-//	
-//	/**
-//	 * Data Object 조회
-//	 * @param dataInfoObjectAttribute
-//	 * @return
-//	 */
-//	@Transactional(readOnly=true)
-//	public List<DataInfoObjectAttribute> getListDataObjectAttribute(DataInfoObjectAttribute dataInfoObjectAttribute) {
-//		return dataMapper.getListDataObjectAttribute(dataInfoObjectAttribute);
-//	}
-	
-//	/**
-//	 * 데이터 공간 정보 변경 요청
-//	 * @return
-//	 */
-//	@Transactional
-//	public int updateDataLocationAndRotation(DataInfoLog dataInfoLog) {
-//		Policy policy = CacheManager.getPolicy();
-//		if(Policy.DATA_CHANGE_REQUEST_DECISION_AUTO.equals(policy.getGeo_data_change_request_decision())) {
-//			// 자동이면 update 후 log
-//			dataInfoLog.setStatus(DataInfoLog.STATUS_COMPLETE);
-//			
-//			DataInfo dataInfo = new DataInfo();
-//			dataInfo.setData_id(dataInfoLog.getData_id());
-//			dataInfo.setLatitude(dataInfoLog.getLatitude());
-//			dataInfo.setLongitude(dataInfoLog.getLongitude());
-//			dataInfo.setHeight(dataInfoLog.getHeight());
-//			dataInfo.setHeading(dataInfoLog.getHeading());
-//			dataInfo.setPitch(dataInfoLog.getPitch());
-//			dataInfo.setRoll(dataInfoLog.getRoll());
-//			dataMapper.updateData(dataInfo);
-//		} else {
-//			// 대기 상태
-//			dataInfoLog.setStatus(DataInfoLog.STATUS_REQUEST);
-//		}
-//		
-//		return dataLogMapper.insertDataInfoLog(dataInfoLog);
-//	}
-	
 	/**
 	 * Data 등록
 	 * @param dataInfo
@@ -222,27 +163,7 @@ public class DataServiceImpl implements DataService {
 		dataInfoLog.setChangeType(MethodType.INSERT.name().toLowerCase());
 		return dataLogService.insertDataInfoLog(dataInfoLog);
 	}
-	
-//	/**
-//	 * Data 속성 등록
-//	 * @param dataAttribute
-//	 * @return
-//	 */
-//	@Transactional
-//	public int insertDataAttribute(DataAttribute dataAttribute) {
-//		return dataMapper.insertDataAttribute(dataAttribute);
-//	}
-//	
-//	/**
-//	 * Data Object 속성 등록
-//	 * @param dataInfoObjectAttribute
-//	 * @return
-//	 */
-//	@Transactional
-//	public int insertDataObjectAttribute(DataInfoObjectAttribute dataInfoObjectAttribute) {
-//		return dataMapper.insertDataObjectAttribute(dataInfoObjectAttribute);
-//	}
-	
+
 	/**
 	 * Data 수정
 	 * @param dataInfo
@@ -259,16 +180,6 @@ public class DataServiceImpl implements DataService {
 		return dataLogService.insertDataInfoLog(dataInfoLog);
 	}
 	
-//	/**
-//	 * Data 속성 수정
-//	 * @param dataAttribute
-//	 * @return
-//	 */
-//	@Transactional
-//	public int updateDataAttribute(DataAttribute dataAttribute) {
-//		return dataMapper.updateDataAttribute(dataAttribute);
-//	}
-	
 	/**
 	 * Data 상태 수정
 	 * @param dataInfo
@@ -278,35 +189,7 @@ public class DataServiceImpl implements DataService {
 	public int updateDataStatus(DataInfo dataInfo) {
 		return dataMapper.updateDataStatus(dataInfo);
 	}
-	
-//	/**
-//	 * TODO 위에 것과 하나로 합쳐라.
-//	 * 일괄 데이터 상태 수정
-//	 * @param business_type
-//	 * @param status_value
-//	 * @param check_ids
-//	 * @return
-//	 */
-//	@Transactional
-//	public List<String> updateDataStatus(String business_type, String status_value, String check_ids) {
-//		
-//		List<String> result = new ArrayList<>();
-//		String[] dataIds = check_ids.split(",");
-//		
-//		for(String data_id : dataIds) {
-//			DataInfo dataInfo = new DataInfo();
-//			dataInfo.setData_id(Long.valueOf(data_id));
-//			if("LOCK".equals(status_value)) {
-//				dataInfo.setStatus(DataInfo.STATUS_FORBID);
-//			} else if("UNLOCK".equals(status_value)) {
-//				dataInfo.setStatus(DataInfo.STATUS_USE);
-//			}
-//			dataMapper.updateDataStatus(dataInfo);
-//		}
-//		
-//		return result;
-//	}
-	
+
 	/**
 	 * Data 삭제
 	 * @param dataInfo

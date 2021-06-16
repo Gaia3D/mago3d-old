@@ -1,10 +1,9 @@
 package gaia3d.persistence;
 
-import java.util.List;
-
+import gaia3d.domain.data.DataGroup;
 import org.springframework.stereotype.Repository;
 
-import gaia3d.domain.data.DataGroup;
+import java.util.List;
 
 @Repository
 public interface DataGroupMapper {
@@ -22,7 +21,14 @@ public interface DataGroupMapper {
 	 * @return
 	 */
 	List<DataGroup> getAllListDataGroupForBasic(DataGroup dataGroup);
-	
+
+	/**
+	 * 익명 사용자 Data Group 총건수
+	 * @param dataGroup
+	 * @return
+	 */
+	Long getDataGroupTotalCountForAnonymous(DataGroup dataGroup);
+
 	/**
 	 * 사용자 Data Group 총건수
 	 * @param dataGroup
@@ -31,12 +37,25 @@ public interface DataGroupMapper {
 	Long getDataGroupTotalCount(DataGroup dataGroup);
 
 	/**
+	 * 익명 사용자 데이터 그룹 전체 목록
+	 * @param dataGroup
+	 * @return
+	 */
+	List<DataGroup> getAllListDataGroupForAnonymous(DataGroup dataGroup);
+
+	/**
      * 사용자 데이터 그룹 전체 목록
      * @param dataGroup
      * @return
      */
     List<DataGroup> getAllListDataGroup(DataGroup dataGroup);
-    
+
+	/**
+	 * 익명 사용자 데이터 그룹 목록
+	 * @return
+	 */
+	List<DataGroup> getListDataGroupForAnonymous(DataGroup dataGroup);
+
     /**
      * 사용자 데이터 그룹 목록
      * @return

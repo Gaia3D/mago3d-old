@@ -1,23 +1,21 @@
 package gaia3d.controller.rest;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import gaia3d.domain.Key;
 import gaia3d.domain.layer.LayerGroup;
 import gaia3d.domain.user.UserSession;
 import gaia3d.service.LayerGroupService;
 import gaia3d.service.UserPolicyService;
 import gaia3d.support.LayerDisplaySupport;
+import org.springframework.http.HttpStatus;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/layers")
@@ -40,7 +38,8 @@ public class LayerRestController {
 	@GetMapping
 	public Map<String, Object> list(HttpServletRequest request, Model model) {
 		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
-		String baseLayers = userPolicyService.getUserPolicy(userSession.getUserId()).getBaseLayers();
+		String userId = userSession != null ? userId = userSession.getUserId() : null;
+		String baseLayers = userPolicyService.getUserPolicy(userId).getBaseLayers();
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
 		String message = null;
