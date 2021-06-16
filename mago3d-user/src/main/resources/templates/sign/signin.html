@@ -67,8 +67,6 @@
 	const naverLoginBtn = document.getElementById("naverBtn");
 	const kakaoLoginBtn = document.getElementById("kakaoBtn");
 
-	console.log("[[${policy}]]");
-
 	const googleUrl = "https://accounts.google.com/o/oauth2/v2/auth?" +
 			"client_id=" + "[[${policy.socialSigninGoogleClientId}]]" +
 			"&redirect_uri=" + "[[${policy.socialSigninGoogleRedirectUri}]]" +
@@ -100,8 +98,8 @@
 	$(document).ready(function() {
 		var lang = "[[${lang}]]";
 		$("#userLocale").val(lang);
-		if("[[${errorCode}]]"){
-			var errorCode = "[[${errorCode}]]";
+		if("[[${signinForm.errorCode}]]"){
+			var errorCode = "[[${signinForm.errorCode}]]";
 			alert(JS_MESSAGE[errorCode]);
 		}
 	});

@@ -1,7 +1,5 @@
 package gaia3d.controller.view;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.SigninType;
 import gaia3d.domain.cache.CacheManager;
 import gaia3d.domain.policy.Policy;
@@ -19,12 +17,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,15 +34,7 @@ import java.util.regex.Pattern;
 public class SignupController {
 
 	@Autowired
-	private ObjectMapper objectMapper;
-	@Autowired
-	private PropertiesConfig propertiesConfig;
-	@Autowired
 	private UserService userService;
-	@Autowired
-	private RestTemplate restTemplate;
-
-	private static final Charset ENCODING_TYPE = StandardCharsets.UTF_8;
 
 	/**
 	 * Sign up 페이지
@@ -85,6 +72,8 @@ public class SignupController {
 		log.info("@@ duplication = {}", duplication);
 
 		signupForm.setPassword(signupForm.getNewPassword());
+		signupForm.setNewPassword(signupForm.getNewPassword());
+		signupForm.setNewPasswordConfirm(signupForm.getPasswordConfirm());
 		String errorcode = userValidate(policy, signupForm);
 
 		log.info("@@error = {}", errorcode);

@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Map;
 
 /**
- * Sign in 관련 처리(소셜 로그인)
+ * 카카오 Sign in 관련 처리(소셜 로그인)
  * @author hansang
  *
  */
@@ -22,11 +22,24 @@ import java.util.Map;
 @AllArgsConstructor
 public class SigninKakaoServiceImpl implements SigninSocialService {
 
-	private RestTemplate restTemplate;
-
-	public UserInfo socialAuthorize(String authCode) {
+	public UserInfo authorize(String authCode, RestTemplate restTemplate) {
 
 		Policy policy = CacheManager.getPolicy();
+
+		MultiValueMap<String, Object> parameters = setParameters(authCode, policy);
+
+		String getTokenUrl = policy.getSocialSigninKakaoAccessTokenUri();
+
+		String accessToken = getAccessToken(restTemplate, parameters, getTokenUrl);
+
+		Map responseBody = getSocialUserInfo(restTemplate, accessToken, policy.getSocialSigninKakaoUserInfoUri());
+
+		UserInfo userInfo = setUserInfo(responseBody);
+
+		return userInfo;
+
+	}
+	public MultiValueMap<String, Object> setParameters(String authCode, Policy policy){
 
 		MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
 		parameters.set("grant_type", "authorization_code");
@@ -34,11 +47,10 @@ public class SigninKakaoServiceImpl implements SigninSocialService {
 		parameters.set("redirect_uri", policy.getSocialSigninKakaoRedirectUri());
 		parameters.set("code", authCode);
 
-		String getTokenUrl = policy.getSocialSigninKakaoAccessTokenUri();
+		return parameters;
+	};
 
-		String accessToken = getAccessToken(restTemplate, parameters, getTokenUrl);
-
-		Map responseBody = getSocialUserInfo(restTemplate, accessToken, policy.getSocialSigninKakaoUserInfoUri());
+	public UserInfo setUserInfo(Map responseBody){
 
 		JSONObject jsonProperties = new JSONObject((Map)responseBody.get("properties"));
 		JSONObject jsonAccount = new JSONObject((Map)responseBody.get("kakao_account"));
@@ -54,7 +66,6 @@ public class SigninKakaoServiceImpl implements SigninSocialService {
 		userInfo.setUserName(name);
 
 		return userInfo;
-
 	}
 
 }

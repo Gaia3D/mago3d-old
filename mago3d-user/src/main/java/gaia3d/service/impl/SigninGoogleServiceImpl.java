@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Map;
 
 /**
- * Sign in 관련 처리(소셜 로그인)
+ * 구글 Sign in 관련 처리(소셜 로그인)
  * @author hansang
  *
  */
@@ -22,11 +22,24 @@ import java.util.Map;
 @AllArgsConstructor
 public class SigninGoogleServiceImpl implements SigninSocialService {
 
-	private RestTemplate restTemplate;
-
-	public UserInfo socialAuthorize(String authCode) {
+	public UserInfo authorize(String authCode, RestTemplate restTemplate) {
 
 		Policy policy = CacheManager.getPolicy();
+
+		MultiValueMap<String, Object> parameters = setParameters(authCode, policy);
+
+		String url = policy.getSocialSigninGoogleAccessTokenUri();
+
+		String accessToken = getAccessToken(restTemplate, parameters, url);
+
+		Map responseBody = getSocialUserInfo(restTemplate, accessToken, policy.getSocialSigninGoogleUserInfoUri());
+
+		UserInfo userInfo = setUserInfo(responseBody);
+
+		return userInfo;
+	}
+
+	public MultiValueMap<String, Object> setParameters(String authCode, Policy policy){
 
 		MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
 		parameters.set("grantType", "authorization_code");
@@ -35,12 +48,10 @@ public class SigninGoogleServiceImpl implements SigninSocialService {
 		parameters.set("clientSecret", policy.getSocialSigninGoogleClientSecret());
 		parameters.set("code", authCode);
 
-		String url = policy.getSocialSigninGoogleAccessTokenUri();
+		return parameters;
+	};
 
-		String accessToken = getAccessToken(restTemplate, parameters, url);
-
-		// getAuthUserInfo
-		Map responseBody = getSocialUserInfo(restTemplate, accessToken, policy.getSocialSigninGoogleUserInfoUri());
+	public UserInfo setUserInfo(Map responseBody){
 
 		JSONObject jsonObject = new JSONObject((Map)responseBody);
 

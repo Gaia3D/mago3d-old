@@ -2,6 +2,7 @@ package gaia3d.controller.view;
 
 import gaia3d.domain.Key;
 import gaia3d.domain.SigninType;
+import gaia3d.domain.SocialType;
 import gaia3d.domain.YOrN;
 import gaia3d.domain.cache.CacheManager;
 import gaia3d.domain.policy.Policy;
@@ -170,46 +171,36 @@ public class SigninController {
 
 		//SigninSocialService signinSocialService = signinSocialServices.get(SocialType.valueOf(socialType).getImplementation());
 
-		SigninSocialService signinSocialService = null;
+		SigninSocialService signinSocialService = setSocialSigninService(socialType);
 
-		switch (socialType){
-			case "GOOGLE" : signinSocialService = signinGoogleService;
-				break;
-			case "FACEBOOK" : signinSocialService = signinFacebookService;
-				break;
-			case "NAVER" : signinSocialService = signinNaverService;
-				break;
-			case "KAKAO" : signinSocialService = signinKakaoService;
-				break;
-		}
+		setRestTemplate();
 
-		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-		factory.setConnectTimeout(10*1000);
-		factory.setReadTimeout(10*1000);
-
-		restTemplate.setRequestFactory(factory);
-
-		UserInfo userInfo = signinSocialService.socialAuthorize(authCode);
+		UserInfo userInfo = signinSocialService.authorize(authCode, restTemplate);
 		Policy policy = CacheManager.getPolicy();
 
 		userInfo.setPasswordChangeTerm(policy.getPasswordChangeTerm());
 		userInfo.setUserLastSigninLock(policy.getUserLastSigninLock());
 
-		UserSession usersession = signinSocialService.checkUser(signinService, userService, userInfo);
+		if(userService.getUser(userInfo.getUserId()) == null){
+			userInfo.setSigninType(SigninType.SOCIAL.getValue());
+			userInfo.setStatus(UserStatus.WAITING_APPROVAL.getValue());
+			userService.insertUser(userInfo);
+		}
+		UserSession userSession = signinService.getUserSession(userInfo);
 
-		userInfo.setPasswordChangeTerm(policy.getPasswordChangeTerm());
-		userInfo.setUserLastSigninLock(policy.getUserLastSigninLock());
-
-		String errorCode = validate(request, policy, userInfo, usersession);
-
-		setSession(request, userInfo, usersession, policy);
+		String errorCode = validate(request, policy, userInfo, userSession);
 
 		if(errorCode != null){
-			model.addAttribute("errorCode", errorCode);
+			userInfo.setErrorCode(errorCode);
+			userInfo.setUserId(null);
+			userInfo.setPassword(null);
+			model.addAttribute("signinForm", userInfo);
 			model.addAttribute("policy", policy);
 
 			return "/sign/signin";
 		}
+
+		setSession(request, userInfo, userSession, policy);
 
 		return "redirect:/data/map";
 
@@ -236,8 +227,17 @@ public class SigninController {
 				return "usersession.password.invalid";
 			}
 		}
-		
-		// 회원 상태 체크
+
+		if(UserStatus.USE != UserStatus.findBy(userSession.getStatus()) && UserStatus.TEMP_PASSWORD != UserStatus.findBy(userSession.getStatus())) {
+			// 0:사용중, 1:사용중지(관리자), 2:잠금(비밀번호 실패횟수 초과), 3:휴면(사인인 기간), 4:만료(사용기간 종료), 5:삭제(화면 비표시)
+			switch(UserStatus.findBy(userSession.getStatus())){
+				case WAITING_APPROVAL : return "usersession.status.wait";
+			}
+			signinForm.setStatus(userSession.getStatus());
+			return "usersession.status.invalid";
+		}
+
+		/*// 회원 상태 체크
 		if(UserStatus.USE != UserStatus.findBy(userSession.getStatus()) && UserStatus.TEMP_PASSWORD != UserStatus.findBy(userSession.getStatus()) && UserStatus.WAITING_APPROVAL != UserStatus.findBy(userSession.getStatus())) {
 			// 0:사용중, 1:사용중지(관리자), 2:잠금(비밀번호 실패횟수 초과), 3:휴면(사인인 기간), 4:만료(사용기간 종료), 5:삭제(화면 비표시)
 			signinForm.setStatus(userSession.getStatus());
@@ -245,7 +245,7 @@ public class SigninController {
 		}
 
 		if(UserStatus.WAITING_APPROVAL == UserStatus.findBy(userSession.getStatus()))
-			return "usersession.status.wait";
+			return "usersession.status.wait";*/
 		
 		// 사인인 실패 횟수
 		if(userSession.getFailSigninCount() >= policy.getUserFailSigninCount()) {
@@ -313,6 +313,32 @@ public class SigninController {
 			// 세션 타임 아웃 시간을 초 단위로 변경해서 설정
 			request.getSession().setMaxInactiveInterval(Integer.valueOf(policy.getSecuritySessionTimeout()).intValue() * 60);
 		}
+	}
+
+	/**
+	 * SigninSocial 서비스 설정(소셜 로그인)
+	 * @param socialType
+	 * @return
+	 */
+	private SigninSocialService setSocialSigninService(String socialType){
+		switch (SocialType.findBy(socialType)){
+			case GOOGLE : return signinGoogleService;
+			case FACEBOOK : return signinFacebookService;
+			case NAVER : return signinNaverService;
+			case KAKAO : return signinKakaoService;
+		}
+		return null;
+	}
+
+	/**
+	 * RestTamplate 설정(소셜 로그인)
+	 * @return
+	 */
+	private void setRestTemplate(){
+		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+		factory.setConnectTimeout(10*1000);
+		factory.setReadTimeout(10*1000);
+		restTemplate.setRequestFactory(factory);
 	}
 
 }

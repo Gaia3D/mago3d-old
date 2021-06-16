@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Map;
 
 /**
- * Sign in 관련 처리(소셜 로그인)
+ * 페이스북 Sign in 관련 처리(소셜 로그인)
  * @author hansang
  *
  */
@@ -22,11 +22,25 @@ import java.util.Map;
 @AllArgsConstructor
 public class SigninFacebookServiceImpl implements SigninSocialService {
 
-	private RestTemplate restTemplate;
-
-	public UserInfo socialAuthorize(String authCode) {
+	public UserInfo authorize(String authCode, RestTemplate restTemplate) {
 
 		Policy policy = CacheManager.getPolicy();
+
+		MultiValueMap<String, Object> parameters = setParameters(authCode, policy);
+
+		String getTokenUrl = policy.getSocialSigninNaverAccessTokenUri();
+
+		String accessToken = getAccessToken(restTemplate, parameters, getTokenUrl);
+
+		Map responseBody = getSocialUserInfo(restTemplate, accessToken, policy.getSocialSigninNaverUserInfoUri());
+
+		UserInfo userInfo = setUserInfo(responseBody);
+
+		return userInfo;
+
+	}
+
+	public MultiValueMap<String, Object> setParameters(String authCode, Policy policy){
 
 		MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
 		parameters.set("grant_type", "authorization_code");
@@ -36,11 +50,10 @@ public class SigninFacebookServiceImpl implements SigninSocialService {
 		parameters.set("code", authCode);
 		parameters.set("session_state", "oauth_state");
 
-		String getTokenUrl = policy.getSocialSigninNaverAccessTokenUri();
+		return parameters;
+	};
 
-		String accessToken = getAccessToken(restTemplate, parameters, getTokenUrl);
-
-		Map responseBody = getSocialUserInfo(restTemplate, accessToken, policy.getSocialSigninNaverUserInfoUri());
+	public UserInfo setUserInfo(Map responseBody){
 
 		JSONObject jsonObject = new JSONObject((Map)responseBody.get("response"));
 
@@ -55,7 +68,6 @@ public class SigninFacebookServiceImpl implements SigninSocialService {
 		userInfo.setUserName(name);
 
 		return userInfo;
-
 	}
 
 }

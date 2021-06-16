@@ -1,16 +1,15 @@
 package gaia3d.service;
 
-import gaia3d.domain.SigninType;
+import gaia3d.domain.policy.Policy;
 import gaia3d.domain.user.UserInfo;
-import gaia3d.domain.user.UserSession;
-import gaia3d.domain.user.UserStatus;
+import gaia3d.support.LogMessageSupport;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
@@ -28,7 +27,12 @@ public interface SigninSocialService {
 	 * @param authCode
 	 * @return
 	 */
-	UserInfo socialAuthorize(@RequestParam(value = "code") String authCode);
+	UserInfo authorize(String authCode, RestTemplate restTemplate);
+
+	MultiValueMap<String, Object> setParameters(String authCode, Policy policy);
+
+	UserInfo setUserInfo(Map responseBody);
+
 
 	/**
 	 * Access Token 받아오기(소셜 로그인)
@@ -37,18 +41,19 @@ public interface SigninSocialService {
 	 * @return
 	 */
 	default String getAccessToken(RestTemplate restTemplate, MultiValueMap<String, Object> parameters, String url){
+		String accessToken = null;
+		try{
+			HttpHeaders headers = new HttpHeaders();
+			HttpEntity<MultiValueMap<String, Object>> restRequest = new HttpEntity<>(parameters, headers);
 
-		HttpHeaders headers = new HttpHeaders();
+			ResponseEntity<JSONObject> apiResponse = restTemplate.postForEntity(url, restRequest, JSONObject.class);
+			JSONObject responseBody = apiResponse.getBody();
+			accessToken = (String) responseBody.get("access_token");
 
-		HttpEntity<MultiValueMap<String, Object>> restRequest = new HttpEntity<>(parameters, headers);
-
-		ResponseEntity<JSONObject> apiResponse = restTemplate.postForEntity(url, restRequest, JSONObject.class);
-		JSONObject responseBody = apiResponse.getBody();
-
-		String accessToken = (String) responseBody.get("access_token");
-
+		} catch(RestClientException e) {
+			LogMessageSupport.printMessage(e, "@@@ RestClientException. message = {}", e.getMessage());
+		}
 		return accessToken;
-
 	}
 
 	/**
@@ -59,29 +64,19 @@ public interface SigninSocialService {
 	 */
 	default Map getSocialUserInfo(RestTemplate restTemplate, String accessToken, String url){
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Authorization", "Bearer "+accessToken);
+		Map responseBody = null;
 
-		HttpEntity<String> entity = new HttpEntity<>("body", headers);
+		try{
+			HttpHeaders headers = new HttpHeaders();
+			headers.set("Authorization", "Bearer "+accessToken);
 
-		ResponseEntity<Map> apiResponse = restTemplate.exchange(url, HttpMethod.GET, entity, Map.class);
-		Map responseBody = apiResponse.getBody();
+			HttpEntity<String> entity = new HttpEntity<>("body", headers);
 
-		return responseBody;
-
-	}
-
-	default UserSession checkUser(SigninService signinService, UserService userService, UserInfo userInfo){
-
-		UserSession userSession;
-
-		if(userService.getUser(userInfo.getUserId()) == null){
-			userInfo.setSigninType(SigninType.SOCIAL.getValue());
-			userInfo.setStatus(UserStatus.WAITING_APPROVAL.getValue());
-			userService.insertUser(userInfo);
+			ResponseEntity<Map> apiResponse = restTemplate.exchange(url, HttpMethod.GET, entity, Map.class);
+			responseBody = apiResponse.getBody();
+		} catch(RestClientException e) {
+			LogMessageSupport.printMessage(e, "@@@ RestClientException. message = {}", e.getMessage());
 		}
-		userSession = signinService.getUserSession(userInfo);
-
-		return userSession;
+		return responseBody;
 	}
 }
