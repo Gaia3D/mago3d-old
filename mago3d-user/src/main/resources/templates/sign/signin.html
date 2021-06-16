@@ -59,7 +59,7 @@
 <script type="text/javascript">
 	function onClickLogin (url){
 		//인증 서버로 인증코드 발급 요청
-		window.location.replace(url)
+		window.location.href=url
 	}
 
 	const googleLoginBtn = document.getElementById("googleBtn");
@@ -71,20 +71,20 @@
 
 	const googleUrl = "https://accounts.google.com/o/oauth2/v2/auth?" +
 			"client_id=" + "[[${policy.socialSigninGoogleClientId}]]" +
-			"&redirect_uri=http://localhost/sign/social-process-signin/GOOGLE" +
+			"&redirect_uri=" + "[[${policy.socialSigninGoogleRedirectUri}]]" +
 			"&response_type=code" +
 			"&scope=email%20profile%20openid" +
 			"&access_type=offline";
 
 	const naverUrl = "https://nid.naver.com/oauth2.0/authorize?" +
 			"client_id="+"[[${policy.socialSigninNaverClientId}]]" +
-			"&redirect_uri=http://localhost/sign/social-process-signin/NAVER" +
+			"&redirect_uri=" + "[[${policy.socialSigninNaverRedirectUri}]]" +
 			"&response_type=code" +
 			"&scope=account_email";
 
 	const kakaoUrl = "https://kauth.kakao.com/oauth/authorize?" +
 			"client_id=" + "[[${policy.socialSigninKakaoClientId}]]" +
-			"&redirect_uri=http://localhost/sign/social-process-signin/KAKAO" +
+			"&redirect_uri=" + "[[${policy.socialSigninKakaoRedirectUri}]]" +
 			"&response_type=code" +
 			"&scope=profile,account_email";
 

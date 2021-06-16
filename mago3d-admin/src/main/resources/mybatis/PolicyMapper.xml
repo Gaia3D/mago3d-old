@@ -110,4 +110,34 @@
 		WHERE policy_id = #{policyId}
 	</update>
 
+	<!-- 소셜 로그인 정책 수정 -->
+	<update id="updatePolicySocialSignin" parameterType="policy">
+		/* updatePolicySocialSignin */
+		UPDATE policy
+		SET social_signin_google_client_id = #{socialSigninGoogleClientId},
+			social_signin_google_client_secret = #{socialSigninGoogleClientSecret},
+			social_signin_google_redirect_uri = #{socialSigninGoogleRedirectUri},
+			social_signin_google_access_token_uri = #{socialSigninGoogleAccessTokenUri},
+			social_signin_google_user_info_uri = #{socialSigninGoogleUserInfoUri},
+
+			social_signin_facebook_client_id = #{socialSigninFacebookClientId},
+			social_signin_facebook_client_secret = #{socialSigninFacebookClientSecret},
+			social_signin_facebook_redirect_uri = #{socialSigninFacebookRedirectUri},
+			social_signin_facebook_access_token_uri = #{socialSigninFacebookAccessTokenUri},
+			social_signin_facebook_user_info_uri = #{socialSigninFacebookUserInfoUri},
+
+			social_signin_naver_client_id = #{socialSigninNaverClientId},
+			social_signin_naver_client_secret = #{socialSigninNaverClientSecret},
+			social_signin_naver_redirect_uri = #{socialSigninNaverRedirectUri},
+			social_signin_naver_access_token_uri = #{socialSigninNaverAccessTokenUri},
+			social_signin_naver_user_info_uri = #{socialSigninNaverUserInfoUri},
+
+			social_signin_kakao_client_id = #{socialSigninKakaoClientId},
+			social_signin_kakao_redirect_uri = #{socialSigninKakaoRedirectUri},
+			social_signin_kakao_access_token_uri = #{socialSigninKakaoAccessTokenUri},
+			social_signin_kakao_user_info_uri = #{socialSigninKakaoUserInfoUri}
+
+		WHERE policy_id = #{policyId}
+	</update>
+
 </mapper>

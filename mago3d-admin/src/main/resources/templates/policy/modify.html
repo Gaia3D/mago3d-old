@@ -32,12 +32,14 @@
 								<li><a href="#securityTab">보안</a></li>
 								<li><a href="#contentTab">컨텐트</a></li>
 								<li><a href="#uploadTab">사용자 업로딩 파일</a></li>
+								<li><a href="#socialSigninTab">소셜 로그인</a></li>
 							</ul>
 								<div th:replace="~{/policy/modify-user :: #userTab}"></div>
 								<div th:replace="~{/policy/modify-password :: #passwordTab}"></div>
 								<div th:replace="~{/policy/modify-security :: #securityTab}"></div>
 								<div th:replace="~{/policy/modify-content :: #contentTab}"></div>
 								<div th:replace="~{/policy/modify-upload :: #uploadTab}"></div>
+								<div th:replace="~{/policy/modify-social-signin :: #socialSigninTab}"></div>
 						</div>
 					</div>
 				</div>
@@ -246,6 +248,37 @@
 	    } else {
 	        alert("진행 중입니다.");
 	        return;
+		}
+	}
+
+	var updatePolicySocialSigninFlag = true;
+	function updatePolicySocialSignin() {
+		if(updatePolicySocialSigninFlag) {
+			if( userCheck() === false ) return false;
+			updatePolicySocialSigninFlag = false;
+			var formData = $('#policySocialSignin').serialize();
+			$.ajax({
+				url: "/policies/social-signin/" + [[${policy.policyId}]],
+				type: "POST",
+				headers: {"X-Requested-With": "XMLHttpRequest"},
+				data: formData,
+				success: function(msg){
+					if(msg.statusCode <= 200) {
+						alert("소셜 로그인 정책이 수정 되었습니다");
+					} else {
+						alert(JS_MESSAGE[msg.errorCode]);
+						console.log("---- " + msg.message);
+					}
+					updatePolicySocialSigninFlag = true;
+				},
+				error:function(request, status, error){
+					alert(JS_MESSAGE["ajax.error.message"]);
+					updatePolicySocialSigninFlag = true;
+				}
+			});
+		} else {
+			alert("진행 중입니다.");
+			return;
 		}
 	}
 

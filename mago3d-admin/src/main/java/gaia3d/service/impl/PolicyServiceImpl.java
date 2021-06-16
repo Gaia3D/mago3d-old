@@ -1,15 +1,14 @@
 package gaia3d.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import gaia3d.domain.policy.Policy;
+import gaia3d.persistence.PolicyMapper;
+import gaia3d.service.PolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import gaia3d.domain.policy.Policy;
-import gaia3d.persistence.PolicyMapper;
-import gaia3d.service.PolicyService;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * mago3d 운영 정책
@@ -105,6 +104,16 @@ public class PolicyServiceImpl implements PolicyService {
 	@Transactional
 	public int updatePolicyUserUpload(Policy policy) {
 		return policyMapper.updatePolicyUserUpload(policy);
+	}
+
+	/**
+	 * 소셜 로그인 정책 수정
+	 * @param policy
+	 * @return
+	 */
+	@Transactional
+	public int updatePolicySocialSignin(Policy policy) {
+		return policyMapper.updatePolicySocialSignin(policy);
 	}
 
 }

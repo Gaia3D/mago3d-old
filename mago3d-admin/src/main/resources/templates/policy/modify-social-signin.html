@@ -1,0 +1,187 @@
+<html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org">
+	<div id="socialSigninTab">
+		<form id="policySocialSignin" th:object="${policy}" method="post" th:action="@{#}" onsubmit="return false;">
+			<table class="input-table scope-row" summary="환경설정 소셜 로그인 테이블">
+			<caption class="hiddenTag">환경설정 소셜 로그인</caption>
+				<col class="col-label l" />
+				<col class="col-input" />
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="socialSigninGoogleClientId">Google Client Id</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="socialSigninGoogleClientId" name="socialSigninGoogleClientId" th:field="*{socialSigninGoogleClientId}" class="l" maxlength="256" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="socialSigninGoogleClientSecret">Google Client Secret</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="socialSigninGoogleClientSecret" name="socialSigninGoogleClientSecret" th:field="*{socialSigninGoogleClientSecret}" class="l" maxlength="256" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="socialSigninGoogleRedirectUri">Google Redirect URI</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="socialSigninGoogleRedirectUri" name="socialSigninGoogleRedirectUri" th:field="*{socialSigninGoogleRedirectUri}" maxlength="256" class="l" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="socialSigninGoogleAccessTokenUri">Google AccessToken URI</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="socialSigninGoogleAccessTokenUri" name="socialSigninGoogleAccessTokenUri" th:field="*{socialSigninGoogleAccessTokenUri}" maxlength="256" class="l" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="socialSigninGoogleUserInfoUri">Google UserInfo URI</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="socialSigninGoogleUserInfoUri" name="socialSigninGoogleUserInfoUri" th:field="*{socialSigninGoogleUserInfoUri}" maxlength="256" class="l" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="socialSigninFacebookClientId">Facebook Client Id</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="socialSigninFacebookClientId" name="socialSigninFacebookClientId" th:field="*{socialSigninFacebookClientId}" class="l" maxlength="256" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="socialSigninFacebookClientSecret">Facebook Client Secret</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="socialSigninFacebookClientSecret" name="socialSigninFacebookClientSecret" th:field="*{socialSigninFacebookClientSecret}" class="l" maxlength="256" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="socialSigninFacebookRedirectUri">Facebook Redirect URI</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="socialSigninFacebookRedirectUri" name="socialSigninFacebookRedirectUri" th:field="*{socialSigninFacebookRedirectUri}" maxlength="256" class="l" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="socialSigninFacebookAccessTokenUri">Facebook AccessToken URI</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="socialSigninFacebookAccessTokenUri" name="socialSigninFacebookAccessTokenUri" th:field="*{socialSigninFacebookAccessTokenUri}" maxlength="256" class="l" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="socialSigninFacebookUserInfoUri">Facebook UserInfo URI</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="socialSigninFacebookUserInfoUri" name="socialSigninFacebookUserInfoUri" th:field="*{socialSigninFacebookUserInfoUri}" maxlength="256" class="l" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="socialSigninNaverClientId">Naver Client Id</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="socialSigninNaverClientId" name="socialSigninNaverClientId" th:field="*{socialSigninNaverClientId}" class="l" maxlength="256" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="socialSigninNaverClientSecret">Naver Client Secret</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="socialSigninNaverClientSecret" name="socialSigninNaverClientSecret" th:field="*{socialSigninNaverClientSecret}" class="l" maxlength="256" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="socialSigninNaverRedirectUri">Naver Redirect URI</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="socialSigninNaverRedirectUri" name="socialSigninNaverRedirectUri" th:field="*{socialSigninNaverRedirectUri}" maxlength="256" class="l" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="socialSigninNaverAccessTokenUri">Naver AccessToken URI</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="socialSigninNaverAccessTokenUri" name="socialSigninNaverAccessTokenUri" th:field="*{socialSigninNaverAccessTokenUri}" maxlength="256" class="l" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="socialSigninNaverUserInfoUri">Naver UserInfo URI</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="socialSigninNaverUserInfoUri" name="socialSigninNaverUserInfoUri" th:field="*{socialSigninNaverUserInfoUri}" maxlength="256" class="l" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="socialSigninKakaoClientId">Kakao Client Id</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="socialSigninKakaoClientId" name="socialSigninKakaoClientId" th:field="*{socialSigninKakaoClientId}" class="l" maxlength="256" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="socialSigninKakaoRedirectUri">Kakao Redirect URI</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="socialSigninKakaoRedirectUri" name="socialSigninKakaoRedirectUri" th:field="*{socialSigninKakaoRedirectUri}" maxlength="256" class="l" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="socialSigninKakaoAccessTokenUri">Kakao AccessToken URI</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="socialSigninKakaoAccessTokenUri" name="socialSigninKakaoAccessTokenUri" th:field="*{socialSigninKakaoAccessTokenUri}" maxlength="256" class="l" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="socialSigninKakaoUserInfoUri">Kakao UserInfo URI</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="socialSigninKakaoUserInfoUri" name="socialSigninKakaoUserInfoUri" th:field="*{socialSigninKakaoUserInfoUri}" maxlength="256" class="l" />
+					</td>
+				</tr>
+			</table>
+			<div class="button-group">
+				<div class="center-buttons">
+					<a href="#" class="button" th:text="#{save}" onclick="updatePolicySocialSignin();"></a>
+				</div>
+			</div>
+		</form>
+	</div>
+</html>

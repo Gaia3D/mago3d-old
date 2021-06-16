@@ -65,4 +65,11 @@ public interface PolicyMapper {
 	 * @return
 	 */
 	int updatePolicyUserUpload(Policy policy);
+
+	/**
+	 * 소셜 로그인 정책 수정
+	 * @param policy
+	 * @return
+	 */
+    int updatePolicySocialSignin(Policy policy);
 }

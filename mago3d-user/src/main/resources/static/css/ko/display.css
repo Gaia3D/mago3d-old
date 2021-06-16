@@ -160,10 +160,10 @@ span.mago {color:#6649ca;}
 .login-wrapper > .autologin > span {float:left; display:inline-block; line-height:87px; margin-left:35px; font-size:14px;}
 .login-wrapper > .autologin ul {display:inline-block; margin-top:22px;}
 .login-wrapper > .autologin ul li {list-style:none; display:inline-block; float:left; margin-left:12px; }
-.login-wrapper > .autologin ul li .login-google {display:block; width:42px; height:42px; background:url(../../images/ko/autologin_google.png) no-repeat left 50%;}
-.login-wrapper > .autologin ul li .login-facebook {display:block; width:42px; height:42px; background:url(../../images/ko/autologin_facebook.png) no-repeat left 50%;}
-.login-wrapper > .autologin ul li .login-naver {display:block; width:42px; height:42px; background:url(../../images/ko/autologin_naver.png) no-repeat left 50%;}
-.login-wrapper > .autologin ul li .login-kakao {display:block; width:42px; height:42px; background:url(../../images/ko/autologin_kakao.png) no-repeat left 50%;}
+.login-wrapper > .autologin ul li .login-google {display:block; width:42px; height:42px; background:url(../../images/ko/autologin_google.png) no-repeat left 50%; cursor:pointer;}
+.login-wrapper > .autologin ul li .login-facebook {display:block; width:42px; height:42px; background:url(../../images/ko/autologin_facebook.png) no-repeat left 50%; cursor:pointer;}
+.login-wrapper > .autologin ul li .login-naver {display:block; width:42px; height:42px; background:url(../../images/ko/autologin_naver.png) no-repeat left 50%; cursor:pointer;}
+.login-wrapper > .autologin ul li .login-kakao {display:block; width:42px; height:42px; background:url(../../images/ko/autologin_kakao.png) no-repeat left 50%; cursor:pointer;}
 .copyright {clear:both; padding-top:60px; font-size:14px; color:#4f4f4f; text-align:center; font-family: 'NotoKrL';}
 .btn-login:hover, .btn-login:focus {background:#2a5bd3; } 
 
