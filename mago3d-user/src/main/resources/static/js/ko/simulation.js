@@ -1,4 +1,61 @@
+
+
 const Simulation = function(magoInstance) {
+	const parseInt10 = function(value) {
+		return  parseInt(value, 10);
+	}
+	const SMLT_TIMESERIES = {
+		STEP : {
+			name : 'step',
+			sliderOption : {
+			    start: [1,1],
+			    connect: [false,true,false],
+				step : 1,
+			    range: {
+			        'min': 1,
+			        'max': 4
+			    },
+				format : {
+					to : parseInt10,
+					from : parseInt10
+				},
+				pips: {
+			        mode: 'steps',
+			        stepped: false,
+					values : [1, 2, 3, 4],
+					format : {
+						to : function(value) {
+							return value + '단계';
+						}
+					}
+			    }
+			},
+			targetGroupId : ''
+		},
+		LEVEL : {
+			name : 'level',
+			sliderOption : {
+				
+			}
+		}
+	}
+
+	const SmltTimeSeries = function(constructorOption) {
+		const PREFIX = 'smlt-construction-';
+		this.name = constructorOption.name;
+		let self = this;
+		
+		const _initSlider = function(slider_opt) {
+			const SUFFIX = '-slider'
+			const slider = noUiSlider.create(document.getElementById(PREFIX + self.name + SUFFIX), slider_opt); 
+	 		slider.on('update', function(e) {
+				console.info(e);
+			});
+			return slider;
+		}
+		
+		this.range = _initSlider(constructorOption.sliderOption); 
+	}
 	const ON_CLASS_NAME = 'on';
 	
 	const _ui = function() {
@@ -76,6 +133,10 @@ const Simulation = function(magoInstance) {
 	//버튼 클릭같은거
 	_ui();
 	
+	//진도부터 뺌
+	var step = new SmltTimeSeries(SMLT_TIMESERIES.STEP);
 	
 }
+
+
 

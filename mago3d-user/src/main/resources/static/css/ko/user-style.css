@@ -2428,7 +2428,7 @@ h1.magologo {display:block; width:250px; height:30px; background:url(/images/ko/
 ::-webkit-scrollbar-thumb { -webkit-border-radius: 8px; background-color: rgba(153, 153, 153, 0.4); }
 
 /* simulation */
-ul.simulation-menu {padding:0; width:330px; margin:60px auto 0 auto; margin-bottom:30px; display:flex; flex-wrap:wrap; border-bottom:1px solid #e6e4e4;}
+ul.simulation-menu {padding:0; width:330px; margin:5px auto 0 auto; margin-bottom:30px; display:flex; flex-wrap:wrap; border-bottom:1px solid #e6e4e4;}
 ul.simulation-menu li {width:100px; list-style:none; float:left; margin:0; padding:0; display:inline-block; font-size:15px; padding:10px 5px; word-break:normal; border-bottom:1px solid #e6e4e4; border-top:1px solid #e6e4e4; display:table-cell; text-align:center; cursor: pointer;}
 ul.simulation-menu li:nth-child(4),  ul.simulation-menu li:nth-child(5),  ul.simulation-menu li:nth-child(6) {border-top:none; border-bottom:none;}
 ul.simulation-menu li.on, ul.simulation-menu li:hover {border-top:2px solid #2f94f3; background:#edf4fb;}

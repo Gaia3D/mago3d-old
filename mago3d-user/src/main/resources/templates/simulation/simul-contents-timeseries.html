@@ -1,16 +1,17 @@
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <div id="smlt_contents_timeseries" class="smlt_contents">
-	<div class="smlt">
+	<div class="smlt" id="smlt-construction-step-div">
 		<div class="smlt-item">
 			<span class="smlt-blt"></span>
-			<span class="smlt-tit">시계열-사용자관리</span>
+			<span class="smlt-tit">시계열-시공단계별</span>
 		</div>				
 		<div class="sub">
 			<div class="sublist">
-				<label for="timeSeriesItem1" class="smlt-sub">항목1</label>
-				<input id="timeSeriesItem1" type="text" class="smlt-value inputtype" />
+				<span class="smlt-sub" style="display:inline-block;">시공단계</span>
+				<div id="smlt-construction-step-slider" style="width:200px;float:right;margin-right: 20px;"></div>
+				<!-- <input id="smlt-construction-step" type="text" class="smlt-value inputtype" /> -->
 			</div>
-			<div class="sublist">
+			<!-- <div class="sublist">
 				<label for="timeSeriesItem2Agree" class="smlt-sub">항목2</label>
 				<input id="timeSeriesItem2Agree" type="checkbox" class="checkbox" /> 동의
 				<input id="timeSeriesItem2Disagree" type="checkbox" class="checkbox mg-l20" /> 비동의
@@ -37,17 +38,17 @@
 				<label for="timeSeriesItem6Agree" class="smlt-sub">항목6</label>
 				<input id="timeSeriesItem6Agree" type="radio" class="radiobox" /> 동의
 				<input id="timeSeriesItem6Disagree" type="radio" class="radiobox mg-l20" /> 비동의
-			</div>
-			<div class="btn-right">
+			</div> -->
+			<div class="btn-right" style="margin-top: 45px;">
 				<button type="button" class="btn-ok">확인</button>
 				<button type="button" class="btn-cancel">취소</button>
 			</div>
 		</div>
 	</div>				
-	<div class="smlt">
+	<div class="smlt" id="smlt-construction-level-div">
 		<div class="smlt-item" >
 			<span class="smlt-blt"></span>
-			<span class="smlt-tit">시계열-수직</span>
+			<span class="smlt-tit">시계열-층별 건설공정</span>
 		</div>	
 		<div class="sub">
 			<div class="sublist">
@@ -63,22 +64,6 @@
 						<option>2</option>
 					</select>
 				</form>
-			</div>
-			<div class="btn-right">
-				<button type="button" class="btn-ok">확인</button>
-				<button type="button" class="btn-cancel">취소</button>
-			</div>
-		</div>	
-	</div>
-	<div class="smlt">			
-		<div class="smlt-item" >
-			<span class="smlt-blt"></span>
-			<span class="smlt-tit">시계열-수평</span>
-		</div>				
-		<div class="sub">	
-			<div class="sublist">
-				<label for="timeSeriesHorizontalItem1" class="smlt-sub">항목1</label>
-				<input id="timeSeriesHorizontalItem1" type="text" class="smlt-value inputtype" />
 			</div>
 			<div class="btn-right">
 				<button type="button" class="btn-ok">확인</button>
