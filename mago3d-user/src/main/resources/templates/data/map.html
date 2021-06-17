@@ -251,10 +251,6 @@
         // 사물인터넷
 		if (MAGO.microService && MAGO.microService['SENSOR_THINGS']) {
 			MAGO.sensorThings = new SensorThings(magoInstance);
-			MAGO.sensorThings = MAGO.sensorThings.create();
-			MAGO.sensorThings.setCameraMoveEvent();
-			MAGO.sensorThings.initF4dData();
-			MAGO.sensorThings.dataSearch(1);
 		}
 
 		// 공간분석

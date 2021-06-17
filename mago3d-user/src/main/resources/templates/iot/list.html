@@ -40,41 +40,20 @@
     <script type="text/javascript" th:src="@{/js/{lang}/sensorthings/occupancy-sensor-things.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
     <script type="text/javascript">
 
-        var observerTarget = document.getElementById('iotMenu');
-        if(observerTarget) {
-            var observerConfig = {attributes: true, attributeFilter: ['style'], subtree: false};
-
-            var observer = new MutationObserver(function(mutations) {
-                var mutation = mutations[0];
-                console.info(mutation);
-                var style = mutation.target.style;
-                console.info(style);
-                /*
-                var display = mutation.target.style.display;
-                var navWidth = document.getElementsByClassName('nav')[0].offsetWidth;
-                var contentWidth = observerTarget.offsetWidth;
-
-                var divided = document.getElementById('mapCtrlDivide').className.indexOf('on') > -1;
-                var offsetWidth = (display === 'none') ? navWidth : navWidth+contentWidth;
-                offsetWidth = divided ? offsetWidth / 2 : offsetWidth;
-
-                var widthPrct = !divided ? '100%':'50%';
-
-                var cssWidth = `calc(${widthPrct} - ${offsetWidth}px)`;
-                $('#magoContainer').css('width',cssWidth);
-
-                var diviedElem = document.getElementById('magoDivideContainer');
-                if(diviedElem.style.display !== 'none') {
-                    cssWidth = `calc(${widthPrct} - ${offsetWidth+3}px)`;
-                    diviedElem.style.width = cssWidth;
-                }
-                */
-            });
-            observer.observe(observerTarget, observerConfig);
-        }
-
         // 사물인터넷 이벤트 모음
         $(document).ready(function () {
+
+            var iotObserverTarget = document.getElementById('iotMenu');
+            if (iotObserverTarget) {
+                var iotObserverConfig = {attributes: true, attributeFilter:['class']};
+                var iotObserver = new MutationObserver(function (mutations) {
+                    for (var mutation of mutations) {
+                        var isVisible = mutation.target.classList.contains("on");
+                        MAGO.sensorThings.active(isVisible);
+                    }
+                });
+                iotObserver.observe(iotObserverTarget, iotObserverConfig);
+            }
 
             if (MAGO.sensorThings) {
                 MAGO.sensorThings.dataSearch(1);

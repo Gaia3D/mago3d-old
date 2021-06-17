@@ -534,3 +534,7 @@ span.subResult {
 .half-doughnut-chart-container > .label span:last-child {
     float: right;
 }
+
+.marR40 {
+    margin-right: 40px !important
+}

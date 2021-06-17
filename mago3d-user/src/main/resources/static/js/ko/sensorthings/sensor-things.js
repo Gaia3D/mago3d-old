@@ -5,11 +5,11 @@ const SensorThings = function (magoInstance) {
     //this.FROST_SERVER_URL = 'http://iot.openindoormap.io/v1.0/';
     this.queryString = '';
     this.type = 'iot_occupancy'; // iot_occupancy, iot_dust
-    this.created = true;
+    this.created = false;
 
     this.currentPageNo = 0;
     //this.currentTime = "2020-10-23T04:59:40.000Z";
-    this.currentTime = moment.utc().format();
+    this.currentTime = moment().utc().format();
     this.processingTime = 1800;     // 30m
     this.callInterval = 10;         // 10s
     this.filterInterval = 3600;     // 1hour
@@ -18,7 +18,8 @@ const SensorThings = function (magoInstance) {
     this.selectedThingId = 0;
     this.selectedDataStreams = [];
 
-    this.gaugeChartNeedle = {};
+    this.gaugeChart = null;
+    this.gaugeChartNeedle = null;
 
 };
 
@@ -76,6 +77,9 @@ SensorThings.prototype.initF4dData = function() {
                 dataType: "json",
                 success: function (json) {
                     f4dController.addF4dMember(dataGroupKey, json.children);
+                    MAGO.sensorThings.dataSearch(1);
+                    MAGO.sensorThings.clearOverlay();
+                    MAGO.sensorThings.addOverlay();
                 },
                 error: function (request, status, error) {
                     alert(JS_MESSAGE["ajax.error.message"]);
@@ -92,7 +96,7 @@ SensorThings.prototype.initF4dData = function() {
  * 자료 갱신 이벤트 생성
  */
 SensorThings.prototype.setInterval = function() {
-    MAGO.updateSensorThings = setInterval(function () {
+    return setInterval(function () {
         let currentTime = MAGO.sensorThings.getCorrectTime(MAGO.sensorThings.getCurrentTime(), MAGO.sensorThings.callInterval);
         MAGO.sensorThings.setCurrentTime(currentTime);
 
@@ -123,33 +127,6 @@ SensorThings.prototype.clearOverlay = function () {
     }
 };
 
-SensorThings.prototype.active = function (isVisible) {
-    if (isVisible) {
-        const newSensorThings = MAGO.sensorThings.create();
-        if (MAGO.sensorThings.type !== newSensorThings.type) {
-            MAGO.sensorThings = newSensorThings;
-            // TODO: 설정값으로 빼기
-            if (MAGO.sensorThings instanceof DustSensorThings) {
-                MAGO.sensorThings.addDustLayer();
-            }
-        }
-        MAGO.sensorThings.dataSearch(1);
-        MAGO.sensorThings.clearOverlay();
-        MAGO.sensorThings.addOverlay();
-        MAGO.sensorThings.created = true;
-        MAGO.sensorThings.setInterval();
-    } else {
-        MAGO.sensorThings.init();
-        MAGO.sensorThings.clearOverlay();
-        // TODO: 설정값으로 빼기
-        if (MAGO.sensorThings instanceof DustSensorThings) {
-            MAGO.sensorThings.clearDustLayer();
-        }
-        MAGO.sensorThings.created = false;
-        clearInterval(MAGO.updateSensorThings);
-    }
-};
-
 /**
  * 화면에 보이는 지도 오버레이 thingId 가져오기
  */
@@ -162,7 +139,52 @@ SensorThings.prototype.getOverlay = function() {
         }
     }
     return result;
-}
+};
+
+/**
+ * 활성화 / 비활성화
+ * @param isVisible
+ */
+SensorThings.prototype.active = function (isVisible) {
+    if (isVisible) {
+        const newSensorThings = this.create();
+        if (!MAGO.sensorThings.created) {
+            MAGO.sensorThings = newSensorThings;
+            MAGO.sensorThings.setCameraMoveEvent();
+            MAGO.sensorThings.initF4dData();
+        }
+        if (MAGO.sensorThings.created && MAGO.sensorThings.type !== newSensorThings.type) {
+            MAGO.sensorThings = newSensorThings;
+            // TODO: 설정값으로 빼기
+            if (MAGO.sensorThings instanceof DustSensorThings) {
+                MAGO.sensorThings.addDustLayer();
+            }
+        }
+        if (MAGO.sensorThings.created) {
+            MAGO.sensorThings.dataSearch(1);
+            MAGO.sensorThings.clearOverlay();
+            MAGO.sensorThings.addOverlay();
+        }
+        MAGO.sensorThings.created = true;
+        MAGO.updateSensorThings = MAGO.sensorThings.setInterval();
+    } else {
+        MAGO.sensorThings.init();
+        MAGO.sensorThings.clearOverlay();
+        // TODO: 설정값으로 빼기
+        if (MAGO.sensorThings instanceof DustSensorThings) {
+            MAGO.sensorThings.clearDustLayer();
+        }
+        MAGO.sensorThings.created = false;
+        clearInterval(MAGO.updateSensorThings);
+    }
+};
+
+SensorThings.prototype.gotoFly = function (longitude, latitude, altitude) {
+    if (MAGO.sensorThings instanceof DustSensorThings) {
+        MAGO.sensorThings.clearDustLayer();
+    }
+    gotoFlyAPI(this.magoInstance, longitude, latitude, altitude, 3);
+};
 
 SensorThings.prototype.setCurrentTime = function (currentTime) {
     this.currentTime = currentTime;
@@ -189,7 +211,17 @@ SensorThings.prototype.getFilterEndTime = function () {
 };
 
 SensorThings.prototype.getFilterDayStartTime = function () {
-    return moment(this.currentTime).utc().subtract(this.filterInterval * 24, 's').format();
+    let filteredTime = moment(this.currentTime).utc().subtract(this.processingTime, 's');
+    filteredTime = filteredTime.subtract(3600 * 24, 's');
+    return this.getCorrectTime(filteredTime, this.filterInterval);
+    //return moment(this.currentTime).utc().subtract(3600 * 24, 's').format();
+};
+
+SensorThings.prototype.getFilterHourlyStartTime = function () {
+    let filteredTime = moment(this.currentTime).utc().subtract(this.processingTime, 's');
+    filteredTime = filteredTime.subtract(60 * 24, 's');
+    return this.getCorrectTime(filteredTime, this.filterInterval);
+    //return moment(this.currentTime).utc().subtract(this.filterInterval, 's').format();
 };
 
 SensorThings.prototype.observationTimeToLocalTime = function (observationTime) {
@@ -207,33 +239,7 @@ SensorThings.prototype.geographicCoordToScreenCoord = function (coordinates) {
     return resultScreenCoord;
 };
 
-/**
- * 등급별 상태메세지 가져오기
- * @param grade
- * @returns {*}
- */
-SensorThings.prototype.getGradeMessage = function (grade) {
-    let message;
-    const num = parseInt(grade);
-    switch (num) {
-        case 1:
-            message = JS_MESSAGE["iot.occupancy.legend.good"];
-            break;
-        case 2:
-            message = JS_MESSAGE["iot.occupancy.legend.normal"];
-            break;
-        case 3:
-            message = JS_MESSAGE["iot.occupancy.legend.bad"];
-            break;
-        case 4:
-            message = JS_MESSAGE["iot.occupancy.legend.very-bad"];
-            break;
-        default:
-            message = JS_MESSAGE["iot.occupancy.legend.nodata"];
-            break;
-    }
-    return message;
-};
+
 
 SensorThings.prototype.dataSearch = function (pageNo) {
     $('#iotInfoContent div').hide();
@@ -250,21 +256,21 @@ SensorThings.prototype.dataSearch = function (pageNo) {
 
 SensorThings.prototype.getUnit = function(dataStream) {
     return dataStream['unitOfMeasurement']['symbol'];
-}
+};
 
 SensorThings.prototype.getObservedPropertyName = function(dataStream) {
     return dataStream['ObservedProperty']['name'];
-}
+};
 
 SensorThings.prototype.numberWithCommas = function (x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+};
 
 SensorThings.prototype.closeDetail = function (obj) {
     const $iotDustMoreDHTML = $(obj).parents(".iotDustMoreDHTML");
     $iotDustMoreDHTML.hide();
     $(".show-more").show();
-}
+};
 
 /**
  * 게이지 차트 그리기
@@ -286,7 +292,11 @@ SensorThings.prototype.drawGaugeChart = function (range, total, percent) {
         cutoutPercentage: 80
     };
 
-    const gaugeChart = new Chart(document.getElementById("gaugeChart"), {
+    if (this.gaugeChart !== null) {
+        this.gaugeChart.destroy();
+    }
+
+    this.gaugeChart = new Chart(document.getElementById("gaugeChart"), {
         type: 'doughnut',
         data: {
             labels: [this.getGradeMessage(1), this.getGradeMessage(2), this.getGradeMessage(3), this.getGradeMessage(4)],
@@ -316,6 +326,9 @@ SensorThings.prototype.drawGaugeChart = function (range, total, percent) {
         options: gaugeChartOptions
     });
 
+    if (this.gaugeChartNeedle !== null) {
+        this.gaugeChartNeedle = null;
+    }
     this.gaugeChartNeedle = new Chart(document.getElementById("gaugeChartNeedle"), {
         type: 'doughnut',
         data: {
