@@ -31,6 +31,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
+	 * 사용자 Email 중복 체크
+	 * @param userInfo
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Boolean isEmailDuplication(UserInfo userInfo) {
+		userInfo.setEmail(Crypt.encrypt(userInfo.getEmail()));
+		return userMapper.isEmailDuplication(userInfo);
+	}
+
+	/**
 	 * 사용자 정보 취득
 	 * @param userId
 	 * @return

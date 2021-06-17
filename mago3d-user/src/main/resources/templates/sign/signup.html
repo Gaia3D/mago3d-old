@@ -17,7 +17,7 @@
 <body class="bggray">
 <div id="join">
 	<h2 class="join">회원가입</h2>
-	<form class="join-select " id="signupForm" th:object="${signupForm}" method="post" action="/sign/process-signup">
+	<form class="join-select " id="signupForm" th:object="${signupForm}" method="post" action="/sign/process-signup" onsubmit="return check()">
 		<input type="hidden" name="signupType" value="2" th:if="${signupForm.signupType} == '2'" />
 		<input type="hidden" name="signupType" value="1" th:if="${signupForm.signupType} == '1'" />
 		<fieldset>
@@ -30,8 +30,8 @@
 			<input type="text" id="userName" name="userName" class="inputname" th:field="*{userName}" th:unless="${signupForm.signupType} == '2'" />
 
 			<div th:unless="${signupForm.signupType} == '2'">
-				<label for="password">비밀번호<span class="join-key">*</span></label>
-				<input type="password" id="password" name="newPassword" class="inputpwd" />
+				<label for="newPassword">비밀번호<span class="join-key">*</span></label>
+				<input type="password" id="newPassword" name="newPassword" class="inputpwd" />
 				<span class="txt-guide">특수문자, 대소문자, 영문포함 8자 이상 32자 이하</span>
 
 				<label for="passwordConfirm">비밀번호 확인<span class="join-key">*</span></label>
@@ -44,9 +44,9 @@
 
 			<label for="email">이메일<span class="join-key">*</span></label>
 			<input type="text" name="email" class="inputemail" th:field="*{email}" th:if="${signupForm.signupType} == '2'" readonly/>
-			<input type="text" id="preEmail" class="inputemail" th:field="*{email}" th:unless="${signupForm.signupType} == '2'"/>
+			<input type="text" id="preEmail" class="inputemail" th:unless="${signupForm.signupType} == '2'"/>
 			<form th:unless="${signupForm.signupType} == '2'">
-				<select id="slctEmail" class="slct-email">
+				<select id="selectEmail" class="select-email">
 					<option value="@naver.com">@naver.com</option>
 					<option value="@daum.net">@daum.net</option>
 					<option value="@gmail.com">@gmail.com</option>
@@ -105,19 +105,52 @@
 	}
 
 	var preEmail = document.getElementById('preEmail');
-	var slctEmail = document.getElementById('slctEmail');
+	var selectEmail = document.getElementById('selectEmail');
 	var email = document.getElementById('email');
 
-	preEmail.onkeyup = function(event){
+	preEmail.onchange = function(event){
 		event = event || window.event;
 		var _val = this.value.trim() ;
-		email.value = _val + slctEmail.value;
+		email.value = _val + selectEmail.value;
 	}
 
-	slctEmail.onchange = function(event){
+	selectEmail.onchange = function(event){
 		event = event || window.event;
 		var _val = preEmail.value.trim() ;
 		email.value = _val + this.value;
+	}
+
+	function check() {userId
+
+		if ($("#userId").val() == "") {
+			alert("아이디를 입력하여 주십시오.");
+			$("#userId").focus();
+			return false;
+		}
+
+		if ($("#userName").val() == "") {
+			alert("이름을 입력하여 주십시오.");
+			$("#userName").focus();
+			return false;
+		}
+
+		if ($("#newPassword").val() == "") {
+			alert("비밀번호를 입력하여 주십시오.");
+			$("#newPassword").focus();
+			return false;
+		}
+
+		if ($("#mobilePhone").val() == "") {
+			alert("전화번호를 입력하여 주십시오.");
+			$("#mobilePhone").focus();
+			return false;
+		}
+
+		if ($("#email").val() == "") {
+			alert("이메일을 입력하여 주십시오.");
+			$("#email").focus();
+			return false;
+		}
 	}
 
 </script>

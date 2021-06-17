@@ -2,7 +2,6 @@ package gaia3d.controller.view;
 
 import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.SharingType;
-import gaia3d.domain.SigninType;
 import gaia3d.domain.SignupType;
 import gaia3d.domain.cache.CacheManager;
 import gaia3d.domain.data.DataGroup;
@@ -20,7 +19,10 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -85,10 +87,15 @@ public class SignupController {
 		log.info("@@ signupForm = {}", signupForm);
 		Policy policy = CacheManager.getPolicy();
 
-		Boolean duplication = userService.isUserIdDuplication(signupForm);
-		log.info("@@ duplication = {}", duplication);
-		if(duplication) {
-			signupForm.setErrorCode("user.id.duplication");
+		Boolean userIdDuplication = userService.isUserIdDuplication(signupForm);
+		Boolean emailDuplication = userService.isEmailDuplication(signupForm);
+		if(userIdDuplication || emailDuplication) {
+			if(userIdDuplication)
+				signupForm.setErrorCode("user.id.duplication");
+			else
+				signupForm.setErrorCode("user.email.duplication");
+
+			log.info("-----err" + signupForm.getErrorCode());
 			signupForm.setPassword(null);
 			model.addAttribute("signupForm", signupForm);
 			model.addAttribute("policy", policy);
@@ -118,7 +125,7 @@ public class SignupController {
 		log.info("signupForm  "+signupForm);
 		userService.insertUser(signupForm);
 
-		makeUserDir(request, signupForm);
+		initUserDir(request, signupForm);
 
 		return "redirect:/sign/signup-complete";
 	}
@@ -142,7 +149,7 @@ public class SignupController {
 	 */
 	private String userValidate(Policy policy, UserInfo userInfo) {
 		String errorCode = null;
-		if(SigninType.findBy(userInfo.getSigninType()) == SigninType.BASIC)
+		if(SignupType.findBy(userInfo.getSignupType()) == SignupType.BASIC)
 			errorCode = PasswordSupport.validateUserPassword(policy, userInfo);
 		if(errorCode != null)
 			return errorCode;
@@ -162,7 +169,7 @@ public class SignupController {
 		return err;
 	}
 
-	private void makeUserDir(HttpServletRequest request, UserInfo userInfo){
+	private void initUserDir(HttpServletRequest request, UserInfo userInfo){
 		// 데이터 업로딩 경로 생성
 		DataGroup dataGroup = new DataGroup();
 		dataGroup.setUserId(userInfo.getUserId());

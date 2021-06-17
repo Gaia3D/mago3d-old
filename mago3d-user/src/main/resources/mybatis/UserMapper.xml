@@ -15,6 +15,18 @@
 		WHERE user_id = #{userId}
 	</select>
 
+	<!-- 사용자 Email 중복 체크 -->
+	<select id="isEmailDuplication" parameterType="userInfo" resultType="boolean">
+		/* isEmailDuplication */
+		SELECT
+			CASE
+				WHEN COUNT(*) > 0 THEN true
+				ELSE false
+				END AS duplication
+		FROM user_info
+		WHERE email = #{email}
+	</select>
+
 	<!-- 사용자 정보 -->
 	<select id="getUser" parameterType="string" resultType="userInfo">
 		/* getUser */

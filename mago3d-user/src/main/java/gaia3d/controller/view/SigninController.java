@@ -187,7 +187,6 @@ public class SigninController {
 			userInfo.setStatus(UserStatus.WAITING_APPROVAL.getValue());
 			model.addAttribute("signupForm", userInfo);
 			return "/sign/signup";
-			//userService.insertUser(userInfo);
 		}
 		UserSession userSession = signinService.getUserSessionByEmail(userInfo);
 

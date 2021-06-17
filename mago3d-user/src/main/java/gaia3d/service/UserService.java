@@ -17,6 +17,13 @@ public interface UserService {
 	Boolean isUserIdDuplication(UserInfo userInfo);
 
 	/**
+	 * 사용자 Email 중복 체크
+	 * @param userInfo
+	 * @return
+	 */
+	Boolean isEmailDuplication(UserInfo userInfo);
+
+	/**
 	 * 사용자 정보 취득
 	 * @param userId
 	 * @return
