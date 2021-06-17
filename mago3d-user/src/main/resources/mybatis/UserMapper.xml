@@ -16,7 +16,7 @@
 	</select>
 
 	<!-- 사용자 Email 중복 체크 -->
-	<select id="isEmailDuplication" parameterType="userInfo" resultType="boolean">
+	<select id="isEmailDuplication" parameterType="String" resultType="boolean">
 		/* isEmailDuplication */
 		SELECT
 			CASE

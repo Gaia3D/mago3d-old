@@ -21,10 +21,10 @@ public interface UserMapper {
 
 	/**
 	 * 사용자 Email 중복 체크
-	 * @param userInfo
+	 * @param email
 	 * @return
 	 */
-	Boolean isEmailDuplication(UserInfo userInfo);
+	Boolean isEmailDuplication(String email);
 
 	/**
 	 * 사용자 정보 취득

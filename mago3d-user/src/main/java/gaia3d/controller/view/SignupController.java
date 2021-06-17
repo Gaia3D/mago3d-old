@@ -88,7 +88,8 @@ public class SignupController {
 		Policy policy = CacheManager.getPolicy();
 
 		Boolean userIdDuplication = userService.isUserIdDuplication(signupForm);
-		Boolean emailDuplication = userService.isEmailDuplication(signupForm);
+		Boolean emailDuplication = userService.isEmailDuplication(signupForm.getEmail());
+		log.info("@@ signupForm = {}", signupForm);
 		if(userIdDuplication || emailDuplication) {
 			if(userIdDuplication)
 				signupForm.setErrorCode("user.id.duplication");
@@ -153,8 +154,11 @@ public class SignupController {
 			errorCode = PasswordSupport.validateUserPassword(policy, userInfo);
 		if(errorCode != null)
 			return errorCode;
-		if(!isValidEmail(userInfo.getEmail()))
+		if(!isValidEmail(userInfo.getEmail())){
+			log.info(userInfo.getEmail());
 			return "user.email.invalid";
+		}
+
 		return null;
 	}
 
