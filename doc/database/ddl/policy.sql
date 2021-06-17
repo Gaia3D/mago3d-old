@@ -86,7 +86,7 @@ create table policy(
 
     notice_email_host                       varchar(20)         default 'localhost',
     notice_email_port                       varchar(10)         default '125',
-    notice_email_admin                      varchar(20)         default 'gkstkd000@gmail.com',
+    notice_email_admin                      varchar(20)         default '관리자 이메일',
 
 	insert_date								timestamp with time zone			default now(),
 	constraint policy_pk primary key (policy_id)	
