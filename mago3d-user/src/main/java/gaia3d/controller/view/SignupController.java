@@ -96,7 +96,6 @@ public class SignupController {
 			else
 				signupForm.setErrorCode("user.email.duplication");
 
-			log.info("-----err" + signupForm.getErrorCode());
 			signupForm.setPassword(null);
 			model.addAttribute("signupForm", signupForm);
 			model.addAttribute("policy", policy);

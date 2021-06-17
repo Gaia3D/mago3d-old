@@ -62,7 +62,10 @@
 			notice_approval_delay_yn = #{noticeApprovalDelayYn},
 			notice_risk_yn = #{noticeRiskYn},
 			notice_risk_send_type = #{noticeRiskSendType},
-			notice_risk_grade = #{noticeRiskGrade}
+			notice_risk_grade = #{noticeRiskGrade},
+			notice_email_host = #{noticeEmailHost},
+			notice_email_port = #{noticeEmailPort},
+			notice_email_admin = #{noticeEmailAdmin}
 		WHERE policy_id = #{policyId}
 	</update>
 

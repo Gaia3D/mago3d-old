@@ -179,11 +179,11 @@ public class Policy {
 	// 소셜 로그인 Kakao UserInfo URI
 	private String socialSigninKakaoUserInfoUri;
 
-	// 알림(메일) 호스트
+	// SMTP 호스트
 	private String noticeEmailHost;
-	// 알림(메일) 포트
+	// SMTP 포트
 	private String noticeEmailPort;
-	// 알림(메일) 관리자
+	// SMTP 관리자
 	private String noticeEmailAdmin;
  	
  	// 등록일

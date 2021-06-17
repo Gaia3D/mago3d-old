@@ -1,72 +1,123 @@
 <html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org">
 	<div id="noticeTab">
-		<form id="policyNotice" th:object="${policy}" method="post" onsubmit="return false;">
-			<table class="input-table scope-row" summary="환경설정 공지사항 테이블">
-			<caption class="hiddenTag">환경설정 공시사항</caption>
+		<form id="policyNotice" th:object="${policy}" method="post" th:action="@{#}" onsubmit="return false;">
+			<table class="input-table scope-row" summary="환경설정 알림 테이블">
+			<caption class="hiddenTag">환경설정 알림</caption>
 				<col class="col-label l" />
 				<col class="col-input" />
+
 				<tr>
 					<th class="col-label l" scope="row">
 						<label for="noticeServiceYn">알림 서비스 사용 유무</label>
 						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
-					<td class="col-input radio-set">
-						<form:radiobutton label="${use }" path="noticeServiceYn" value="Y" />
-						<form:radiobutton label="${notuse }(기본값)" path="noticeServiceYn" value="N" />
-						<form:errors path="noticeServiceYn" cssClass="error" />
+					<td class="col-input">
+						<input type="text" id="noticeServiceYn" name="noticeServiceYn" th:field="*{noticeServiceYn}" class="l" maxlength="256" />
 					</td>
 				</tr>
 				<tr>
 					<th class="col-label l" scope="row">
-						<form:label path="noticeServiceSendType">알림 발송 매체</form:label>
+						<label for="noticeEmailHost">SMTP 호스트</label>
 						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
-					<td class="col-input radio-set">
-						<form:radiobutton label="SMS(기본값)" path="noticeServiceSendType" value="0" />
-						<form:radiobutton label="이메일" path="noticeServiceSendType" value="1" />
-						<form:radiobutton label="메신저" path="noticeServiceSendType" value="2" />
-						<form:errors path="noticeServiceSendType" cssClass="error" />
+					<td class="col-input">
+						<input type="text" id="noticeEmailHost" name="noticeEmailHost" th:field="*{noticeEmailHost}" class="l" maxlength="256" />
 					</td>
 				</tr>
 				<tr>
 					<th class="col-label l" scope="row">
-						<form:label path="noticeRiskYn">알림 장애 발생시</form:label>
+						<label for="noticeEmailPort">SMTP 포트</label>
 						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
-					<td class="col-input radio-set">
-						<form:radiobutton label="${use }" path="noticeRiskYn" value="Y" />
-						<form:radiobutton label="${notuse }(기본값)" path="noticeRiskYn" value="N" />
-						<form:errors path="noticeRiskYn" cssClass="error" />
+					<td class="col-input">
+						<input type="text" id="noticeEmailPort" name="noticeEmailPort" th:field="*{noticeEmailPort}" class="l" maxlength="256" />
 					</td>
 				</tr>
 				<tr>
 					<th class="col-label l" scope="row">
-						<form:label path="noticeRiskSendType">알림 장애 발송 매체</form:label>
+						<label for="noticeEmailAdmin">SMTP 관리자</label>
 						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
-					<td class="col-input radio-set">
-						<form:radiobutton label="SMS(기본값)" path="noticeRiskSendType" value="0" />
-						<form:radiobutton label="이메일" path="noticeRiskSendType" value="1" />
-						<form:radiobutton label="메신저" path="noticeRiskSendType" value="2" />
-						<form:errors path="noticeRiskSendType" cssClass="error" />
+					<td class="col-input">
+						<input type="text" id="noticeEmailAdmin" name="noticeEmailAdmin" th:field="*{noticeEmailAdmin}" maxlength="256" class="l" />
 					</td>
 				</tr>
 				<tr>
 					<th class="col-label l" scope="row">
-						<form:label path="noticeRiskGrade">알림 발송 장애 등급</form:label>
+						<label for="noticeServiceSendType">알림 발송 매체</label>
 						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
-					<td class="col-input radio-set">
-						<form:radiobutton label="1등급(기본값)" path="noticeRiskGrade" value="1" />
-						<form:radiobutton label="2등급" path="noticeRiskGrade" value="2" />
-						<form:radiobutton label="3등급" path="noticeRiskGrade" value="3" />
-						<form:errors path="noticeRiskGrade" cssClass="error" />
+					<td class="col-input">
+						<input type="text" id="noticeServiceSendType" name="noticeServiceSendType" th:field="*{noticeServiceSendType}" maxlength="256" class="l" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="noticeApprovalRequestYn">알림 결재 요청/대기시</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="noticeApprovalRequestYn" name="noticeApprovalRequestYn" th:field="*{noticeApprovalRequestYn}" maxlength="256" class="l" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="noticeApprovalSignYn">알림 결재 완료시</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="noticeApprovalSignYn" name="noticeApprovalSignYn" th:field="*{noticeApprovalSignYn}" maxlength="256" class="l" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="noticePasswordUpdateYn">알림 관리 계정 패스워드 변경시</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="noticePasswordUpdateYn" name="noticePasswordUpdateYn" th:field="*{noticePasswordUpdateYn}" maxlength="256" class="l" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="noticeApprovalDelayYn">알림 결재 대기시</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="noticeApprovalDelayYn" name="noticeApprovalDelayYn" th:field="*{noticeApprovalDelayYn}" maxlength="256" class="l" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="noticeRiskYn">알림 장애 발생시</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="noticeRiskYn" name="noticeRiskYn" th:field="*{noticeRiskYn}" maxlength="256" class="l" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="noticeRiskSendType">알림 장애 발송 매체</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="noticeRiskSendType" name="noticeRiskSendType" th:field="*{noticeRiskSendType}" maxlength="256" class="l" />
+					</td>
+				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label for="noticeRiskGrade">알림 발송 장애 등급</label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input">
+						<input type="text" id="noticeRiskGrade" name="noticeRiskGrade" th:field="*{noticeRiskGrade}" maxlength="256" class="l" />
 					</td>
 				</tr>
 			</table>
 			<div class="button-group">
 				<div class="center-buttons">
-					<a href="#" onclick="updatePolicyNotice();" class="button"><spring:message code='save'/></a>
+					<a href="#" class="button" th:text="#{save}" onclick="updatePolicyNotice();"></a>
 				</div>
 			</div>
 		</form>
