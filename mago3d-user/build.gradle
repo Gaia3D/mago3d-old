@@ -92,7 +92,7 @@ dependencies {
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.5.3'
 
     implementation 'org.apache.commons:commons-compress:1.18'
-
+    implementation 'org.apache.httpcomponents:httpclient'
 	implementation 'org.modelmapper:modelmapper:2.3.6'
 
 	runtimeOnly 'org.postgresql:postgresql'

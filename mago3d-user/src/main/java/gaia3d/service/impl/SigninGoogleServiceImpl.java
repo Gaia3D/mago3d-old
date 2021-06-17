@@ -57,11 +57,9 @@ public class SigninGoogleServiceImpl implements SigninSocialService {
 
 		UserInfo userInfo = new UserInfo();
 
-		String id = jsonObject.get("email").toString();
 		String email = jsonObject.get("email").toString();
 		String name = jsonObject.get("name").toString();
 
-		userInfo.setUserId(id);
 		userInfo.setEmail(email);
 		userInfo.setUserName(name);
 

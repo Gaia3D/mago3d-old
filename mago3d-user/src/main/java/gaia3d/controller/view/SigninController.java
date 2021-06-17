@@ -1,9 +1,6 @@
 package gaia3d.controller.view;
 
-import gaia3d.domain.Key;
-import gaia3d.domain.SigninType;
-import gaia3d.domain.SocialType;
-import gaia3d.domain.YOrN;
+import gaia3d.domain.*;
 import gaia3d.domain.cache.CacheManager;
 import gaia3d.domain.policy.Policy;
 import gaia3d.domain.role.RoleKey;
@@ -11,6 +8,7 @@ import gaia3d.domain.user.UserInfo;
 import gaia3d.domain.user.UserSession;
 import gaia3d.domain.user.UserStatus;
 import gaia3d.listener.Gaia3dHttpSessionBindingListener;
+import gaia3d.security.Crypt;
 import gaia3d.service.SigninService;
 import gaia3d.service.SigninSocialService;
 import gaia3d.service.UserService;
@@ -24,6 +22,7 @@ import gaia3d.support.SessionUserSupport;
 import gaia3d.utils.WebUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -65,7 +64,6 @@ public class SigninController {
 
 	@Autowired
 	RestTemplate restTemplate;
-
 
 	/**
 	 * Sign in 페이지
@@ -173,7 +171,7 @@ public class SigninController {
 
 		SigninSocialService signinSocialService = setSocialSigninService(socialType);
 
-		//setTimeoutRestTemplate();
+		setTimeoutRestTemplate();
 
 		UserInfo userInfo = signinSocialService.authorize(authCode, restTemplate);
 		Policy policy = CacheManager.getPolicy();
@@ -181,15 +179,17 @@ public class SigninController {
 		userInfo.setPasswordChangeTerm(policy.getPasswordChangeTerm());
 		userInfo.setUserLastSigninLock(policy.getUserLastSigninLock());
 
-		if(userService.getUser(userInfo.getUserId()) == null){
-			//
+		String encryptEmail = Crypt.encrypt(userInfo.getEmail());
+
+		if(userService.getUserByEmail(encryptEmail) == null){
 			userInfo.setSigninType(SigninType.SOCIAL.getValue());
+			userInfo.setSignupType(SignupType.SOCIAL.getValue());
 			userInfo.setStatus(UserStatus.WAITING_APPROVAL.getValue());
-			/*model.addAttribute("signupForm", userInfo);
-			return "/sign/signup";*/
-			userService.insertUser(userInfo);
+			model.addAttribute("signupForm", userInfo);
+			return "/sign/signup";
+			//userService.insertUser(userInfo);
 		}
-		UserSession userSession = signinService.getUserSession(userInfo);
+		UserSession userSession = signinService.getUserSessionByEmail(userInfo);
 
 		String errorCode = validate(request, policy, userInfo, userSession);
 
@@ -338,6 +338,7 @@ public class SigninController {
 	 * @return
 	 */
 	private void setTimeoutRestTemplate(){
+		RestTemplateBuilder builder = new RestTemplateBuilder();
 		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
 		factory.setConnectTimeout(10*1000);
 		factory.setReadTimeout(10*1000);

@@ -24,6 +24,15 @@
 		  AND A.user_group_id = B.user_group_id
 	</select>
 
+	<!-- 사용자 정보(email) -->
+	<select id="getUserByEmail" parameterType="string" resultType="userInfo">
+		/* getUserByEmail */
+		SELECT A.*, B.user_group_name
+		FROM user_info A, user_group B
+		WHERE A.email = #{email}
+		  AND A.user_group_id = B.user_group_id
+	</select>
+
 	<!-- 사용자 등록 -->
 	<insert id="insertUser" parameterType="userInfo">
 		/* insertUser */

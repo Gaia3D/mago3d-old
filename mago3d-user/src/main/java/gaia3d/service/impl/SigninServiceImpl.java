@@ -1,5 +1,6 @@
 package gaia3d.service.impl;
 
+import gaia3d.security.Crypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,18 @@ public class SigninServiceImpl implements SigninService {
 	@Transactional(readOnly=true)
 	public UserSession getUserSession(UserInfo userInfo) {
 		return signinMapper.getUserSession(userInfo);
+	}
+
+	/**
+	 * 회원 세션 정보를 취득(email)
+	 * @param userInfo
+	 * @return
+	 */
+	@Transactional(readOnly=true)
+	public UserSession getUserSessionByEmail(UserInfo userInfo) {
+		String encryptEmail = Crypt.encrypt(userInfo.getEmail());
+		userInfo.setEmail(encryptEmail);
+		return signinMapper.getUserSessionByEmail(userInfo);
 	}
 
 	/**

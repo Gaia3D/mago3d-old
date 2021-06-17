@@ -27,6 +27,13 @@ public interface UserMapper {
 	UserInfo getUser(String userId);
 
 	/**
+	 * 사용자 정보 취득(email)
+	 * @param email
+	 * @return
+	 */
+	UserInfo getUserByEmail(String email);
+
+	/**
 	 * 사용자 등록
 	 * @param userInfo
 	 * @return
@@ -39,4 +46,5 @@ public interface UserMapper {
 	 * @return
 	 */
 	int updatePassword(UserInfo userInfo);
+
 }

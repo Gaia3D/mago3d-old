@@ -57,11 +57,9 @@ public class SigninKakaoServiceImpl implements SigninSocialService {
 
 		UserInfo userInfo = new UserInfo();
 
-		String id = jsonAccount.get("email").toString();
 		String email = jsonAccount.get("email").toString();
 		String name = jsonProperties.get("nickname").toString();
 
-		userInfo.setUserId(id);
 		userInfo.setEmail(email);
 		userInfo.setUserName(name);
 

@@ -16,6 +16,13 @@ public interface SigninService {
 	 * @return
 	 */
 	UserSession getUserSession(UserInfo userInfo);
+
+	/**
+	 * 회원 세션 정보를 취득(email)
+	 * @param userInfo
+	 * @return
+	 */
+	UserSession getUserSessionByEmail(UserInfo userInfo);
 	
 	/**
 	 * Sign in 성공 후 회원 정보를 갱신

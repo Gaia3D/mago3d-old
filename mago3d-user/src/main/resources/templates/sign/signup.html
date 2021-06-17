@@ -18,29 +18,34 @@
 <div id="join">
 	<h2 class="join">회원가입</h2>
 	<form class="join-select " id="signupForm" th:object="${signupForm}" method="post" action="/sign/process-signup">
+		<input type="hidden" name="signupType" value="2" th:if="${signupForm.signupType} == '2'" />
+		<input type="hidden" name="signupType" value="1" th:if="${signupForm.signupType} == '1'" />
 		<fieldset>
 			<legend>회원가입</legend>
-
 			<label for="userId">아이디<span class="join-key">*</span></label>
 			<input type="text" id="userId" name="userId" class="inputid" />
 
 			<label for="userName">이름<span class="join-key">*</span></label>
-			<input type="text" id="userName" name="userName" class="inputname" />
+			<input type="text" name="userName" class="inputname" th:field="*{userName}" th:if="${signupForm.signupType} == '2'" readonly/>
+			<input type="text" id="userName" name="userName" class="inputname" th:field="*{userName}" th:unless="${signupForm.signupType} == '2'" />
 
-			<label for="password">비밀번호<span class="join-key">*</span></label>
-			<input type="password" id="password" name="newPassword" class="inputpwd" />
-			<span class="txt-guide">특수문자, 대소문자, 영문포함 8자 이상 32자 이하</span>
+			<div th:unless="${signupForm.signupType} == '2'">
+				<label for="password">비밀번호<span class="join-key">*</span></label>
+				<input type="password" id="password" name="newPassword" class="inputpwd" />
+				<span class="txt-guide">특수문자, 대소문자, 영문포함 8자 이상 32자 이하</span>
 
-			<label for="passwordConfirm">비밀번호 확인<span class="join-key">*</span></label>
-            <input type="password" id="passwordConfirm" name="passwordConfirm" class="inputpwd" />
-            <span class="txt-guide">특수문자, 대소문자, 영문포함 8글자 이상</span>
+				<label for="passwordConfirm">비밀번호 확인<span class="join-key">*</span></label>
+				<input type="password" id="passwordConfirm" name="passwordConfirm" class="inputpwd" />
+				<span class="txt-guide">특수문자, 대소문자, 영문포함 8글자 이상</span>
 
-			<label for="mobilePhone">핸드폰 번호<span class="join-key">*</span></label>
-			<input type="text" id="mobilePhone" name="mobilePhone" class="inputMobilePhone" maxlength="13"/>
+				<label for="mobilePhone">핸드폰 번호<span class="join-key">*</span></label>
+				<input type="text" id="mobilePhone" name="mobilePhone" class="inputMobilePhone" maxlength="13"/>
+			</div>
 
 			<label for="email">이메일<span class="join-key">*</span></label>
-			<input type="text" id="preEmail" class="inputemail"/>
-			<form>
+			<input type="text" name="email" class="inputemail" th:field="*{email}" th:if="${signupForm.signupType} == '2'" readonly/>
+			<input type="text" id="preEmail" class="inputemail" th:field="*{email}" th:unless="${signupForm.signupType} == '2'"/>
+			<form th:unless="${signupForm.signupType} == '2'">
 				<select id="slctEmail" class="slct-email">
 					<option value="@naver.com">@naver.com</option>
 					<option value="@daum.net">@daum.net</option>
@@ -48,7 +53,7 @@
 					<option value="">직접입력</option>
 				</select>
 			</form>
-			<input type="hidden" id="email" name="email" value="">
+			<input type="hidden" id="email" name="email" value="" th:unless="${signupForm.signupType} == '2'" />
 			<button type="submit" class="btn-join">가입하기</button>
 		</fieldset>
 	</form>
@@ -115,8 +120,5 @@
 		email.value = _val + this.value;
 	}
 
-
-
 </script>
-
 </html>

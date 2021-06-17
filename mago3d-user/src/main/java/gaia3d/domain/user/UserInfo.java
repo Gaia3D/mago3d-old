@@ -97,6 +97,8 @@ public class UserInfo extends Search implements Serializable {
 	private String status;
 	// 로그인 타입. 1:일반(플랫폼), 2:소셜 로그인(구글, 페이스북, 네이버, 카카오)
 	private String signinType;
+	// 회원가입 타입. 1:일반(플랫폼), 2:소셜 로그인(구글, 페이스북, 네이버, 카카오)
+	private String signupType;
 	// 현재 사용자 상태값
 	private String dbStatus;
 	// 새로운 비밀번호

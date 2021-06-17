@@ -141,6 +141,7 @@ hr.h50 {clear:both; display:block; height:50px; visibility:hidden;}
 
 /* 로그인 */
 #login {width:580px; margin:0 auto; height:750px; padding:0; background:white; box-shadow: 0 0 2px rgba(132,132,132,0.6); border-radius:8px; position:absolute; top:50%; left:50%; margin-top:-380px; margin-left:-280px;}
+#signup-complete {width:580px; margin:0 auto; height:400px; padding:0; background:white; box-shadow: 0 0 2px rgba(132,132,132,0.6); border-radius:8px; position:absolute; top:50%; left:50%; margin-top:-380px; margin-left:-280px;}
 .select-lang {margin-right:30px; padding-top:30px; height:80px;}
 .language {float:right; width:70px; font-size:12px; padding-left:5px;}
 .login-wrapper img {text-align:center;}
@@ -178,7 +179,9 @@ span.mago {color:#6649ca;}
 #join span.txt-guide {clear:both; display:inline-block; margin-left:150px; color:#868686; margin-top:5px; font-size:12px; margin-bottom:20px;}
 #join .slct-email {float:left; display:inline-block; width:140px; font-size:15px; height:44px; padding-left:10px; margin:0;}
 #join .btn-join {clear:both; display:inline-block; margin-top:90px; font-size:23px;color:white; cursor:pointer; padding:20px 150px 22px 150px; line-height:20px; margin-left:65px; background:#396ce8; border-radius:3px; color:white; text-align:center; }
-#join .btn-join:hover, #join .btn-join:focus  {background:#2a5bd3;} 
+#join .btn-join:hover, #join .btn-join:focus  {background:#2a5bd3;}
+#signup-complete .btn-go-login {clear:both; display:inline-block; margin-top:20px; font-size:23px;color:white; cursor:pointer; padding:10px 30px 10px 30px; line-height:20px; margin-left:140px; background:#396ce8; border-radius:3px; color:white; text-align:center; }
+#signup-complete .btn-go-login:hover, #join .btn-join:focus  {background:#2a5bd3;}
 .emailtxt {display:inline-block; float:left; font-size:16px; width:20px; text-align:center; line-height:42px;}
 .join-key {font-size:18px; color:#fb522b; margin-left:3px;}
 .input-key {font-size:18px; color:#fb522b; margin-left:3px;}

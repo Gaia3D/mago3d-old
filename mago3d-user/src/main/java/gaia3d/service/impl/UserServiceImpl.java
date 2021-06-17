@@ -41,13 +41,23 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
+	 * 사용자 정보 취득(email)
+	 * @param email
+	 * @return
+	 */
+	@Transactional(readOnly=true)
+	public UserInfo getUserByEmail(String email) {
+		return userMapper.getUserByEmail(email);
+	}
+
+	/**
 	 * 사용자 등록
 	 * @param userInfo
 	 * @return
 	 */
 	@Transactional
 	public int insertUser(UserInfo userInfo) {
-		if(userInfo.getSigninType().equals("1")){
+		if(userInfo.getSignupType().equals("1")){
 			userInfo.setPassword(PasswordSupport.encodePassword(userInfo.getPassword()));
 		}
 		else{
