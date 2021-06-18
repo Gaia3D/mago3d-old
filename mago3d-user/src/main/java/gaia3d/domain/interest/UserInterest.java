@@ -16,10 +16,6 @@ public class UserInterest extends Search {
 
     // 고유 번호
     private Integer userInterestId;
-    // 지구
-    private Integer urbanId;
-    // 차수 (1차, 2차..)
-    private Integer urbanOrder;
     // 사용자 아이디
     private String userId;
     // 즐겨찾기 json

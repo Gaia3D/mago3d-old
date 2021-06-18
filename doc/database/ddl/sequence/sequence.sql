@@ -15,6 +15,13 @@ drop sequence if exists data_smart_tiling_file_info_seq;
 drop sequence if exists data_smart_tiling_file_parse_log_seq;
 drop sequence if exists data_attribute_file_info_seq;
 drop sequence if exists data_object_attribute_file_info_seq;
+drop sequence if exists data_library_group_seq;
+drop sequence if exists data_library_seq;
+drop sequence if exists data_library_upload_seq;
+drop sequence if exists data_library_upload_file_seq;
+drop sequence if exists data_library_converter_job_seq;
+drop sequence if exists data_library_converter_job_file_seq;
+
 drop sequence if exists geopolicy_seq;
 drop sequence if exists issue_seq;
 drop sequence if exists issue_detail_seq;
@@ -29,6 +36,8 @@ drop sequence if exists micro_service_seq;
 drop sequence if exists micro_service_log_seq;
 drop sequence if exists policy_seq;
 drop sequence if exists role_seq;
+drop sequence if exists rule_seq;
+drop sequence if exists rule_group_seq;
 drop sequence if exists tile_info_seq;
 drop sequence if exists tile_data_group_seq;
 drop sequence if exists tile_log_seq;
@@ -58,6 +67,13 @@ create sequence data_file_parse_log_seq increment 1 minvalue 1 maxvalue 99999999
 create sequence data_smart_tiling_file_info_seq increment 1 minvalue 1 maxvalue 9999999999999999 start 1 cache 1;
 create sequence data_smart_tiling_file_parse_log_seq increment 1 minvalue 1 maxvalue 9999999999999999 start 1 cache 1;
 create sequence data_object_attribute_file_info_seq increment 1 minvalue 1 maxvalue 9999999999999999 start 1 cache 1;
+create sequence data_library_converter_job_seq increment 1 minvalue 1 maxvalue 999999999999 start 1 cache 1;
+create sequence data_library_converter_job_file_seq increment 1 minvalue 1 maxvalue 999999999999 start 1 cache 1;
+create sequence data_library_group_seq increment 1 minvalue 1 maxvalue 999999999999 start 1000 cache 1;
+create sequence data_library_seq increment 1 minvalue 1 maxvalue 9999999999999999 start 31 cache 1;
+create sequence data_library_upload_seq increment 1 minvalue 1 maxvalue 9999999999999999 start 1 cache 1;
+create sequence data_library_upload_file_seq increment 1 minvalue 1 maxvalue 9999999999999999 start 1 cache 1;
+
 create sequence geopolicy_seq increment 1 minvalue 1 maxvalue 999999999999 start 2 cache 1;
 create sequence issue_seq increment 1 minvalue 1 maxvalue 9999999999999999 start 1 cache 1;
 create sequence issue_detail_seq increment 1 minvalue 1 maxvalue 9999999999999999 start 1 cache 1;
@@ -72,6 +88,8 @@ create sequence micro_service_seq increment 1 minvalue 1 maxvalue 999999999999 s
 create sequence micro_service_log_seq increment 1 minvalue 1 maxvalue 999999999999 start 10000 cache 1;
 create sequence policy_seq increment 1 minvalue 1 maxvalue 999999999999 start 2 cache 1;
 create sequence role_seq increment 1 minvalue 1 maxvalue 999999999999 start 2000 cache 1;
+create sequence rule_seq increment 1 minvalue 1 maxvalue 999999999999 start 2022 cache 1;
+create sequence rule_group_seq increment 1 minvalue 1 maxvalue 999999999999 start 2004 cache 1;
 create sequence tile_info_seq increment 1 minvalue 1 maxvalue 999999999999 start 100 cache 1;
 create sequence tile_data_group_seq increment 1 minvalue 1 maxvalue 999999999999 start 100 cache 1;
 create sequence tile_log_seq increment 1 minvalue 1 maxvalue 999999999999 start 100 cache 1;

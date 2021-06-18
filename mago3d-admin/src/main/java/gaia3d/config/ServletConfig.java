@@ -79,7 +79,7 @@ public class ServletConfig implements WebMvcConfigurer {
 					"/design-layers/insert", "/design-layers/update/**", "/design-layers/**/layer-file-infos/**", "/data-adjust-logs/status/**",
 					"/data-library-uploads", "/datas/attributes",
 					"/rule/**", "/rules/**", "/rule-template/**", "/rule-templates/**",
-					"/upload-datas", "/users/status", "/user-groups/urban-groups", "/user-groups/role", "/user-groups/micro-services",
+					"/upload-datas", "/users/status", "/user-groups/role", "/user-groups/micro-services",
 					"/guide/**", "/css/**", "/externlib/**", "favicon*", "/images/**", "/js/**");
 		registry.addInterceptor(logInterceptor)
 				.addPathPatterns("/**")

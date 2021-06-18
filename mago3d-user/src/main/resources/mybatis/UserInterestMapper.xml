@@ -10,12 +10,6 @@
             <if test="userId != null and userId != ''">
                 user_id = #{userId}
             </if>
-            <if test="urbanId != null">
-                AND urban_id = #{urbanId}
-            </if>
-            <if test="urban_order != null">
-                AND urban_order = #{urbanOrder}
-            </if>
             <if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
                 AND ${searchWord} = #{searchValue}
             </if>
@@ -42,12 +36,6 @@
         <trim prefix="WHERE" prefixOverrides="AND">
             <if test="userId != null and userId != ''">
                 user_id = #{userId}
-            </if>
-            <if test="urbanId != null">
-                AND urban_id = #{urbanId}
-            </if>
-            <if test="urban_order != null">
-                AND urban_order = #{urbanOrder}
             </if>
             <if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
                 AND ${searchWord} = #{searchValue}
@@ -85,12 +73,6 @@
             <if test="userId != null and userId != ''">
                 AND user_id = #{userId}
             </if>
-            <if test="urbanId != null">
-                AND urban_id = #{urbanId}
-            </if>
-            <if test="urbanOrder != null">
-                AND urban_order = #{urbanOrder}
-            </if>
         </trim>
     </select>
 
@@ -104,13 +86,13 @@
             <if test="contents != null and contents != ''">
                 contents,
             </if>
-            urban_id, urban_order, user_id
+            user_id
         ) VALUES (
             #{userInterestId},
             <if test="contents != null and contents != ''">
                 #{contents}::jsonb,
             </if>
-            #{urbanId}, #{urbanOrder}, #{userId}
+            #{userId}
         )
     </insert>
 
@@ -126,12 +108,6 @@
         <if test="userId != null and userId != ''">
             AND user_id = #{userId}
         </if>
-        <if test="urbanId != null">
-            AND urban_id = #{urbanId}
-        </if>
-        <if test="urbanOrder != null">
-            AND urban_order = #{urbanOrder}
-        </if>
     </update>
 
     <delete id="deleteUserInterest" parameterType="userInterest">
@@ -141,12 +117,6 @@
         WHERE user_interest_id = #{userInterestId}
         <if test="userId != null and userId != ''">
             AND user_id = #{userId}
-        </if>
-        <if test="urbanId != null">
-            AND urban_id = #{urbanId}
-        </if>
-        <if test="urbanOrder != null">
-            AND urban_order = #{urbanOrder}
         </if>
     </delete>
 

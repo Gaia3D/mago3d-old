@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
+<head>
+	<title>3D 라이브러리 수정</title>
+	<th:block layout:fragment="pageCustomStyle">
+		<link rel="shortcut icon" th:href="@{/images/favicon.ico(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/externlib/cesium/Widgets/widgets.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
+		<script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
+		<script type="text/javascript" th:src="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.js(cacheVersion=${contentCacheVersion})}"></script>
+	</th:block>
+</head>
+<body>
+<th:block layout:fragment="pageCustomContent">
+	<div id="siteBody" class="site-body">
+		<div class="container">
+			<div class="site-content">
+				<div th:replace="~{/fragments/sub-menu :: #subMenuWrap}"></div>
+				<div class="page-area">
+					<div th:replace="~{/fragments/page-header :: #pageHeaderWrap}"></div>
+					<div class="page-content">
+						<div class="input-header row">
+							<div class="content-desc u-pull-right">
+								<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								<th:block th:text="#{check}"></th:block>
+							</div>
+						</div>
+
+						<!-- S: 3D 라이브러리 수정 -->
+						<form id="dataLibrary" th:object="${dataLibrary}" th:action="@{#}" method="post" onsubmit="return false;">
+							<input type="hidden" name="_method" value="PUT" />
+							<input type="hidden" id="dataLibraryId" name="dataLibraryId" th:field="*{dataLibraryId}" />
+							<table class="input-table scope-row" summary="3D 라이브러리 정보 수정 테이블">
+								<caption class="hiddenTag">3D 라이브러리 정보 수정 테이블</caption>
+								<colgroup>
+				                    <col class="col-label l"></col>
+				                    <col class="col-input"></col>
+				                </colgroup>
+								<tr>
+									<th class="col-label" scope="row">3D 라이브러리 그룹명</th>
+									<td class="col-input" th:text="${dataLibrary.dataLibraryGroupName}"></td>
+								</tr>
+								<tr>
+									<th class="col-label" scope="row">3D 라이브러리 Key</th>
+									<td class="col-input" th:text="${dataLibrary.dataLibraryKey}"></td>
+								</tr>
+								<tr>
+									<th class="col-label" scope="row">3D 라이브러리명</th>
+									<td class="col-input" th:text="${dataLibrary.dataLibraryName}"></td>
+								</tr>
+								<tr>
+									<th class="col-label" scope="row">
+						            	<label for="status" th:text="상태"></label>
+						                <span class="icon-glyph glyph-emark-dot color-warning"></span>
+									</th>
+									<td class="col-input">
+										<select id="status" name="status" class="selectBoxClass">
+											<option value="processing">변환중 </option>
+											<option value="use">사용중</option>
+											<option value="unused">사용중지</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th class="col-label" scope="row">
+										<label for="ruleName">Rule</label>
+										<span class="icon-glyph glyph-emark-dot color-warning"></span>
+									</th>
+									<td class="col-input">
+										<input type="text" id="ruleName" name="ruleName" th:field="*{ruleName}" class="m" readonly="true" />
+										<input type="button" id="ruleButton" value="가시화 Rule 선택" />
+										<input type="hidden" id="ruleId" name="ruleId" th:field="*{ruleId}" />
+									</td>
+								</tr>
+								<tr>
+									<th class="col-label l" scope="row">
+										<label for="description" th:text="#{description}"></label>
+									</th>
+									<td class="col-input">
+										<input type="text" id="description" name="description" th:field="*{description}" class="xl" />
+									</td>
+								</tr>
+								<tr>
+									<th class="col-label" scope="row">수정일</th>
+									<td class="col-input">
+										<th:block th:text="${#temporals.format(dataLibrary.updateDate,'yyyy-MM-dd HH:mm')}"></th:block>
+									</td>
+								</tr>
+								<tr>
+									<th class="col-label" scope="row">등록일</th>
+									<td class="col-input">
+										<th:block th:text="${#temporals.format(dataLibrary.insertDate,'yyyy-MM-dd HH:mm')}"></th:block>
+									</td>
+								</tr>
+							</table>
+						</form>
+
+						<div class="button-group">
+							<div class="center-buttons">
+								<input type="submit" th:value="#{modified}" onclick="updateDataLibrary();"/>
+								<a href="/data-library/list" class="button">목록</a>
+							</div>
+						</div>
+
+						<!-- 룰 선택 -->
+						<div th:replace="~{/data-library/rule-dialog :: #ruleDialog}"></div>
+						<!-- Spinner -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+<th:block layout:fragment="pageCustomScript">				
+<script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/{lang}/map-controll.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/{lang}/ui-controll.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#status").val("[[${dataLibrary.status}]]");
+	});
+	
+	function validate() {
+	}
+
+	var ruleDialog = $( ".rulePopupDialog" ).dialog({
+		autoOpen: false,
+		height: 500,
+		width: 1000,
+		modal: true,
+		overflow : "auto",
+		resizable: false
+	});
+	// 룰 찾기
+	$( "#ruleButton" ).on( "click", function() {
+		ruleDialog.dialog( "open" );
+		ruleDialog.dialog( "option", "title", "3D 라이브러리 룰 선택");
+	});
+
+	// 룰 선택
+	function confirmRule(ruleId, ruleName) {
+		$("#ruleId").val(ruleId);
+		$("#ruleName").val(ruleName);
+		ruleDialog.dialog( "close" );
+	}
+
+	var updateDataLibraryFlag = true;
+	function updateDataLibrary() {
+		if (validate() == false) {
+			return false;
+		}
+		if(updateDataLibraryFlag) {
+			updateDataLibraryFlag = false;
+			var formData = $("#dataLibrary").serialize();
+			$.ajax({
+				url: "/data-libraries/[[${dataLibrary.dataLibraryId}]]",
+				type: "POST",
+				headers: {"X-Requested-With": "XMLHttpRequest"},
+				data: formData,
+				success: function(msg){
+					if(msg.statusCode <= 200) {
+						alert(JS_MESSAGE["update"]);
+					} else {
+						alert(JS_MESSAGE[msg.errorCode]);
+						console.log("---- " + msg.message);
+					}
+					updateDataLibraryFlag = true;
+				},
+				error:function(request, status, error){
+					alert(JS_MESSAGE["ajax.error.message"]);
+					updateDataLibraryFlag = true;
+				}
+			});
+		} else {
+			alert(JS_MESSAGE["button.dobule.click"]);
+		}
+	}
+</script>
+</th:block>	
+</body>
+</html>

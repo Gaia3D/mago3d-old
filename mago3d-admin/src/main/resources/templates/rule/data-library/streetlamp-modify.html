@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
+<head>
+	<title>Rule 수정</title>
+	<th:block layout:fragment="pageCustomStyle">
+		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+	</th:block>
+</head>
+<body>
+<th:block layout:fragment="pageCustomContent">
+	<div id="siteBody" class="site-body">
+		<div class="container">
+			<div class="site-content">
+				<div th:replace="~{/fragments/sub-menu :: #subMenuWrap}"></div>
+				<div class="page-area">
+					<div th:replace="~{/fragments/page-header :: #pageHeaderWrap}"></div>
+					<div class="page-content">
+						<form id="rule" th:object="${rule}" method="post" action="" onsubmit="return false;">
+							<input type="hidden" name="_method" value="PUT" />
+							<input type="hidden" id="ruleGroupId" name="ruleGroupId" th:value="${rule.ruleGroupId}" />
+
+						<table class="input-table scope-row" summary="가로등 Rule 수정">
+						<caption class="hiddenTag">가로등 Rule 수정</caption>
+							<col class="col-label l" />
+							<col class="col-input" />
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="ruleType">타입</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<select id="ruleType" name="ruleType" class="selectBoxClass" >
+										<option value="data_library"> 데이터 라이브러리 </option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									룰 그룹명
+								</th>
+								<td class="col-input"><th:block th:text="${ruleGroup.ruleGroupName}"></th:block></td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="ruleName">룰명</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input"><input type="text" id="ruleName" name="ruleName" th:field="*{ruleName}" class="l" size="70" /></td>
+							</tr>
+							<tr>
+								<th class="col-label" scope="row">
+									룰 Key(영문,숫자,-,_)
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<input type="text" id="ruleKey" name="ruleKey" th:field="*{ruleKey}" readonly="readonly" class="l" />
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									용도
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input radio-set">
+									<input type="radio" id="assembleFalse" name="assemble" value="false" />
+									<label for="assembleFalse">단일형</label>
+									<input type="radio" id="assembleTrue" name="assemble" value="true" />
+									<label for="assembleTrue">복합형</label>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									사용 여부
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input radio-set">
+									<input type="radio" id="availableTrue" name="available" value="true" checked />
+									<label for="availableTrue">사용</label>
+									<input type="radio" id="availableFalse" name="available" value="false" />
+									<label for="availableFalse">미사용</label>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									그리기 유형
+								</th>
+								<td class="col-input">
+									<select id="drawType" name="drawType" class="selectBoxClass">
+										<option th:value="point"> 점(Point) </option>
+										<option th:value="line"> 라인(Line) </option>
+										<option th:value="both"> 혼합(Point, Line) </option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="localCoordinateX">조명 시작점(x,y,z)</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<input type="text" id="localCoordinateX" name="localCoordinateX" class="m" />
+									<input type="text" id="localCoordinateY" name="localCoordinateY" class="m" />
+									<input type="text" id="localCoordinateZ" name="localCoordinateZ" class="m" />
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="directionX">조명 방향(x,y,z)</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<input type="text" id="directionX" name="directionX" class="m" />
+									<input type="text" id="directionY" name="directionY" class="m" />
+									<input type="text" id="directionZ" name="directionZ" class="m" />
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="degreeMain">조명 각도(주,보조)</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<input type="text" id="degreeMain" name="degreeMain" class="m" />
+									<input type="text" id="degreeSub" name="degreeSub" class="m" />
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="heightMain">조명 높이(주,보조)</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<input type="text" id="heightMain" name="heightMain" class="m" />
+									<input type="text" id="heightSub" name="heightSub" class="m" />
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row"><label for="lumen">밝기(단위 : lumen)</label></th>
+								<td class="col-input">
+									<input type="text" id="lumen" name="lumen" class="m" />
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="colorR">색상(R,G,B)</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<input type="text" id="colorR" name="colorR" class="m" />
+									<input type="text" id="colorG" name="colorG" class="m" />
+									<input type="text" id="colorB" name="colorB" class="m" />
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row"><label for="description">설명</label></th>
+								<td class="col-input"><input type="text" id="description" name="description" th:field="*{description}" class="xl" size="100" /></td>
+							</tr>
+						</table>
+						<div class="button-group">
+							<div id="insertRoleLink" class="center-buttons">
+								<input type="submit" value="저장" onclick="update();" />
+								<a href="/rule/list" class="button">목록</a>
+							</div>
+						</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+<th:block layout:fragment="pageCustomScript">
+
+	<script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.js(cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/navigation.js(cacheVersion=${contentCacheVersion})}"></script>
+
+<script th:inline="javascript">
+	$(document).ready(function() {
+		var attributes = JSON.parse(/*[[${rule.attributes}]]*/"");
+
+		$("[name=assemble]").filter("[value='" + attributes.assemble + "']").prop("checked",true);
+		$("[name=available]").filter("[value='[[${rule.available}]]']").prop("checked",true);
+		$("#drawType").val(attributes.drawType);
+
+		$("#localCoordinateX").val(attributes.localCoordinateX);
+		$("#localCoordinateY").val(attributes.localCoordinateY);
+		$("#localCoordinateZ").val(attributes.localCoordinateZ);
+
+		$("#directionX").val(attributes.directionX);
+		$("#directionY").val(attributes.directionY);
+		$("#directionZ").val(attributes.directionZ);
+
+		$("#degreeMain").val(attributes.degreeMain);
+		$("#degreeSub").val(attributes.degreeSub);
+
+		$("#heightMain").val(attributes.heightMain);
+		$("#heightSub").val(attributes.heightSub);
+
+		$("#lumen").val(attributes.lumen);
+
+		$("#colorR").val(attributes.colorR);
+		$("#colorG").val(attributes.colorG);
+		$("#colorB").val(attributes.colorB);
+	});
+
+	function validate() {
+		if( $("#ruleName").val().trim() === "" ) {
+			alert("Rule 명을 입력하여 주십시오.");
+			$("#ruleName").focus();
+			return false;
+		}
+	}
+
+	// 저장
+	var updateRuleFlag = true;
+	function update() {
+		if (validate() == false) {
+			return false;
+		}
+		if(updateRuleFlag) {
+			updateRuleFlag = false;
+			var formData = $("#rule").serialize();
+			$.ajax({
+				url: "/rules/streetlamps/[[${rule.ruleId}]]",
+				type: "POST",
+				headers: {"X-Requested-With": "XMLHttpRequest"},
+				data: formData,
+				success: function(msg){
+					if(msg.statusCode <= 200) {
+						alert(JS_MESSAGE["update"]);
+						//window.location.reload();
+					} else {
+						alert(JS_MESSAGE[msg.errorCode]);
+						console.log("---- " + msg.message);
+					}
+					updateRuleFlag = true;
+				},
+				error:function(request, status, error){
+					alert(JS_MESSAGE["ajax.error.message"]);
+					updateRuleFlag = true;
+				}
+			});
+		} else {
+			alert(JS_MESSAGE["button.dobule.click"]);
+		}
+	}
+</script>
+</th:block>
+</body>
+</html>

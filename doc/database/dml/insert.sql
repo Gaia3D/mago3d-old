@@ -54,6 +54,32 @@ values
     (55, '0', '1', '2D 레이어 등록', 'LAYER', 5, 5, 2, 2, 5, '/layer/input', '/layer/list', null, 'glyph-stack', 'N', 'Y', 'N'),
     (56, '0', '1', '2D 레이어 수정', 'LAYER', 5, 5, 2, 2, 6, '/layer/modify', '/layer/list', null, 'glyph-stack', 'N', 'Y', 'N'),
 
+    (7, '0', '1', '3D 라이브러리', '3D LIBRARY', 7, 0, 1, 2, 7, '/data-library-group/list', null, null, 'glyph-office', 'Y', 'Y', 'Y'),
+    (71, '0', '1', '3D 라이브러리 그룹', '3D LIBRARY', 7, 7, 2, 1, 1, '/data-library-group/list', null, null, 'glyph-office', 'Y', 'Y', 'Y'),
+    (72, '0', '1', '3D 라이브러리 그룹 등록', '3D LIBRARY', 7, 7, 2, 2, 2, '/data-library-group/input', '/data-library-group/list', null, 'glyph-office', 'N', 'Y', 'N'),
+    (73, '0', '1', '3D 라이브러리 그룹 수정', '3D LIBRARY', 7, 7, 2, 2, 3, '/data-library-group/modify', '/data-library-group/list', null, 'glyph-office', 'N', 'Y', 'N'),
+    (74, '0', '1', '3D 라이브러리 업로드', '3D LIBRARY', 7, 7, 2, 2, 4, '/data-library-upload/input', null, null, 'glyph-monitor', 'Y', 'Y', 'Y'),
+    (75, '0', '1', '3D 라이브러리 업로드 목록', '3D LIBRARY', 7, 7, 2, 2, 5, '/data-library-upload/list', null, null, 'glyph-monitor', 'Y', 'Y', 'Y'),
+    (76, '0', '1', '3D 라이브러리 업로드 수정', '3D LIBRARY', 7, 7, 2, 2, 6, '/data-library-upload/modify', '/data-library-upload/list', null, 'glyph-monitor', 'N', 'Y', 'N'),
+    (77, '0', '1', '3D 라이브러리 변환 결과', '3D LIBRARY', 7, 7, 2, 2, 7, '/data-library-converter/list', null, null, 'glyph-monitor', 'Y', 'Y', 'Y'),
+    (78, '0', '1', '3D 라이브러리 목록', '3D LIBRARY', 7, 7, 2, 2, 8, '/data-library/list', null, null, 'glyph-desktop', 'Y', 'Y', 'Y'),
+    (79, '0', '1', '3D 라이브러리 수정', '3D LIBRARY', 7, 7, 2, 2, 9, '/data-library/modify', '/data-library/list', null, 'glyph-desktop', 'N', 'Y', 'N'),
+
+    (101, '0', '1', 'Business Rule', 'BRMS', 101, 0, 1, 2, 8, '/rule-group/list', null, null, 'glyph-desktop', 'Y', 'Y', 'Y'),
+    (111, '0', '1', '룰 그룹', 'BRMS', 101, 101, 2, 1, 1, '/rule-group/list', null, null, 'glyph-desktop', 'Y', 'Y', 'Y'),
+    (112, '0', '1', '룰 그룹 등록', 'BRMS', 101, 101, 2, 2, 2, '/rule-group/input', '/rule-group/list', null, 'glyph-desktop', 'N', 'Y', 'N'),
+    (113, '0', '1', '룰 그룹 수정', 'BRMS', 101, 101, 2, 2, 3, '/rule-group/modify', '/rule-group/list', null, 'glyph-desktop', 'N', 'Y', 'N'),
+    (114, '0', '1', '룰 목록', 'BRMS', 101, 101, 2, 2, 4, '/rule/list', null, null, 'glyph-desktop', 'Y', 'Y', 'Y'),
+    (116, '0', '1', '룰 등록', 'BRMS', 101, 101, 2, 2, 6, '/rule/input', '/rule/list', null, 'glyph-desktop', 'N', 'Y', 'N'),
+    (117, '0', '1', '룰 수정', 'BRMS', 101, 101, 2, 2, 7, '/rule/modify', '/rule/list', null, 'glyph-desktop', 'N', 'Y', 'N'),
+
+	(201, '0', '1', '디지털트윈 서비스', 'DIGITALTWIN SERVICE', 201, 0, 1, 2, 9, '/micro-service/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
+	(211, '0', '1', '디지털트윈 서비스 목록', 'DIGITALTWIN SERVICE', 201, 201, 2, 1, 1, '/micro-service/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
+    (212, '0', '1', '디지털트윈 서비스 요청 이력 목록', 'DIGITALTWIN SERVICE', 201, 201, 2, 2, 2, '/log/micro-service-log/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
+    (213, '0', '1', 'Health Check', 'DIGITALTWIN SERVICE', 201, 201, 2, 2, 3, '/log/health-check-log/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
+	(214, '0', '1', '디지털트윈 서비스 등록', 'DIGITALTWIN SERVICE', 201, 201, 2, 2, 4, '/micro-service/input', '/micro-service/list', null, 'glyph-desktop', 'N', 'Y', 'N'),
+	(215, '0', '1', '디지털트윈 서비스 수정', 'DIGITALTWIN SERVICE', 201, 201, 2, 2, 5, '/micro-service/modify', '/micro-service/list', null, 'glyph-desktop', 'N', 'Y', 'N'),
+
     (401, '0', '1', '환경설정', 'CONFIGURATION', 401, 0, 1, 2, 10, '/policy/modify', null, null, 'glyph-settings', 'Y', 'Y', 'Y'),
     (411, '0', '1', '일반 운영정책', 'CONFIGURATION', 401, 401, 2, 1, 1, '/policy/modify', null, null, 'glyph-settings', 'Y', 'Y', 'Y'),
     (412, '0', '1', '공간정보 운영정책', 'CONFIGURATION', 401, 401, 2, 2, 2, '/geopolicy/modify', null, null, 'glyph-settings', 'Y', 'Y', 'Y'),
@@ -122,6 +148,32 @@ values
 	(54, 1, 54, 2, 'Y'),
 	(55, 1, 55, 2, 'Y'),
 	(56, 1, 56, 2, 'Y'),
+
+    (7, 1, 7, 2, 'Y'),
+    (71, 1, 71, 1, 'Y'),
+    (72, 1, 72, 2, 'Y'),
+    (73, 1, 73, 2, 'Y'),
+    (74, 1, 74, 2, 'Y'),
+    (75, 1, 75, 2, 'Y'),
+    (76, 1, 76, 2, 'Y'),
+    (77, 1, 77, 2, 'Y'),
+    (78, 1, 78, 2, 'Y'),
+    (79, 1, 79, 2, 'Y'),
+
+    (101, 1, 101, 2, 'Y'),
+    (111, 1, 111, 1, 'Y'),
+    (112, 1, 112, 2, 'Y'),
+    (113, 1, 113, 2, 'Y'),
+    (114, 1, 114, 2, 'Y'),
+    (116, 1, 116, 2, 'Y'),
+    (117, 1, 117, 2, 'Y'),
+
+    (201, 1, 201, 2, 'Y'),
+    (211, 1, 211, 1, 'Y'),
+    (212, 1, 212, 2, 'Y'),
+    (213, 1, 213, 2, 'Y'),
+    (214, 1, 214, 2, 'Y'),
+    (215, 1, 215, 2, 'Y'),
 
 	(401, 1, 401, 2, 'Y'),
 	(411, 1, 411, 1, 'Y'),
@@ -211,4 +263,10 @@ INSERT INTO data_group (
     ancestor, parent, depth, view_order, children, basic, available, tiling, data_count, metainfo)
 values
 (1, 'basic', '기본', 'infra/data/basic/', 'admin', 'common', 'admin', 1, 0, 1, 1, 0, true, true, false, 0,  TO_JSON('{"isPhysical": false}'::json));
+
+INSERT INTO data_library_group (
+    data_library_group_id, data_library_group_key, data_library_group_name, data_library_group_path, data_library_group_target, sharing, user_id,
+    ancestor, parent, depth, view_order, children, basic, available, data_library_count)
+values
+(1, 'basic', '기본', 'infra/data-library/basic/', 'admin', 'common', 'admin', 1, 0, 1, 1, 0, true, true, 0);
 

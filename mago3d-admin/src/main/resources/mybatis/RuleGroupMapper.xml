@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gaia3d.persistence.RuleGroupMapper">
+
+	<!-- 룰 그룹 목록 -->
+	<select id="getListRuleGroup" resultType="ruleGroup" parameterType="ruleGroup">
+		/* getListRuleGroup */
+		WITH RECURSIVE rule_group_tree (
+			rule_group_id, rule_group_name, rule_group_key, rule_type, rule_inherit_type, user_id,
+			ancestor, parent, depth, view_order, basic, available, description, insert_date,
+			path, cycle
+		) AS (
+			SELECT A.rule_group_id, A.rule_group_name, A.rule_group_key, A.rule_type, A.rule_inherit_type, A.user_id,
+				A.ancestor, A.parent, A.depth, A.view_order, A.basic, A.available, A.description, A.insert_date,
+				ARRAY[A.view_order], false
+			FROM rule_group A
+			WHERE A.parent = 0
+				<if test="available != null">
+					AND A.available = #{available}
+				</if>
+				<if test="ruleGroupId != null and ruleGroupId > 0">
+					AND A.rule_group_id = #{ruleGroupId}
+				</if>
+			UNION ALL
+			SELECT A.rule_group_id, A.rule_group_name, A.rule_group_key, A.rule_type, A.rule_inherit_type, A.user_id,
+				A.ancestor, A.parent, A.depth, A.view_order, A.basic, A.available, A.description, A.insert_date,
+				path || A.view_order, A.rule_group_id = ANY(path)
+			FROM rule_group A, rule_group_tree B
+			WHERE A.parent = B.rule_group_id AND not cycle
+		)
+		SELECT rule_group_id, rule_group_name, rule_group_key, rule_type, rule_inherit_type, user_id,
+			ancestor, parent, depth, view_order, basic, available, description, insert_date,
+			path
+		FROM rule_group_tree
+		ORDER BY path
+	</select>
+
+	<!-- 룰 그룹 정보 -->
+	<select id="getRuleGroup" parameterType="ruleGroup" resultType="ruleGroup">
+		/* getRuleGroup */
+		SELECT A.*,
+			(SELECT rule_group_name FROM rule_group WHERE rule_group_id = A.rule_group_id) AS parentName
+		FROM (
+			SELECT *
+			FROM rule_group
+			WHERE rule_group_id = #{ruleGroupId}
+			<if test="userId != null and userId != ''">AND user_id = #{userId}
+			</if>
+		) A
+	</select>
+
+	<!-- 룰 그룹 Key 중복 확인 -->
+	<select id="isRuleGroupKeyDuplication" parameterType="ruleGroup" resultType="boolean">
+		/* isRuleGroupKeyDuplication */
+		SELECT 
+			CASE 
+				WHEN COUNT(*) > 0 THEN true
+				ELSE false
+			END AS duplication
+		FROM rule_group
+		WHERE rule_group_key = #{ruleGroupKey}
+		<if test="userId != null and userId != ''">
+			AND user_id = #{userId}
+		</if>
+	</select>
+
+	<!-- 부모와 순서를 가지고 룰 그룹 정보를 취득 -->
+	<select id="getRuleGroupByParentAndViewOrder" parameterType="ruleGroup" resultType="ruleGroup">
+		/* getRuleGroupByParentAndViewOrder */
+		SELECT A.*,
+			(SELECT rule_group_name FROM rule_group WHERE rule_group_id = A.rule_group_id) AS parentName
+		FROM (
+			SELECT *
+			FROM rule_group
+			WHERE parent = #{parent}
+			<if test="updateType == 'UP'.toString()">
+				<![CDATA[
+				AND view_order < #{viewOrder}
+				]]>
+				ORDER BY view_order DESC
+			</if>
+			<if test="updateType == 'DOWN'.toString()">
+				<![CDATA[
+				AND view_order > #{viewOrder}
+				]]>
+				ORDER BY view_order
+			</if>
+			LIMIT 1
+		) A
+	</select>
+
+	<!-- 최상위 룰 그룹 정보 -->
+	<select id="getAncestorRuleGroupByRuleGroupId" parameterType="int" resultType="ruleGroup">
+		/* getAncestorRuleGroupByRuleGroupId */
+		SELECT *
+		FROM rule_group
+		WHERE rule_group_id = (SELECT ancestor FROM rule_group WHERE rule_group_id = #{value} )
+	</select>
+	
+	<!-- 룰 그룹 등록 -->
+	<insert id="insertRuleGroup" parameterType="ruleGroup">
+		/* insertRule */
+		<selectKey keyProperty="ruleGroupId" resultType="int" order="BEFORE">
+    		SELECT NEXTVAL('rule_group_seq')
+  		</selectKey>
+		INSERT INTO rule_group (
+			rule_group_id, rule_group_name, rule_group_key, rule_type, rule_inherit_type, user_id,
+		    ancestor, parent, depth, view_order,
+		    basic, available, description
+		) VALUES (
+			#{ruleGroupId}, #{ruleGroupName}, #{ruleGroupKey},  #{ruleType}, #{ruleInheritType}, #{userId},
+			(
+				SELECT COALESCE(MAX(ancestor), #{ruleGroupId})
+				FROM rule_group
+				WHERE rule_group_id = #{parent}
+				AND rule_group_id != 0
+			),
+			#{parent},
+			(
+				SELECT COALESCE(MAX(depth),  0 ) + 1
+				FROM rule_group
+				WHERE rule_group_id = #{parent}
+			),
+			(
+				SELECT COALESCE(MAX(view_order), 0) + 1
+				FROM rule_group
+				WHERE parent = #{parent}
+			),
+			COALESCE(#{basic}, false), #{available}, trim(#{description})
+		)
+	</insert>
+
+	<!-- 룰 그룹 수정 -->
+	<update id="updateRuleGroup" parameterType="ruleGroup">
+		/* updateRuleGroup */
+		UPDATE rule_group
+		SET
+			<if test="ruleGroupName != null and ruleGroupName != ''">
+			rule_group_name = #{ruleGroupName},
+			</if>
+			<if test="ruleGroupKey != null and ruleGroupKey != ''">
+				rule_group_key = #{ruleGroupKey},
+			</if>
+			<if test="ruleType != null and ruleType != ''">
+				rule_type = #{ruleType},
+			</if>
+			<if test="ruleInheritType != null">
+				rule_inherit_type = #{ruleInheritType},
+			</if>
+			<if test="ancestor != null and ancestor gt 0">
+				ancestor = #{ancestor},
+			</if>
+			<if test="parent != null and parent gt 0">
+				parent = #{parent},
+			</if>
+			<if test="depth != null and depth gt 0">
+				depth = #{depth},
+			</if>
+			<if test="viewOrder != null and viewOrder gt 0">
+				view_order = #{viewOrder},
+			</if>
+			<if test="basic != null">
+				basic = #{basic},
+			</if>
+		    <if test="available != null">
+				available = #{available},
+			</if>
+			<if test="description != null and description != ''">
+				description = #{description},
+			</if>
+				update_date = NOW()
+		WHERE rule_group_id = #{ruleGroupId}
+		<if test="userId != null and userId != ''">
+			AND user_id = #{userId}
+		</if>
+	</update>
+
+	<!-- 룰 그룹 순서 수정 -->
+	<update id="updateRuleGroupViewOrder" parameterType="ruleGroup">
+		/* updateRuleGroupViewOrder */
+		UPDATE rule_group
+		SET view_order = #{viewOrder}
+		WHERE rule_group_id = #{ruleGroupId}
+	</update>
+
+	<!-- 룰 그룹 삭제 -->
+	<delete id="deleteRuleGroup" parameterType="ruleGroup">
+		/* deleteRuleGroup */
+		DELETE
+		FROM rule_group
+		WHERE rule_group_id = #{ruleGroupId}
+		<if test="userId != null and userId != ''">
+			AND user_id = #{userId}
+		</if>
+	</delete>
+
+</mapper>

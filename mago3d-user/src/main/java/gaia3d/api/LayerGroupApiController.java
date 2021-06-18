@@ -36,10 +36,9 @@ public class LayerGroupApiController {
      * @return
      */
     @GetMapping(produces = "application/json; charset=UTF-8")
-    public ResponseEntity<CollectionModel<EntityModel<LayerGroupDto>>> getLayerGroups(HttpServletRequest request, @RequestParam(required = false) Integer urbanGroupId) {
+    public ResponseEntity<CollectionModel<EntityModel<LayerGroupDto>>> getLayerGroups(HttpServletRequest request) {
         UserSession userSession = (UserSession) request.getSession().getAttribute(Key.USER_SESSION.name());
         CollectionModel<EntityModel<LayerGroupDto>> model = getLayerGroupList(LayerGroup.builder()
-                //.urbanGroupId(urbanGroupId)
                 .userGroupId(userSession.getUserGroupId())
                 .build());
 

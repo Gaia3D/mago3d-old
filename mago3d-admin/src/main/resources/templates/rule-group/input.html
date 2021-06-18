@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
+<head>
+	<title>룰 그룹 등록</title>
+	<th:block layout:fragment="pageCustomStyle">
+		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+	</th:block>
+</head>
+<body>
+<th:block layout:fragment="pageCustomContent">
+	<div id="siteBody" class="site-body">
+		<div class="container">
+			<div class="site-content">
+				<div th:replace="~{/fragments/sub-menu :: #subMenuWrap}"></div>
+				<div class="page-area">
+					<div th:replace="~{/fragments/page-header :: #pageHeaderWrap}"></div>
+					<div class="page-content">
+						<div class="input-header row">
+							<div class="content-desc u-pull-right">
+								<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								<th:block th:text="#{check}"></th:block>
+							</div>
+						</div>
+						<form id="ruleGroup" th:object="${ruleGroup}" method="post" th:action="@{#}" onsubmit="return false;">
+							<table class="input-table scope-row" summary="룰 그룹 등록 테이블">
+								<caption class="hiddenTag">룰 그룹 등록</caption>
+								<colgroup>
+									<col class="col-label l"></col>
+									<col class="col-input"></col>
+								</colgroup>
+								<tr>
+									<th class="col-label" scope="row">
+										<label for="ruleType">룰 타입</label>
+										<span class="icon-glyph glyph-emark-dot color-warning"></span>
+									</th>
+									<td class="col-input">
+										<select id="ruleType" name="ruleType" class="selectBoxClass">
+											<option value="data"> 데이터 </option>
+											<option value="data_library"> 데이터 라이브러리 </option>
+											<option value="layer"> 레이어 </option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th class="col-label" scope="row">
+										<label for="ruleGroupName">룰 그룹명</label>
+										<span class="icon-glyph glyph-emark-dot color-warning"></span>
+									</th>
+									<td class="col-input">
+										<input type="text" id="ruleGroupName" name="ruleGroupName" class="l" maxlength="100" />
+									</td>
+								</tr>
+								<tr>
+									<th class="col-label" scope="row">
+										<label for="ruleGroupKey">룰 그룹 Key(영문,숫자,-,_)</label>
+										<span class="icon-glyph glyph-emark-dot color-warning"></span>
+									</th>
+									<td class="col-input">
+										<input type="hidden" id="duplicationValue" name="duplicationValue" />
+										<input type="text" id="ruleGroupKey" name="ruleGroupKey" class="l" />
+										<input type="button" id="duplicationButton" th:value="#{overlap.check}" />
+									</td>
+								</tr>
+								<tr>
+									<th class="col-label" scope="row">
+										<label for="parentName">상위 룰 그룹</label>
+										<span class="icon-glyph glyph-emark-dot color-warning"></span>
+									</th>
+									<td class="col-input">
+										<input type="hidden" id="parent" name="parent" />
+										<input type="text" id="parentName" name="parentName" class="l" th:value="${ruleGroup.parentName}" readonly="readonly" />
+										<input type="button" id="ruleGroupButton" value="상위 데이터 그룹 선택" />
+									</td>
+								</tr>
+								<tr>
+									<th class="col-label l" scope="row">
+										최상위 룰 상속 여부
+										<span class="icon-glyph glyph-emark-dot color-warning"></span>
+									</th>
+									<td class="col-input radio-set">
+										<input type="radio" id="ruleInheritTypeTrue" name="ruleInheritType" value="true" checked />
+										<label for="ruleInheritTypeTrue">사용</label>
+										<input type="radio" id="ruleInheritTypeFalse" name="ruleInheritType" value="false" />
+										<label for="ruleInheritTypeFalse">미사용</label>
+									</td>
+								</tr>
+								<tr>
+									<th class="col-label l" scope="row">
+										사용 여부
+										<span class="icon-glyph glyph-emark-dot color-warning"></span>
+									</th>
+									<td class="col-input radio-set">
+										<input type="radio" id="availableTrue" name="available" value="true" checked />
+										<label for="availableTrue">사용</label>
+										<input type="radio" id="availableFalse" name="available" value="false" />
+										<label for="availableFalse">미사용</label>
+									</td>
+								</tr>
+								<tr>
+									<th class="col-label l" scope="row">
+										<label for="description" th:text="#{description}"></label>
+									</th>
+									<td class="col-input">
+										<input type="text" id="description" name="description" class="xl" />
+									</td>
+								</tr>
+							</table>
+							<div class="button-group">
+								<div class="center-buttons">
+									<input type="submit" th:value="#{save}" onclick="insertRuleGroup();" />
+									<a href="/rule-group/list" class="button">목록</a>
+								</div>
+							</div>
+						</form>
+					</div>
+					<!-- 상위 룰 그룹 선택 다이얼 로그 -->
+					<div th:replace="~{/rule-group/rule-group-dialog :: #ruleGroupDialog}"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+<th:block layout:fragment="pageCustomScript">
+
+	<script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.js(cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/navigation.js(cacheVersion=${contentCacheVersion})}"></script>
+
+	<script th:inline="javascript">
+		$(document).ready(function() {
+		});
+
+		// 데이터 그룹 중복 확인
+		$( "#duplicationButton" ).on( "click", function() {
+			var ruleGroupKey = $("#ruleGroupKey").val();
+			if (ruleGroupKey == "") {
+				alert("룰 그룹  그룹키(한글불가)를 입력해 주세요.");
+				$("#ruleGroupKey").focus();
+				return false;
+			}
+
+			var regDataGroupKey = /^[a-zA-Z0-9-_]+$/;
+			if (!regDataGroupKey.test(document.getElementById("ruleGroupKey").value)) {
+				alert("룰 그룹  그룹키(한글불가)가 올바르지 않습니다.");
+				return false;
+			}
+
+			var formData = "ruleGroupKey=" + ruleGroupKey;
+			$.ajax({
+				url: "/rule-groups/duplication",
+				type: "GET",
+				headers: {"X-Requested-With": "XMLHttpRequest"},
+				data: formData,
+				dataType: "json",
+				success: function(msg){
+					if(msg.statusCode <= 200) {
+						if(msg.duplication == true) {
+							alert(JS_MESSAGE["rule.group.key.duplication"]);
+							$("#ruleGroupKey").focus();
+							$("#duplicationValue").val("");
+						} else {
+							alert(JS_MESSAGE["rule.group.key.enable"]);
+							$("#duplicationValue").val(msg.duplication);
+						}
+					} else {
+						alert(JS_MESSAGE[msg.errorCode]);
+						console.log("---- " + msg.message);
+					}
+				},
+				error:function(request, status, error) {
+					//alert(JS_MESSAGE["ajax.error.message"]);
+					alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+				}
+			});
+		});
+
+		function validate() {
+			var number = /^[0-9]+$/;
+			if ($("#ruleGroupName").val() === null || $("#ruleGroupName").val() === "") {
+				alert("룰 그룹 그룹명을 입력해 주세요.");
+				$("#ruleGroupName").focus();
+				return false;
+			}
+			var duplicationValue = $("#duplicationValue").val();
+			if (duplicationValue === null || duplicationValue === "") {
+				alert(JS_MESSAGE["rule.group.key.duplication.check"]);
+				$("#ruleGroupKey").focus();
+				return false;
+			} else if (duplicationValue === "true") {
+				alert(JS_MESSAGE["rule.group.key.duplication"]);
+				$("#ruleGroupKey").focus();
+				return false;
+			}
+			if ($("#ruleGroupKey").val() === null || $("#ruleGroupKey").val() === "") {
+				alert("룰 그룹 그룹키(한글불가)를 입력해 주세요.");
+				$("#ruleGroupKey").focus();
+				return false;
+			}
+			if($("#parent").val() === null || $("#parent").val() === "" || !number.test($("#parent").val())) {
+				alert("상위 룰 그룹을 선택해 주세요.");
+				$("#parent").focus();
+				return false;
+			}
+		}
+
+		// 저장
+		var insertRuleGroupFlag = true;
+		function insertRuleGroup() {
+			if (validate() == false) {
+				return false;
+			}
+			if(insertRuleGroupFlag) {
+				insertRuleGroupFlag = false;
+				var formData = $("#ruleGroup").serialize();
+				$.ajax({
+					url: "/rule-groups",
+					type: "POST",
+					headers: {"X-Requested-With": "XMLHttpRequest"},
+					data: formData,
+					success: function(msg){
+						if(msg.statusCode <= 200) {
+							alert(JS_MESSAGE["insert"]);
+							window.location.reload();
+						} else {
+							alert(JS_MESSAGE[msg.errorCode]);
+							console.log("---- " + msg.message);
+						}
+						insertRuleGroupFlag = true;
+					},
+					error:function(request, status, error){
+						alert(JS_MESSAGE["ajax.error.message"]);
+						insertRuleGroupFlag = true;
+					}
+				});
+			} else {
+				alert(JS_MESSAGE["button.dobule.click"]);
+			}
+		}
+
+		var ruleGroupDialog = $( ".dialog" ).dialog({
+			autoOpen: false,
+			height: 500,
+			width: 1000,
+			modal: true,
+			overflow : "auto",
+			resizable: false
+		});
+
+		// 상위 룰 그룹 그룹 찾기
+		$( "#ruleGroupButton" ).on( "click", function() {
+			ruleGroupDialog.dialog( "open" );
+			ruleGroupDialog.dialog( "option", "title", "룰 그룹 그룹 선택");
+		});
+
+		// 다이얼로그에서 선택
+		function confirmParent(parent, parentName) {
+			$("#parent").val(parent);
+			$("#parentName").val(parentName);
+			ruleGroupDialog.dialog( "close" );
+		}
+
+		$( "#ruleDialogClose" ).on( "click", function() {
+			ruleGroupDialog.dialog( "close" );
+		});
+	</script>
+</th:block>
+</body>
+</html>

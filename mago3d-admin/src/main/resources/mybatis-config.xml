@@ -28,6 +28,13 @@
 		<typeAlias type="gaia3d.domain.data.DataInfo" alias="dataInfo" />
 		<typeAlias type="gaia3d.domain.data.DataInfoSimple" alias="dataInfoSimple" />
 		<typeAlias type="gaia3d.domain.data.DataInfoLog" alias="dataInfoLog" />
+		<typeAlias type="gaia3d.domain.datalibrary.DataLibraryConverterJob" alias="dataLibraryConverterJob" />
+		<typeAlias type="gaia3d.domain.datalibrary.DataLibraryConverterJobFile" alias="dataLibraryConverterJobFile" />
+		<typeAlias type="gaia3d.domain.datalibrary.DataLibraryGroup" alias="dataLibraryGroup" />
+		<typeAlias type="gaia3d.domain.datalibrary.DataLibrary" alias="dataLibrary" />
+		<typeAlias type="gaia3d.domain.datalibrary.DataLibraryUpload" alias="dataLibraryUpload" />
+		<typeAlias type="gaia3d.domain.datalibrary.DataLibraryUploadFile" alias="dataLibraryUploadFile" />
+
 		<typeAlias type="gaia3d.domain.policy.GeoPolicy" alias="geoPolicy" />
 		<typeAlias type="gaia3d.domain.healthcheck.HealthCheckLog" alias="healthCheckLog" />
 		<typeAlias type="gaia3d.domain.issue.Issue" alias="issue" />
@@ -39,6 +46,8 @@
 		<typeAlias type="gaia3d.domain.microservice.MicroServiceLog" alias="microServiceLog" />
     	<typeAlias type="gaia3d.domain.policy.Policy" alias="policy" />
     	<typeAlias type="gaia3d.domain.role.Role" alias="role" />
+		<typeAlias type="gaia3d.domain.rule.Rule" alias="rule" />
+		<typeAlias type="gaia3d.domain.rule.RuleGroup" alias="ruleGroup" />
 		<typeAlias type="gaia3d.domain.tile.TileDataGroup" alias="tileDataGroup" />
 		<typeAlias type="gaia3d.domain.tile.TileInfo" alias="tileInfo" />
 		<typeAlias type="gaia3d.domain.tile.TileLog" alias="tileLog" />

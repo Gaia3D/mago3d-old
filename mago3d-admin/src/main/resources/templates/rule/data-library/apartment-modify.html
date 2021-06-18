@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
+<head>
+	<title>Rule 수정</title>
+	<th:block layout:fragment="pageCustomStyle">
+		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+	</th:block>
+</head>
+<body>
+<th:block layout:fragment="pageCustomContent">
+	<div id="siteBody" class="site-body">
+		<div class="container">
+			<div class="site-content">
+				<div th:replace="~{/fragments/sub-menu :: #subMenuWrap}"></div>
+				<div class="page-area">
+					<div th:replace="~{/fragments/page-header :: #pageHeaderWrap}"></div>
+					<div class="page-content">
+						<form id="rule" th:object="${rule}" method="post" action="" onsubmit="return false;">
+							<input type="hidden" name="_method" value="PUT" />
+							<input type="hidden" id="ruleGroupId" name="ruleGroupId" th:value="${rule.ruleGroupId}" />
+
+						<table class="input-table scope-row" summary="아파트 Rule 수정">
+							<caption class="hiddenTag">아파트 Rule 수정</caption>
+							<col class="col-label l" />
+							<col class="col-input" />
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="ruleType">타입</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<select id="ruleType" name="ruleType" class="selectBoxClass" >
+										<option value="data_library"> 데이터 라이브러리 </option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									룰 그룹명
+								</th>
+								<td class="col-input"><th:block th:text="${ruleGroup.ruleGroupName}"></th:block></td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="ruleName">룰명</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input"><input type="text" id="ruleName" name="ruleName" th:field="*{ruleName}" class="l" size="70" /></td>
+							</tr>
+							<tr>
+								<th class="col-label" scope="row">
+									룰 Key(영문,숫자,-,_)
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<input type="text" id="ruleKey" name="ruleKey" th:field="*{ruleKey}" readonly="readonly" class="l" />
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									용도
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input radio-set">
+									<input type="radio" id="assembleFalse" name="assemble" value="false" />
+									<label for="assembleFalse">단일형</label>
+									<input type="radio" id="assembleTrue" name="assemble" value="true" />
+									<label for="assembleTrue">복합형</label>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									사용 여부
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input radio-set">
+									<input type="radio" id="availableTrue" name="available" value="true" checked />
+									<label for="availableTrue">사용</label>
+									<input type="radio" id="availableFalse" name="available" value="false" />
+									<label for="availableFalse">미사용</label>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									그리기 유형
+								</th>
+								<td class="col-input">
+									<select id="drawType" name="drawType" class="selectBoxClass">
+										<option th:value="point"> 점(Point) </option>
+										<option th:value="line"> 라인(Line) </option>
+										<option th:value="both"> 혼합(Point, Line) </option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="upperPlateId">아파트 상판 데이터 라이브러리</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<select id="upperPlateId" name="upperPlateId" class="selectBoxClass">
+										<th:block th:unless="${#lists.isEmpty(dataLibraryList)}" th:each="dataLibrary : ${dataLibraryList}">
+											<option th:value="${dataLibrary.dataLibraryId}"><th:block th:text="${dataLibrary.dataLibraryName}"></th:block></option>
+										</th:block>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="middlePlateId">아파트 중판 데이터 라이브러리</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<select id="middlePlateId" name="middlePlateId" class="selectBoxClass">
+										<th:block th:unless="${#lists.isEmpty(dataLibraryList)}" th:each="dataLibrary : ${dataLibraryList}">
+											<option th:value="${dataLibrary.dataLibraryId}"><th:block th:text="${dataLibrary.dataLibraryName}"></th:block></option>
+										</th:block>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="lowerPlateId">아파트 하판 데이터 라이브러리</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<select id="lowerPlateId" name="lowerPlateId" class="selectBoxClass">
+										<th:block th:unless="${#lists.isEmpty(dataLibraryList)}" th:each="dataLibrary : ${dataLibraryList}">
+											<option th:value="${dataLibrary.dataLibraryId}"><th:block th:text="${dataLibrary.dataLibraryName}"></th:block></option>
+										</th:block>
+									</select>
+								</td>
+							</tr>
+
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="middlePlateCopyableId">중판 복제 대상 데이터 라이브러리</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<select id="middlePlateCopyableId" name="middlePlateCopyableId" class="selectBoxClass">
+										<th:block th:unless="${#lists.isEmpty(dataLibraryList)}" th:each="dataLibrary : ${dataLibraryList}">
+											<option th:value="${dataLibrary.dataLibraryId}"><th:block th:text="${dataLibrary.dataLibraryName}"></th:block></option>
+										</th:block>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="heightUpperPlateBasicValue">상판 기본 높이</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<input type="text" id="heightUpperPlateBasicValue" name="heightUpperPlateBasicValue" class="m" />
+									<select id="heightUpperPlateBasicUnit" name="heightUpperPlateBasicUnit" class="selectBoxClass" style="margin-left: 7px;">
+										<option value="m"> M </option>
+										<option value="m"> CM </option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="heightMiddlePlateBasicValue">중판 기본 높이</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<input type="text" id="heightMiddlePlateBasicValue" name="heightMiddlePlateBasicValue" class="m" />
+									<select id="heightMiddlePlateBasicUnit" name="heightMiddlePlateBasicUnit" class="selectBoxClass" style="margin-left: 7px;">
+										<option value="m"> M </option>
+										<option value="m"> CM </option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="heightLowerPlateBasicValue">하판 기본 높이</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<input type="text" id="heightLowerPlateBasicValue" name="heightLowerPlateBasicValue" class="m" />
+									<select id="heightLowerPlateBasicUnit" name="heightLowerPlateBasicUnit" class="selectBoxClass" style="margin-left: 7px;">
+										<option value="m"> M </option>
+										<option value="m"> CM </option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="heightMiddlePlateCopyValue">중판 복제 길이(세로)</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<input type="text" id="heightMiddlePlateCopyValue" name="heightMiddlePlateCopyValue" class="m" />
+									<select id="heightMiddlePlateCopyUnit" name="heightMiddlePlateCopyUnit" class="selectBoxClass" style="margin-left: 7px;">
+										<option value="m"> M </option>
+										<option value="m"> CM </option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="middlePlateShortLenthHandling">중판 길이가 모자랄때 처리</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<select id="middlePlateShortLenthHandling" name="middlePlateShortLenthHandling" class="selectBoxClass">
+										<option value="ceil"> 올림 </option>
+										<option value="floor"> 버림 </option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row"><label for="description">설명</label></th>
+								<td class="col-input"><input type="text" id="description" name="description" th:field="*{description}" class="xl" size="100" /></td>
+							</tr>
+						</table>
+						<div class="button-group">
+							<div id="insertRoleLink" class="center-buttons">
+								<input type="submit" value="저장" onclick="update();" />
+								<a href="/rule/list" class="button">목록</a>
+							</div>
+						</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+<th:block layout:fragment="pageCustomScript">
+
+	<script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.js(cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/navigation.js(cacheVersion=${contentCacheVersion})}"></script>
+
+<script th:inline="javascript">
+	$(document).ready(function() {
+		var attributes = JSON.parse(/*[[${rule.attributes}]]*/"");
+
+		$("[name=assemble]").filter("[value='" + attributes.assemble + "']").prop("checked",true);
+		$("[name=available]").filter("[value='[[${rule.available}]]']").prop("checked",true);
+		$("#drawType").val(attributes.drawType);
+
+		$("#upperPlateId").val(attributes.upperPlateId);
+		$("#middlePlateId").val(attributes.middlePlateId);
+		$("#lowerPlateId").val(attributes.lowerPlateId);
+
+		$("#middlePlateCopyableId").val(attributes.middlePlateCopyableId);
+
+		$("#heightUpperPlateBasicValue").val(attributes.heightUpperPlateBasicValue);
+		$("#heightUpperPlateBasicUnit").val(attributes.heightUpperPlateBasicUnit);
+		$("#heightMiddlePlateBasicValue").val(attributes.heightMiddlePlateBasicValue);
+		$("#heightMiddlePlateBasicUnit").val(attributes.heightMiddlePlateBasicUnit);
+		$("#heightLowerPlateBasicValue").val(attributes.heightLowerPlateBasicValue);
+		$("#heightLowerPlateBasicUnit").val(attributes.heightLowerPlateBasicUnit);
+
+		$("#heightMiddlePlateCopyValue").val(attributes.heightMiddlePlateCopyValue);
+		$("#heightMiddlePlateCopyUnit").val(attributes.heightMiddlePlateCopyUnit);
+
+		$("#middlePlateShortLenthHandling").val(attributes.middlePlateShortLenthHandling);
+	});
+
+	function validate() {
+		if( $("#ruleName").val().trim() === "" ) {
+			alert("Rule 명을 입력하여 주십시오.");
+			$("#ruleName").focus();
+			return false;
+		}
+	}
+
+	// 저장
+	var updateRuleFlag = true;
+	function update() {
+		if (validate() == false) {
+			return false;
+		}
+		if(updateRuleFlag) {
+			updateRuleFlag = false;
+			var formData = $("#rule").serialize();
+			$.ajax({
+				url: "/rules/apartments/[[${rule.ruleId}]]",
+				type: "POST",
+				headers: {"X-Requested-With": "XMLHttpRequest"},
+				data: formData,
+				success: function(msg){
+					if(msg.statusCode <= 200) {
+						alert(JS_MESSAGE["update"]);
+						//window.location.reload();
+					} else {
+						alert(JS_MESSAGE[msg.errorCode]);
+						console.log("---- " + msg.message);
+					}
+					updateRuleFlag = true;
+				},
+				error:function(request, status, error){
+					alert(JS_MESSAGE["ajax.error.message"]);
+					updateRuleFlag = true;
+				}
+			});
+		} else {
+			alert(JS_MESSAGE["button.dobule.click"]);
+		}
+	}
+</script>
+</th:block>
+</body>
+</html>

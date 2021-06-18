@@ -39,7 +39,6 @@ public class DataGroupApiController {
     public ResponseEntity<CollectionModel<EntityModel<DataGroupDto>>> getDataGroups(HttpServletRequest request, @RequestParam(required = false) Integer urbanGroupId) {
         UserSession userSession = (UserSession) request.getSession().getAttribute(Key.USER_SESSION.name());
         List<EntityModel<DataGroupDto>> dataGroupList = dataGroupService.getAllListDataGroup(DataGroup.builder()
-                //.urbanGroupId(urbanGroupId)
                 .userGroupId(userSession.getUserGroupId())
                 .build())
                 .stream()

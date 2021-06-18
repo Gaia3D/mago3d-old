@@ -126,6 +126,8 @@ public class Policy {
  	private String contentLayerGroupRoot;
  	// data 그룹 최상위 그룹명
  	private String contentDataGroupRoot;
+	// 데이터 라이브러리 그룹 최상위 그룹명
+	private String contentDataLibraryGroupRoot;
 	// 행정구역 사용여부
 	private Boolean contentDistrictAvailable;
  	
