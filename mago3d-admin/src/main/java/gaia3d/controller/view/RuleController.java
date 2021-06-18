@@ -29,8 +29,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-import static gaia3d.domain.rule.RuleType.*;
-
 @Slf4j
 @Controller
 @RequestMapping("/rule")
@@ -127,7 +125,6 @@ public class RuleController {
 		DataGroup dataGroup = new DataGroup();
 		dataGroup.setUserId(userSession.getUserId());
 		List<DataGroup> dataGroupList = dataGroupService.getListDataGroup(DataGroup.builder().userId(userSession.getUserId()).exceptBasic(true).build());
-		List<DesignLayerGroup> designLayerGroupList = designLayerGroupService.getListDesignLayerGroup();
 		List<LayerGroup> layerGroupList = layerGroupService.getListLayerGroup();
 
 		DataLibrary dataLibrary = new DataLibrary();
@@ -137,7 +134,6 @@ public class RuleController {
 
 		model.addAttribute("ruleGroup", ruleGroup);
 		model.addAttribute("dataGroupList", dataGroupList);
-		model.addAttribute("designLayerGroupList", designLayerGroupList);
 		model.addAttribute("layerGroupList", layerGroupList);
 		model.addAttribute("dataLibraryList", dataLibraryList);
 
@@ -195,7 +191,6 @@ public class RuleController {
 		DataGroup dataGroup = new DataGroup();
 		dataGroup.setUserId(userSession.getUserId());
 		List<DataGroup> dataGroupList = dataGroupService.getListDataGroup(DataGroup.builder().userId(userSession.getUserId()).exceptBasic(true).build());
-		List<DesignLayerGroup> designLayerGroupList = designLayerGroupService.getListDesignLayerGroup();
 		List<LayerGroup> layerGroupList = layerGroupService.getListLayerGroup();
 
 		DataLibrary dataLibrary = new DataLibrary();
@@ -206,7 +201,6 @@ public class RuleController {
 		model.addAttribute("rule", rule);
 		model.addAttribute("ruleGroup", ruleGroup);
 		model.addAttribute("dataGroupList", dataGroupList);
-		model.addAttribute("designLayerGroupList", designLayerGroupList);
 		model.addAttribute("layerGroupList", layerGroupList);
 		model.addAttribute("dataLibraryList", dataLibraryList);
 
