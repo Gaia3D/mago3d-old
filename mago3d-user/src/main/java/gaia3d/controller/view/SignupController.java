@@ -123,11 +123,27 @@ public class SignupController {
 		signupForm.setUserGroupId(UserGroupType.USER.getValue());
 		signupForm.setStatus(UserStatus.WAITING_APPROVAL.getValue());
 		log.info("signupForm  "+signupForm);
-		userService.insertUser(signupForm);
 
-		initUserDir(request, signupForm);
+		String dataGroupPath = signupForm.getUserId() + "/basic/";
 
-		return "redirect:/sign/signup-complete";
+		try{
+			userService.insertUser(signupForm);
+			initUserDir(request, signupForm);
+
+			return "redirect:/sign/signup-complete";
+		}catch (Exception e){
+			String userId = signupForm.getUserId();
+
+			FileUtils.deleteFileReculsive(dataGroupPath);
+
+			userService.deleteUser(userId);
+
+			signupForm.setErrorCode("mmmm");
+			model.addAttribute("signupForm", signupForm);
+
+			return "/sign/signup";
+		}
+
 	}
 
 	/**
@@ -172,12 +188,14 @@ public class SignupController {
 		return err;
 	}
 
-	private void initUserDir(HttpServletRequest request, UserInfo userInfo){
+	private void initUserDir(HttpServletRequest request, UserInfo userInfo) throws Exception {
 		// 데이터 업로딩 경로 생성
+		String userId = userInfo.getUserId();
 		DataGroup dataGroup = new DataGroup();
-		dataGroup.setUserId(userInfo.getUserId());
+		dataGroup.setUserId(userId);
 
-		String dataGroupPath = userInfo.getUserId() + "/basic/";
+		String dataGroupPath = userId + "/basic/";
+
 		DataGroup basicDataGroup = dataGroupService.getBasicDataGroup(dataGroup);
 		if(basicDataGroup == null) {
 			dataGroup.setDataGroupKey("basic");
@@ -189,7 +207,11 @@ public class SignupController {
 			dataGroupService.insertBasicDataGroup(dataGroup);
 		}
 
-		FileUtils.makeDirectoryByPath(propertiesConfig.getUserDataServiceDir(), dataGroupPath);
+		if(!FileUtils.makeDirectoryByPath(propertiesConfig.getUserDataServiceDir(), dataGroupPath)) {
+			dataGroupService.deleteDataGroup(dataGroup);
+			throw new Exception();
+		}
+
 	}
 
 }

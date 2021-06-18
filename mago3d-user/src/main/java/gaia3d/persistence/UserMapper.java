@@ -53,5 +53,12 @@ public interface UserMapper {
 	 * @return
 	 */
 	int updatePassword(UserInfo userInfo);
+	
+	/**
+	 * 사용자 삭제
+	 * @param userId
+	 * @return
+	 */
+    int deleteUser(String userId);
 
 }

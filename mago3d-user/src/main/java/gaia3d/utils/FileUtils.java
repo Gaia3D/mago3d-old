@@ -363,4 +363,26 @@ public class FileUtils {
 		}
 		return filePath;
 	}
+
+	public static void deleteFileReculsive(String path) {
+		File folder = new File(path);
+		try {
+			while(folder.exists()) {
+				if(!folder.isDirectory()) {
+					folder.delete();
+					break;
+				}
+				File[] folder_list = folder.listFiles(); //파일리스트 얻어오기
+				for (int j = 0; j < folder_list.length; j++) {
+					folder_list[j].delete(); //파일 삭제
+				}
+
+				if(folder_list.length == 0 && folder.isDirectory()){
+					folder.delete(); //대상폴더 삭제
+				}
+			}
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+	}
 }

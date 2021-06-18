@@ -71,4 +71,10 @@
 		status = #{status}
 		WHERE user_id = #{userId}
 	</update>
+
+	<!-- 사용자 삭제 -->
+	<delete id="deleteUser" parameterType="string">
+		/* deleteUser */
+		DELETE FROM user_info WHERE user_id = #{value}
+	</delete>
 </mapper>

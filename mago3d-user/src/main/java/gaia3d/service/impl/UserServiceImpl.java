@@ -88,4 +88,14 @@ public class UserServiceImpl implements UserService {
 	public int updatePassword(UserInfo userInfo) {
 		return userMapper.updatePassword(userInfo);
 	}
+
+	/**
+	 * 사용자 삭제
+	 * @param userId
+	 * @return
+	 */
+	@Transactional
+	public int deleteUser(String userId) {
+		return userMapper.deleteUser(userId);
+	}
 }
