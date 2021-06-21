@@ -9,9 +9,20 @@ $(function() {
 			var navWidth = document.getElementsByClassName('nav')[0].offsetWidth;
 			var contentWidth = observerTarget.offsetWidth;
 			
+			var divided = document.getElementById('mapCtrlDivide').className.indexOf('on') > -1;
 			var offsetWidth = (display === 'none') ? navWidth : navWidth+contentWidth;
-			var cssWidth = 'calc(100% - ' + offsetWidth + 'px)';
+			offsetWidth = divided ? offsetWidth / 2 : offsetWidth;
+			
+			var widthPrct = !divided ? '100%':'50%';
+			
+			var cssWidth = `calc(${widthPrct} - ${offsetWidth}px)`;
 			$('#magoContainer').css('width',cssWidth);
+			
+			var diviedElem = document.getElementById('magoDivideContainer');
+			if(diviedElem.style.display !== 'none') {
+				cssWidth = `calc(${widthPrct} - ${offsetWidth+3}px)`;
+				diviedElem.style.width = cssWidth;
+			}
 		});
 		observer.observe(observerTarget, observerConfig);
 	}

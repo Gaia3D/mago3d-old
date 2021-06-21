@@ -1,22 +1,22 @@
 ﻿<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <body>
 <div id="toolbarWrap">	
-		<div class="toolbox-menu">
-			<button type="button" id="mapCtrlReset">처음</button>
-			<button type="button" id="mapCtrlAll">전체화면</button>
-			<button type="button" id="">레이어</button>
-			<button type="button" id="mapCtrlDistance" data-type="LineString">측정</button>
-			<button type="button" id="">화면분할</button>
-			<button type="button" id="">시점고정</button>
-			<button type="button" id="">위치조회</button>
-		</div>		
-		<div class="toolbox-zooming">
-			<button type="button" id="mapCtrlZoomIn"><span class="blind">확대</span></button>
-			<button type="button" id="mapCtrlZoomOut"><span class="blind">축소</span></button>
-		</div>
-		<div class="toolbox-3d">
-			<button type="button" id="mapCtrlSetting">3D설정</button>
-		</div>
+	<div class="toolbox-menu">
+		<button type="button" id="mapCtrlReset">처음</button>
+		<button type="button" id="mapCtrlAll">전체화면</button>
+		<button type="button" id="">레이어</button>
+		<button type="button" id="mapCtrlDistance" data-type="LineString">측정</button>
+		<button type="button" id="mapCtrlDivide">화면분할</button>
+		<button type="button" id="mapCameraFix">시점고정</button>
+		<button type="button" id="mapRenderPosition">위치조회</button>
+	</div>		
+	<div class="toolbox-zooming">
+		<button type="button" id="mapCtrlZoomIn"><span class="blind">확대</span></button>
+		<button type="button" id="mapCtrlZoomOut"><span class="blind">축소</span></button>
+	</div>
+	<div class="toolbox-3d">
+		<button type="button" id="mapCtrlSetting">3D설정</button>
+	</div>
 	<div id="mago3DSettingLabelLayer" class="labelLayer" style="display:none;">
 		<div class="layerHeader">
 			<h3><th:block th:text="#{toolbar.mago3d.settings}"></th:block></h3>

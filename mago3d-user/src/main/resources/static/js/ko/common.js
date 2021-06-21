@@ -380,3 +380,7 @@ function getFormData($form) {
 	});
 	return indexed_array;
 }
+
+function cloneObject (obj) {
+	return JSON.parse(JSON.stringify(obj));
+}

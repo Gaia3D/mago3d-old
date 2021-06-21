@@ -1,10 +1,10 @@
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <div id="simulationContent" class="contents yScroll fullHeight" style="display:none;">
 	<ul class="simulation-menu">
-		<li id="smlt_menu_timeseries" class="smlt_menu on">시계열</li>
-		<li id="smlt_menu_natural" class="smlt_menu">기상/자연</li>
-		<li id="smlt_menu_extrusion" class="smlt_menu">익스트루전빌딩</li>
-		<li id="smlt_menu_findload" class="smlt_menu">길찾기</li>					
+		<li id="smlt_menu_timeseries" class="smlt_menu on" data-smlt="timeSeries">시계열</li>
+		<li id="smlt_menu_natural" class="smlt_menu" data-smlt="natural">기상/자연</li>
+		<li id="smlt_menu_extrusion" class="smlt_menu" data-smlt="extrusion">익스트루전빌딩</li>
+		<li id="smlt_menu_findload" class="smlt_menu" data-smlt="findLoad">길찾기</li>					
 	</ul>
 	
 	<div th:replace="~{/simulation/simul-contents-timeseries :: #smlt_contents_timeseries}"></div>

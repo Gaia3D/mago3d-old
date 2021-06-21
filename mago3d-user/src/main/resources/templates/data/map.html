@@ -27,6 +27,27 @@
 			height: 100%;
 			background-color: #eee;
 		}
+		.mapWrap2 {
+			float:right;
+			width: calc(50% - 60px);
+			height: 100%;
+			background-color: #eee;
+			display:none;
+			border-right: 3px solid #ccc;
+		}
+		.positionBox {
+			display : none;
+		    width: 120px;
+		    height: 100px;
+		    position: absolute;
+		    bottom: 40px;
+		    left: 439px;
+		    background: #283651;
+		    z-index: 200;
+		    border-radius: 10px;
+		    border: 2px solid #B4BBE7;
+		    opacity: 0.7;
+		}
     </style>
 </head>
 <body>
@@ -103,8 +124,18 @@
 			<label for="timeInput" class="hiddenTag">saRange</label>
 			<input id="timeInput"/>
 		</div>
+		
+		<div class="positionBox" id="positionBox">
+			<button type="button" style="float: right;width: 20px;">X</button>
+			<div style="color: #D2D4E1; margin: 20px 0 0 10px;">
+				<span id="positionBoxLongitude" style="display: block;">D2D4E1</span>
+				<span id="positionBoxLatitude" style="display: block;">D2D4E1</span>
+				<span id="positionBoxHeight" style="display: block;">D2D4E1</span>
+			</div>
+		</div>
 	</div>
-	<canvas id="objectLabel"></canvas>
+	<div id="magoDivideContainer" class="mapWrap2">
+	</div>
 	<!-- E: MAP -->
 </div>
 <!-- E: WRAP -->
@@ -135,6 +166,7 @@
 <script type="text/javascript" th:src="@{/externlib/chartjs/Chart.min.js(cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/externlib/tuidatepicker-4.0.3/tui-date-picker.min.js(cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/mago3d/mago3d.js(cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/mago3d/mago3djs-weather.js(cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/mago3d/mago3d_lx.js(cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
@@ -146,7 +178,9 @@
 <script type="text/javascript" th:src="@{/js/{lang}/search.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/data-info.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/user-policy.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
-<script type="text/javascript" th:src="@{/js/{lang}/simulation.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/{lang}/simulation/simulation.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/{lang}/simulation/time-series.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/{lang}/simulation/wind.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/layer.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/map-data-controll.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/map-init.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
@@ -157,6 +191,7 @@
 <script type="text/javascript">
 
 	var MAGO3D_INSTANCE;
+	var MAGO3D_DIVIDE_INSTANCE;
 	var MAGO = MAGO || {
 		policy: {},
 		dataGroup: {},
@@ -176,15 +211,6 @@
 		var geoPolicyJson = MAGO.policy;
 
 		var cesiumViewerOption = {};
-		cesiumViewerOption.infoBox = false;
-		cesiumViewerOption.navigationHelpButton = false;
-		cesiumViewerOption.selectionIndicator = false;
-		cesiumViewerOption.homeButton = false;
-		cesiumViewerOption.fullscreenButton = false;
-		cesiumViewerOption.geocoder = false;
-		cesiumViewerOption.baseLayerPicker = false;
-		cesiumViewerOption.sceneModePicker = false;
-
 		cesiumViewerOption.defaultControl = {};
 		cesiumViewerOption.defaultControl.zoom = false;
 		cesiumViewerOption.defaultControl.initCamera = false;
@@ -215,14 +241,6 @@
 		// TODO : 세슘 MAP 선택 UI 제거, 엔진에서 처리로 변경 예정.
 		if(viewer.baseLayerPicker) viewer.baseLayerPicker.destroy();
 		viewer.scene.globe.depthTestAgainstTerrain = true;
-		//viewer.scene.screenSpaceCameraController.minimumZoomDistance = 10;
-
-		magoManager.on(Mago3D.MagoManager.EVENT_TYPE.MOUSEMOVE, function(result) {
-			//console.info(result);
-		});
-
-		// mago3d logo 추가
-		// Mago3D.tempCredit(viewer);
 
 		// 기본 레이어 랜더링
 		setTimeout(function(){
@@ -231,8 +249,8 @@
 			cesiumCreditAlt(); 		// 웹 접근성
 		}, geoPolicyJson.initDuration * 1000);
 
-		// 툴바
-		mapControllEvent(magoInstance);
+		// 툴바기능, 지도 컨트롤 이벤
+		mapControllEventHandler(magoInstance);
 
 		// 지도상에 데이터 다루는거
 		MapDataControll(magoInstance);
@@ -261,7 +279,6 @@
 
 		// 이슈 등록
 		MAGO.issueController = new IssueController(magoInstance);
-
 	}
     // smart tiling data flyTo
     function gotoFly(longitude, latitude, altitude) {

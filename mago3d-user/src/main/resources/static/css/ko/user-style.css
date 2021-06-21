@@ -2401,13 +2401,13 @@ h1.magologo {display:block; width:250px; height:30px; background:url(/images/ko/
 .toolbox-menu > button:nth-child(5) {margin:0; padding:0; height:52px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -198px; border-radius:0; border-top:1px solid #d9d8d8;}
 .toolbox-menu > button:nth-child(6) {margin:0; padding:0; height:52px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -251px; border-radius:0; border-top:1px solid #d9d8d8;}
 .toolbox-menu > button:last-child {margin:0; padding:0; height:52px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -304px; border-radius:0; border-top-left-radius:0; border-top-right-radius:0; border-bottom-left-radius:6px; border-bottom-right-radius:6px; border-top:1px solid #d9d8d8; }
-.toolbox-menu > button:first-child:hover {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -2px; border-top-left-radius:6px; border-top-right-radius:6px; }
-.toolbox-menu > button:nth-child(2):hover {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -54px -53px; }
-.toolbox-menu > button:nth-child(3):hover {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -107px; }
-.toolbox-menu > button:nth-child(4):hover {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -151px;}
-.toolbox-menu > button:nth-child(5):hover {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -198px; }
-.toolbox-menu > button:nth-child(6):hover {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -251px;}
-.toolbox-menu > button:last-child:hover {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -304px; }
+.toolbox-menu > button:first-child:hover{color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -2px; border-top-left-radius:6px; border-top-right-radius:6px; }
+.toolbox-menu > button:nth-child(2):hover, .toolbox-menu > button:nth-child(2).on {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -54px -53px; }
+.toolbox-menu > button:nth-child(3):hover, .toolbox-menu > button:nth-child(3).on {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -107px; }
+.toolbox-menu > button:nth-child(4):hover, .toolbox-menu > button:nth-child(4).on {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -151px;}
+.toolbox-menu > button:nth-child(5):hover, .toolbox-menu > button:nth-child(5).on {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -198px; }
+.toolbox-menu > button:nth-child(6):hover, .toolbox-menu > button:nth-child(6).on {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -251px;}
+.toolbox-menu > button:last-child:hover, .toolbox-menu > button:last-child.on {color:white; background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -304px; }
 .toolbox-zooming {position:absolute; right:18px; top:390px; z-index: 1; width:50px; height:auto; margin:0; padding:0; box-shadow: 0 0 2px rgba(132,132,132,0.6); border-top-left-radius:6px; border-top-right-radius:6px; border-bottom-left-radius:6px; border-bottom-right-radius:6px;}
 .toolbox-zooming > button {cursor:pointer; font-size:10px; color:black; letter-spacing:-0.5px; vertical-align:bottom;}
 .toolbox-zooming > button:first-child {margin:0; padding:0; height:42px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -438px; border-top-left-radius:6px; border-bottom-left-radius:0; border-bottom-right-radius:0; border-top-right-radius:6px;}

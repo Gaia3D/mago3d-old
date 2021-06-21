@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <div id="smlt_contents_timeseries" class="smlt_contents">
-	<div class="smlt" id="smlt-construction-step-div">
-		<div class="smlt-item">
+	<div class="smlt">
+		<div class="smlt-item" id="smlt-construction-step-div" data-type="step">
 			<span class="smlt-blt"></span>
 			<span class="smlt-tit">시계열-시공단계별</span>
 		</div>				
@@ -9,7 +9,6 @@
 			<div class="sublist">
 				<span class="smlt-sub" style="display:inline-block;">시공단계</span>
 				<div id="smlt-construction-step-slider" style="width:200px;float:right;margin-right: 20px;"></div>
-				<!-- <input id="smlt-construction-step" type="text" class="smlt-value inputtype" /> -->
 			</div>
 			<!-- <div class="sublist">
 				<label for="timeSeriesItem2Agree" class="smlt-sub">항목2</label>
@@ -40,34 +39,22 @@
 				<input id="timeSeriesItem6Disagree" type="radio" class="radiobox mg-l20" /> 비동의
 			</div> -->
 			<div class="btn-right" style="margin-top: 45px;">
-				<button type="button" class="btn-ok">확인</button>
-				<button type="button" class="btn-cancel">취소</button>
+				<button type="button" class="btn-cancel">닫기</button>
 			</div>
 		</div>
 	</div>				
-	<div class="smlt" id="smlt-construction-level-div">
-		<div class="smlt-item" >
+	<div class="smlt">
+		<div class="smlt-item" id="smlt-construction-level-div" data-type="level">
 			<span class="smlt-blt"></span>
 			<span class="smlt-tit">시계열-층별 건설공정</span>
 		</div>	
 		<div class="sub">
-			<div class="sublist">
-				<label for="timeSeriesVerticalItem1" class="smlt-sub">항목1</label>
-				<input id="timeSeriesVerticalItem1" type="text" class="smlt-value inputtype" />
-			</div>
-			<div class="sublist">
-				<label for="timeSeriesVerticalItem2" class="smlt-sub">항목2</label>
-				<form>
-					<select id="timeSeriesVerticalItem2" class="selecttype">
-						<option>선택</option>
-						<option>1</option>
-						<option>2</option>
-					</select>
-				</form>
+			<div class="sublist" style="height:260px;">
+				<span class="smlt-sub">건설공정</span>
+				<div id="smlt-construction-level-slider" style="width:20px;height:200px;margin-top: 20px;"></div>
 			</div>
 			<div class="btn-right">
-				<button type="button" class="btn-ok">확인</button>
-				<button type="button" class="btn-cancel">취소</button>
+				<button type="button" class="btn-cancel">닫기</button>
 			</div>
 		</div>	
 	</div>
