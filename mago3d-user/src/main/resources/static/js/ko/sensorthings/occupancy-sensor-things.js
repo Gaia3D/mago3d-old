@@ -10,14 +10,14 @@ const OccupancySensorThings = function (magoInstance) {
         'occupancyFloor': '#2196F3'
     };
     this.mappingTable = {
-        911 : {
+        'Alphadom_IndoorGML' : {
             dataId : 5000000,
             baseFloor: 7,
             maxCapacityBuilding : 3000,
             maxCapacityFloor : 200,
             maxCapacity : 10
         },
-        963 : {
+        'UOS21C_IndoorGML' : {
             dataId : 5000001,
             baseFloor: 0,
             maxCapacityBuilding : 400,
@@ -42,6 +42,7 @@ const OccupancySensorThings = function (magoInstance) {
     this.chartYAxesTitle = '재실자(명)';
 
     this.selectedBuildingId = 0;
+    this.selectedBuildingName = '';
     this.selectedDataGroupId = '';
     this.selectedDataKey = '';
     this.cellSpaceList = {};
@@ -162,6 +163,7 @@ OccupancySensorThings.prototype.init = function () {
     this.selectedThingId = 0;
     this.selectedDataStreams = [];
     this.selectedBuildingId = 0;
+    this.selectedBuildingName = '';
     this.selectedDataGroupId = '';
     this.selectedDataKey = '';
     this.cellSpaceList = {};
@@ -306,6 +308,7 @@ OccupancySensorThings.prototype.getList = function (pageNo, params) {
             for (const thing of things) {
 
                 const thingId = thing['@iot.id'];
+                const thingName = thing['name'];
 
                 // Datastreams
                 const dataStreams = thing['Datastreams'];
@@ -313,7 +316,7 @@ OccupancySensorThings.prototype.getList = function (pageNo, params) {
                 const dataStream = dataStreams[0];
 
                 // MappingInformation
-                const mappingInfo = _this.mappingTable[thingId];
+                const mappingInfo = _this.mappingTable[thingName];
                 const dataId = mappingInfo['dataId'];
                 const maxCapacityBuilding = mappingInfo['maxCapacityBuilding'];
                 const maxCapacityFloor = mappingInfo['maxCapacityFloor'];
@@ -495,9 +498,10 @@ OccupancySensorThings.prototype.setCellSpaceList = function() {
     for (const thing of _this.things) {
 
         const thingId = parseInt(thing['@iot.id']);
+        const thingName = thing['name'];
 
         // TODO thingId와 dataId 맵핑테이블을 통한 데이터 조회
-        const dataId = _this.mappingTable[thingId]['dataId'];
+        const dataId = _this.mappingTable[thingName]['dataId'];
         data.promises.push(_this.ajaxDataInfo(dataId));
 
     }
@@ -542,6 +546,7 @@ OccupancySensorThings.prototype.redrawOverlayBuilding = function() {
     };
     for (const thing of _this.things) {
         const thingId = parseInt(thing['@iot.id']);
+        const thingName = thing['name'];
 
         // Datastreams
         const dataStreams = thing['Datastreams'];
@@ -549,7 +554,7 @@ OccupancySensorThings.prototype.redrawOverlayBuilding = function() {
         const dataStream = dataStreams[0];
 
         // MappingInformation
-        const mappingInfo = _this.mappingTable[thingId];
+        const mappingInfo = _this.mappingTable[thingName];
         if (!mappingInfo) return;
         const dataId = mappingInfo['dataId'];
         const maxCapacityBuilding = mappingInfo['maxCapacityBuilding'];
@@ -632,7 +637,7 @@ OccupancySensorThings.prototype.redrawOverlayFloor = function() {
     const _this = this;
 
     // MappingInformation
-    const mappingInfo = _this.mappingTable[_this.selectedBuildingId];
+    const mappingInfo = _this.mappingTable[_this.selectedBuildingName];
     if (!mappingInfo) return;
     const dataId = mappingInfo['dataId'];
     const maxCapacityBuilding = mappingInfo['maxCapacityBuilding'];
@@ -739,7 +744,7 @@ OccupancySensorThings.prototype.getInformation = function(thingId) {
     if (_this.observedProperty === 'occupancyBuild') {
         mappingInfo = _this.mappingTable[thingId];
     } else if (_this.observedProperty === 'occupancyFloor') {
-        mappingInfo = _this.mappingTable[_this.selectedBuildingId];
+        mappingInfo = _this.mappingTable[_this.selectedBuildingName];
     }
 
     const dataId = mappingInfo['dataId'];
@@ -806,6 +811,7 @@ OccupancySensorThings.prototype.getFloorInformation = function (buildingInfo) {
 
     const _this = this;
     _this.selectedBuildingId = buildingInfo.id;
+    _this.selectedBuildingName = buildingInfo.name;
 
     const observedProperty = 'occupancyFloor';
     const queryString = 'Datastreams?$select=id,name,unitOfMeasurement&' +
@@ -831,7 +837,7 @@ OccupancySensorThings.prototype.getFloorInformation = function (buildingInfo) {
                 const thing = dataStream['Thing'];
 
                 // MappingInformation
-                const mappingInfo = _this.mappingTable[_this.selectedBuildingId];
+                const mappingInfo = _this.mappingTable[_this.selectedBuildingName];
                 const dataId = mappingInfo['dataId'];
                 const maxCapacityBuilding = mappingInfo['maxCapacityBuilding'];
                 const maxCapacityFloor = mappingInfo['maxCapacityFloor'];
@@ -1242,7 +1248,7 @@ OccupancySensorThings.prototype.callDatastreamsByThingsId = function (filter, ra
                     const maxCapacityBuilding = mappingInfo['maxCapacityBuilding'];
                     grade = _this.getGrade(value, 0, maxCapacityBuilding);
                 } else if (ObservedPropertyName === 'occupancyFloor') {
-                    mappingInfo = _this.mappingTable[_this.selectedBuildingId];
+                    mappingInfo = _this.mappingTable[_this.selectedBuildingName];
                     const maxCapacityFloor = mappingInfo['maxCapacityFloor'];
                     grade = _this.getGrade(value, 0, maxCapacityFloor);
                 } else if (ObservedPropertyName === 'occupancy') {
@@ -1305,7 +1311,7 @@ OccupancySensorThings.prototype.updateFloorInformation = function (randomValue) 
     // TODO thingId와 dataId 맵핑테이블을 통한 데이터 조회
     // MappingInformation
     let dataId = '', baseFloor = 0, maxCapacityBuilding = 0, maxCapacityFloor = 0, maxCapacity = 0;
-    const mappingInfo = _this.mappingTable[_this.selectedBuildingId];
+    const mappingInfo = _this.mappingTable[_this.selectedBuildingName];
     dataId = mappingInfo['dataId'];
     baseFloor = mappingInfo['baseFloor'];
     maxCapacityBuilding = mappingInfo['maxCapacityBuilding'];

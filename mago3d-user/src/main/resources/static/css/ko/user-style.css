@@ -765,7 +765,7 @@ font-size:1.1em;
 /* PAGINATION */
 .pagination {
 position: relative;
-padding-bottom:25px;
+/*padding-bottom:25px;*/
 text-align: center;
 }
 .pagination li {

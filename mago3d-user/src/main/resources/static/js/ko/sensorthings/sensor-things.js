@@ -1,13 +1,13 @@
 const SensorThings = function (magoInstance) {
 
     this.magoInstance = magoInstance;
-    this.FROST_SERVER_URL = 'http://localhost:18888/FROST-Server/v1.0/';
+    this.FROST_SERVER_URL = 'http://localhost:8888/FROST-Server/v1.0/';
     //this.FROST_SERVER_URL = 'http://iot.openindoormap.io/v1.0/';
     this.queryString = '';
     this.type = 'iot_occupancy'; // iot_occupancy, iot_dust
     this.created = false;
 
-    this.currentPageNo = 0;
+    this.currentPageNo = 1;
     //this.currentTime = "2020-10-23T04:59:40.000Z";
     this.currentTime = moment().utc().format();
     this.processingTime = 1800;     // 30m
@@ -51,7 +51,10 @@ SensorThings.prototype.setCameraMoveEvent = function() {
     });
     magoManager.on(Mago3D.MagoManager.EVENT_TYPE.CAMERAMOVEEND, (e) => {
         // 지도상의 센서 위치 갱신
-        MAGO.sensorThings.redrawOverlay();
+        if (MAGO.sensorThings.created) {
+            MAGO.sensorThings.redrawOverlay();
+        }
+
     });
 };
 
@@ -77,9 +80,6 @@ SensorThings.prototype.initF4dData = function() {
                 dataType: "json",
                 success: function (json) {
                     f4dController.addF4dMember(dataGroupKey, json.children);
-                    MAGO.sensorThings.dataSearch(1);
-                    MAGO.sensorThings.clearOverlay();
-                    MAGO.sensorThings.addOverlay();
                 },
                 error: function (request, status, error) {
                     alert(JS_MESSAGE["ajax.error.message"]);
@@ -146,25 +146,41 @@ SensorThings.prototype.getOverlay = function() {
  * @param isVisible
  */
 SensorThings.prototype.active = function (isVisible) {
+
+    // TODO 레이어 온오프 형태로 변경
+
     if (isVisible) {
-        const newSensorThings = this.create();
-        if (!MAGO.sensorThings.created) {
-            MAGO.sensorThings = newSensorThings;
-            MAGO.sensorThings.setCameraMoveEvent();
-            MAGO.sensorThings.initF4dData();
+        // 레이어 초기화
+        if (MAGO.sensorThings instanceof DustSensorThings) {
+            MAGO.sensorThings.clearDustLayer();
         }
-        if (MAGO.sensorThings.created && MAGO.sensorThings.type !== newSensorThings.type) {
+
+        const newSensorThings = this.create();
+
+        // 처음 생성 시
+        if (!MAGO.sensorThings.created) {
             MAGO.sensorThings = newSensorThings;
             // TODO: 설정값으로 빼기
             if (MAGO.sensorThings instanceof DustSensorThings) {
                 MAGO.sensorThings.addDustLayer();
             }
         }
+
         if (MAGO.sensorThings.created) {
-            MAGO.sensorThings.dataSearch(1);
-            MAGO.sensorThings.clearOverlay();
-            MAGO.sensorThings.addOverlay();
+            if (MAGO.sensorThings.type !== newSensorThings.type) {
+                // 기존에 생성 했지만 타입이 다를 경우
+                MAGO.sensorThings = newSensorThings;
+                // TODO: 설정값으로 빼기
+                if (MAGO.sensorThings instanceof DustSensorThings) {
+                    MAGO.sensorThings.addDustLayer();
+                }
+            }
         }
+
+        MAGO.sensorThings.dataSearch(1);
+        MAGO.sensorThings.clearOverlay();
+        MAGO.sensorThings.addOverlay();
+
         MAGO.sensorThings.created = true;
         MAGO.updateSensorThings = MAGO.sensorThings.setInterval();
     } else {

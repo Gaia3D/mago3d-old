@@ -126,6 +126,9 @@ DustSensorThings.prototype.init = function () {
     if (this.layer != null) {
         this.magoInstance.getViewer().imageryLayers.remove(this.layer);
     }
+    if (this.dataSource != null) {
+        this.magoInstance.getViewer().dataSources.remove(this.dataSource);
+    }
 
 };
 
@@ -137,7 +140,7 @@ DustSensorThings.prototype.addDustLayer = function () {
 
     const provider = new Cesium.WebMapServiceImageryProvider({
         url : [MAGO.policy.geoserverDataUrl, MAGO.policy.geoserverDataStore, 'wms'].join('/'),
-        layers : 'lhdt:dust_contour',
+        layers : MAGO.policy.geoserverDataStore + ':air-quality-group',
         minimumLevel:2,
         maximumLevel : 20,
         rectangle : new Cesium.Rectangle(124.645669 * Math.PI / 180, 33.227749 * Math.PI / 180
@@ -161,6 +164,9 @@ DustSensorThings.prototype.addDustLayer = function () {
 DustSensorThings.prototype.clearDustLayer = function () {
     if (this.layer != null) {
         this.layer.show = false;
+    }
+    if (this.dataSource && this.dataSource.show) {
+        this.dataSource.show = false;
     }
 };
 
@@ -363,6 +369,9 @@ DustSensorThings.prototype.addOverlay = function () {
         dataType: "json",
         headers: {"X-Requested-With": "XMLHttpRequest"},
         success: function (msg) {
+
+            if (!_this.created || !(MAGO.sensorThings instanceof DustSensorThings)) return;
+
             _this.things = msg.value;
 
             var ds = new Cesium.CustomDataSource();
