@@ -262,35 +262,29 @@ INSERT INTO data_group (
     data_group_id, data_group_key, data_group_name, data_group_path, data_group_target, sharing, user_id,
     ancestor, parent, depth, view_order, children, basic, available, tiling, data_count, metainfo)
 values
-(1, 'basic', '기본', 'infra/data/basic/', 'admin', 'common', 'admin', 1, 0, 1, 1, 0, true, true, false, 0,  TO_JSON('{"isPhysical": false}'::json));
+    (1, 'basic', '기본', 'infra/data/basic/', 'admin', 'common', 'admin', 1, 0, 1, 1, 0, true, true, false, 0,  TO_JSON('{"isPhysical": false}'::json));
 
 INSERT INTO data_library_group (
     data_library_group_id, data_library_group_key, data_library_group_name, data_library_group_path, data_library_group_target, sharing, user_id,
     ancestor, parent, depth, view_order, children, basic, available, data_library_count)
 values
-(1, 'basic', '기본', 'infra/data-library/basic/', 'admin', 'common', 'admin', 1, 0, 1, 1, 0, true, true, 0);
+    (1, 'basic', '기본', 'infra/data-library/basic/', 'admin', 'common', 'admin', 1, 0, 1, 1, 0, true, true, 0);
 
-INSERT INTO rule_group
-    (rule_group_id, rule_group_name, rule_group_key, rule_type, rule_inherit_type, user_id,
-        ancestor, parent, depth, view_order, basic, available, description)
+INSERT INTO rule_group (
+    rule_group_id, rule_group_name, rule_group_key, rule_type, rule_inherit_type, user_id, ancestor, parent, depth, view_order, basic, available, description)
 VALUES
-    (1, '나무', 'tree_group_test', 'data_library', true, 'admin',
-        1, 1, 1, 1, true, true, '데이터 라이브러리 나무 Rule 그룹');
-
--- INSERT INTO rule(rule_id, rule_group_id, rule_key, rule_name, user_id,
---                  attributes, available)
--- VALUES(1, 1, 'tree_test', '나무 테스트', 'admin',
---                 '{"ruleKey": "treeTest", "assemble": false, "drawType": "both", "ruleName": "이팝나무_겨울", "ruleType": "data_library", "available": true, "totalCount": null, "description": "", "ruleGroupId": 2003, "ruleGroupKey": "tree", "dataLibraryId": null, "ruleGroupName": "가로수", "dataLibraryGroupId": null, "dataLibraryGroupKey": null, "dataLibraryGroupName": null}', true);
---
+    (1, '데이터 룰 그룹', 'data', 'data', true, 'admin', 1, 0, 1, 1, true, true, '데이터 Rule 그룹'),
+    (2, '3D 라이브러리 룰 그룹', 'data_library', 'data_library', true, 'admin', 2, 0, 1, 2, true, true, '3D 라이브러리 Rule 그룹'),
+    (3, '레이어 룰 그룹', 'layer', 'layer', true, 'admin', 3, 0, 1, 3, true, true, '레이어 Rule 그룹');
 
 
 INSERT INTO membership(
     membership_id, membership_name, allow_capacity, allow_count)
 values
-(1, 'BASIC', 0.1, 10),
-(2, 'SILVER', 1.0, 30),
-(3, 'GOLD', 5.0, 50),
-(4, 'PLATINUM', 10.0, 100);
+    (1, 'BASIC', 0.1, 10),
+    (2, 'SILVER', 1.0, 30),
+    (3, 'GOLD', 5.0, 50),
+    (4, 'PLATINUM', 10.0, 100);
 
 INSERT INTO membership_usage(
     membership_usage_id, membership_id, membership_name, user_id, update_date)

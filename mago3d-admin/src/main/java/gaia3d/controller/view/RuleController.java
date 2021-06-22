@@ -113,7 +113,6 @@ public class RuleController {
 
 		RuleGroup ancestroRuleGroup = ruleGroupService.getAncestorRuleGroupByRuleGroupId(ruleGroupId);
 		String viewName = getViewName(ancestroRuleGroup, ruleGroup);
-
 		if(viewName == null) {
 			log.info("@@@@@@@@@@@@@@@@@@@ ruleGroup is null");
 			return "redirect:/rule-group/list?errorCode=rule-group.invalid";
@@ -235,21 +234,6 @@ public class RuleController {
 		String viewName = null;
 		if(RuleGroupType.TREE == RuleGroupType.valueOf(ruleGroup.getRuleGroupKey().toUpperCase())) {
 			viewName = "tree";
-		} else if(RuleGroupType.STREETLAMP == RuleGroupType.valueOf(ruleGroup.getRuleGroupKey().toUpperCase())) {
-			// 가로등
-			viewName = "streetlamp";
-		} else if(RuleGroupType.BRIDGE == RuleGroupType.valueOf(ruleGroup.getRuleGroupKey().toUpperCase())) {
-			// 교량
-			viewName = "bridge";
-		} else if(RuleGroupType.OVERPASS == RuleGroupType.valueOf(ruleGroup.getRuleGroupKey().toUpperCase())) {
-			// 육교
-			viewName = "overpass";
-		} else if(RuleGroupType.NOISEBARRIER == RuleGroupType.valueOf(ruleGroup.getRuleGroupKey().toUpperCase())) {
-			// 방음벽
-			viewName = "noisebarrier";
-		} else if(RuleGroupType.APARTMENT == RuleGroupType.valueOf(ruleGroup.getRuleGroupKey().toUpperCase())) {
-			// 아파트
-			viewName = "apartment";
 		}
 
 		return viewName;

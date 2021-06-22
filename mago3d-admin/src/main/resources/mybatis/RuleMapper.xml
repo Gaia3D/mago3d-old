@@ -64,16 +64,6 @@
 		OFFSET #{offset} LIMIT #{limit}
 	</select>
 
-	<!-- 도시 그룹 룰 -->
-	<select id="getListUrbanRule" parameterType="rule" resultType="rule">
-		/* getListUrbanRule */
-		SELECT A.*, B.rule_group_name, B.rule_type
-		FROM rule A LEFT JOIN rule_group B
-			ON A.rule_group_id = B.rule_group_id
-		WHERE B.rule_type = #{ruleType};
-
-	</select>
-
 	<!-- 룰 목록 -->
 	<select id="getListRuleByRuleGroupId" parameterType="int" resultType="rule">
 		/* getListRuleByRuleGroupId */

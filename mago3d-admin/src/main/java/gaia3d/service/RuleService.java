@@ -19,7 +19,6 @@ public interface RuleService {
      */
     List<Rule> getListRuleByRuleGroupId(Integer ruleGroupId);
 
-
     Rule getRule(Integer ruleId);
 
     int insertRule(Rule rule);

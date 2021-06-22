@@ -30,12 +30,9 @@ public class RuleApiController {
      * @return
      */
     @GetMapping(produces = "application/json; charset=UTF-8")
-    public ResponseEntity<CollectionModel<EntityModel<Rule>>> getRules(
-            Rule rule,
-            @RequestParam(defaultValue = "1") Long pageNo,
-            @RequestParam(defaultValue = "10") Long pageRows
-    ) {
-
+    public ResponseEntity<CollectionModel<EntityModel<Rule>>> getRules( Rule rule,
+                                                                        @RequestParam(defaultValue = "1") Long pageNo,
+                                                                        @RequestParam(defaultValue = "10") Long pageRows) {
         long totalCount = ruleService.getRuleTotalCount(rule);
         Pagination pagination = new Pagination(totalCount, pageNo, pageRows, PAGE_LIST_COUNT);
         log.info("@@ pagination = {}", pagination);
