@@ -47,10 +47,10 @@
 			<input type="text" id="preEmail" class="inputemail" th:unless="${signupForm.signupType} == '2'"/>
 			<form th:unless="${signupForm.signupType} == '2'">
 				<select id="selectEmail" class="select-email">
+					<option value="">직접입력</option>
 					<option value="@naver.com">@naver.com</option>
 					<option value="@daum.net">@daum.net</option>
 					<option value="@gmail.com">@gmail.com</option>
-					<option value="">직접입력</option>
 				</select>
 			</form>
 			<input type="hidden" id="email" name="email" value="" th:unless="${signupForm.signupType} == '2'" />

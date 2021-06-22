@@ -22,7 +22,7 @@ public class Membership extends Search implements Serializable {
 	// 멤버십 이름
 	private String membershipName;
 	// 허용 용량
-	private Double allowCapacity;
+	private Double uploadFileSize;
 	// 허용 횟수
-	private Integer allowCount;
+	private Integer convertFileCount;
 }

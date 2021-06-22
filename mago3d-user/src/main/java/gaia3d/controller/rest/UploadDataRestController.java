@@ -274,8 +274,8 @@ public class UploadDataRestController {
 		uploadDataService.insertUploadData(uploadData, uploadDataFileList);
 
 		MembershipUsage membershipUsage = membershipService.getUsageByUserId(userId);
-		membershipUsage.setUseCapacity(Double.valueOf(request.getParameter("fileSize")));
-		membershipService.updateUsageCapacity(membershipUsage);
+		membershipUsage.setUseUploadFileSize(Double.valueOf(request.getParameter("fileSize")));
+		membershipService.updateUsageFileSize(membershipUsage);
 
 		int statusCode = HttpStatus.OK.value();
 		

@@ -313,8 +313,8 @@
 					total+=files[i].size;
 				}
 				/*alert('File added - ' + files.length + ' - Size - ' + total);
-				alert("[[${membershipUsage.allowCapacity}]]" - total*0.000000001);*/
-				if(("[[${membershipUsage.useCapacity}]]"*1 + total*0.000000001) > "[[${membershipUsage.allowCapacity}]]"*1){
+				alert("[[${membershipUsage.uploadFileSize}]]" - total*0.000000001);*/
+				if(("[[${membershipUsage.useUploadFileSize}]]"*1 + total*0.000000001) > "[[${membershipUsage.uploadFileSize}]]"*1){
 					alert("업로드 가능한 용량이 초과되었습니다!");
 					total = 0;
 					myDropzone.removeAllFiles(true);

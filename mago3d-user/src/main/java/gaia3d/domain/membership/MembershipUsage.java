@@ -28,14 +28,14 @@ public class MembershipUsage extends Search implements Serializable {
 	// 사용자 고유번호
 	private String userId;
 	// 사용 용량
-	private Double useCapacity;
+	private Double useUploadFileSize;
 	// 사용 횟수
-	private Integer useCount;
+	private Integer useConvertFileCount;
 
 	// 허용 용량
-	private Double allowCapacity;
+	private Double uploadFileSize;
 	// 허용 횟수
-	private Integer allowCount;
+	private Integer convertFileCount;
 	
 	// 멤버십 변경 날짜
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")

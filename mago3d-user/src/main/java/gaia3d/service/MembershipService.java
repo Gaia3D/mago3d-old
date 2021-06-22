@@ -38,8 +38,8 @@ public interface MembershipService {
      * @param membershipUsage
      * @return
      */
-    int updateUsageCapacity(MembershipUsage membershipUsage);
+    int updateUsageFileSize(MembershipUsage membershipUsage);
 
 
-    int updateUsageCount(MembershipUsage membershipUsage);
+    int updateUsageFileCount(MembershipUsage membershipUsage);
 }

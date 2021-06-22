@@ -279,7 +279,7 @@ VALUES
 
 
 INSERT INTO membership(
-    membership_id, membership_name, allow_capacity, allow_count)
+    membership_id, membership_name, upload_file_size, convert_file_count)
 values
     (1, 'BASIC', 0.1, 10),
     (2, 'SILVER', 1.0, 30),
@@ -287,9 +287,9 @@ values
     (4, 'PLATINUM', 10.0, 100);
 
 INSERT INTO membership_usage(
-    membership_usage_id, membership_id, membership_name, user_id, update_date)
+    membership_usage_id, membership_id, user_id, update_date)
 values
-(1, 1, 'BASIC', 'admin', NOW()),
-(2, 1, 'BASIC', 'mago3d', NOW());
+    (1, 1, 'admin', NOW()),
+    (2, 1, 'mago3d', NOW());
 
 commit;

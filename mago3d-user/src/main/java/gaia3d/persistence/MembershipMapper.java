@@ -45,13 +45,13 @@ public interface MembershipMapper {
 	 * @param membershipUsage
 	 * @return
 	 */
-	int updateUsageCapacity(MembershipUsage membershipUsage);
+	int updateUsageFileSize(MembershipUsage membershipUsage);
 
 	/**
 	 * 멤버십 변환 횟수 갱신
 	 * @param membershipUsage
 	 * @return
 	 */
-	int updateUsageCount(MembershipUsage membershipUsage);
+	int updateUsageFileCount(MembershipUsage membershipUsage);
 
 }

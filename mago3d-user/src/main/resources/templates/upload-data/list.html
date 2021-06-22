@@ -269,14 +269,14 @@
 
 	// F4D Converter 일괄 변환
 	var saveConverterJobFlag = true;
-	var useCount = Number("[[${membershipUsage.useCount}]]");
-	var allowCount = Number("[[${membershipUsage.allowCount}]]");
+	var useConvertFileCount = Number("[[${membershipUsage.useConvertFileCount}]]");
+	var convertFileCount = Number("[[${membershipUsage.convertFileCount}]]");
 	function saveConverterJob() {
-		if(useCount + 1 > allowCount){
+		if(useConvertFileCount + 1 > convertFileCount){
 			alert("하루 변환가능 횟수를 초과했습니다.")
 			return false;
 		}else{
-			useCount+=1;
+			useConvertFileCount+=1;
 		}
 		if($("#title").val() === null || $("#title").val() === "") {
 			alert(JS_MESSAGE["converter.title.empty"]);

@@ -15,8 +15,9 @@
 	<select id="getUsageByUserId" parameterType="string" resultType="membershipUsage">
 		/* getUsageByUserId */
 		SELECT A.*,
-			   B.allow_capacity AS allowCapacity,
-			   B.allow_count AS allowCount
+			   B.membership_name AS membershipName,
+			   B.upload_file_size AS uploadFileSize,
+			   B.convert_file_count AS convertFileCount
 		FROM membership_usage A LEFT OUTER JOIN membership B ON A.membership_id = B.membership_id
 		WHERE A.user_id = #{userId}
 	</select>
@@ -28,26 +29,26 @@
 			SELECT NEXTVAL('membership_usage_seq')
 		</selectKey>
 		INSERT INTO membership_usage(
-			membership_usage_id, membership_id, user_id, membership_name, update_date
+			membership_usage_id, membership_id, user_id, update_date
 		) values(
-					#{membershipUsageId}, #{membershipId}, #{userId}, #{membershipName}, NOW()
+					#{membershipUsageId}, #{membershipId}, #{userId}, NOW()
 				)
 	</insert>
 
 	<!-- 멤버십 사용량 갱신 -->
-	<update id="updateUsageCapacity" parameterType="membershipUsage">
-		/* updateUsageCapacity */
+	<update id="updateUsageFileSize" parameterType="membershipUsage">
+		/* updateUsageFileSize */
 		UPDATE membership_usage
-		SET use_capacity = #{useCapacity},
+		SET use_upload_file_size = #{useUploadFileSize},
 		update_date = NOW()
 		WHERE user_id = #{userId}
 	</update>
 
 	<!-- 멤버십 변환 횟수 갱신 -->
-	<update id="updateUsageCount" parameterType="membershipUsage">
-		/* updateUsageCount */
+	<update id="updateUsageFileCount" parameterType="membershipUsage">
+		/* updateUsageFileCount */
 		UPDATE membership_usage
-		SET use_count = use_count+1,
+		SET use_convert_file_count = use_convert_file_count+1,
 			update_date = NOW()
 		WHERE user_id = #{userId}
 	</update>

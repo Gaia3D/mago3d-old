@@ -65,8 +65,8 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @return
 	 */
 	@Transactional
-	public int updateUsageCapacity(MembershipUsage membershipUsage) {
-		return membershipMapper.updateUsageCapacity(membershipUsage);
+	public int updateUsageFileSize(MembershipUsage membershipUsage) {
+		return membershipMapper.updateUsageFileSize(membershipUsage);
 	}
 
 	/**
@@ -75,8 +75,8 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @return
 	 */
 	@Transactional
-	public int updateUsageCount(MembershipUsage membershipUsage) {
-		return membershipMapper.updateUsageCount(membershipUsage);
+	public int updateUsageFileCount(MembershipUsage membershipUsage) {
+		return membershipMapper.updateUsageFileCount(membershipUsage);
 	}
 
 }
