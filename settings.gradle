@@ -9,7 +9,8 @@
 
 rootProject.name = 'mago3d'
 
-include ':common'
+include ':security'
+include ':data-library'
 include ':mago3d-admin'
 include ':mago3d-user'
 include ':mago3d-converter'

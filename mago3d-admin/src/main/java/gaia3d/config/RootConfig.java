@@ -1,7 +1,7 @@
 package gaia3d.config;
 
-import javax.sql.DataSource;
-
+import com.zaxxer.hikari.HikariDataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -19,10 +19,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zaxxer.hikari.HikariDataSource;
-
-import gaia3d.security.Crypt;
-import lombok.extern.slf4j.Slf4j;
+import javax.sql.DataSource;
 
 @Slf4j
 @MapperScan(basePackages="gaia3d.persistence")
@@ -53,9 +50,9 @@ public class RootConfig {
 		HikariDataSource dataSource = new HikariDataSource();
 		//dataSource.setPoolName("mago3DAdminPool");
 		dataSource.setDriverClassName(driverClassName);
-		dataSource.setJdbcUrl(Crypt.decrypt(url));
-		dataSource.setUsername(Crypt.decrypt(username));
-		dataSource.setPassword(Crypt.decrypt(password));
+		dataSource.setJdbcUrl(gaia3d.security.crypto.Crypt.decrypt(url));
+		dataSource.setUsername(gaia3d.security.crypto.Crypt.decrypt(username));
+		dataSource.setPassword(gaia3d.security.crypto.Crypt.decrypt(password));
 		dataSource.setMaximumPoolSize(maximumPoolSize);
 		dataSource.setMinimumIdle(minimumIdle);
 		

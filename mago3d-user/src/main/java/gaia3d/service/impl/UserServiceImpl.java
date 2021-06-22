@@ -2,7 +2,7 @@ package gaia3d.service.impl;
 
 import gaia3d.domain.user.UserInfo;
 import gaia3d.persistence.UserMapper;
-import gaia3d.security.Crypt;
+import gaia3d.security.crypto.Crypt;
 import gaia3d.service.UserService;
 import gaia3d.support.PasswordSupport;
 import org.springframework.beans.factory.annotation.Autowired;

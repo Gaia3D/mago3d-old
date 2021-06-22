@@ -1,6 +1,6 @@
 package gaia3d.config;
 
-import gaia3d.security.Crypt;
+import gaia3d.security.crypto.Crypt;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;

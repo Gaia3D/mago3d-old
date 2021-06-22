@@ -9,7 +9,7 @@ import gaia3d.geospatial.LayerStyleParser;
 import gaia3d.geospatial.Ogr2OgrExecute;
 import gaia3d.persistence.LayerFileInfoMapper;
 import gaia3d.persistence.LayerMapper;
-import gaia3d.security.Crypt;
+import gaia3d.security.crypto.Crypt;
 import gaia3d.service.GeoPolicyService;
 import gaia3d.service.LayerService;
 import gaia3d.support.LogMessageSupport;

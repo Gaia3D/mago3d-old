@@ -189,7 +189,27 @@ JS_MESSAGE["layer.key.duplication"] = "사용중인 layer Key 입니다. 다른 
 
 JS_MESSAGE["already.agreed"] = "이미 동의하였습니다.";
 
+JS_MESSAGE["data.library.name.empty"] = "데이터 라이브러리명을 입력하여 주십시오.";
+JS_MESSAGE["data.library.group.id.empty"] = "데이터 라이브러리 그룹명을 입력하여 주십시오.";
+JS_MESSAGE["data.library.sharing.empty"] = "공유 유형을 선택하여 주십시오.";
+JS_MESSAGE["data.library.type.empty"] = "데이터 라이브러리 타입을 선택하여 주십시오.";
+JS_MESSAGE["data.library.group.key.empty"] = "데이터 라이브러리 그룹 Key 를 입력하여 주십시오.";
+JS_MESSAGE["data.library.group.key.duplication"] = "사용중인 데이터 라이브러리 그룹 Key 입니다. 다른 이름을 사용해 주십시오.";
+JS_MESSAGE["data.library.group.key.enable"] = "사용 가능한 데이터 라이브러리 그룹 Key 입니다.";
+JS_MESSAGE["data.library.group.key.duplication.check"] = "데이터 라이브러리 그룹 Key 중복 확인이 필요 합니다.";
+
 JS_MESSAGE["tile.key.empty"] = "타일 Key 를 입력하여 주십시오.";
 JS_MESSAGE["tile.key.duplication"] = "사용중인 타일 Key 입니다. 다른 이름을 사용해 주십시오.";
 JS_MESSAGE["tile.key.enable"] = "사용 가능한 타일 Key 입니다.";
 JS_MESSAGE["tile.key.duplication.check"] = "타일 Key 중복 확인이 필요 합니다.";
+
+JS_MESSAGE["rule.key.empty"] = "Rule Key 를 입력하여 주십시오.";
+JS_MESSAGE["rule.key.duplication"] = "사용중인 Rule Key 입니다. 다른 이름을 사용해 주십시오.";
+JS_MESSAGE["rule.key.enable"] = "사용 가능한 Rule Key 입니다.";
+JS_MESSAGE["rule.key.duplication.check"] = "Rule Key 중복 확인이 필요 합니다.";
+
+JS_MESSAGE["rule.group.key.empty"] = "룰 그룹 Key 를 입력하여 주십시오.";
+JS_MESSAGE["rule.group.key.duplication"] = "사용중인 룰 그룹 Key 입니다. 다른 이름을 사용해 주십시오.";
+JS_MESSAGE["rule.group.key.enable"] = "사용 가능한 룰 그룹 Key 입니다.";
+JS_MESSAGE["rule.group.key.duplication.check"] = "룰 그룹 Key 중복 확인이 필요 합니다.";
+JS_MESSAGE["rule.group.inherit.type.invalid"] = "데이터 라이브러리 그룹 2Depth에서 최상위 그룹 Rule을 상속 선언한 경우, 하위 그룹에서 속성 변경이 불가능 합니다.";

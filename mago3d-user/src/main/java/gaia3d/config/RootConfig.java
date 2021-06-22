@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.zaxxer.hikari.HikariDataSource;
 
 import lombok.extern.slf4j.Slf4j;
-import gaia3d.security.Crypt;
+import gaia3d.security.crypto.Crypt;
 
 @Slf4j
 @MapperScan(basePackages="gaia3d.persistence")

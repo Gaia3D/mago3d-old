@@ -10,7 +10,7 @@ import gaia3d.domain.user.UserGroup;
 import gaia3d.domain.user.UserInfo;
 import gaia3d.domain.user.UserSession;
 import gaia3d.domain.user.UserStatus;
-import gaia3d.security.Crypt;
+import gaia3d.security.crypto.Crypt;
 import gaia3d.service.PolicyService;
 import gaia3d.service.UserGroupService;
 import gaia3d.service.UserService;

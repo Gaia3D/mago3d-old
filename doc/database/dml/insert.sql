@@ -270,3 +270,16 @@ INSERT INTO data_library_group (
 values
 (1, 'basic', '기본', 'infra/data-library/basic/', 'admin', 'common', 'admin', 1, 0, 1, 1, 0, true, true, 0);
 
+INSERT INTO rule_group
+    (rule_group_id, rule_group_name, rule_group_key, rule_type, rule_inherit_type, user_id,
+        ancestor, parent, depth, view_order, basic, available, description)
+VALUES
+    (1, '나무', 'tree_group_test', 'data_library', true, 'admin',
+        1, 1, 1, 1, true, true, '데이터 라이브러리 나무 Rule 그룹');
+
+-- INSERT INTO rule(rule_id, rule_group_id, rule_key, rule_name, user_id,
+--                  attributes, available)
+-- VALUES(1, 1, 'tree_test', '나무 테스트', 'admin',
+--                 '{"ruleKey": "treeTest", "assemble": false, "drawType": "both", "ruleName": "이팝나무_겨울", "ruleType": "data_library", "available": true, "totalCount": null, "description": "", "ruleGroupId": 2003, "ruleGroupKey": "tree", "dataLibraryId": null, "ruleGroupName": "가로수", "dataLibraryGroupId": null, "dataLibraryGroupKey": null, "dataLibraryGroupName": null}', true);
+--
+commit;

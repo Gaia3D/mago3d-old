@@ -5,7 +5,7 @@ import gaia3d.domain.role.RoleKey;
 import gaia3d.domain.user.UserInfo;
 import gaia3d.domain.user.UserStatus;
 import gaia3d.persistence.UserMapper;
-import gaia3d.security.Crypt;
+import gaia3d.security.crypto.Crypt;
 import gaia3d.service.DataGroupService;
 import gaia3d.service.DataService;
 import gaia3d.service.UserService;

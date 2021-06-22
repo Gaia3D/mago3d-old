@@ -1,6 +1,5 @@
 package gaia3d.config;
 
-import gaia3d.security.Crypt;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -46,8 +45,8 @@ public class RabbitConfig {
     @Bean
 	ConnectionFactory connectionFactory() {
 		CachingConnectionFactory connectionFactory = new CachingConnectionFactory(propertiesConfig.getRabbitmqServerHost());
-		connectionFactory.setUsername(Crypt.decrypt(propertiesConfig.getRabbitmqUser()));
-		connectionFactory.setPassword(Crypt.decrypt(propertiesConfig.getRabbitmqPassword()));
+		connectionFactory.setUsername(gaia3d.security.crypto.Crypt.decrypt(propertiesConfig.getRabbitmqUser()));
+		connectionFactory.setPassword(gaia3d.security.crypto.Crypt.decrypt(propertiesConfig.getRabbitmqPassword()));
 		connectionFactory.setPort(Integer.parseInt(propertiesConfig.getRabbitmqServerPort()));
 		return connectionFactory;
 	}

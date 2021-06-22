@@ -22,7 +22,7 @@ services:
 #      context: ./doc/docker/geoserver
 #      dockerfile: Dockerfile
     volumes:
-      - mago3d-geoserver-data:/geoserver-data
+      - D:\data\geoserver_data:/geoserver-data
     network_mode: "service:db"
 
   rabbitmq:

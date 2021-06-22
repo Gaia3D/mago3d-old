@@ -1,6 +1,6 @@
 package gaia3d.service.impl;
 
-import gaia3d.security.Crypt;
+import gaia3d.security.crypto.Crypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
