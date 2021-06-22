@@ -46,22 +46,16 @@ public class SigninController {
 
 	@Autowired
 	private UserService userService;
-
 	@Autowired
 	private SigninService signinService;
-
 	@Autowired
 	private SigninGoogleServiceImpl signinGoogleService;
-
 	@Autowired
 	private SigninFacebookServiceImpl signinFacebookService;
-
 	@Autowired
 	private SigninNaverServiceImpl signinNaverService;
-
 	@Autowired
 	private SigninKakaoServiceImpl signinKakaoService;
-
 	@Autowired
 	RestTemplate restTemplate;
 

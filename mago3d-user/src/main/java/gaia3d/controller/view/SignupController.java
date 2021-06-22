@@ -43,16 +43,12 @@ public class SignupController {
 
 	@Autowired
 	private UserService userService;
-
 	@Autowired
 	private PropertiesConfig propertiesConfig;
-
 	@Autowired
 	private DataGroupService dataGroupService;
-
 	@Autowired
 	private MessageSource messageSource;
-
 
 	/**
 	 * Sign up 페이지
