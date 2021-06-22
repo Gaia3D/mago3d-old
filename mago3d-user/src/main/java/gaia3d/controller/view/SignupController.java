@@ -10,6 +10,7 @@ import gaia3d.domain.user.UserGroupType;
 import gaia3d.domain.user.UserInfo;
 import gaia3d.domain.user.UserStatus;
 import gaia3d.service.DataGroupService;
+import gaia3d.service.MembershipService;
 import gaia3d.service.UserService;
 import gaia3d.support.PasswordSupport;
 import gaia3d.utils.FileUtils;
@@ -52,6 +53,9 @@ public class SignupController {
 
 	@Autowired
 	private MessageSource messageSource;
+
+	@Autowired
+	private MembershipService membershipService;
 
 	/**
 	 * Sign up 페이지
@@ -129,21 +133,15 @@ public class SignupController {
 		try{
 			userService.insertUser(signupForm);
 			initUserDir(request, signupForm);
-
-			return "redirect:/sign/signup-complete";
 		}catch (Exception e){
-			String userId = signupForm.getUserId();
-
-			FileUtils.deleteFileReculsive(dataGroupPath);
-
-			userService.deleteUser(userId);
-
-			signupForm.setErrorCode("mmmm");
+			FileUtils.deleteFileRecursive(dataGroupPath);
+			userService.deleteUser(signupForm.getUserId());
+			//signupForm.setErrorCode("mmmm");
 			model.addAttribute("signupForm", signupForm);
-
 			return "/sign/signup";
 		}
 
+		return "redirect:/sign/signup-complete";
 	}
 
 	/**

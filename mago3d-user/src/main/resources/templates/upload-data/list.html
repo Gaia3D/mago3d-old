@@ -269,7 +269,15 @@
 
 	// F4D Converter 일괄 변환
 	var saveConverterJobFlag = true;
+	var useCount = Number("[[${membershipUsage.useCount}]]");
+	var allowCount = Number("[[${membershipUsage.allowCount}]]");
 	function saveConverterJob() {
+		if(useCount + 1 > allowCount){
+			alert("하루 변환가능 횟수를 초과했습니다.")
+			return false;
+		}else{
+			useCount+=1;
+		}
 		if($("#title").val() === null || $("#title").val() === "") {
 			alert(JS_MESSAGE["converter.title.empty"]);
 			$("#title").focus();

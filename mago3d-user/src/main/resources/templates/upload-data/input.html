@@ -275,6 +275,7 @@
 	    },
 		init: function() {
 			var myDropzone = this; // closure
+
 			var uploadTask = document.querySelector("#allFileUpload");
 			var clearTask = document.querySelector("#allFileClear");
 			
@@ -282,7 +283,7 @@
 				if (validate() === false) {
 					return;
 				}
-				
+
 				uploadFileCount = 0;
 	            uploadFileResultCount = 0;
 	            e.preventDefault();
@@ -305,6 +306,22 @@
 	            }
 	        });
 
+			// 멤버십 1일 업로드 가능 용량 체크
+			var total = 0;
+			this.on("addedfiles", function (files) {
+				for(var i = 0; i < files.length; i++){
+					total+=files[i].size;
+				}
+				/*alert('File added - ' + files.length + ' - Size - ' + total);
+				alert("[[${membershipUsage.allowCapacity}]]" - total*0.000000001);*/
+				if(("[[${membershipUsage.useCapacity}]]"*1 + total*0.000000001) > "[[${membershipUsage.allowCapacity}]]"*1){
+					alert("업로드 가능한 용량이 초과되었습니다!");
+					total = 0;
+					myDropzone.removeAllFiles(true);
+					return;
+				}
+			});
+
 			this.on("sending", function(file, xhr, formData) {
 				formData.append("dataName", $("#dataName").val());
 				formData.append("dataGroupId", $("#dataGroupId").val());
@@ -315,6 +332,7 @@
 				formData.append("latitude", $("#latitude").val());
 				formData.append("altitude", $("#altitude").val());
 				formData.append("description", $("#description").val());
+				formData.append("fileSize", total*0.000000001);
 			});
 			
 			// maxFiles 카운터를 초과하면 경고창

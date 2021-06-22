@@ -4,12 +4,14 @@ import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.FileType;
 import gaia3d.domain.Key;
 import gaia3d.domain.cache.CacheManager;
+import gaia3d.domain.membership.MembershipUsage;
 import gaia3d.domain.policy.Policy;
 import gaia3d.domain.uploaddata.UploadData;
 import gaia3d.domain.uploaddata.UploadDataFile;
 import gaia3d.domain.uploaddata.UploadDataType;
 import gaia3d.domain.uploaddata.UploadDirectoryType;
 import gaia3d.domain.user.UserSession;
+import gaia3d.service.MembershipService;
 import gaia3d.service.UploadDataService;
 import gaia3d.support.LogMessageSupport;
 import gaia3d.utils.DateUtils;
@@ -51,6 +53,9 @@ public class UploadDataRestController {
 	
 	@Autowired
 	private UploadDataService uploadDataService;
+
+	@Autowired
+	private MembershipService membershipService;
 	
 	/**
 	 * TODO 비동기로 처리해야 할듯
@@ -266,7 +271,12 @@ public class UploadDataRestController {
 		uploadData.setDescription(request.getParameter("description"));
 		
 		log.info("@@@@@@@@@@@@ uploadData = {}", uploadData);
-		uploadDataService.insertUploadData(uploadData, uploadDataFileList);       
+		uploadDataService.insertUploadData(uploadData, uploadDataFileList);
+
+		MembershipUsage membershipUsage = membershipService.getUsageByUserId(userId);
+		membershipUsage.setUseCapacity(Double.valueOf(request.getParameter("fileSize")));
+		membershipService.updateUsageCapacity(membershipUsage);
+
 		int statusCode = HttpStatus.OK.value();
 		
 		result.put("statusCode", statusCode);

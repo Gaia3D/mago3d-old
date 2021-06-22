@@ -30,6 +30,10 @@ public class UserSession implements Serializable {
 	private String userId;
 	// 사용자 그룹 고유번호
 	private Integer userGroupId;
+	// 멤버십 고유번호
+	private Integer membershipId;
+	// 멤버십 이름
+	private String membershipName;
 	// 사용자 그룹명(화면용)
 	private String userGroupName;
 	// 이름

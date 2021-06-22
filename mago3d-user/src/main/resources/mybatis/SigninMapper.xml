@@ -6,7 +6,9 @@
 	<!-- 세션 정보 -->
 	<select id="getUserSession" parameterType="userInfo" resultType="userSession">
 		/* getUserSession */
-		SELECT A.*, B.user_group_name AS userGroupName,
+		SELECT A.*,
+		       B.user_group_name AS userGroupName,
+		       C.membership_name AS membershipName,
 			<![CDATA[
 			CASE WHEN A.last_password_change_date < (NOW() - INTERVAL '${passwordChangeTerm} DAY') THEN true
 				ELSE false
@@ -18,13 +20,16 @@
 			END AS user_last_signin_lock_over
 			]]>
 		FROM user_info A LEFT OUTER JOIN user_group B ON A.user_group_id = B.user_group_id
+						LEFT OUTER JOIN membership C ON A.membership_id = C.membership_id
 		WHERE A.user_id = #{userId}
 	</select>
 
 	<!-- 세션 정보(email) -->
 	<select id="getUserSessionByEmail" parameterType="userInfo" resultType="userSession">
 		/* getUserSessionByEmail */
-		SELECT A.*, B.user_group_name AS userGroupName,
+		SELECT A.*,
+		       B.user_group_name AS userGroupName,
+			   C.membership_name AS membershipName,
 			<![CDATA[
 			   CASE WHEN A.last_password_change_date < (NOW() - INTERVAL '${passwordChangeTerm} DAY') THEN true
 					ELSE false
@@ -36,6 +41,7 @@
 				   END AS user_last_signin_lock_over
 			]]>
 		FROM user_info A LEFT OUTER JOIN user_group B ON A.user_group_id = B.user_group_id
+						 LEFT OUTER JOIN membership C ON A.membership_id = C.membership_id
 		WHERE A.email = #{email}
 	</select>
 	

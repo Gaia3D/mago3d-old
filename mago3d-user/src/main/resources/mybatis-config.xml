@@ -30,6 +30,8 @@
     	<typeAlias type="gaia3d.domain.layer.LayerGroup" alias="layerGroup" />
     	<typeAlias type="gaia3d.domain.layer.LayerFileInfo" alias="layerFileInfo" />
     	<typeAlias type="gaia3d.domain.menu.Menu" alias="menu" />
+    	<typeAlias type="gaia3d.domain.membership.Membership" alias="membership" />
+    	<typeAlias type="gaia3d.domain.membership.MembershipUsage" alias="membershipUsage" />
 		<typeAlias type="gaia3d.domain.microservice.MicroService" alias="microService" />
 		<typeAlias type="gaia3d.domain.microservice.MicroServiceLog" alias="microServiceLog" />
     	<typeAlias type="gaia3d.domain.policy.Policy" alias="policy" />

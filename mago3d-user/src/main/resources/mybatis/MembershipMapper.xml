@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gaia3d.persistence.MembershipMapper">
+
+	<!-- 멤버십 정보 조회 -->
+	<select id="getMembershipById" parameterType="int" resultType="membership">
+		/* getMembershipByUserId */
+		SELECT A.*
+		FROM membership A
+		WHERE A.membership_id = #{membershipId}
+	</select>
+
+	<!-- 멤버십 정보 조회 -->
+	<select id="getUsageByUserId" parameterType="string" resultType="membershipUsage">
+		/* getUsageByUserId */
+		SELECT A.*,
+			   B.allow_capacity AS allowCapacity,
+			   B.allow_count AS allowCount
+		FROM membership_usage A LEFT OUTER JOIN membership B ON A.membership_id = B.membership_id
+		WHERE A.user_id = #{userId}
+	</select>
+
+	<!-- 멤버십 등록 -->
+	<insert id="insertUsage" parameterType="membershipUsage">
+		/* insertUsage */
+		<selectKey keyProperty="membershipUsageId" resultType="long" order="BEFORE">
+			SELECT NEXTVAL('membership_usage_seq')
+		</selectKey>
+		INSERT INTO membership_usage(
+			membership_usage_id, membership_id, user_id, membership_name, update_date
+		) values(
+					#{membershipUsageId}, #{membershipId}, #{userId}, #{membershipName}, NOW()
+				)
+	</insert>
+
+	<!-- 멤버십 사용량 갱신 -->
+	<update id="updateUsageCapacity" parameterType="membershipUsage">
+		/* updateUsageCapacity */
+		UPDATE membership_usage
+		SET use_capacity = #{useCapacity},
+		update_date = NOW()
+		WHERE user_id = #{userId}
+	</update>
+
+	<!-- 멤버십 변환 횟수 갱신 -->
+	<update id="updateUsageCount" parameterType="membershipUsage">
+		/* updateUsageCount */
+		UPDATE membership_usage
+		SET use_count = use_count+1,
+			update_date = NOW()
+		WHERE user_id = #{userId}
+	</update>
+
+
+
+</mapper>

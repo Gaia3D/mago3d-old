@@ -282,4 +282,20 @@ VALUES
 -- VALUES(1, 1, 'tree_test', '나무 테스트', 'admin',
 --                 '{"ruleKey": "treeTest", "assemble": false, "drawType": "both", "ruleName": "이팝나무_겨울", "ruleType": "data_library", "available": true, "totalCount": null, "description": "", "ruleGroupId": 2003, "ruleGroupKey": "tree", "dataLibraryId": null, "ruleGroupName": "가로수", "dataLibraryGroupId": null, "dataLibraryGroupKey": null, "dataLibraryGroupName": null}', true);
 --
+
+
+INSERT INTO membership(
+    membership_id, membership_name, allow_capacity, allow_count)
+values
+(1, 'BASIC', 0.1, 10),
+(2, 'SILVER', 1.0, 30),
+(3, 'GOLD', 5.0, 50),
+(4, 'PLATINUM', 10.0, 100);
+
+INSERT INTO membership_usage(
+    membership_usage_id, membership_id, membership_name, user_id, update_date)
+values
+(1, 1, 'BASIC', 'admin', NOW()),
+(2, 1, 'BASIC', 'mago3d', NOW());
+
 commit;

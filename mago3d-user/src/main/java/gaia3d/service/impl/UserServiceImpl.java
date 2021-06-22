@@ -1,8 +1,11 @@
 package gaia3d.service.impl;
 
+import gaia3d.domain.membership.Membership;
+import gaia3d.domain.membership.MembershipUsage;
 import gaia3d.domain.user.UserInfo;
 import gaia3d.persistence.UserMapper;
 import gaia3d.security.crypto.Crypt;
+import gaia3d.service.MembershipService;
 import gaia3d.service.UserService;
 import gaia3d.support.PasswordSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +22,10 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserMapper userMapper;
-	
+
+	@Autowired
+	private MembershipService membershipService;
+
 	/**
 	 * 사용자 ID 중복 체크
 	 * @param userInfo
@@ -76,9 +82,17 @@ public class UserServiceImpl implements UserService {
 			userInfo.setUserGroupId(2);
 		}
 		userInfo.setEmail(Crypt.encrypt(userInfo.getEmail()));
+
+		Membership membership = membershipService.getMembershipById(1);
+		MembershipUsage membershipUsage = new MembershipUsage();
+		membershipUsage.setMembershipId(membership.getMembershipId());
+		membershipUsage.setMembershipName(membership.getMembershipName());
+		membershipUsage.setUserId(userInfo.getUserId());
+		membershipService.insertUsage(membershipUsage);
+
 		return userMapper.insertUser(userInfo);
 	}
-	
+
 	/**
 	 * 사용자 비밀번호 수정
 	 * @param userInfo

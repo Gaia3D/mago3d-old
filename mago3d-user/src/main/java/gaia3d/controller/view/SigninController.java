@@ -36,7 +36,7 @@ import java.util.List;
 
 /**
  * Sign in 처리
- * 
+ *
  * @author jeongdae
  */
 @Slf4j
@@ -152,7 +152,7 @@ public class SigninController {
 		if(userSession.getPasswordChangeTermOver() || UserStatus.TEMP_PASSWORD == UserStatus.findBy(userSession.getStatus())){
 			return "redirect:/user/modify-password";
 		}
-		
+
 		return "redirect:/data/map";
 	}
 
@@ -169,13 +169,11 @@ public class SigninController {
 
 		//SigninSocialService signinSocialService = signinSocialServices.get(SocialType.valueOf(socialType).getImplementation());
 
-		SigninSocialService signinSocialService = setSocialSigninService(socialType);
+		SigninSocialService signinSocialService = getSocialSigninService(socialType);
 
-		setTimeoutRestTemplate();
-
-		UserInfo userInfo = signinSocialService.authorize(authCode, restTemplate);
 		Policy policy = CacheManager.getPolicy();
 
+		UserInfo userInfo = signinSocialService.authorize(authCode, getTimeoutRestTemplate());
 		userInfo.setPasswordChangeTerm(policy.getPasswordChangeTerm());
 		userInfo.setUserLastSigninLock(policy.getUserLastSigninLock());
 
@@ -191,7 +189,6 @@ public class SigninController {
 		UserSession userSession = signinService.getUserSessionByEmail(userInfo);
 
 		String errorCode = validate(request, policy, userInfo, userSession);
-
 		if(errorCode != null){
 			userInfo.setErrorCode(errorCode);
 			userInfo.setUserId(null);
@@ -248,29 +245,29 @@ public class SigninController {
 
 		if(UserStatus.WAITING_APPROVAL == UserStatus.findBy(userSession.getStatus()))
 			return "usersession.status.wait";*/
-		
+
 		// 사인인 실패 횟수
 		if(userSession.getFailSigninCount() >= policy.getUserFailSigninCount()) {
 			signinForm.setFailSigninCount(userSession.getFailSigninCount());
 			return "usersession.failsignincount.invalid";
 		}
-		
+
 		// 마지막 접속일(접속 정책이 3개월 미접속인 경우 접속 금지의 경우)
 		if(userSession.getUserLastSigninLockOver()) {
 			signinForm.setLastSigninDate(userSession.getLastSigninDate());
 			signinForm.setUserLastSigninLock(policy.getUserLastSigninLock());
 			return "usersession.lastsignin.invalid";
 		}
-		
+
 		// 초기 세팅시만 이 값을 N으로 세팅해서 사용자 Role 체크 하지 않음
 		if(YOrN.N != YOrN.valueOf(userSession.getUserRoleCheckYn())) {
 			// 사용자 그룹 ROLE 확인
 			List<String> userGroupRoleKeyList = CacheManager.getUserGroupRoleKeyList(userSession.getUserGroupId());
 			if(!RoleSupport.isUserGroupRoleValid(userGroupRoleKeyList, RoleKey.USER_SIGNIN.name())) {
-	 			return "usersession.role.invalid";
+				return "usersession.role.invalid";
 			}
 		}
-		
+
 //		// 사용자 IP 체크
 //		if(Policy.Y.equals(policy.getSecurity_user_ip_check_yn())) {
 //			UserDevice userDevice = new UserDevice();
@@ -281,9 +278,9 @@ public class SigninController {
 //				return "userdevice.ip.invalid";
 //			}
 //		}
-			
+
 		// TODO 사용기간이 종료 되었는지 확인할것
-		
+
 		// 중복 사인인 허용 하지 않을 경우, 동일 아이디로 생성된 세션이 존재할 경우 파기
 		log.info("##################################### userDuplicationSigninYn() = {}", policy.getUserDuplicationSigninYn());
 		if(YOrN.N == YOrN.valueOf(policy.getUserDuplicationSigninYn())) {
@@ -322,7 +319,7 @@ public class SigninController {
 	 * @param socialType
 	 * @return
 	 */
-	private SigninSocialService setSocialSigninService(String socialType){
+	private SigninSocialService getSocialSigninService(String socialType){
 		switch (SocialType.findBy(socialType)){
 			case GOOGLE : return signinGoogleService;
 			case FACEBOOK : return signinFacebookService;
@@ -336,12 +333,13 @@ public class SigninController {
 	 * RestTamplate 설정(소셜 로그인)
 	 * @return
 	 */
-	private void setTimeoutRestTemplate(){
+	private RestTemplate getTimeoutRestTemplate(){
 		RestTemplateBuilder builder = new RestTemplateBuilder();
 		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
 		factory.setConnectTimeout(10*1000);
 		factory.setReadTimeout(10*1000);
 		restTemplate.setRequestFactory(factory);
+		return restTemplate;
 	}
 
 }

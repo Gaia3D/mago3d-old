@@ -8,11 +8,13 @@ import gaia3d.domain.cache.CacheManager;
 import gaia3d.domain.common.Pagination;
 import gaia3d.domain.converter.ConverterJob;
 import gaia3d.domain.data.DataGroup;
+import gaia3d.domain.membership.MembershipUsage;
 import gaia3d.domain.role.RoleKey;
 import gaia3d.domain.uploaddata.UploadData;
 import gaia3d.domain.uploaddata.UploadDataFile;
 import gaia3d.domain.user.UserSession;
 import gaia3d.service.DataGroupService;
+import gaia3d.service.MembershipService;
 import gaia3d.service.PolicyService;
 import gaia3d.service.UploadDataService;
 import gaia3d.support.RoleSupport;
@@ -56,6 +58,9 @@ public class UploadDataController {
 
 	@Autowired
 	private PolicyService policyService;
+
+	@Autowired
+	private MembershipService membershipService;
 	
 	@Autowired
 	private PropertiesConfig propertiesConfig;
@@ -107,7 +112,9 @@ public class UploadDataController {
 		if(totalCount > 0L) {
 			uploadDataList = uploadDataService.getListUploadData(uploadData);
 		}
-		
+		MembershipUsage membershipUsage = membershipService.getUsageByUserId(userSession.getUserId());
+
+		model.addAttribute("membershipUsage", membershipUsage);
 		model.addAttribute(pagination);
 		model.addAttribute("uploadData", uploadData);
 		model.addAttribute("converterJobForm", new ConverterJob());
@@ -154,7 +161,10 @@ public class UploadDataController {
 											dataGroupName(dataGroup.getDataGroupName()).build();
 		
 		String acceptedFiles = policyService.getUserUploadType();
-		
+
+		MembershipUsage membershipUsage = membershipService.getUsageByUserId(userSession.getUserId());
+
+		model.addAttribute("membershipUsage", membershipUsage);
 		model.addAttribute("uploadData", uploadData);
 		model.addAttribute("dataGroupList", dataGroupList);
 		model.addAttribute("acceptedFiles", acceptedFiles);

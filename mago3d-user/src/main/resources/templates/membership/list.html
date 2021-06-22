@@ -1,0 +1,28 @@
+﻿<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
+<head>
+	<meta charset="UTF-8">
+	<meta name="Description" content="실내외 3차원 통합 플랫폼, mago3D" />
+	<meta name="Keywords" content="" />
+	<meta name="author" content="Gaia3D" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+	<title><th:block th:text="#{signup.complete.page.title}"></th:block></title>
+	<link rel="shortcut icon" th:href="@{/images/favicon.ico(cacheVersion=${contentCacheVersion})}" />
+	<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+	<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+	<link rel="stylesheet" th:href="@{/css/{lang}/display.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+</head>
+<body class="bggray">
+	<div id="signup-complete">
+		<div class="login-wrapper" style="margin-top: 50px;">
+			<img th:src="@{/images/{lang}/mago3d_logo.png(lang=${lang})}" alt="디지털트윈 플랫폼, mago3D 로고" style="margin-top: 50px;"/>
+			<p class="stitle" style="margin-top: 30px;">실내외 3차원 통합 플랫폼, <span class="mago">mago3D</span>와 함께 디지털 트윈 세상으로!</p>
+			<p class="stitle">회원가입이 정상적으로 요청되었습니다. 관리자 승인후 이용해 주세요!</p>
+			<a type="button" href="/sign/signin" class="btn-go-login">로그인하기</a>
+			<div class="copyright">ⓒ Gaia3d Corp. All Rights Reserved.</div>
+		</div>
+	</div>
+</body>
+
+</html>

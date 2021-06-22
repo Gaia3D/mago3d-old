@@ -10,6 +10,7 @@ drop table if exists user_group_menu cascade;
 create table user_info(
 	user_id						varchar(32),
 	user_group_id				integer								not null,
+	membership_id               integer                             default 1,
 	user_name					varchar(64)							not null,
 	password					varchar(512)						not null,
 	salt						varchar(256),
@@ -35,6 +36,7 @@ create table user_info(
 comment on table user_info is '사용자 기본정보';
 comment on column user_info.user_id is '고유번호';
 comment on column user_info.user_group_id is '사용자 그룹 고유번호';
+comment on column user_info.membership_id is '멤버십 고유번호';
 comment on column user_info.user_name is '이름';
 comment on column user_info.password is '비밀번호';
 comment on column user_info.salt is 'SALT';
