@@ -77,7 +77,8 @@
                 $('.dustStation').removeClass('on');
                 $(this).addClass('on');
                 const thingId = $(this).data('id');
-                MAGO.sensorThings.getInformation(thingId);
+                const thingName = $(this).data('name');
+                MAGO.sensorThings.getInformation(thingId, thingName);
             });
 
             let down = false;
