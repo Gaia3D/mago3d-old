@@ -59,7 +59,8 @@
 				ELSE false
 			END AS duplication
 		FROM rule_group
-		WHERE rule_group_key = #{ruleGroupKey}
+		WHERE rule_type = #{ruleType}
+			AND rule_group_key = #{ruleGroupKey}
 		<if test="userId != null and userId != ''">
 			AND user_id = #{userId}
 		</if>

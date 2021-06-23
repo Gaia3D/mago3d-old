@@ -173,25 +173,20 @@
 		WHERE A.user_id = B.user_id
 		<if test="userId != null and userId != '' and userGroupId != null and userGroupId >= 0">
 			AND (
-			A.data_group_target = 'admin'
-			OR
-			(
-			A.data_group_target = 'user'
-			AND A.user_id = #{userId}
-			)
-			OR
-			(
-			A.data_group_target = 'user'
-			AND A.user_id != #{userId}
-			AND (A.sharing = 'common' OR A.sharing = 'public')
-			)
-			OR
-			(
-			A.data_group_target = 'user'
-			AND A.user_id != #{userId}
-			AND A.sharing = 'group'
-			AND B.user_group_id = #{userGroupId}
-			)
+				A.data_group_target = 'admin'
+				OR (
+					A.data_group_target = 'user'
+					AND A.user_id = #{userId})
+				OR (
+					A.data_group_target = 'user'
+					AND A.user_id != #{userId}
+					AND (A.sharing = 'common' OR A.sharing = 'public'))
+				OR (
+					A.data_group_target = 'user'
+					AND A.user_id != #{userId}
+					AND A.sharing = 'group'
+					AND B.user_group_id = #{userGroupId}
+				)
 			)
 		</if>
 		<!-- 		<trim prefix="WHERE" prefixOverrides="AND"> -->

@@ -167,7 +167,7 @@
 		SELECT *
 		FROM (
 			SELECT A.*, ST_X(A.location) AS longitude, ST_Y(A.location) AS latitude, B.data_group_name, B.data_group_target, B.data_group_key, B.tiling
-			FROM data_info A, data_group B, user_info C
+			FROM data_info A, data_group B
 			WHERE A.data_group_id = B.data_group_id
 				AND (
 					B.data_group_target = 'admin'

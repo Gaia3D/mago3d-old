@@ -172,7 +172,7 @@
 				var formData = $("#ruleGroup").serialize();
 				$.ajax({
 					url: "/rule-groups/[[${ruleGroup.ruleGroupId}]]",
-					type: "PUT",
+					type: "POST",
 					headers: {"X-Requested-With": "XMLHttpRequest"},
 					data: formData,
 					success: function(msg){

@@ -152,7 +152,7 @@
 				return false;
 			}
 
-			var formData = "ruleGroupKey=" + ruleGroupKey;
+			var formData = "ruleType=" + $("#ruleType").val() + "&ruleGroupKey=" + ruleGroupKey;
 			$.ajax({
 				url: "/rule-groups/duplication",
 				type: "GET",
