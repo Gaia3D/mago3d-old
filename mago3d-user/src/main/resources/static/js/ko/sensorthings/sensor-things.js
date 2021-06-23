@@ -1,8 +1,10 @@
 const SensorThings = function (magoInstance) {
 
     this.magoInstance = magoInstance;
-    this.FROST_SERVER_URL = 'http://localhost:8888/FROST-Server/v1.0/';
-    //this.FROST_SERVER_URL = 'http://iot.openindoormap.io/v1.0/';
+    //this.FROST_SERVER_URL = 'http://localhost:8888/FROST-Server/v1.0/';
+    this.FROST_SERVER_URL = 'http://iot.openindoormap.io/v1.0/';
+    this.geoserverDataUrl = 'http://iot.openindoormap.io/geoserver';
+    this.geoserverDataStore = 'oim';
     this.queryString = '';
     this.type = 'iot_occupancy'; // iot_occupancy, iot_dust
     this.created = false;
@@ -118,10 +120,10 @@ SensorThings.prototype.setInterval = function() {
         //currentTime = moment(currentTime).utc().add(3600, 's').format();
         MAGO.sensorThings.setCurrentTime(currentTime);
 
-        console.info("currentTime : " + currentTime);
-        console.info("callInterval : " + MAGO.sensorThings.callInterval);
-        //console.info("getFilterStartTime : " + LHDT.sensorThings.getFilterStartTime());
-        //console.info("getFilterEndTime : " + LHDT.sensorThings.getFilterEndTime());
+        // console.info("currentTime : " + currentTime);
+        // console.info("callInterval : " + MAGO.sensorThings.callInterval);
+        // console.info("getFilterStartTime : " + LHDT.sensorThings.getFilterStartTime());
+        // console.info("getFilterEndTime : " + LHDT.sensorThings.getFilterEndTime());
 
     }, 1000 * MAGO.sensorThings.callInterval);
 };

@@ -139,8 +139,8 @@ DustSensorThings.prototype.addDustLayer = function () {
     }
 
     const provider = new Cesium.WebMapServiceImageryProvider({
-        url : [MAGO.policy.geoserverDataUrl, MAGO.policy.geoserverDataStore, 'wms'].join('/'),
-        layers : MAGO.policy.geoserverDataStore + ':air-quality-group',
+        url : [this.geoserverDataUrl, this.geoserverDataStore, 'wms'].join('/'),
+        layers : this.geoserverDataStore + ':air-quality-group',
         minimumLevel:2,
         maximumLevel : 20,
         rectangle : new Cesium.Rectangle(124.645669 * Math.PI / 180, 33.227749 * Math.PI / 180
