@@ -6,9 +6,8 @@
             <th:block th:if="${session.USER_SESSION}">
                 <ul>
                     <li>
-                        <a href="/membership/list" title="Membership">멤버십</a>
                         <span class=user th:text="${session.USER_SESSION.userName}"><th:block th:text="#{common.sir}"></th:block></span>
-                        <span class=user th:text="${session.USER_SESSION.membershipName}"><th:block th:text="#{common.sir}"></th:block></span>
+                        <a href="/membership/list" title="Membership" th:text="${session.USER_SESSION.membershipName}"></a>
                         <a href="/guide/help" th:title="#{common.api.document}" onclick="goMagoAPIGuide(this.href);return false;"><th:block th:text="#{common.api.document}"></th:block></a>
                         <a href="/sign/signout" title="Sign out">Sign out</a>
                     </li>

@@ -1,7 +1,7 @@
 -- FK, Index 는 별도 파일로 분리. 맨 마지막에 작업 예정
 drop table if exists membership cascade;
 drop table if exists membership_usage cascade;
-drop table if exists membership_history cascade;
+drop table if exists membership_log cascade;
 
 
 -- 멤버십 기본정보
@@ -35,8 +35,8 @@ comment on table membership_usage is '멤버십 기본정보';
 comment on column membership_usage.membership_usage_id is '고유번호';
 comment on column membership_usage.membership_id is '멤버십 고유번호';
 comment on column membership_usage.user_id is '사용자 아이디';
-comment on column membership_usage.use_upload_file_size is '사용량(GB)';
-comment on column membership_usage.use_convert_file_count is '사용횟수';
+comment on column membership_usage.use_upload_file_size is '사용 용량(GB)';
+comment on column membership_usage.use_convert_file_count is '사용 횟수';
 comment on column membership_usage.update_date is '멤버십 변경 날짜';
 comment on column membership_usage.insert_date is '등록일';
 

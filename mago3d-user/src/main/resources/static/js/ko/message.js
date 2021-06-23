@@ -170,3 +170,6 @@ JS_MESSAGE["iot.dust.legend.normal"]="보통";
 JS_MESSAGE["iot.dust.legend.bad"]="나쁨";
 JS_MESSAGE["iot.dust.legend.very-bad"]="매우나쁨";
 JS_MESSAGE["iot.dust.legend.nodata"]="없음";
+
+JS_MESSAGE["membership.file.count.exceed"]="변환 월 허용횟수를 초과하였습니다.";
+JS_MESSAGE["membership.file.size.exceed"]="파일 업로딩 월 허용용량을 초과하였습니다.";

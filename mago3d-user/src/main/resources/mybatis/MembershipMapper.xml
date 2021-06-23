@@ -39,7 +39,7 @@
 	<update id="updateUsageFileSize" parameterType="membershipUsage">
 		/* updateUsageFileSize */
 		UPDATE membership_usage
-		SET use_upload_file_size = #{useUploadFileSize},
+		SET use_upload_file_size = use_upload_file_size + #{useUploadFileSize},
 		update_date = NOW()
 		WHERE user_id = #{userId}
 	</update>

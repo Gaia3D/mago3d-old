@@ -273,7 +273,7 @@
 	var convertFileCount = Number("[[${membershipUsage.convertFileCount}]]");
 	function saveConverterJob() {
 		if(useConvertFileCount + 1 > convertFileCount){
-			alert("하루 변환가능 횟수를 초과했습니다.")
+			alert(JS_MESSAGE["membership.file.count.exceed"]);
 			return false;
 		}else{
 			useConvertFileCount+=1;

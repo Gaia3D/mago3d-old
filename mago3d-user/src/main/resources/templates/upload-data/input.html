@@ -307,16 +307,18 @@
 	        });
 
 			// 멤버십 1일 업로드 가능 용량 체크
-			var total = 0;
+			var totalFileSize = 0;
 			this.on("addedfiles", function (files) {
 				for(var i = 0; i < files.length; i++){
-					total+=files[i].size;
+					totalFileSize+=files[i].size;
 				}
 				/*alert('File added - ' + files.length + ' - Size - ' + total);
 				alert("[[${membershipUsage.uploadFileSize}]]" - total*0.000000001);*/
-				if(("[[${membershipUsage.useUploadFileSize}]]"*1 + total*0.000000001) > "[[${membershipUsage.uploadFileSize}]]"*1){
-					alert("업로드 가능한 용량이 초과되었습니다!");
-					total = 0;
+				var useUploadFileSize = Number("[[${membershipUsage.useUploadFileSize}]]");
+				var uploadFileSize = Number("[[${membershipUsage.uploadFileSize}]]");
+				if((useUploadFileSize + totalFileSize*0.000000001) > uploadFileSize){
+					alert(JS_MESSAGE["membership.file.size.exceed"]);
+					totalFileSize = 0;
 					myDropzone.removeAllFiles(true);
 					return;
 				}
@@ -332,7 +334,7 @@
 				formData.append("latitude", $("#latitude").val());
 				formData.append("altitude", $("#altitude").val());
 				formData.append("description", $("#description").val());
-				formData.append("fileSize", total*0.000000001);
+				formData.append("fileSize", totalFileSize*0.000000001);
 			});
 			
 			// maxFiles 카운터를 초과하면 경고창
@@ -348,6 +350,7 @@
 	                fileUploadDialog.dialog( "close" );
 	                if(response.statusCode <= 200) {
 	                	if(response.errorCode === undefined || response.errorCode === null) {
+							totalFileSize = 0;
 	                		uploadFileResultCount ++;
 							if(uploadFileCount === uploadFileResultCount) {
 								alert(JS_MESSAGE["upload.complete"]);

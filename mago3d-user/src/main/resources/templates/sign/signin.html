@@ -13,84 +13,47 @@
 	<script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 </head>
 <body class="bggray">
-	<div id="login">
-		<form class="select-lang">
-		<select class="language">
+<div id="login">
+	<form class="select-lang">
+		<select id="userLocale" name="userLocale" onchange="changeLanguage(this.value);" style="background: #9065dc; color: white; height: 25px;">
 			<option value="ko"><th:block th:text="#{common.korea}"></th:block></option>
 			<option value="en"><th:block th:text="#{common.english}"></th:block></option>
 		</select>
+	</form>
+	<div class="login-wrapper">
+		<img th:src="@{/images/{lang}/mago3d_logo.png(lang=${lang})}" alt="디지털트윈 플랫폼, mago3D 로고" />
+		<p class="stitle">실내외 3차원 통합 플랫폼, <span class="mago">mago3D</span>와 함께 디지털 트윈 세상으로!</p>
+		<form autocomplete="off" id="signinForm" th:object="${signinForm}" method="post" action="/sign/process-signin">
+			<fieldset>
+				<legend>mago3D 로그인</legend>
+				<label for="userId"><span class="blind">아이디</span></label><input type="text" id="userId" name="userId" class="inputid" th:title="#{common.id}" th:placeholder="#{common.id}" required="required" autofocus="autofocus" />
+				<label for="password"><span class="blind">비밀번호</span></label><input type="password" id="password" name="password" class="inputpwd" th:title="#{common.password}" th:placeholder="#{common.password}" required="required" />
+				<button type="submit" class="btn-login">로그인</button>
+			</fieldset>
 		</form>
-		<div class="login-wrapper">
-			<img th:src="@{/images/{lang}/mago3d_logo.png(lang=${lang})}" alt="디지털트윈 플랫폼, mago3D 로고" />
-			<p class="stitle">실내외 3차원 통합 플랫폼, <span class="mago">mago3D</span>와 함께 디지털 트윈 세상으로!</p>
-			<form autocomplete="off" id="signinForm" th:object="${signinForm}" method="post" action="/sign/process-signin">
-				<fieldset>
-					<legend>mago3D 로그인</legend>
-					<label for="userId"><span class="blind">아이디</span></label><input type="text" id="userId" name="userId" class="inputid" th:title="#{common.id}" th:placeholder="#{common.id}" required="required" autofocus="autofocus" />
-					<label for="password"><span class="blind">비밀번호</span></label><input type="password" id="password" name="password" class="inputpwd" th:title="#{common.password}" th:placeholder="#{common.password}" required="required" />
-					<button type="submit" class="btn-login">로그인</button>
-				</fieldset>
-			</form>
-			<ul class="join">
-				<li class="on"><a href="/sign/signup">회원가입</a></li>
-				<li><a href="#">비밀번호 찾기</a></li>
+		<ul class="join">
+			<li class="on"><a href="/sign/signup">회원가입</a></li>
+			<li><a href="#">비밀번호 찾기</a></li>
+		</ul>
+		<hr class="h30">
+		<div class="autologin">
+			<span>쇼셜계정으로 로그인</span>
+			<ul>
+				<li><a href="/signins/GOOGLE" id="googleButton" class="login-google" title="구글 아이디로 로그인"></a></li>
+				<li><a href="/signins/FACEBOOK" id="facebookButton" class="login-facebook" title="페이스북 아이디로 로그인"></a></li>
+				<li><a href="/signins/NAVER" id="naverButton" class="login-naver" title="네이버 아아디로 로그인"></a></li>
+				<li><a href="/signins/KAKAO" id="kakaoButton" class="login-kakao" title="카카오 아이디로 로그인"></a></li>
 			</ul>
-			<hr class="h30">
-			<div class="autologin">
-				<span>쇼셜계정으로 로그인</span>
-				<ul>
-					<li><a id="googleBtn" class="login-google" title="구글 아이디로 로그인"></a></li>
-					<li><a id="fbBtn" class="login-facebook" title="페이스북 아이디로 로그인"></a></li>
-					<li><a id="naverBtn" class="login-naver" title="네이버 아아디로 로그인"></a></li>
-					<li><a id="kakaoBtn" class="login-kakao" title="카카오 아이디로 로그인"></a></li>
-				</ul>
-			</div>
-			<div class="copyright">ⓒ Gaia3d Corp. All Rights Reserved.</div>
 		</div>
-		<!-- /.login -->	
+		<div class="copyright">ⓒ Gaia3d Corp. All Rights Reserved.</div>
 	</div>
-	<!-- /.login -->	
+	<!-- /.login -->
+</div>
+<!-- /.login -->
 </body>
 
 <script type="text/javascript">
-	function onClickLogin (url){
-		//인증 서버로 인증코드 발급 요청
-		window.location.href=url
-	}
 
-	const googleLoginBtn = document.getElementById("googleBtn");
-	const fbLoginBtn = document.getElementById("fbBtn");
-	const naverLoginBtn = document.getElementById("naverBtn");
-	const kakaoLoginBtn = document.getElementById("kakaoBtn");
-
-	const googleUrl = "https://accounts.google.com/o/oauth2/v2/auth?" +
-			"client_id=" + "[[${policy.socialSigninGoogleClientId}]]" +
-			"&redirect_uri=" + "[[${policy.socialSigninGoogleRedirectUri}]]" +
-			"&response_type=code" +
-			"&scope=email%20profile%20openid" +
-			"&access_type=offline";
-
-	const naverUrl = "https://nid.naver.com/oauth2.0/authorize?" +
-			"client_id="+"[[${policy.socialSigninNaverClientId}]]" +
-			"&redirect_uri=" + "[[${policy.socialSigninNaverRedirectUri}]]" +
-			"&response_type=code" +
-			"&scope=account_email";
-
-	const kakaoUrl = "https://kauth.kakao.com/oauth/authorize?" +
-			"client_id=" + "[[${policy.socialSigninKakaoClientId}]]" +
-			"&redirect_uri=" + "[[${policy.socialSigninKakaoRedirectUri}]]" +
-			"&response_type=code" +
-			"&scope=profile,account_email";
-
-
-	googleLoginBtn.addEventListener("click", function(){onClickLogin(googleUrl)});
-	fbLoginBtn.addEventListener("click", function(){onClickLogin(googleUrl)});
-	naverLoginBtn.addEventListener("click", function(){onClickLogin(naverUrl)});
-	kakaoLoginBtn.addEventListener("click", function(){onClickLogin(kakaoUrl)});
-
-</script>
-
-<script type="text/javascript">
 	$(document).ready(function() {
 		var lang = "[[${lang}]]";
 		$("#userLocale").val(lang);
@@ -110,7 +73,7 @@
 				if(msg.statusCode <= 200) {
 					alert(JS_MESSAGE["change"]);
 					location.reload();
-0				} else {
+					0				} else {
 					alert(JS_MESSAGE[msg.errorCode]);
 				}
 			},

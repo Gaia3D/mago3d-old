@@ -22,7 +22,6 @@ import gaia3d.support.SessionUserSupport;
 import gaia3d.utils.WebUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -328,7 +327,6 @@ public class SigninController {
 	 * @return
 	 */
 	private RestTemplate getTimeoutRestTemplate(){
-		RestTemplateBuilder builder = new RestTemplateBuilder();
 		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
 		factory.setConnectTimeout(10*1000);
 		factory.setReadTimeout(10*1000);
