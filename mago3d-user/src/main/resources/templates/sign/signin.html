@@ -15,7 +15,7 @@
 <body class="bggray">
 <div id="login">
 	<form class="select-lang">
-		<select id="userLocale" name="userLocale" onchange="changeLanguage(this.value);" style="background: #9065dc; color: white; height: 25px;">
+		<select id="userLocale" name="userLocale" class="language" onchange="changeLanguage(this.value);">
 			<option value="ko"><th:block th:text="#{common.korea}"></th:block></option>
 			<option value="en"><th:block th:text="#{common.english}"></th:block></option>
 		</select>
@@ -47,9 +47,7 @@
 		</div>
 		<div class="copyright">ⓒ Gaia3d Corp. All Rights Reserved.</div>
 	</div>
-	<!-- /.login -->
 </div>
-<!-- /.login -->
 </body>
 
 <script type="text/javascript">
@@ -73,7 +71,7 @@
 				if(msg.statusCode <= 200) {
 					alert(JS_MESSAGE["change"]);
 					location.reload();
-					0				} else {
+				}else {
 					alert(JS_MESSAGE[msg.errorCode]);
 				}
 			},
