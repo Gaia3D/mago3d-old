@@ -9,10 +9,9 @@ import gaia3d.domain.datalibrary.DataLibrary;
 import gaia3d.domain.layer.LayerGroup;
 import gaia3d.domain.rule.Rule;
 import gaia3d.domain.rule.RuleGroup;
-import gaia3d.domain.rule.RuleGroupType;
-import gaia3d.domain.rule.RuleType;
 import gaia3d.domain.user.UserSession;
 import gaia3d.service.*;
+import gaia3d.support.RuleSupport;
 import gaia3d.support.SQLInjectSupport;
 import gaia3d.utils.DateUtils;
 import gaia3d.utils.FormatUtils;
@@ -112,14 +111,14 @@ public class RuleController {
 		}
 
 		RuleGroup ancestroRuleGroup = ruleGroupService.getAncestorRuleGroupByRuleGroupId(ruleGroupId);
-		String viewName = getViewName(ancestroRuleGroup, ruleGroup);
+		String viewName = RuleSupport.getViewName(ancestroRuleGroup, ruleGroup);
 		if(viewName == null) {
 			log.info("@@@@@@@@@@@@@@@@@@@ ruleGroup is null");
 			return "redirect:/rule-group/list?errorCode=rule-group.invalid";
 		}
 
 		viewName += "-input";
-		String viewDirectory = getViewDirectory(ancestroRuleGroup.getRuleType());
+		String viewDirectory = RuleSupport.getViewDirectory(ancestroRuleGroup.getRuleType());
 
 		DataGroup dataGroup = new DataGroup();
 		dataGroup.setUserId(userSession.getUserId());
@@ -141,27 +140,6 @@ public class RuleController {
 		return "/rule/" + viewDirectory + "/" + viewName;
 	}
 
-	private String getViewDirectory(String ruleTypeValue) {
-		RuleType ruleType = RuleType.valueOf(ruleTypeValue.toUpperCase());
-
-		String viewDirectory;
-		switch (ruleType) {
-			case DATA:
-				viewDirectory = "data";
-				break;
-			case DATA_LIBRARY:
-				viewDirectory = "data-library";
-				break;
-			case LAYER:
-				viewDirectory = "layer";
-				break;
-			default:
-				viewDirectory = "data";
-		}
-
-		return viewDirectory;
-	}
-
 	/**
 	 * 룰 수정 페이지 이동
 	 * @param request
@@ -176,14 +154,14 @@ public class RuleController {
 
 		RuleGroup ruleGroup = ruleGroupService.getRuleGroup(RuleGroup.builder().ruleGroupId(rule.getRuleGroupId()).build());
 		RuleGroup ancestroRuleGroup = ruleGroupService.getAncestorRuleGroupByRuleGroupId(rule.getRuleGroupId());
-		String viewName = getViewName(ancestroRuleGroup, ruleGroup);
+		String viewName = RuleSupport.getViewName(ancestroRuleGroup, ruleGroup);
 		if(viewName == null) {
 			log.info("@@@@@@@@@@@@@@@@@@@ ruleGroup is null");
 			return "redirect:/rule-group/list?errorCode=rule-group.invalid";
 		}
 
 		viewName += "-modify";
-		String viewDirectory = getViewDirectory(ancestroRuleGroup.getRuleType());
+		String viewDirectory = RuleSupport.getViewDirectory(ancestroRuleGroup.getRuleType());
 
 		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
 
@@ -204,39 +182,6 @@ public class RuleController {
 		model.addAttribute("dataLibraryList", dataLibraryList);
 
 		return "/rule/" + viewDirectory + "/" + viewName;
-	}
-
-	// 뷰 이름
-	private String getViewName(RuleGroup ancestorRuleGroup, RuleGroup ruleGroup) {
-
-		RuleType ruleType = RuleType.valueOf(ancestorRuleGroup.getRuleType().toUpperCase());
-
-		// 룰 구분으로 1차 viewName
-		String viewName;
-		switch (ruleType) {
-			case DATA:
-				viewName = "data";
-				break;
-			case DATA_LIBRARY:
-				viewName = getDataLibraryViewName(ruleGroup);
-				break;
-			case LAYER:
-				viewName = "layer";
-				break;
-			default:
-				viewName = "data";
-		}
-
-		return viewName;
-	}
-
-	private String getDataLibraryViewName(RuleGroup ruleGroup) {
-		String viewName = null;
-		if(RuleGroupType.TREE == RuleGroupType.valueOf(ruleGroup.getRuleGroupKey().toUpperCase())) {
-			viewName = "tree";
-		}
-
-		return viewName;
 	}
 
 	/**

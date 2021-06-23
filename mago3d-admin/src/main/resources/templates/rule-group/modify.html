@@ -38,7 +38,7 @@
 								</colgroup>
 								<tr>
 									<th class="col-label" scope="row">
-										<label for="ruleType">룰 타입</label>
+										<label for="ruleType">구분</label>
 										<span class="icon-glyph glyph-emark-dot color-warning"></span>
 									</th>
 									<td class="col-input">
@@ -46,7 +46,7 @@
 											<option value="data"> 데이터 </option>
 											<option value="data_library"> 데이터 라이브러리 </option>
 											<option value="layer"> 레이어 </option>
-											<option value="design_layer"> 디자인 레이어 </option>
+											<option value="simulation"> 시뮬레이션 </option>
 										</select>
 									</td>
 								</tr>
@@ -172,7 +172,7 @@
 				var formData = $("#ruleGroup").serialize();
 				$.ajax({
 					url: "/rule-groups/[[${ruleGroup.ruleGroupId}]]",
-					type: "POST",
+					type: "PUT",
 					headers: {"X-Requested-With": "XMLHttpRequest"},
 					data: formData,
 					success: function(msg){

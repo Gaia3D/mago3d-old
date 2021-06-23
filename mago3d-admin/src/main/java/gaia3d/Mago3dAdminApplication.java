@@ -1,20 +1,19 @@
 package gaia3d;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpSessionBindingListener;
-
+import gaia3d.filter.XSSFilter;
+import gaia3d.listener.Gaia3dHttpSessionBindingListener;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
-import lombok.extern.slf4j.Slf4j;
-import gaia3d.filter.XSSFilter;
-import gaia3d.listener.Gaia3dHttpSessionBindingListener;
+import javax.servlet.http.HttpSessionBindingListener;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @SpringBootApplication
@@ -27,6 +26,16 @@ public class Mago3dAdminApplication extends SpringBootServletInitializer {
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(Mago3dAdminApplication.class);
+	}
+
+	@Bean
+	public FilterRegistrationBean<HiddenHttpMethodFilter> hiddenHttpMethodFilter() {
+		FilterRegistrationBean<HiddenHttpMethodFilter> registrationBean = new FilterRegistrationBean<>(new HiddenHttpMethodFilter());
+
+		//List<String> urls = getUrlList();
+		//registrationBean.setUrlPatterns(urls);
+		registrationBean.addUrlPatterns("/*");
+		return registrationBean;
 	}
 
 	@Bean

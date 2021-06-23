@@ -49,7 +49,7 @@ public class LayerGroupDto implements Serializable {
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime insertDate;
 	/**
-	 * 자식 design 레이어 목록
+	 * 자식 레이어 목록
 	 */
 	private List<Layer> layerList;
 }

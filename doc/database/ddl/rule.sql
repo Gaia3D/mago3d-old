@@ -30,7 +30,7 @@ comment on table rule_group is '룰 그룹';
 comment on column rule_group.rule_group_id is '룰 그룹 고유번호';
 comment on column rule_group.rule_group_name is '룰 그룹명';
 comment on column rule_group.rule_group_key is '룰 그룹 Key. 확장용';
-comment on column rule_group.rule_type is '룰 구분. data, data_group, data_attributes, data_library, layer, design_layer 등';
+comment on column rule_group.rule_type is '룰 구분. data, data_group, data_attributes, data_library, layer, simulation 등';
 comment on column rule_group.rule_inherit_type is '최상위 룰 상속 여부. true : 상속, false : 상속 안함';
 comment on column rule_group.user_id is '사용자 아이디';
 comment on column rule_group.view_order is '나열 순서';

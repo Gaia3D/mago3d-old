@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 public class BaseRule extends BaseDataLibrary {
 
-    // 룰 타입. data, data-library, layer, design-layer 등
+    // 룰 타입. data, data-library, layer, simulation 등
     private String ruleType;
 
     private Integer ruleGroupId;

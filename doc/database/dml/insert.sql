@@ -75,8 +75,8 @@ values
 
 	(201, '0', '1', '디지털트윈 서비스', 'DIGITALTWIN SERVICE', 201, 0, 1, 2, 9, '/micro-service/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
 	(211, '0', '1', '디지털트윈 서비스 목록', 'DIGITALTWIN SERVICE', 201, 201, 2, 1, 1, '/micro-service/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
-    (212, '0', '1', '디지털트윈 서비스 요청 이력 목록', 'DIGITALTWIN SERVICE', 201, 201, 2, 2, 2, '/log/micro-service-log/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
-    (213, '0', '1', 'Health Check', 'DIGITALTWIN SERVICE', 201, 201, 2, 2, 3, '/log/health-check-log/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
+    (212, '0', '1', '디지털트윈 서비스 요청 이력 목록', 'DIGITALTWIN SERVICE', 201, 201, 2, 2, 2, '/micro-service-log/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
+    (213, '0', '1', 'Health Check', 'DIGITALTWIN SERVICE', 201, 201, 2, 2, 3, '/health-check-log/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
 	(214, '0', '1', '디지털트윈 서비스 등록', 'DIGITALTWIN SERVICE', 201, 201, 2, 2, 4, '/micro-service/input', '/micro-service/list', null, 'glyph-desktop', 'N', 'Y', 'N'),
 	(215, '0', '1', '디지털트윈 서비스 수정', 'DIGITALTWIN SERVICE', 201, 201, 2, 2, 5, '/micro-service/modify', '/micro-service/list', null, 'glyph-desktop', 'N', 'Y', 'N'),
 
@@ -275,7 +275,8 @@ INSERT INTO rule_group (
 VALUES
     (1, '데이터 룰 그룹', 'data', 'data', true, 'admin', 1, 0, 1, 1, true, true, '데이터 Rule 그룹'),
     (2, '3D 라이브러리 룰 그룹', 'data_library', 'data_library', true, 'admin', 2, 0, 1, 2, true, true, '3D 라이브러리 Rule 그룹'),
-    (3, '레이어 룰 그룹', 'layer', 'layer', true, 'admin', 3, 0, 1, 3, true, true, '레이어 Rule 그룹');
+    (3, '레이어 룰 그룹', 'layer', 'layer', true, 'admin', 3, 0, 1, 3, true, true, '레이어 Rule 그룹'),
+    (4, '시뮬레이션 룰 그룹', 'simulation', 'simulation', true, 'admin', 4, 0, 1, 4, true, true, '시뮬레이션 Rule 그룹');
 
 
 INSERT INTO membership(

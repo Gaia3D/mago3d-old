@@ -44,7 +44,7 @@ public class RuleGroup extends Search implements Serializable {
 	// 룰 그룹 Key. 확장용
 	private String ruleGroupKey;
 
-	// 룰 구분. data, data_group, data_attributes, data_library, layer, design_layer 등
+	// 룰 구분. data, data_group, data_attributes, data_library, layer, simulation 등
 	private String ruleType;
 
 

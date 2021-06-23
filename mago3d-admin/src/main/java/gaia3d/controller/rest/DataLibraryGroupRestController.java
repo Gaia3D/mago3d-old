@@ -148,7 +148,7 @@ public class DataLibraryGroupRestController {
 		int statusCode = HttpStatus.OK.value();
 		if(updateCount == 0) {
 			statusCode = HttpStatus.BAD_REQUEST.value();
-			errorCode = "design.layer.group.view-order.invalid";
+			errorCode = "data.library.group.view-order.invalid";
 		}
 			
 		result.put("statusCode", statusCode);

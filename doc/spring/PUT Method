@@ -1,3 +1,5 @@
+톰캣이 put을 파싱하지 않음
+http://hwannnn.blogspot.com/2018/07/putdeletemapping-body.html
 
 form tag 전송은 하는데.... mapping 이 안되는 문제...
 나중에 해결 해야 겠다. 우선 post 로 하자.

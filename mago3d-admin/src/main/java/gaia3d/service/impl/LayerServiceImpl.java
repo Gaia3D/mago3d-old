@@ -29,7 +29,6 @@ import java.util.*;
 
 /**
  * 여기서는 Geoserver Rest API 결과를 가지고 파싱 하기 때문에 RestTemplate을 커스트마이징하면 안됨
- * TODO DesignLayerFileInfoMapper 는 서비스를 호출해서 해야 하는데... 귀찮아서
  * @author Cheon JeongDae
  *
  */

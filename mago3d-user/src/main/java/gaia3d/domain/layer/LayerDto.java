@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * design layer
+ * 레이어
  *
  * @author Cheon JeongDae
  */

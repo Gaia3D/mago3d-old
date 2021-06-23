@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
+<head>
+	<title>디지털 트윈 서비스 수정</title>
+	<th:block layout:fragment="pageCustomStyle">
+		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+	</th:block>
+</head>
+<body>
+<th:block layout:fragment="pageCustomContent">
+	<div id="siteBody" class="site-body">
+		<div class="container">
+			<div class="site-content">
+				<div th:replace="~{/fragments/sub-menu :: #subMenuWrap}"></div>
+				<div class="page-area">
+					<div th:replace="~{/fragments/page-header :: #pageHeaderWrap}"></div>
+					<div class="page-content">
+						<form id="microService" th:object="${microService}" method="post" th:action="@{#}" onsubmit="return false;">
+							<table class="input-table scope-row" summary="microService 테이블">
+								<caption class="hiddenTag">디지털 트윈 서비스 등록</caption>
+								<col class="col-label l" />
+								<col class="col-input" />
+								<tr>
+									<th class="col-label l" scope="row">
+										<label for="microServiceName">디지털 트윈 서비스명</label>
+										<span class="icon-glyph glyph-emark-dot color-warning"></span>
+									</th>
+									<td class="col-input"><input type="text" id="microServiceName" name="microServiceName" th:field="*{microServiceName}" class="l" /></td>
+								</tr>
+								<tr>
+									<th class="col-label l" scope="row">
+										<label for="microServiceKey">디지털 트윈 서비스 Key</label>
+										<span class="icon-glyph glyph-emark-dot color-warning"></span>
+									</th>
+									<td class="col-input"><input type="text" id="microServiceKey" name="microServiceKey" th:field="*{microServiceKey}" class="l" /></td>
+								</tr>
+								<tr>
+									<th class="col-label l" scope="row">
+										<label for="microServiceType">디지털 트윈 서비스 유형</label>
+										<span class="icon-glyph glyph-emark-dot color-warning"></span>
+									</th>
+									<td class="col-input">
+										<select id="microServiceType" name="microServiceType" th:field="*{microServiceType}" class="selectBoxClass" >
+											<option value="cache"> Cache </option>
+											<option value="simulation"> Simulation </option>
+											<option value="sensor_things"> SensorThings </option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th class="col-label l" scope="row">
+										<label for="serverIp">서버 IP</label>
+										<span class="icon-glyph glyph-emark-dot color-warning"></span>
+									</th>
+									<td class="col-input"><input type="text" id="serverIp" name="serverIp" th:field="*{serverIp}" class="l" /></td>
+								</tr>
+								<tr>
+									<th class="col-label l" scope="row">
+										<label for="urlScheme">프로토콜</label>
+										<span class="icon-glyph glyph-emark-dot color-warning"></span>
+									</th>
+									<td class="col-input"><input type="text" id="urlScheme" name="urlScheme" th:field="*{urlScheme}" class="m" /></td>
+								</tr>
+								<tr>
+									<th class="col-label l" scope="row">
+										<label for="urlHost">호스트</label>
+									</th>
+									<td class="col-input"><input type="text" id="urlHost" name="urlHost" th:field="*{urlHost}" class="m" /></td>
+								</tr>
+								<tr>
+									<th class="col-label l" scope="row">
+										<label for="urlPort">포트</label>
+										<span class="icon-glyph glyph-emark-dot color-warning"></span>
+									</th>
+									<td class="col-input"><input type="text" id="urlPort" name="urlPort" th:field="*{urlPort}" class="m" /></td>
+								</tr>
+								<tr>
+									<th class="col-label l" scope="row">
+										<label for="urlPath">경로</label>
+										<span class="icon-glyph glyph-emark-dot color-warning"></span>
+									</th>
+									<td class="col-input"><input type="text" id="urlPath" name="urlPath" th:field="*{urlPath}" class="l" /></td>
+								</tr>
+								<tr>
+									<th class="col-label l" scope="row">
+										사용 여부
+										<span class="icon-glyph glyph-emark-dot color-warning"></span>
+									</th>
+									<td class="col-input radio-set">
+										<input type="radio" id="availableTrue" name="available" value="true" />
+										<label for="availableTrue">사용</label>
+										<input type="radio" id="availableFalse" name="available" value="false" />
+										<label for="availableFalse">미사용</label>
+									</td>
+								</tr>
+								<tr>
+									<th class="col-label l" scope="row"><label for="description">설명</label></th>
+									<td class="col-input"><input type="text" id="description" name="description" th:field="*{description}" class="xl" size="100" /></td>
+								</tr>
+							</table>
+							<div class="button-group">
+								<div id="insertMicroServiceLink" class="center-buttons">
+									<input type="submit" value="수정" onclick="updateMicroService();" />
+									<a href="/micro-service/list" class="button">목록</a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+<th:block layout:fragment="pageCustomScript">
+
+	<script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.js(cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/navigation.js(cacheVersion=${contentCacheVersion})}"></script>
+
+	<script th:inline="javascript">
+		$(document).ready(function() {
+			$("#microServiceType").val([[${microService.microServiceType}]]);
+			$("[name=available]").filter("[value='[[${microService.available}]]']").prop("checked",true);
+		});
+
+		$("#microServiceKey").keyup(function(event) {
+			var inputValue = $(this).val();
+			if(isHangul(inputValue)) {
+				alert("디지털 트윈 서비스 Key는 영문 및 숫자만 입력 가능 합니다.");
+				return;
+			}
+		});
+
+		function validate() {
+			if( $("#microServiceName").val().trim() === "" ) {
+				alert("디지털 트윈 서비스 명을 입력하여 주십시오.");
+				$("#microServiceName").focus();
+				return false;
+			}
+			if( $("#microServiceKey").val().trim() === "" ) {
+				alert("디지털 트윈 서비스 Key를 입력하여 주십시오.");
+				$("#microServiceKey").focus();
+				return false;
+			}
+			if($("#microServiceType").val() === "") {
+				alert("디지털 트윈 서비스 유형을 선택하여 주십시오.");
+				return false;
+			}
+
+			if( $("#serverIp").val().trim() === "" ) {
+				alert("서버 IP 입력하여 주십시오.");
+				$("#serverIp").focus();
+				return false;
+			}
+			if( $("#urlScheme").val().trim() === "" ) {
+				alert("프로토콜 입력하여 주십시오.");
+				$("#urlScheme").focus();
+				return false;
+			}
+
+			if( $("[name=available]:checked").val() === "" || $("[name=available]:checked").val() === undefined) {
+				alert("사용 유무를 선택하여 주십시오.");
+				return false;
+			}
+		}
+
+		// 수정
+		var updateMicroServiceFlag = true;
+		function updateMicroService() {
+			if (validate() == false) {
+				return false;
+			}
+			if(updateMicroServiceFlag) {
+				updateMicroServiceFlag = false;
+				var formData = $("#microService").serialize();
+				$.ajax({
+					url: "/micro-services/[[${microService.microServiceId}]]",
+					type: "POST",
+					headers: {"X-Requested-With": "XMLHttpRequest"},
+					data: formData,
+					success: function(msg){
+						if(msg.statusCode <= 200) {
+							alert(JS_MESSAGE["update"]);
+							window.location.reload();
+						} else {
+							alert(JS_MESSAGE[msg.errorCode]);
+							console.log("---- " + msg.message);
+						}
+						updateMicroServiceFlag = true;
+					},
+					error:function(request, status, error){
+						alert(JS_MESSAGE["ajax.error.message"]);
+						updateMicroServiceFlag = true;
+					}
+				});
+			} else {
+				alert(JS_MESSAGE["button.dobule.click"]);
+			}
+		}
+	</script>
+</th:block>
+</body>
+</html>
