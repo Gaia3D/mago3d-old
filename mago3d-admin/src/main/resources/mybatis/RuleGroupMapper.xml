@@ -40,12 +40,13 @@
 	<select id="getRuleGroup" parameterType="ruleGroup" resultType="ruleGroup">
 		/* getRuleGroup */
 		SELECT A.*,
-			(SELECT rule_group_name FROM rule_group WHERE rule_group_id = A.rule_group_id) AS parentName
+			(SELECT rule_group_name FROM rule_group WHERE rule_group_id = A.parent) AS parentName
 		FROM (
 			SELECT *
 			FROM rule_group
 			WHERE rule_group_id = #{ruleGroupId}
-			<if test="userId != null and userId != ''">AND user_id = #{userId}
+			<if test="userId != null and userId != ''">
+				AND user_id = #{userId}
 			</if>
 		) A
 	</select>
