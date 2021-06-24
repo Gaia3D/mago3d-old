@@ -20,12 +20,26 @@
 			<span class="smlt-blt"></span>
 			<span class="smlt-tit">물 시뮬레이션</span>
 		</div>	
-		<div class="sub">
+		<div class="sub" id="smlt-natural-water-sub">
 			<div class="sublist">
-				<span class="smlt-sub">물</span>
+				<span class="smlt-sub">영역 설정</span>
+				<button type="button" data-mode="area" class="btn-ok">영역 그리기</button>
 			</div>
+			<div class="sublist water-action-btn" style="display:none;">
+				<span class="smlt-sub">생성</span>
+				<button type="button" data-mode="create" data-type="water" class="btn-ok">물</button>
+				<button type="button" data-mode="create" data-type="polution" class="btn-ok">오염원</button>
+				<button type="button" data-mode="create" data-type="weir" class="btn-ok">보</button>
+			</div>
+			<div class="sublist water-action-btn" style="display:none;">
+				<span class="smlt-sub">조작</span>
+				<button type="button" data-mode="move" class="btn-ok">이동</button>
+				<button type="button" data-mode="delete" class="btn-ok">삭제</button>
+				<button type="button" data-mode="clear" class="btn-ok">초기화</button>
+			</div>
+			
 			<div class="btn-right">
-				<button type="button" class="btn-cancel">닫기</button>
+				<button type="button" data-mode="close" class="btn-cancel">닫기</button>
 			</div>
 		</div>	
 	</div>

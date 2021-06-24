@@ -123,7 +123,8 @@ const Simulation = function(magoInstance) {
 				const elId = 'smlt_contents_natural';
 				
 				const smlts = {
-					wind : new SmltWind(magoInstance)
+					wind : new SmltWind(magoInstance),
+					water : new SmltWater(magoInstance)
 				}
 				
 				return {
@@ -154,7 +155,7 @@ const Simulation = function(magoInstance) {
 		const simulatorProvider = _simulator();
 		const tabConfig = { attributes: true, attributeFilter:['style', 'class'],subtree: true,childList:false, attributeOldValue:true};
 		const menuConfig = { attributes: true, attributeFilter:['class'],subtree: true,childList:false, attributeOldValue:true};
-		const MAIN_OBSERVE_TARGET = 'simulationContent';
+		
 		const menuObserver = new MutationObserver(function(mutations) {
 			mutations.forEach(function(mutation) {
 				const target = mutation.target;
@@ -166,12 +167,13 @@ const Simulation = function(magoInstance) {
 			});
 		});
 		
-		const TABOBSERVERTYPE = {
-			'NO' : 0,
-			'TAB' : 1,
-			'MENU' : 2 
-		}
+		const MAIN_OBSERVE_TARGET = 'simulationContent';
 		const tabObserver = new MutationObserver(function(mutations) {
+			const TABOBSERVERTYPE = {
+				'NO' : 0,
+				'TAB' : 1,
+				'MENU' : 2 
+			}
 			const _checkType = function (m) {
 				const target = m.target;
 				//처리대상아님
@@ -214,7 +216,7 @@ const Simulation = function(magoInstance) {
 					
 					simulator = simulatorProvider[key];
 				}
-
+				menuObserver.disconnect();
 				menuObserver.observe(document.getElementById(simulator.observerTarget), menuConfig);
 			}
 			

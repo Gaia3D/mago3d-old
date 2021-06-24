@@ -384,3 +384,14 @@ function getFormData($form) {
 function cloneObject (obj) {
 	return JSON.parse(JSON.stringify(obj));
 }
+
+const API = function(){};
+API.Converter = function(){};
+
+API.Converter.screenCoordToMagoPoint3D = function(x, y, magoManager) {
+	return Mago3D.ManagerUtils.screenCoordToWorldCoord(undefined, x,y,undefined,undefined,undefined,undefined, magoManager);
+}
+
+API.Converter.magoToCesiumForPoint3D = function(point3d) {
+	return new Cesium.Cartesian3(point3d.x, point3d.y, point3d.z);
+}
