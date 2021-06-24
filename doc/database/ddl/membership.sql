@@ -42,17 +42,19 @@ comment on column membership_usage.insert_date is '등록일';
 
 -- 멤버십 변경 기록
 create table membership_log(
-    membership_history_id           integer,
-    membership_id                   integer,
+    membership_log_id               integer,
+    current_membership_id           integer,
+    request_membership_id           integer,
     user_id 					    varchar(32),
-    status                          varchar(10)                     default 'request',
+    status                          varchar(10),
     insert_date					    timestamp with time zone	    default now(),
-    constraint membership_history_pk primary key(membership_history_id)
+    constraint membership_log_pk primary key(membership_log_id)
 );
 
 comment on table membership_log is '멤버십 변경 요청';
-comment on column membership_log.membership_history_id is '고유번호';
-comment on column membership_log.membership_id is '멤버십 고유번호';
+comment on column membership_log.membership_log_id is '고유번호';
+comment on column membership_log.current_membership_id is '현재 멤버십 고유번호';
+comment on column membership_log.request_membership_id is '요청 멤버십 고유번호';
 comment on column membership_log.user_id is '사용자 아이디';
-comment on column membership_log.status is '멤버십 상태 (request, approval)';
+comment on column membership_log.status is '멤버십 상태 (REQUEST : 요청, CANCEL : 취소, APPROVAL : 승인, DENY : 거절)';
 comment on column membership_log.insert_date is '등록일';

@@ -1,6 +1,8 @@
 package gaia3d.service.impl;
 
+import gaia3d.domain.Status;
 import gaia3d.domain.membership.Membership;
+import gaia3d.domain.membership.MembershipLog;
 import gaia3d.domain.membership.MembershipUsage;
 import gaia3d.domain.user.UserInfo;
 import gaia3d.persistence.UserMapper;
@@ -82,13 +84,22 @@ public class UserServiceImpl implements UserService {
 			userInfo.setUserGroupId(2);
 		}
 		userInfo.setEmail(Crypt.encrypt(userInfo.getEmail()));
-
+		
+		// 멤버십 사용량
 		Membership membership = membershipService.getMembershipById(1);
 		MembershipUsage membershipUsage = new MembershipUsage();
 		membershipUsage.setMembershipId(membership.getMembershipId());
 		membershipUsage.setMembershipName(membership.getMembershipName());
 		membershipUsage.setUserId(userInfo.getUserId());
 		membershipService.insertUsage(membershipUsage);
+
+		// 멤버십 로그
+		MembershipLog membershipLog = new MembershipLog();
+		membershipLog.setUserId(userInfo.getUserId());
+		membershipLog.setCurrentMembershipId(1);
+		membershipLog.setRequestMembershipId(1);
+		membershipLog.setStatus(Status.APPROVAL.getValue());
+		membershipService.insertLog(membershipLog);
 
 		return userMapper.insertUser(userInfo);
 	}

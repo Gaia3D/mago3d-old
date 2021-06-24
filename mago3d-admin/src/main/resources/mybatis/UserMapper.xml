@@ -43,7 +43,7 @@
 	<!-- 사용자 목록 -->
 	<select id="getListUser" parameterType="userInfo" resultType="userInfo">
 		/* getListUser */
-		SELECT X.*
+		SELECT X.*, Y.membership_name AS membershipName
 		FROM (
 			SELECT a.*, b.user_group_name
 			FROM user_info a
@@ -88,7 +88,8 @@
 			</otherwise>
 			</choose>
 			OFFSET #{offset} LIMIT #{limit}
-		) X
+		) X LEFT JOIN membership Y
+			ON X.membership_id = Y.membership_id
 	</select>
 	
 	<!-- 사용자 정보 -->
@@ -162,6 +163,9 @@
 			</if>
 			<if test="email != null and email != ''">
 			email = #{email},
+			</if>
+			<if test="membershipId != null and membershipId != ''">
+				membership_id = #{membershipId},
 			</if>
 			<if test="messenger != null and messenger != ''">
 			messenger = #{messenger},

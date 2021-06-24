@@ -5,6 +5,8 @@ import gaia3d.domain.membership.MembershipLog;
 import gaia3d.domain.membership.MembershipUsage;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * 멤버십
  * @author hansang
@@ -42,6 +44,34 @@ public interface MembershipMapper {
 	MembershipLog getLastLog(String userId);
 
 	/**
+	 * 멤버십 사용량 총 건수
+	 * @param membershipUsage
+	 * @return
+	 */
+	Long getUsageTotalCount(MembershipUsage membershipUsage);
+
+	/**
+	 * 멤버십 로그 총 건수
+	 * @param membershipLog
+	 * @return
+	 */
+	Long getLogTotalCount(MembershipLog membershipLog);
+
+	/**
+	 * 멤버십 사용량 목록
+	 * @param membershipUsage
+	 * @return
+	 */
+	List<MembershipUsage> getListUsage(MembershipUsage membershipUsage);
+
+	/**
+	 * 멤버십 로그 목록
+	 * @param membershipLog
+	 * @return
+	 */
+	List<MembershipLog> getListLog(MembershipLog membershipLog);
+
+	/**
 	 * 멤버십 등록
 	 * @param membershipUsage
 	 * @return
@@ -70,9 +100,9 @@ public interface MembershipMapper {
 	int updateLogStatus(MembershipLog membershipLog);
 
 	/**
-	 * 멤버십 사용량 갱신
+	 * 사용량
 	 * @param membershipUsage
 	 * @return
 	 */
-	int updateUsage(MembershipUsage membershipUsage);
+    int updateUsage(MembershipUsage membershipUsage);
 }

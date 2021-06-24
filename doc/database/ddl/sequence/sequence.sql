@@ -32,6 +32,7 @@ drop sequence if exists layer_seq;
 drop sequence if exists layer_group_seq;
 drop sequence if exists layer_file_info_seq;
 drop sequence if exists membership_usage_seq;
+drop sequence if exists membership_log_seq;
 drop sequence if exists menu_seq;
 drop sequence if exists micro_service_seq;
 drop sequence if exists micro_service_log_seq;
@@ -85,6 +86,7 @@ create sequence layer_seq increment 1 minvalue 1 maxvalue 999999999999 start 100
 create sequence layer_group_seq increment 1 minvalue 1 maxvalue 999999999999 start 10000 cache 1;
 create sequence layer_file_info_seq increment 1 minvalue 1 maxvalue 999999999999 start 1000 cache 1;
 create sequence membership_usage_seq increment 1 minvalue 1 maxvalue 999999999999 start 3 cache 1;
+create sequence membership_log_seq increment 1 minvalue 1 maxvalue 999999999999 start 3 cache 1;
 create sequence menu_seq increment 1 minvalue 1 maxvalue 999999999999 start 10000 cache 1;
 create sequence micro_service_seq increment 1 minvalue 1 maxvalue 999999999999 start 10000 cache 1;
 create sequence micro_service_log_seq increment 1 minvalue 1 maxvalue 999999999999 start 10000 cache 1;

@@ -1,26 +1,22 @@
 package gaia3d.controller.view;
 
-import gaia3d.config.PropertiesConfig;
+import gaia3d.domain.Key;
+import gaia3d.domain.Status;
 import gaia3d.domain.cache.CacheManager;
+import gaia3d.domain.membership.Membership;
+import gaia3d.domain.membership.MembershipLog;
 import gaia3d.domain.policy.Policy;
-import gaia3d.domain.user.UserGroupType;
-import gaia3d.domain.user.UserInfo;
-import gaia3d.domain.user.UserStatus;
-import gaia3d.service.DataGroupService;
-import gaia3d.service.UserService;
+import gaia3d.domain.user.UserSession;
+import gaia3d.service.MembershipService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 /**
  * Sign up 처리
@@ -33,50 +29,63 @@ import javax.validation.Valid;
 public class MembershipController {
 
 	@Autowired
-	private UserService userService;
-
-	@Autowired
-	private PropertiesConfig propertiesConfig;
-
-	@Autowired
-	private DataGroupService dataGroupService;
-
-	@Autowired
-	private MessageSource messageSource;
+	private MembershipService membershipService;
 
 	/**
-	 * Sign up 페이지
+	 * 멤버십 목록
 	 * @param request
-	 * @param model
 	 * @return
 	 */
 	@GetMapping("/list")
-	public String list(HttpServletRequest request, Model model) {
+	public String list(HttpServletRequest request) {
 		Policy policy = CacheManager.getPolicy();
 
 		return "/membership/list";
 	}
 
 	/**
-	 * Sign up 처리
+	 * 멤버십 로그 등록
+	 * @param membershipId
+	 * @return
+	 */
+	@GetMapping(value = "/insert/log/{membershipId}")
+	public String insertLog(HttpServletRequest request, Model model, @PathVariable String membershipId) {
+
+		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
+
+		MembershipLog membershipLog = membershipService.getLastLog(userSession.getUserId());
+
+		if(membershipLog.getStatus().equals(Status.REQUEST.getValue())){
+			// 승인 대기중 상태 -> 취소만 가능한 페이지
+			Membership membership = membershipService.getMembershipById(membershipLog.getRequestMembershipId());
+			model.addAttribute("membership", membership);
+			return "/membership/wait-approval";
+		}
+		MembershipLog newMembershipLog = new MembershipLog();
+		newMembershipLog.setCurrentMembershipId(userSession.getMembershipId());
+		newMembershipLog.setRequestMembershipId(Integer.parseInt(membershipId));
+		newMembershipLog.setStatus(Status.REQUEST.getValue());
+		newMembershipLog.setUserId(userSession.getUserId());
+		membershipService.insertLog(newMembershipLog);
+
+		return "/membership/insert-complete";
+	}
+
+	/**
+	 * 멤버십 변경 취소
 	 * @param request
-	 * @param signupForm
-	 * @param bindingResult
 	 * @param model
 	 * @return
 	 */
-	@PostMapping(value = "/update-history")
-	public String updateHistory(HttpServletRequest request, @Valid @ModelAttribute("signupForm") UserInfo signupForm, BindingResult bindingResult, Model model) {
-		log.info("@@ signupForm = {}", signupForm);
+	@GetMapping(value = "/cancel")
+	public String cancel(HttpServletRequest request, Model model) {
 
-		// 회원 가입
-		signupForm.setUserGroupId(UserGroupType.USER.getValue());
-		signupForm.setStatus(UserStatus.WAITING_APPROVAL.getValue());
-		log.info("signupForm  "+signupForm);
+		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
+		MembershipLog membershipLog = membershipService.getLastLog(userSession.getUserId());
+		membershipLog.setStatus(Status.CANCEL.getValue());
 
-		String dataGroupPath = signupForm.getUserId() + "/basic/";
+		membershipService.updateLogStatus(membershipLog);
 
-		return "redirect:/sign/signup-complete";
+		return "/membership/cancel-complete";
 	}
-
 }

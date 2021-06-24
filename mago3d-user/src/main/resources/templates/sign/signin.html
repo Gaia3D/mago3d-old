@@ -26,8 +26,14 @@
 		<form autocomplete="off" id="signinForm" th:object="${signinForm}" method="post" action="/sign/process-signin">
 			<fieldset>
 				<legend>mago3D 로그인</legend>
-				<label for="userId"><span class="blind">아이디</span></label><input type="text" id="userId" name="userId" class="inputid" th:title="#{common.id}" th:placeholder="#{common.id}" required="required" autofocus="autofocus" />
-				<label for="password"><span class="blind">비밀번호</span></label><input type="password" id="password" name="password" class="inputpwd" th:title="#{common.password}" th:placeholder="#{common.password}" required="required" />
+				<label for="userId">
+					<span class="blind">아이디</span>
+				</label>
+				<input type="text" id="userId" name="userId" class="inputid" th:title="#{common.id}" th:placeholder="#{common.id}" required="required" autofocus="autofocus" />
+				<label for="password">
+					<span class="blind">비밀번호</span>
+				</label>
+				<input type="password" id="password" name="password" class="inputpwd" th:title="#{common.password}" th:placeholder="#{common.password}" required="required" />
 				<button type="submit" class="btn-login">로그인</button>
 			</fieldset>
 		</form>

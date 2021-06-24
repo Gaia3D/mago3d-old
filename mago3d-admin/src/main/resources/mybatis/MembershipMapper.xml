@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gaia3d.persistence.MembershipMapper">
+
+	<!-- 멤버십 정보 조회 -->
+	<select id="getMembershipById" parameterType="int" resultType="membership">
+		/* getMembershipByUserId */
+		SELECT A.*
+		FROM membership A
+		WHERE A.membership_id = #{membershipId}
+	</select>
+
+	<!-- 멤버십 정보 조회 -->
+	<select id="getUsageByUserId" parameterType="string" resultType="membershipUsage">
+		/* getUsageByUserId */
+		SELECT A.*,
+			   B.membership_name AS membershipName,
+			   B.upload_file_size AS uploadFileSize,
+			   B.convert_file_count AS convertFileCount
+		FROM membership_usage A LEFT OUTER JOIN membership B ON A.membership_id = B.membership_id
+		WHERE A.user_id = #{userId}
+	</select>
+
+	<!-- 멤버십 마지막 로그 상태 조회 -->
+	<select id="getLastLog" parameterType="string" resultType="membershipLog">
+		/* getLastLog */
+		SELECT A.*
+		FROM membership_log A
+		WHERE A.user_id = #{userId}
+		ORDER BY A.membership_log_id DESC LIMIT 1
+	</select>
+
+	<!-- 사용량 총 건수 -->
+	<select id="getUsageTotalCount" parameterType="membershipUsage" resultType="long">
+		/* getUsageTotalCount */
+		SELECT COUNT(membership_usage_id)
+		FROM membership_usage
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
+				AND ${searchWord} = #{searchValue}
+			</if>
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
+				AND ${searchWord} LIKE '%' || #{searchValue} || '%'
+			</if>
+		</trim>
+	</select>
+
+	<!-- 로그 총 건수 -->
+	<select id="getLogTotalCount" parameterType="membershipLog" resultType="long">
+		/* getLogTotalCount */
+		SELECT COUNT(membership_log_id)
+		FROM membership_log
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
+				AND ${searchWord} = #{searchValue}
+			</if>
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
+				AND ${searchWord} LIKE '%' || #{searchValue} || '%'
+			</if>
+		</trim>
+	</select>
+
+	<!-- 사용량 목록 -->
+	<select id="getListUsage" parameterType="membershipUsage" resultType="membershipUsage">
+		/* getListUsage */
+		SELECT X.*, Y.membership_name AS membershipName, Y.upload_file_size AS uploadFileSize, Y.convert_file_count AS convertFileCount
+		FROM membership_usage X LEFT JOIN membership Y
+								ON X.membership_id = Y.membership_id
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
+				AND ${searchWord} = #{searchValue}
+			</if>
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
+				AND ${searchWord} LIKE '%' || #{searchValue} || '%'
+			</if>
+		</trim>
+		<choose>
+			<when test="orderWord != null and orderWord != '' and orderValue != null and orderValue != ''">
+				ORDER BY ${orderWord} ${orderValue}
+			</when>
+			<otherwise>
+				ORDER BY insert_date DESC, user_id DESC
+			</otherwise>
+		</choose>
+		OFFSET #{offset} LIMIT #{limit}
+	</select>
+
+	<!-- 로그 목록 -->
+	<select id="getListLog" parameterType="membershipLog" resultType="membershipLog">
+		/* getListLog */
+		SELECT X.*, Y.membership_name AS currentMembershipName, Z.membership_name AS requestMembershipName
+		FROM membership_log X LEFT JOIN membership Y
+		ON X.current_membership_id = Y.membership_id
+		LEFT JOIN membership Z
+		ON X.request_membership_id = Z.membership_id
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
+				AND ${searchWord} = #{searchValue}
+			</if>
+			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
+				AND ${searchWord} LIKE '%' || #{searchValue} || '%'
+			</if>
+		</trim>
+		<choose>
+			<when test="orderWord != null and orderWord != '' and orderValue != null and orderValue != ''">
+				ORDER BY ${orderWord} ${orderValue}
+			</when>
+			<otherwise>
+				ORDER BY insert_date DESC, user_id DESC
+			</otherwise>
+		</choose>
+		OFFSET #{offset} LIMIT #{limit}
+	</select>
+
+	<!-- 멤버십 등록 -->
+	<insert id="insertUsage" parameterType="membershipUsage">
+		/* insertUsage */
+		<selectKey keyProperty="membershipUsageId" resultType="long" order="BEFORE">
+			SELECT NEXTVAL('membership_usage_seq')
+		</selectKey>
+		INSERT INTO membership_usage(
+			membership_usage_id, membership_id, user_id, update_date
+		) values(
+					#{membershipUsageId}, #{membershipId}, #{userId}, NOW()
+				)
+	</insert>
+
+	<!-- 멤버십 로그 등록 -->
+	<insert id="insertLog" parameterType="membershipLog">
+		/* insertLog */
+		<selectKey keyProperty="membershipLogId" resultType="long" order="BEFORE">
+			SELECT NEXTVAL('membership_log_seq')
+		</selectKey>
+		INSERT INTO membership_log(
+		membership_log_id, current_membership_id, request_membership_id, user_id, status
+		) values(
+		#{membershipLogId}, #{currentMembershipId}, #{requestMembershipId}, #{userId}, #{status}
+		)
+	</insert>
+
+	<!-- 멤버십 변환 횟수 갱신 -->
+	<update id="updateUsageFileCount" parameterType="membershipUsage">
+		/* updateUsageFileCount */
+		UPDATE membership_usage
+		SET use_convert_file_count = use_convert_file_count+1,
+			update_date = NOW()
+		WHERE user_id = #{userId}
+	</update>
+
+	<!-- 멤버십 로그 상태 변경 -->
+	<update id="updateLogStatus" parameterType="membershipLog">
+		/* updateLogStatus */
+		UPDATE membership_log
+		SET status = #{status}
+		WHERE membership_log_id = #{membershipLogId}
+	</update>
+
+	<!-- 사용량 수정 -->
+	<update id="updateUsage" parameterType="membershipUsage">
+		/* updateUsage */
+		UPDATE membership_usage
+		SET
+		<if test="membershipId != null and membershipId != ''">
+			membership_id = #{membershipId},
+		</if>
+		<if test="useUploadFileSize != null and useUploadFileSize != ''">
+			use_upload_file_size = #{useUploadFileSize},
+		</if>
+		update_date = NOW()
+		WHERE user_id = #{userId}
+	</update>
+
+</mapper>

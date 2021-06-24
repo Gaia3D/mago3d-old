@@ -1,10 +1,8 @@
 package gaia3d;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpSessionBindingListener;
-
+import gaia3d.filter.XSSFilter;
+import gaia3d.listener.Gaia3dHttpSessionBindingListener;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -12,9 +10,9 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
-import lombok.extern.slf4j.Slf4j;
-import gaia3d.filter.XSSFilter;
-import gaia3d.listener.Gaia3dHttpSessionBindingListener;
+import javax.servlet.http.HttpSessionBindingListener;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @SpringBootApplication

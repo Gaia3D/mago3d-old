@@ -1,16 +1,16 @@
 -- 사용자 그룹 테이블 기본값 입력
 insert into user_group(	user_group_id, user_group_key, user_group_name, ancestor, parent, depth, view_order, basic, available, description)
 values
-	(1, 'SUPER_ADMIN', '슈퍼 관리자', 1, 0, 1, 1, 'Y', 'Y', '기본값'),
-	(2, 'USER', '사용자', 1, 0, 1, 2, 'Y', 'Y', '기본값'),
-	(3, 'GUEST', 'GUEST', 1, 0, 1, 3, 'Y', 'Y', '기본값');
+    (1, 'SUPER_ADMIN', '슈퍼 관리자', 1, 0, 1, 1, 'Y', 'Y', '기본값'),
+    (2, 'USER', '사용자', 1, 0, 1, 2, 'Y', 'Y', '기본값'),
+    (3, 'GUEST', 'GUEST', 1, 0, 1, 3, 'Y', 'Y', '기본값');
 
 -- 슈퍼 관리자 등록
 insert into user_info(
-	user_id, user_group_id, user_name, password, user_role_check_yn, last_signin_date)
+    user_id, user_group_id, membership_id, user_name, password, user_role_check_yn, last_signin_date)
 values
-    ('admin', 1, '슈퍼관리자', '$2a$10$KFr/2p5Og2jBy8NkTaEb/eoUna6AVlQ.A7s4YpPJ9A8dZwLYum5f.', 'N', now()),
-    ('mago3d', 2, 'mago3D', '$2a$10$lmYPqp2UJm4lHuF57Rs.wuzX034x7y/21jlCc8OQ4yFxbZt6Iich2', 'Y', now());
+    ('admin', 1, 4, '슈퍼관리자', '$2a$10$KFr/2p5Og2jBy8NkTaEb/eoUna6AVlQ.A7s4YpPJ9A8dZwLYum5f.', 'N', now()),
+    ('mago3d', 2, 4, 'mago3D', '$2a$10$lmYPqp2UJm4lHuF57Rs.wuzX034x7y/21jlCc8OQ4yFxbZt6Iich2', 'Y', now());
 
 -- 관리자 메뉴
 insert into menu(menu_id, menu_type, menu_target, name, name_en, ancestor, parent, depth, previous_depth, view_order, url, url_alias, html_id, css_class, default_yn, use_yn, display_yn)
@@ -73,14 +73,18 @@ values
     (116, '0', '1', '룰 등록', 'BRMS', 101, 101, 2, 2, 6, '/rule/input', '/rule/list', null, 'glyph-desktop', 'N', 'Y', 'N'),
     (117, '0', '1', '룰 수정', 'BRMS', 101, 101, 2, 2, 7, '/rule/modify', '/rule/list', null, 'glyph-desktop', 'N', 'Y', 'N'),
 
-	(201, '0', '1', '디지털트윈 서비스', 'DIGITALTWIN SERVICE', 201, 0, 1, 2, 9, '/micro-service/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
-	(211, '0', '1', '디지털트윈 서비스 목록', 'DIGITALTWIN SERVICE', 201, 201, 2, 1, 1, '/micro-service/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
+    (201, '0', '1', '디지털트윈 서비스', 'DIGITALTWIN SERVICE', 201, 0, 1, 2, 9, '/micro-service/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
+    (211, '0', '1', '디지털트윈 서비스 목록', 'DIGITALTWIN SERVICE', 201, 201, 2, 1, 1, '/micro-service/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
     (212, '0', '1', '디지털트윈 서비스 요청 이력 목록', 'DIGITALTWIN SERVICE', 201, 201, 2, 2, 2, '/micro-service-log/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
     (213, '0', '1', 'Health Check', 'DIGITALTWIN SERVICE', 201, 201, 2, 2, 3, '/health-check-log/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
-	(214, '0', '1', '디지털트윈 서비스 등록', 'DIGITALTWIN SERVICE', 201, 201, 2, 2, 4, '/micro-service/input', '/micro-service/list', null, 'glyph-desktop', 'N', 'Y', 'N'),
-	(215, '0', '1', '디지털트윈 서비스 수정', 'DIGITALTWIN SERVICE', 201, 201, 2, 2, 5, '/micro-service/modify', '/micro-service/list', null, 'glyph-desktop', 'N', 'Y', 'N'),
+    (214, '0', '1', '디지털트윈 서비스 등록', 'DIGITALTWIN SERVICE', 201, 201, 2, 2, 4, '/micro-service/input', '/micro-service/list', null, 'glyph-desktop', 'N', 'Y', 'N'),
+    (215, '0', '1', '디지털트윈 서비스 수정', 'DIGITALTWIN SERVICE', 201, 201, 2, 2, 5, '/micro-service/modify', '/micro-service/list', null, 'glyph-desktop', 'N', 'Y', 'N'),
 
-    (401, '0', '1', '환경설정', 'CONFIGURATION', 401, 0, 1, 2, 10, '/policy/modify', null, null, 'glyph-settings', 'Y', 'Y', 'Y'),
+    (301, '0', '1', '멤버십', 'MEMBERSHIP', 301, 0, 1, 2, 10, '/membership/usage/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
+    (311, '0', '1', '멤버십 사용량 목록', 'MEMBERSHIP', 301, 301, 2, 1, 1, '/membership/usage/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
+    (312, '0', '1', '멤버십 변경 요청 이력 목록', 'MEMBERSHIP', 301, 301, 2, 2, 2, '/membership/log/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
+
+    (401, '0', '1', '환경설정', 'CONFIGURATION', 401, 0, 1, 2, 11, '/policy/modify', null, null, 'glyph-settings', 'Y', 'Y', 'Y'),
     (411, '0', '1', '일반 운영정책', 'CONFIGURATION', 401, 401, 2, 1, 1, '/policy/modify', null, null, 'glyph-settings', 'Y', 'Y', 'Y'),
     (412, '0', '1', '공간정보 운영정책', 'CONFIGURATION', 401, 401, 2, 2, 2, '/geopolicy/modify', null, null, 'glyph-settings', 'Y', 'Y', 'Y'),
     (413, '0', '1', '관리자 메뉴', 'ADMIN MENU', 401, 401, 2, 2, 3, '/menu/admin-menu', null, null, 'glyph-settings', 'Y', 'Y', 'Y'),
@@ -96,7 +100,7 @@ values
 
 -- 사용자 메뉴
 insert into menu(menu_id, menu_type, menu_target, name, name_en, ancestor, parent, depth, previous_depth, view_order, url, url_alias, html_id, html_content_id,
-    css_class, default_yn, use_yn, display_yn)
+                 css_class, default_yn, use_yn, display_yn)
 values
     (1001, '1', '0', '데이터', 'DATA', 1001, 0, 1, 0, 1, '/data/map', null, 'dataMenu', 'dataContent', 'data', 'Y', 'Y', 'Y'),
     (1002, '1', '0', '변환', 'CONVERTER', 1002, 0, 1, 1, 2, '/upload-data/list', null, 'converterMenu', 'converterContent', 'converter', 'Y', 'Y', 'Y'),
@@ -110,44 +114,44 @@ values
 -- 사용자 그룹별 메뉴
 insert into user_group_menu(user_group_menu_id, user_group_id, menu_id, previous_depth, all_yn)
 values
-	(1, 1, 1, 0, 'Y'),
-	(2, 1, 2, 0, 'Y'),
-	(21, 1, 21, 1, 'Y'),
-	(22, 1, 22, 2, 'Y'),
-	(23, 1, 23, 2, 'Y'),
-	(24, 1, 24, 2, 'Y'),
-	(25, 1, 25, 2, 'Y'),
-	(26, 1, 26, 2, 'Y'),
-	(27, 1, 27, 2, 'Y'),
-	(28, 1, 28, 2, 'Y'),
-	(29, 1, 29, 2, 'Y'),
+    (1, 1, 1, 0, 'Y'),
+    (2, 1, 2, 0, 'Y'),
+    (21, 1, 21, 1, 'Y'),
+    (22, 1, 22, 2, 'Y'),
+    (23, 1, 23, 2, 'Y'),
+    (24, 1, 24, 2, 'Y'),
+    (25, 1, 25, 2, 'Y'),
+    (26, 1, 26, 2, 'Y'),
+    (27, 1, 27, 2, 'Y'),
+    (28, 1, 28, 2, 'Y'),
+    (29, 1, 29, 2, 'Y'),
 
-	(3, 1, 3, 2, 'Y'),
-	(31, 1, 31, 1, 'Y'),
-	(32, 1, 32, 2, 'Y'),
-	(33, 1, 33, 2, 'Y'),
-	(34, 1, 34, 2, 'Y'),
-	(35, 1, 35, 2, 'Y'),
-	(36, 1, 36, 2, 'Y'),
-	(37, 1, 37, 2, 'Y'),
-	(38, 1, 38, 2, 'Y'),
-	(39, 1, 39, 2, 'Y'),
-	(40, 1, 40, 2, 'Y'),
-	(41, 1, 41, 2, 'Y'),
-	(42, 1, 42, 2, 'Y'),
-	(43, 1, 43, 2, 'Y'),
-	(44, 1, 44, 2, 'Y'),
-	(45, 1, 45, 2, 'Y'),
-	(46, 1, 46, 2, 'Y'),
-	(47, 1, 47, 2, 'Y'),
+    (3, 1, 3, 2, 'Y'),
+    (31, 1, 31, 1, 'Y'),
+    (32, 1, 32, 2, 'Y'),
+    (33, 1, 33, 2, 'Y'),
+    (34, 1, 34, 2, 'Y'),
+    (35, 1, 35, 2, 'Y'),
+    (36, 1, 36, 2, 'Y'),
+    (37, 1, 37, 2, 'Y'),
+    (38, 1, 38, 2, 'Y'),
+    (39, 1, 39, 2, 'Y'),
+    (40, 1, 40, 2, 'Y'),
+    (41, 1, 41, 2, 'Y'),
+    (42, 1, 42, 2, 'Y'),
+    (43, 1, 43, 2, 'Y'),
+    (44, 1, 44, 2, 'Y'),
+    (45, 1, 45, 2, 'Y'),
+    (46, 1, 46, 2, 'Y'),
+    (47, 1, 47, 2, 'Y'),
 
-	(5, 1, 5, 2, 'Y'),
-	(51, 1, 51, 1, 'Y'),
-	(52, 1, 52, 2, 'Y'),
-	(53, 1, 53, 2, 'Y'),
-	(54, 1, 54, 2, 'Y'),
-	(55, 1, 55, 2, 'Y'),
-	(56, 1, 56, 2, 'Y'),
+    (5, 1, 5, 2, 'Y'),
+    (51, 1, 51, 1, 'Y'),
+    (52, 1, 52, 2, 'Y'),
+    (53, 1, 53, 2, 'Y'),
+    (54, 1, 54, 2, 'Y'),
+    (55, 1, 55, 2, 'Y'),
+    (56, 1, 56, 2, 'Y'),
 
     (7, 1, 7, 2, 'Y'),
     (71, 1, 71, 1, 'Y'),
@@ -175,76 +179,80 @@ values
     (214, 1, 214, 2, 'Y'),
     (215, 1, 215, 2, 'Y'),
 
-	(401, 1, 401, 2, 'Y'),
-	(411, 1, 411, 1, 'Y'),
-	(412, 1, 412, 2, 'Y'),
-	(413, 1, 413, 2, 'Y'),
-	(414, 1, 414, 2, 'Y'),
-	(415, 1, 415, 2, 'Y'),
-	(416, 1, 416, 2, 'Y'),
+    (301, 1, 301, 2, 'Y'),
+    (311, 1, 311, 1, 'Y'),
+    (312, 1, 312, 2, 'Y'),
+
+    (401, 1, 401, 2, 'Y'),
+    (411, 1, 411, 1, 'Y'),
+    (412, 1, 412, 2, 'Y'),
+    (413, 1, 413, 2, 'Y'),
+    (414, 1, 414, 2, 'Y'),
+    (415, 1, 415, 2, 'Y'),
+    (416, 1, 416, 2, 'Y'),
     (417, 1, 417, 2, 'Y'),
     (418, 1, 418, 2, 'Y'),
     (420, 1, 420, 2, 'Y'),
     (421, 1, 421, 2, 'Y'),
     (422, 1, 422, 2, 'Y'),
-    
-	(NEXTVAL('user_group_menu_seq'), 1, 1001, 1, 'Y'),
-	(NEXTVAL('user_group_menu_seq'), 1, 1002, 1, 'Y'),
-	(NEXTVAL('user_group_menu_seq'), 1, 1003, 1, 'Y'),
-	(NEXTVAL('user_group_menu_seq'), 1, 1004, 1, 'Y'),
-	(NEXTVAL('user_group_menu_seq'), 1, 1005, 1, 'Y'),
-	(NEXTVAL('user_group_menu_seq'), 1, 1006, 1, 'Y'),
+
+    (NEXTVAL('user_group_menu_seq'), 1, 1001, 1, 'Y'),
+    (NEXTVAL('user_group_menu_seq'), 1, 1002, 1, 'Y'),
+    (NEXTVAL('user_group_menu_seq'), 1, 1003, 1, 'Y'),
+    (NEXTVAL('user_group_menu_seq'), 1, 1004, 1, 'Y'),
+    (NEXTVAL('user_group_menu_seq'), 1, 1005, 1, 'Y'),
+    (NEXTVAL('user_group_menu_seq'), 1, 1006, 1, 'Y'),
     (NEXTVAL('user_group_menu_seq'), 1, 1007, 1, 'Y'),
 
-	(NEXTVAL('user_group_menu_seq'), 2, 1001, 1, 'Y'),
-	(NEXTVAL('user_group_menu_seq'), 2, 1002, 1, 'Y'),
-	(NEXTVAL('user_group_menu_seq'), 2, 1003, 1, 'Y'),
-	(NEXTVAL('user_group_menu_seq'), 2, 1004, 1, 'Y'),
-	(NEXTVAL('user_group_menu_seq'), 2, 1005, 1, 'Y'),
-	(NEXTVAL('user_group_menu_seq'), 2, 1006, 1, 'Y'),
-	(NEXTVAL('user_group_menu_seq'), 2, 1007, 1, 'Y'),
+    (NEXTVAL('user_group_menu_seq'), 2, 1001, 1, 'Y'),
+    (NEXTVAL('user_group_menu_seq'), 2, 1002, 1, 'Y'),
+    (NEXTVAL('user_group_menu_seq'), 2, 1003, 1, 'Y'),
+    (NEXTVAL('user_group_menu_seq'), 2, 1004, 1, 'Y'),
+    (NEXTVAL('user_group_menu_seq'), 2, 1005, 1, 'Y'),
+    (NEXTVAL('user_group_menu_seq'), 2, 1006, 1, 'Y'),
+    (NEXTVAL('user_group_menu_seq'), 2, 1007, 1, 'Y'),
 
     (NEXTVAL('user_group_menu_seq'), 3, 1001, 1, 'Y'),
-	(NEXTVAL('user_group_menu_seq'), 3, 1002, 1, 'Y'),
-	(NEXTVAL('user_group_menu_seq'), 3, 1003, 1, 'Y'),
-	(NEXTVAL('user_group_menu_seq'), 3, 1004, 1, 'Y'),
-	(NEXTVAL('user_group_menu_seq'), 3, 1005, 1, 'Y'),
-	(NEXTVAL('user_group_menu_seq'), 3, 1006, 1, 'Y'),
-	(NEXTVAL('user_group_menu_seq'), 3, 1007, 1, 'Y');
+    (NEXTVAL('user_group_menu_seq'), 3, 1002, 1, 'Y'),
+    (NEXTVAL('user_group_menu_seq'), 3, 1003, 1, 'Y'),
+    (NEXTVAL('user_group_menu_seq'), 3, 1004, 1, 'Y'),
+    (NEXTVAL('user_group_menu_seq'), 3, 1005, 1, 'Y'),
+    (NEXTVAL('user_group_menu_seq'), 3, 1006, 1, 'Y'),
+    (NEXTVAL('user_group_menu_seq'), 3, 1007, 1, 'Y');
 
 insert into user_group_role(user_group_role_id, user_group_id, role_id)
 values
-	(NEXTVAL('user_group_role_seq'), 1, 1),
-	(NEXTVAL('user_group_role_seq'), 1, 2),
-	(NEXTVAL('user_group_role_seq'), 1, 3),
-	(NEXTVAL('user_group_role_seq'), 1, 1001),
-	(NEXTVAL('user_group_role_seq'), 1, 1002),
-	(NEXTVAL('user_group_role_seq'), 1, 1003),
-	(NEXTVAL('user_group_role_seq'), 2, 1001),
-	(NEXTVAL('user_group_role_seq'), 2, 1002),
+    (NEXTVAL('user_group_role_seq'), 1, 1),
+    (NEXTVAL('user_group_role_seq'), 1, 2),
+    (NEXTVAL('user_group_role_seq'), 1, 3),
+    (NEXTVAL('user_group_role_seq'), 1, 1001),
+    (NEXTVAL('user_group_role_seq'), 1, 1002),
+    (NEXTVAL('user_group_role_seq'), 1, 1003),
+    (NEXTVAL('user_group_role_seq'), 2, 1001),
+    (NEXTVAL('user_group_role_seq'), 2, 1002),
     (NEXTVAL('user_group_role_seq'), 2, 1003);
 
 
 -- 메인 화면 위젯
 insert into widget(widget_id, widget_name, widget_key, view_order, user_id)
 values
-	(NEXTVAL('widget_seq'), '사용자 현황', 'userWidget', 1, 'admin' ),
-	(NEXTVAL('widget_seq'), '데이터 타입별 현황', 'dataTypeWidget', 2, 'admin' ),
-	(NEXTVAL('widget_seq'), '데이터 변환 현황', 'converterWidget', 3, 'admin' ),
-	(NEXTVAL('widget_seq'), '최근 이슈', 'issueWidget', 4, 'admin' ),
-	(NEXTVAL('widget_seq'), '데이터 위치 정보 변경 요청', 'dataAdjustLogWidget', 5, 'admin' ),
-	(NEXTVAL('widget_seq'), '리소스 현황', 'systemResourceWidget', 6, 'admin' ),
-	(NEXTVAL('widget_seq'), '스케줄 실행 결과', 'scheduleWidget', 7, 'admin' ),
-	(NEXTVAL('widget_seq'), 'API 요청', 'apiLogWidget', 8, 'admin' );
+    (NEXTVAL('widget_seq'), '사용자 현황', 'userWidget', 1, 'admin' ),
+    (NEXTVAL('widget_seq'), '데이터 타입별 현황', 'dataTypeWidget', 2, 'admin' ),
+    (NEXTVAL('widget_seq'), '데이터 변환 현황', 'converterWidget', 3, 'admin' ),
+    (NEXTVAL('widget_seq'), '최근 이슈', 'issueWidget', 4, 'admin' ),
+    (NEXTVAL('widget_seq'), '데이터 위치 정보 변경 요청', 'dataAdjustLogWidget', 5, 'admin' ),
+    (NEXTVAL('widget_seq'), '리소스 현황', 'systemResourceWidget', 6, 'admin' ),
+    (NEXTVAL('widget_seq'), '스케줄 실행 결과', 'scheduleWidget', 7, 'admin' ),
+    (NEXTVAL('widget_seq'), 'API 요청', 'apiLogWidget', 8, 'admin' );
 
 
 -- 운영 정책
 insert into policy(	policy_id, password_exception_char)
-			values( 1, '<>&''"');
+values( 1, '<>&''"');
 
 -- 2D, 3D 운영 정책
 insert into geopolicy(	geopolicy_id)
-			values( 1 );
+values( 1 );
 
 -- Role
 insert into role(role_id, role_name, role_key, role_target, role_type, use_yn, default_yn)
@@ -253,9 +261,9 @@ values
     (2, '[관리자 전용] 관리자 페이지 사용자 관리 권한', 'ADMIN_USER_MANAGE', '1', '0', 'Y', 'Y'),
     (3, '[관리자 전용] 관리자 페이지 Layer 관리 권한', 'ADMIN_LAYER_MANAGE', '1', '0', 'Y', 'Y'),
 
-	(1001, '[사용자 전용] 사용자 페이지 SIGN IN 권한', 'USER_SIGNIN', '0', '0', 'Y', 'Y'),
-	(1002, '[사용자 전용] 사용자 페이지 DATA 등록 권한', 'USER_DATA_CREATE', '0', '0', 'Y', 'Y'),
-	(1003, '[사용자 전용] 사용자 페이지 DATA 조회 권한', 'USER_DATA_READ', '0', '0', 'Y', 'Y');
+    (1001, '[사용자 전용] 사용자 페이지 SIGN IN 권한', 'USER_SIGNIN', '0', '0', 'Y', 'Y'),
+    (1002, '[사용자 전용] 사용자 페이지 DATA 등록 권한', 'USER_DATA_CREATE', '0', '0', 'Y', 'Y'),
+    (1003, '[사용자 전용] 사용자 페이지 DATA 조회 권한', 'USER_DATA_READ', '0', '0', 'Y', 'Y');
 
 
 INSERT INTO data_group (
@@ -290,7 +298,13 @@ values
 INSERT INTO membership_usage(
     membership_usage_id, membership_id, user_id, update_date)
 values
-    (1, 1, 'admin', NOW()),
-    (2, 1, 'mago3d', NOW());
+    (1, 4, 'admin', NOW()),
+    (2, 4, 'mago3d', NOW());
+
+INSERT INTO membership_log(
+    membership_log_id, current_membership_id, request_membership_id, user_id, status)
+values
+    (1, 4, 4, 'admin', 'APPROVAL'),
+    (2, 4, 4, 'mago3d', 'APPROVAL');
 
 commit;

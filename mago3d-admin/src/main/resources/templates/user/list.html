@@ -141,6 +141,7 @@
                                             <th scope="col">아이디</th>
                                             <th scope="col">이름</th>
                                             <th scope="col">상태</th>
+                                            <th scope="col">멤버십</th>
                                             <th scope="col">비밀번호 수정</th>
                                             <th scope="col">수정</th>
                                             <th scope="col">삭제</th>
@@ -195,6 +196,10 @@
                                                     <span class="icon-text">대기중</span>
                                                     <a href="#" th:onclick="approval([[${user.userId}]]); return false;" class="button" style="margin-left: 5px; text-decoration: none;">승인</a>
                                                 </th:block>
+                                            </td>
+                                            <td class="col-type">
+                                                <label th:for="|membershipName_${user.membershipName}|" class="hiddenTag"></label>
+                                                <a href="/membership/usage/list" th:text="${user.membershipName}"></a>
                                             </td>
                                             <td class="col-type">
                                                 <a th:href="@{/user/modify(userId=${user.userId}, type=password)}" class="image-button button-edit" th:text="#{modified}"></a>
@@ -310,6 +315,36 @@
                         alert(JS_MESSAGE[msg.errorCode]);
                     }
                     approvalFlag = true;
+                },
+                error:function(request,status,error){
+                    alert(JS_MESSAGE["ajax.error.message"]);
+                    approvalFlag = true;
+                }
+            });
+        } else {
+            alert(JS_MESSAGE["button.dobule.click"]);
+        }
+    }
+
+    // 멤버십 승인
+    var approvalMembershipFlag = true;
+    function approvalMembership(userId) {
+        if(approvalMembershipFlag) {
+            approvalMembershipFlag = false;
+            var formData = $("#searchForm").serialize();
+            $.ajax({
+                url: "/memberships/" + userId + "/approvals",
+                type: "POST",
+                headers: {"X-Requested-With": "XMLHttpRequest"},
+                data: formData,
+                success: function(msg){
+                    if(msg.statusCode <= 200) {
+                        alert(JS_MESSAGE["update"]);
+                        location.reload();
+                    } else {
+                        alert(JS_MESSAGE[msg.errorCode]);
+                    }
+                    approvalMembershipFlag = true;
                 },
                 error:function(request,status,error){
                     alert(JS_MESSAGE["ajax.error.message"]);

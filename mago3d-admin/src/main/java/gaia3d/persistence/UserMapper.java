@@ -1,10 +1,9 @@
 package gaia3d.persistence;
 
-import java.util.List;
-
+import gaia3d.domain.user.UserInfo;
 import org.springframework.stereotype.Repository;
 
-import gaia3d.domain.user.UserInfo;
+import java.util.List;
 
 /**
  * 사용자
@@ -89,4 +88,5 @@ public interface UserMapper {
 	 * @return
 	 */
 	int deleteUser(String userId);
+	
 }

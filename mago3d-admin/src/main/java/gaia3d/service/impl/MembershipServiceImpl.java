@@ -1,13 +1,18 @@
 package gaia3d.service.impl;
 
+import gaia3d.domain.Status;
 import gaia3d.domain.membership.Membership;
 import gaia3d.domain.membership.MembershipLog;
 import gaia3d.domain.membership.MembershipUsage;
+import gaia3d.domain.user.UserInfo;
 import gaia3d.persistence.MembershipMapper;
+import gaia3d.persistence.UserMapper;
 import gaia3d.service.MembershipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 멤버십
@@ -19,6 +24,9 @@ public class MembershipServiceImpl implements MembershipService {
 
 	@Autowired
 	private MembershipMapper membershipMapper;
+
+	@Autowired
+	private UserMapper userMapper;
 
 	/**
 	 * 멤버십 조회
@@ -61,6 +69,46 @@ public class MembershipServiceImpl implements MembershipService {
 	}
 
 	/**
+	 * 멤버십 사용량 총 건수
+	 * @param membershipUsage
+	 * @return
+	 */
+	@Transactional
+	public Long getUsageTotalCount(MembershipUsage membershipUsage) {
+		return membershipMapper.getUsageTotalCount(membershipUsage);
+	}
+
+	/**
+	 * 멤버십 로그 총 건수
+	 * @param membershipLog
+	 * @return
+	 */
+	@Transactional
+	public Long getLogTotalCount(MembershipLog membershipLog) {
+		return membershipMapper.getLogTotalCount(membershipLog);
+	}
+
+	/**
+	 * 멤버십 사용량 목록
+	 * @param membershipUsage
+	 * @return
+	 */
+	@Transactional
+	public List<MembershipUsage> getListUsage(MembershipUsage membershipUsage) {
+		return membershipMapper.getListUsage(membershipUsage);
+	}
+
+	/**
+	 * 멤버십 로그 목록
+	 * @param membershipLog
+	 * @return
+	 */
+	@Transactional
+	public List<MembershipLog> getListLog(MembershipLog membershipLog) {
+		return membershipMapper.getListLog(membershipLog);
+	}
+
+	/**
 	 * 멤버십 등록
 	 * @param membershipUsage
 	 * @return
@@ -97,17 +145,19 @@ public class MembershipServiceImpl implements MembershipService {
 	 */
 	@Transactional
 	public int updateLogStatus(MembershipLog membershipLog) {
+		System.out.println(membershipLog.getStatus());
+		if(membershipLog.getStatus().equals(Status.APPROVAL.getValue())){
+			System.out.println("membershipLog.getStatus()");
+			UserInfo userInfo = new UserInfo();
+			userInfo.setUserId(membershipLog.getUserId());
+			userInfo.setMembershipId(membershipLog.getRequestMembershipId());
+			userMapper.updateUser(userInfo);
+
+			MembershipUsage membershipUsage = new MembershipUsage();
+			membershipUsage.setUserId(membershipLog.getUserId());
+			membershipUsage.setMembershipId(membershipLog.getRequestMembershipId());
+			membershipMapper.updateUsage(membershipUsage);
+		}
 		return membershipMapper.updateLogStatus(membershipLog);
 	}
-
-	/**
-	 * 멤버십 사용량 갱신
-	 * @param membershipUsage
-	 * @return
-	 */
-	@Transactional
-	public int updateUsage(MembershipUsage membershipUsage) {
-		return membershipMapper.updateUsage(membershipUsage);
-	}
-
 }
