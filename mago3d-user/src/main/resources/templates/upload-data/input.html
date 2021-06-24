@@ -316,7 +316,7 @@
 				alert("[[${membershipUsage.uploadFileSize}]]" - total*0.000000001);*/
 				var useUploadFileSize = Number("[[${membershipUsage.useUploadFileSize}]]");
 				var uploadFileSize = Number("[[${membershipUsage.uploadFileSize}]]");
-				if((useUploadFileSize + totalFileSize*0.000000001) > uploadFileSize){
+				if((useUploadFileSize + totalFileSize*0.000001) > uploadFileSize){
 					alert(JS_MESSAGE["membership.file.size.exceed"]);
 					totalFileSize = 0;
 					myDropzone.removeAllFiles(true);
@@ -334,7 +334,7 @@
 				formData.append("latitude", $("#latitude").val());
 				formData.append("altitude", $("#altitude").val());
 				formData.append("description", $("#description").val());
-				formData.append("fileSize", totalFileSize*0.000000001);
+				formData.append("fileSize", totalFileSize*0.000001);
 			});
 			
 			// maxFiles 카운터를 초과하면 경고창

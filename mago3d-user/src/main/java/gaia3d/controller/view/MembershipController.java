@@ -37,8 +37,12 @@ public class MembershipController {
 	 * @return
 	 */
 	@GetMapping("/list")
-	public String list(HttpServletRequest request) {
+	public String list(HttpServletRequest request, Model model) {
 		Policy policy = CacheManager.getPolicy();
+
+		UserSession userSession = (UserSession) request.getSession().getAttribute(Key.USER_SESSION.name());
+		int membershipId = userSession.getMembershipId();
+		model.addAttribute("membershipId", membershipId);
 
 		return "/membership/list";
 	}

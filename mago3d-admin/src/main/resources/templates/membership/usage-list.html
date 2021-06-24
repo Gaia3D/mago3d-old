@@ -114,7 +114,7 @@
                                             <td class="col-number" th:text="${pagination.rowNumber - membershipUsageStat.index}"></td>
                                             <td class="col-name" th:text="${membershipUsage.membershipName}"></td>
                                             <td class="col-name" th:text="${membershipUsage.userId}"></td>
-                                            <td class="col-name" th:text="|${membershipUsage.useUploadFileSize} / ${membershipUsage.uploadFileSize} GB |"></td>
+                                            <td class="col-name" th:text="|${membershipUsage.useUploadFileSize} / ${membershipUsage.uploadFileSize} MB |"></td>
                                             <td class="col-name" th:text="|${membershipUsage.useConvertFileCount} / ${membershipUsage.convertFileCount} 건 |"></td>
                                             <td class="col-type">
                                                 <p th:text="${#temporals.format(membershipUsage.insertDate, 'yyyy-MM-dd HH:mm')}"></p>

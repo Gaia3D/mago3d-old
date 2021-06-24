@@ -8,7 +8,7 @@ drop table if exists membership_log cascade;
 create table membership(
     membership_id                   integer,
     membership_name 			    varchar(32),
-    upload_file_size				numeric(20,15)			        not null,
+    upload_file_size				integer			                not null,
     convert_file_count				integer,
     constraint membership_pk primary key(membership_id)
 );
@@ -16,7 +16,7 @@ create table membership(
 comment on table membership is '멤버십 정책';
 comment on column membership.membership_id is '고유번호';
 comment on column membership.membership_name is '멤버십 이름 (일반, 실버, 골드, 플레티넘)';
-comment on column membership.upload_file_size is '허용 용량(GB)';
+comment on column membership.upload_file_size is '허용 용량(MB)';
 comment on column membership.convert_file_count is '허용 횟수';
 
 -- 멤버십 사용량(월별)
@@ -35,7 +35,7 @@ comment on table membership_usage is '멤버십 기본정보';
 comment on column membership_usage.membership_usage_id is '고유번호';
 comment on column membership_usage.membership_id is '멤버십 고유번호';
 comment on column membership_usage.user_id is '사용자 아이디';
-comment on column membership_usage.use_upload_file_size is '사용 용량(GB)';
+comment on column membership_usage.use_upload_file_size is '사용 용량(MB)';
 comment on column membership_usage.use_convert_file_count is '사용 횟수';
 comment on column membership_usage.update_date is '멤버십 변경 날짜';
 comment on column membership_usage.insert_date is '등록일';

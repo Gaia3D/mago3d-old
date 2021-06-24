@@ -142,6 +142,7 @@ hr.h50 {clear:both; display:block; height:50px; visibility:hidden;}
 /* 멤버십 */
 #membership-item {width:300px; margin:0 auto; height:400px; padding:0; background:white; box-shadow: 0 0 2px rgba(132,132,132,0.6); border-radius:8px; position:absolute; top:60%; margin-top:-300px;}
 #membership-item .btn-go {clear:both; display:inline-block; color:white; cursor:pointer; padding:10px 30px 10px 30px; line-height:20px; background:#396ce8; border-radius:3px; color:white; text-align:center; }
+#membership-item .btn-stop {background: #ff5959; clear:both; display:inline-block; color:white; cursor:pointer; padding:10px 30px 10px 30px; line-height:20px; background:#396ce8; border-radius:3px; color:white; text-align:center; }
 #membership-item .btn-go:hover, #join .btn-join:focus  {background:#2a5bd3;}
 
 /* 로그인 */

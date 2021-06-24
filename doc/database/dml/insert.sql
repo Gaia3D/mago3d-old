@@ -290,10 +290,10 @@ VALUES
 INSERT INTO membership(
     membership_id, membership_name, upload_file_size, convert_file_count)
 values
-    (1, 'BASIC', 0.1, 10),
-    (2, 'SILVER', 1.0, 30),
-    (3, 'GOLD', 5.0, 50),
-    (4, 'PLATINUM', 10.0, 100);
+    (1, 'BASIC', 100, 10),
+    (2, 'SILVER', 1000, 30),
+    (3, 'GOLD', 5000, 50),
+    (4, 'PLATINUM', 10000, 100);
 
 INSERT INTO membership_usage(
     membership_usage_id, membership_id, user_id, update_date)

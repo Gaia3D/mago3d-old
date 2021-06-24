@@ -33,7 +33,7 @@ public class MembershipUsage extends Search implements Serializable {
 	private Integer useConvertFileCount;
 
 	// 허용 용량
-	private Double uploadFileSize;
+	private Integer uploadFileSize;
 	// 허용 횟수
 	private Integer convertFileCount;
 	
