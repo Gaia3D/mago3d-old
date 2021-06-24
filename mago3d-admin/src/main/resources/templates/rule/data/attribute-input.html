@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
 <head>
-	<title>레이어 속성 관리 Rule 수정</title>
+	<title>레이어 속성 관리 Rule 등록</title>
 	<th:block layout:fragment="pageCustomStyle">
 		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
 		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
@@ -20,12 +20,10 @@
 				<div class="page-area">
 					<div th:replace="~{/fragments/page-header :: #pageHeaderWrap}"></div>
 					<div class="page-content">
-						<form id="rule" th:object="${rule}" method="post" action="" onsubmit="return false;">
-							<input type="hidden" name="_method" value="PUT" />
-							<input type="hidden" id="ruleGroupId" name="ruleGroupId" th:value="${rule.ruleGroupId}" />
-
-						<table class="input-table scope-row" summary="레이어 속성 관리 Rule 수정">
-						<caption class="hiddenTag">레이어 속성 관리 Rule 수정</caption>
+						<form id="rule" method="post" action="" onsubmit="return false;">
+							<input type="hidden" id="ruleGroupId" name="ruleGroupId" th:value="${ruleGroup.ruleGroupId}" />
+						<table class="input-table scope-row" summary="레이어 속성 관리 Rule 등록">
+							<caption class="hiddenTag">레이어 속성 관리 Rule등록</caption>
 							<col class="col-label l" />
 							<col class="col-input" />
 							<tr>
@@ -35,7 +33,7 @@
 								</th>
 								<td class="col-input">
 									<select id="ruleType" name="ruleType" class="selectBoxClass" >
-										<option value="data_library"> 3D 라이브러리 </option>
+										<option value="layer"> 레이어 </option>
 									</select>
 								</td>
 							</tr>
@@ -50,15 +48,16 @@
 									<label for="ruleName">룰명</label>
 									<span class="icon-glyph glyph-emark-dot color-warning"></span>
 								</th>
-								<td class="col-input"><input type="text" id="ruleName" name="ruleName" th:field="*{ruleName}" class="l" size="70" /></td>
+								<td class="col-input"><input type="text" id="ruleName" name="ruleName" class="l" size="70" /></td>
 							</tr>
 							<tr>
 								<th class="col-label" scope="row">
-									룰 Key(영문,숫자,-,_)
+									<label for="ruleKey">룰 Key(영문,숫자,-,_)</label>
 									<span class="icon-glyph glyph-emark-dot color-warning"></span>
 								</th>
 								<td class="col-input">
-									<input type="text" id="ruleKey" name="ruleKey" th:field="*{ruleKey}" readonly="readonly" class="l" />
+									<input type="text" id="ruleKey" name="ruleKey" class="l" />
+									<input type="button" id="duplicationButton" th:value="#{overlap.check}" />
 								</td>
 							</tr>
 							<tr>
@@ -92,16 +91,24 @@
 								</th>
 								<td class="col-input radio-set">
 									<input type="radio" id="attributeTypeShape" name="attributeType" value="shape" />
-									<label for="attributeTypeShape">Shape 파일 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+									<label for="attributeTypeShape">단일 Shape 파일 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+									<input type="radio" id="attributeTypeCsv" name="attributeType" value="csv" />
+									<label for="attributeTypeCsv">단일 CSV 파일 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 									<input type="radio" id="attributeTypeShapeCsv" name="attributeType" value="shapeAndCsv"/>
-									<label for="attributeTypeShapeCsv">Shape 파일 + CSV(추가 속성) 파일</label>
+									<label for="attributeTypeShapeCsv">복합 Shape + CSV(추가 속성) 파일</label>
 								</td>
 							</tr>
-							<tr id="displayCsvMappingColumnForShape" style="display: none">
+							<tr id="displayShapeMappingColumnForData" style="display: none">
 								<th class="col-label l" scope="row">
-									<label for="csvMappingColumnForShape">Shape 매핑 CSV 파일 컬럼명(PK)</label>
+									<label for="displayShapeMappingColumnForData">데이터 매핑 Shape 파일 컬럼명(PK)</label>
 								</th>
-								<td class="col-input"><input type="text" id="csvMappingColumnForShape" name="csvMappingColumnForShape" class="xl" size="100" /></td>
+								<td class="col-input"><input type="text" id="shpaeMappingColumnForData" name="shpaeMappingColumnForData" class="xl" size="100" /></td>
+							</tr>
+							<tr id="displayCsvMappingColumnForData" style="display: none">
+								<th class="col-label l" scope="row">
+									<label for="csvMappingColumnForData">데이터 매핑 CSV 파일 컬럼명(PK)</label>
+								</th>
+								<td class="col-input"><input type="text" id="csvMappingColumnForData" name="csvMappingColumnForData" class="xl" size="100" /></td>
 							</tr>
 							<tr id="displayAdditionalCsvColumns" style="display: none">
 								<th class="col-label l" scope="row">
@@ -122,7 +129,7 @@
 									<span class="icon-glyph glyph-emark-dot color-warning"></span>
 								</th>
 								<td class="col-input radio-set">
-									<input type="radio" id="availableTrue" name="available" value="true" />
+									<input type="radio" id="availableTrue" name="available" value="true" checked />
 									<label for="availableTrue">사용</label>
 									<input type="radio" id="availableFalse" name="available" value="false" />
 									<label for="availableFalse">미사용</label>
@@ -130,12 +137,12 @@
 							</tr>
 							<tr>
 								<th class="col-label l" scope="row"><label for="description">설명</label></th>
-								<td class="col-input"><input type="text" id="description" name="description" th:field="*{description}" class="xl" size="100" /></td>
+								<td class="col-input"><input type="text" id="description" name="description" class="xl" size="100" /></td>
 							</tr>
 						</table>
 						<div class="button-group">
 							<div id="insertRoleLink" class="center-buttons">
-								<input type="submit" value="저장" onclick="update();" />
+								<input type="submit" value="저장" onclick="insert();" />
 								<a href="/rule/list" class="button">목록</a>
 							</div>
 						</div>
@@ -146,81 +153,126 @@
 		</div>
 	</div>
 </th:block>
+
 <th:block layout:fragment="pageCustomScript">
-
-	<script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
-	<script type="text/javascript" th:src="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.js(cacheVersion=${contentCacheVersion})}"></script>
-	<script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
-	<script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
-	<script type="text/javascript" th:src="@{/js/navigation.js(cacheVersion=${contentCacheVersion})}"></script>
-
+<script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.js(cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/navigation.js(cacheVersion=${contentCacheVersion})}"></script>
 <script th:inline="javascript">
 	$(document).ready(function() {
-		var attributes = JSON.parse(/*[[${rule.attributes}]]*/"");
-
-		$("#usage").val(attributes.usage);
-		var applyEvent = attributes.applyEvent;
-		if(applyEvent.indexOf("labelDisplay", 0) >= 0) {
-			$("input:checkbox[id='labelDisplay']").attr("checked", true);
-		}
-		if(applyEvent.indexOf("verticalExtrusion", 0) >= 0) {
-			$("input:checkbox[id='verticalExtrusion']").attr("checked", true);
-		}
-
-		$("[name=attributeType]").filter("[value='" + attributes.attributeType + "']").prop("checked",true);
-		$("[name=available]").filter("[value='" + attributes.available + "']").prop("checked",true);
-		$("#csvMappingColumnForShape").val(attributes.csvMappingColumnForShape);
-		$("#additionalCsvColumns").val(attributes.additionalCsvColumns);
-		$("#fileExtension").val(attributes.fileExtension);
 		changeUsageCondition();
-		changeMappingCondition(attributes.attributeType);
 	});
 
 	$("input[name='attributeType']:radio").change(function () {
 		if($("input:radio[name=attributeType]:checked").val()=== "shape") {
-			$("#displayCsvMappingColumnForShape").css("display", "none");
+			$("#displayShapeMappingColumnForData").css("display", "");
+			$("#displayCsvMappingColumnForData").css("display", "none");
+			$("#displayAdditionalCsvColumns").css("display", "none");
+		} else if($("input:radio[name=attributeType]:checked").val()=== "csv") {
+			$("#displayShapeMappingColumnForData").css("display", "none");
+			$("#displayCsvMappingColumnForData").css("display", "");
 			$("#displayAdditionalCsvColumns").css("display", "none");
 		} else if($("input:radio[name=attributeType]:checked").val()=== "shapeAndCsv") {
-			$("#displayCsvMappingColumnForShape").css("display", "");
+			$("#displayShapeMappingColumnForData").css("display", "none");
+			$("#displayCsvMappingColumnForData").css("display", "");
 			$("#displayAdditionalCsvColumns").css("display", "");
 		}
 	});
 
+	$("#ruleKey").keyup(function(event) {
+		var inputValue = $(this).val();
+		if(isHangul(inputValue)) {
+			alert("Rule Key는 영문 및 숫자만 입력 가능 합니다.");
+			return;
+		}
+	});
+
+	// 룰 키 중복 확인
+	$( "#duplicationButton" ).on( "click", function() {
+		var ruleKey = $("#ruleKey").val();
+		if (ruleKey == "") {
+			alert("Rule 키(한글불가)를 입력해 주세요.");
+			$("#ruleKey").focus();
+			return false;
+		}
+
+		var ruleKeyExpress = /^[a-zA-Z0-9-_]+$/;
+		if (!ruleKeyExpress.test(document.getElementById("ruleKey").value)) {
+			alert("Rule 키(한글불가)가 올바르지 않습니다.");
+			return false;
+		}
+
+		var formData = "ruleKey=" + ruleKey;
+		$.ajax({
+			url: "/rules/duplication",
+			type: "GET",
+			headers: {"X-Requested-With": "XMLHttpRequest"},
+			data: formData,
+			dataType: "json",
+			success: function(msg){
+				if(msg.statusCode <= 200) {
+					if(msg.duplication == true) {
+						alert(JS_MESSAGE["rule.key.duplication"]);
+						$("#ruleKey").focus();
+						return false;
+					} else {
+						alert(JS_MESSAGE["rule.key.enable"]);
+						$("#duplication").val(msg.duplication);
+					}
+				} else {
+					alert(JS_MESSAGE[msg.errorCode]);
+					console.log("---- " + msg.message);
+				}
+			},
+			error:function(request, status, error) {
+				//alert(JS_MESSAGE["ajax.error.message"]);
+				alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			}
+		});
+	});
+
 	function validate() {
-		if( $("#ruleName").val() === "" ) {
+		if( $("#ruleName").val().trim() === "" ) {
 			alert("Rule 명을 입력하여 주십시오.");
 			$("#ruleName").focus();
+			return false;
+		}
+		else if( $("#ruleKey").val().trim() === "" ) {
+			alert("Rule Key를 입력하여 주십시오.");
+			$("#ruleKey").focus();
 			return false;
 		}
 	}
 
 	// 저장
-	var updateRuleFlag = true;
-	function update() {
+	var insertRuleFlag = true;
+	function insert() {
 		if (validate() == false) {
 			return false;
 		}
-		if(updateRuleFlag) {
-			updateRuleFlag = false;
+		if(insertRuleFlag) {
+			insertRuleFlag = false;
 			var formData = $("#rule").serialize();
 			$.ajax({
-				url: "/rule/layers/attributes/[[${rule.ruleId}]]",
+				url: "/rule/layers/attributes",
 				type: "POST",
 				headers: {"X-Requested-With": "XMLHttpRequest"},
 				data: formData,
 				success: function(msg){
 					if(msg.statusCode <= 200) {
-						alert(JS_MESSAGE["update"]);
+						alert(JS_MESSAGE["insert"]);
 						//window.location.reload();
 					} else {
 						alert(JS_MESSAGE[msg.errorCode]);
 						console.log("---- " + msg.message);
 					}
-					updateRuleFlag = true;
+					insertRuleFlag = true;
 				},
 				error:function(request, status, error){
 					alert(JS_MESSAGE["ajax.error.message"]);
-					updateRuleFlag = true;
+					insertRuleFlag = true;
 				}
 			});
 		} else {
@@ -233,25 +285,17 @@
 		if(usage === "background") {
 			$("#displayApplyEvent").css("display", "none");
 			$("#displayAttributeType").css("display", "none");
-			$("#displayCsvMappingColumnForShape").css("display", "none");
+			$("#displayShapeMappingColumnForData").css("display", "none");
+			$("#displayCsvMappingColumnForData").css("display", "none");
 			$("#displayAdditionalCsvColumns").css("display", "none");
 			$("#displayFileExtension").css("display", "none");
 		} else if(usage === "extrusion") {
 			$("#displayApplyEvent").css("display", "");
 			$("#displayAttributeType").css("display", "");
-			$("#displayCsvMappingColumnForShape").css("display", "");
+			$("#displayShapeMappingColumnForData").css("display", "");
+			$("#displayCsvMappingColumnForData").css("display", "");
 			$("#displayAdditionalCsvColumns").css("display", "");
 			$("#displayFileExtension").css("display", "");
-		}
-	}
-
-	function changeMappingCondition(attributeType) {
-		if(attributeType === "shape") {
-			$("#displayCsvMappingColumnForShape").css("display", "none");
-			$("#displayAdditionalCsvColumns").css("display", "none");
-		} else if(attributeType === "shapeAndCsv") {
-			$("#displayCsvMappingColumnForShape").css("display", "");
-			$("#displayAdditionalCsvColumns").css("display", "");
 		}
 	}
 </script>

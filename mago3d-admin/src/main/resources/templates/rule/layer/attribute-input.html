@@ -66,7 +66,7 @@
 									<span class="icon-glyph glyph-emark-dot color-warning"></span>
 								</th>
 								<td class="col-input">
-									<select id="usage" name="usage" onchange="changeCondition();" class="selectBoxClass" >
+									<select id="usage" name="usage" onchange="changeUsageCondition();" class="selectBoxClass" >
 										<option value="background"> 배경 지도 </option>
 										<option value="extrusion"> Extrusion </option>
 									</select>
@@ -91,24 +91,16 @@
 								</th>
 								<td class="col-input radio-set">
 									<input type="radio" id="attributeTypeShape" name="attributeType" value="shape" />
-									<label for="attributeTypeShape">단일 Shape 파일 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-									<input type="radio" id="attributeTypeCsv" name="attributeType" value="csv" />
-									<label for="attributeTypeCsv">단일 CSV 파일 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+									<label for="attributeTypeShape">Shape 파일 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 									<input type="radio" id="attributeTypeShapeCsv" name="attributeType" value="shapeAndCsv"/>
-									<label for="attributeTypeShapeCsv">복합 Shape + CSV(추가 속성) 파일</label>
+									<label for="attributeTypeShapeCsv">Shape 파일 + CSV(추가 속성) 파일</label>
 								</td>
 							</tr>
-							<tr id="displayShapeMappingColumnForData" style="display: none">
+							<tr id="displayCsvMappingColumnForShape" style="display: none">
 								<th class="col-label l" scope="row">
-									<label for="displayShapeMappingColumnForData">데이터 매핑 Shape 파일 컬럼명(PK)</label>
+									<label for="csvMappingColumnForShape">Shape 매핑 CSV 파일 컬럼명(PK)</label>
 								</th>
-								<td class="col-input"><input type="text" id="shpaeMappingColumnForData" name="shpaeMappingColumnForData" class="xl" size="100" /></td>
-							</tr>
-							<tr id="displayCsvMappingColumnForData" style="display: none">
-								<th class="col-label l" scope="row">
-									<label for="csvMappingColumnForData">데이터 매핑 CSV 파일 컬럼명(PK)</label>
-								</th>
-								<td class="col-input"><input type="text" id="csvMappingColumnForData" name="csvMappingColumnForData" class="xl" size="100" /></td>
+								<td class="col-input"><input type="text" id="csvMappingColumnForShape" name="csvMappingColumnForShape" class="xl" size="100" /></td>
 							</tr>
 							<tr id="displayAdditionalCsvColumns" style="display: none">
 								<th class="col-label l" scope="row">
@@ -167,16 +159,10 @@
 
 	$("input[name='attributeType']:radio").change(function () {
 		if($("input:radio[name=attributeType]:checked").val()=== "shape") {
-			$("#displayShapeMappingColumnForData").css("display", "");
-			$("#displayCsvMappingColumnForData").css("display", "none");
-			$("#displayAdditionalCsvColumns").css("display", "none");
-		} else if($("input:radio[name=attributeType]:checked").val()=== "csv") {
-			$("#displayShapeMappingColumnForData").css("display", "none");
-			$("#displayCsvMappingColumnForData").css("display", "");
+			$("#displayCsvMappingColumnForShape").css("display", "none");
 			$("#displayAdditionalCsvColumns").css("display", "none");
 		} else if($("input:radio[name=attributeType]:checked").val()=== "shapeAndCsv") {
-			$("#displayShapeMappingColumnForData").css("display", "none");
-			$("#displayCsvMappingColumnForData").css("display", "");
+			$("#displayCsvMappingColumnForShape").css("display", "");
 			$("#displayAdditionalCsvColumns").css("display", "");
 		}
 	});
@@ -285,15 +271,13 @@
 		if(usage === "background") {
 			$("#displayApplyEvent").css("display", "none");
 			$("#displayAttributeType").css("display", "none");
-			$("#displayShapeMappingColumnForData").css("display", "none");
-			$("#displayCsvMappingColumnForData").css("display", "none");
+			$("#displayCsvMappingColumnForShape").css("display", "none");
 			$("#displayAdditionalCsvColumns").css("display", "none");
 			$("#displayFileExtension").css("display", "none");
 		} else if(usage === "extrusion") {
 			$("#displayApplyEvent").css("display", "");
 			$("#displayAttributeType").css("display", "");
-			$("#displayShapeMappingColumnForData").css("display", "");
-			$("#displayCsvMappingColumnForData").css("display", "");
+			$("#displayCsvMappingColumnForShape").css("display", "");
 			$("#displayAdditionalCsvColumns").css("display", "");
 			$("#displayFileExtension").css("display", "");
 		}

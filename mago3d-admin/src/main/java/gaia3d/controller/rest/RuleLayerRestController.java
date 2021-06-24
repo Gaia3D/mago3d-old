@@ -5,6 +5,8 @@ import gaia3d.domain.Key;
 import gaia3d.domain.rule.RuleGroup;
 import gaia3d.domain.user.UserSession;
 import gaia3d.rule.layer.LayerAttribute;
+import gaia3d.rule.layer.LayerAttributeType;
+import gaia3d.rule.layer.LayerUsage;
 import gaia3d.service.RuleGroupService;
 import gaia3d.service.RuleService;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +41,22 @@ public class RuleLayerRestController extends RuleBaseRestController {
 	 */
 	@PostMapping(value = "/attributes")
 	public Map<String, Object> attributesInsert(HttpServletRequest request, LayerAttribute layerAttribute) {
-		log.info("@@@@@ insert layerAttribute = {}", layerAttribute);
+		log.info("@@@@@ before layerAttribute = {}", layerAttribute);
+
+		// 레이어 용도가 배경일때, 속성 초기화
+		if(LayerUsage.BACKGROUND == LayerUsage.valueOf(layerAttribute.getUsage().toUpperCase())) {
+			layerAttribute.setApplyEvent(null);
+			layerAttribute.setAttributeType(null);
+			layerAttribute.setCsvMappingColumnForShape(null);
+			layerAttribute.setAdditionalCsvColumns(null);
+		}
+		// 레이어 속성 파일 유형이 Shape 일때 초기화
+		if(LayerAttributeType.SHAPE == LayerAttributeType.valueOf(layerAttribute.getAttributeType().toUpperCase())) {
+			layerAttribute.setCsvMappingColumnForShape(null);
+			layerAttribute.setAdditionalCsvColumns(null);
+		}
+
+		log.info("@@@@@ after layerAttribute = {}", layerAttribute);
 
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
@@ -70,7 +87,22 @@ public class RuleLayerRestController extends RuleBaseRestController {
 	 */
 	@PutMapping(value = "/attributes/{ruleId}")
 	public Map<String, Object> attributesUpdate(HttpServletRequest request, @PathVariable Integer ruleId, LayerAttribute layerAttribute) {
-		log.info("@@@@@ update layerAttribute = {}", layerAttribute);
+		log.info("@@@@@ before layerAttribute = {}", layerAttribute);
+
+		// 레이어 용도가 배경일때, 속성 초기화
+		if(LayerUsage.BACKGROUND == LayerUsage.valueOf(layerAttribute.getUsage().toUpperCase())) {
+			layerAttribute.setApplyEvent(null);
+			layerAttribute.setAttributeType(null);
+			layerAttribute.setCsvMappingColumnForShape(null);
+			layerAttribute.setAdditionalCsvColumns(null);
+		}
+		// 레이어 속성 파일 유형이 Shape 일때 초기화
+		if(layerAttribute.getAttributeType() == null || LayerAttributeType.SHAPE == LayerAttributeType.valueOf(layerAttribute.getAttributeType().toUpperCase())) {
+			layerAttribute.setCsvMappingColumnForShape(null);
+			layerAttribute.setAdditionalCsvColumns(null);
+		}
+
+		log.info("@@@@@ after layerAttribute = {}", layerAttribute);
 
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
