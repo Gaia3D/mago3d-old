@@ -1,18 +1,12 @@
 package gaia3d.domain.layer;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
+import gaia3d.domain.common.Search;
+import lombok.*;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import gaia3d.domain.common.Search;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 레이어
@@ -76,6 +70,10 @@ public class Layer extends Search implements Serializable {
     
     // 업로딩 아이디
     private String userId;
+
+    // 룰셋 아이디
+    private Integer ruleId;
+    private String ruleName;
     
     // 공유 타입. 0 : 공개, 1 : 개인, 2 : 그룹
     private String sharing;

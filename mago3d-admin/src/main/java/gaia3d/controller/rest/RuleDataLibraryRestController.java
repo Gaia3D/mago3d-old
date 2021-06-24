@@ -1,7 +1,7 @@
 package gaia3d.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gaia3d.datalibrary.tree.Tree;
+import gaia3d.rule.datalibrary.tree.Tree;
 import gaia3d.domain.Key;
 import gaia3d.domain.rule.RuleGroup;
 import gaia3d.domain.user.UserSession;
@@ -17,12 +17,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 룰 관리
- * TODO 여긴 네가지 rule 로 Controller를 분리 해야 할거 같음
+ * 데이터 라이브러리 룰 관리
  */
 @Slf4j
 @RestController
-@RequestMapping(value = "/rules")
+@RequestMapping(value = "/rule/data-libraries")
 public class RuleDataLibraryRestController extends RuleBaseRestController {
 
 	@Autowired

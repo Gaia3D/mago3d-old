@@ -164,10 +164,13 @@ public class RuleController {
 		String viewDirectory = RuleSupport.getViewDirectory(ancestroRuleGroup.getRuleType());
 
 		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
+		String userId = userSession.getUserId();
 
 		DataGroup dataGroup = new DataGroup();
-		dataGroup.setUserId(userSession.getUserId());
-		List<DataGroup> dataGroupList = dataGroupService.getListDataGroup(DataGroup.builder().userId(userSession.getUserId()).exceptBasic(true).build());
+		dataGroup.setUserId(userId);
+		List<DataGroup> dataGroupList = dataGroupService.getListDataGroup(	DataGroup.builder()
+																					.userId(userId)
+																					.exceptBasic(true).build());
 		List<LayerGroup> layerGroupList = layerGroupService.getListLayerGroup();
 
 		DataLibrary dataLibrary = new DataLibrary();

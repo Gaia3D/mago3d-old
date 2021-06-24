@@ -84,7 +84,7 @@ sourceSets {
 
 dependencies {
     implementation project(':security')
-    implementation project(':data-library')
+    implementation project(':rule')
 
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'

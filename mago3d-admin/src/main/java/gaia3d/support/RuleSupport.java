@@ -95,8 +95,8 @@ public class RuleSupport {
 
         RuleGroupType ruleGroupType = RuleGroupType.valueOf(ruleGroup.getRuleGroupKey().toUpperCase());
         switch (ruleGroupType) {
-            case LAYER_ATTRIBUTES:
-                viewName = "layer_attributes";
+            case LAYER_ATTRIBUTE:
+                viewName = "attribute";
                 break;
             default:
                 viewName = null;

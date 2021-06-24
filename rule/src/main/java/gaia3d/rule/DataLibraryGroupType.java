@@ -1,4 +1,4 @@
-package gaia3d.datalibrary;
+package gaia3d.rule;
 
 public enum DataLibraryGroupType {
     // 나무

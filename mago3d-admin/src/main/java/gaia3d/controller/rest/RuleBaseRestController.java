@@ -2,9 +2,9 @@ package gaia3d.controller.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gaia3d.datalibrary.BaseRule;
 import gaia3d.domain.rule.Rule;
 import gaia3d.domain.rule.RuleGroup;
+import gaia3d.rule.BaseRule;
 import gaia3d.service.RuleGroupService;
 import gaia3d.service.RuleService;
 import gaia3d.support.LogMessageSupport;

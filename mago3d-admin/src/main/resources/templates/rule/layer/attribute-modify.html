@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
+<head>
+	<title>레이어 속성 관리 Rule 수정</title>
+	<th:block layout:fragment="pageCustomStyle">
+		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+	</th:block>
+</head>
+<body>
+<th:block layout:fragment="pageCustomContent">
+	<div id="siteBody" class="site-body">
+		<div class="container">
+			<div class="site-content">
+				<div th:replace="~{/fragments/sub-menu :: #subMenuWrap}"></div>
+				<div class="page-area">
+					<div th:replace="~{/fragments/page-header :: #pageHeaderWrap}"></div>
+					<div class="page-content">
+						<form id="rule" th:object="${rule}" method="post" action="" onsubmit="return false;">
+							<input type="hidden" name="_method" value="PUT" />
+							<input type="hidden" id="ruleGroupId" name="ruleGroupId" th:value="${rule.ruleGroupId}" />
+
+						<table class="input-table scope-row" summary="레이어 속성 관리 Rule 수정">
+						<caption class="hiddenTag">레이어 속성 관리 Rule 수정</caption>
+							<col class="col-label l" />
+							<col class="col-input" />
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="ruleType">구분</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<select id="ruleType" name="ruleType" class="selectBoxClass" >
+										<option value="data_library"> 3D 라이브러리 </option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									룰 그룹명
+								</th>
+								<td class="col-input"><th:block th:text="${ruleGroup.ruleGroupName}"></th:block></td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="ruleName">룰명</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input"><input type="text" id="ruleName" name="ruleName" th:field="*{ruleName}" class="l" size="70" /></td>
+							</tr>
+							<tr>
+								<th class="col-label" scope="row">
+									룰 Key(영문,숫자,-,_)
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<input type="text" id="ruleKey" name="ruleKey" th:field="*{ruleKey}" readonly="readonly" class="l" />
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="usage">용도</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<select id="usage" name="usage" onchange="changeCondition();" class="selectBoxClass" >
+										<option value="background"> 배경 지도 </option>
+										<option value="extrusion"> Extrusion </option>
+									</select>
+								</td>
+							</tr>
+							<tr id="displayApplyEvent" style="display: none">
+								<th class="col-label l" scope="row">
+									적용 이벤트
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input radio-set">
+									<input type="checkbox" id="labelDisplay" name="applyEvent" value="labelDisplay" />
+									<label for="labelDisplay">정보 표시</label>
+									<input type="checkbox" id="verticalExtrusion" name="applyEvent" value="verticalExtrusion" />
+									<label for="verticalExtrusion">3D 건물 가시화</label>
+								</td>
+							</tr>
+							<tr id="displayAttributeType" style="display: none">
+								<th class="col-label l" scope="row">
+									속성 파일 유형
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input radio-set">
+									<input type="radio" id="attributeTypeShape" name="attributeType" value="shape" />
+									<label for="attributeTypeShape">단일 Shape 파일 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+									<input type="radio" id="attributeTypeCsv" name="attributeType" value="csv" />
+									<label for="attributeTypeCsv">단일 CSV 파일 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+									<input type="radio" id="attributeTypeShapeCsv" name="attributeType" value="shapeAndCsv"/>
+									<label for="attributeTypeShapeCsv">복합 Shape + CSV(추가 속성) 파일</label>
+								</td>
+							</tr>
+							<tr id="displayShapeMappingColumnForData" style="display: none">
+								<th class="col-label l" scope="row">
+									<label for="displayShapeMappingColumnForData">데이터 매핑 Shape 파일 컬럼명(PK)</label>
+								</th>
+								<td class="col-input"><input type="text" id="shpaeMappingColumnForData" name="shpaeMappingColumnForData" class="xl" size="100" /></td>
+							</tr>
+							<tr id="displayCsvMappingColumnForData" style="display: none">
+								<th class="col-label l" scope="row">
+									<label for="csvMappingColumnForData">데이터 매핑 CSV 파일 컬럼명(PK)</label>
+								</th>
+								<td class="col-input"><input type="text" id="csvMappingColumnForData" name="csvMappingColumnForData" class="xl" size="100" /></td>
+							</tr>
+							<tr id="displayAdditionalCsvColumns" style="display: none">
+								<th class="col-label l" scope="row">
+									<label for="additionalCsvColumns">CSV 추가 속성 컬럼명</label>
+								</th>
+								<td class="col-input"><input type="text" id="additionalCsvColumns" name="additionalCsvColumns" class="xl" size="100" /></td>
+							</tr>
+							<tr id="displayFileExtension" style="display: none">
+								<th class="col-label l" scope="row">
+									<label for="fileExtension">속성 파일 확장자</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input"><input type="text" id="fileExtension" name="fileExtension" value="cpg,dbf,idx,sbn,sbx,shp,shx,prj,qpj,csv,zip" class="xl" size="100" /></td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									사용 여부
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input radio-set">
+									<input type="radio" id="availableTrue" name="available" value="true" />
+									<label for="availableTrue">사용</label>
+									<input type="radio" id="availableFalse" name="available" value="false" />
+									<label for="availableFalse">미사용</label>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row"><label for="description">설명</label></th>
+								<td class="col-input"><input type="text" id="description" name="description" th:field="*{description}" class="xl" size="100" /></td>
+							</tr>
+						</table>
+						<div class="button-group">
+							<div id="insertRoleLink" class="center-buttons">
+								<input type="submit" value="저장" onclick="update();" />
+								<a href="/rule/list" class="button">목록</a>
+							</div>
+						</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+<th:block layout:fragment="pageCustomScript">
+
+	<script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.js(cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/navigation.js(cacheVersion=${contentCacheVersion})}"></script>
+
+<script th:inline="javascript">
+	$(document).ready(function() {
+		var attributes = JSON.parse(/*[[${rule.attributes}]]*/"");
+
+		$("#usage").val(attributes.usage);
+		var applyEvent = attributes.applyEvent;
+		if(applyEvent.indexOf("labelDisplay", 0) >= 0) {
+			$("input:checkbox[id='labelDisplay']").attr("checked", true);
+		}
+		if(applyEvent.indexOf("verticalExtrusion", 0) >= 0) {
+			$("input:checkbox[id='verticalExtrusion']").attr("checked", true);
+		}
+
+		$("[name=attributeType]").filter("[value='" + attributes.attributeType + "']").prop("checked",true);
+		$("[name=available]").filter("[value='" + attributes.available + "']").prop("checked",true);
+		$("#shpaeMappingColumnForData").val(attributes.shpaeMappingColumnForData);
+		$("#csvMappingColumnForData").val(attributes.csvMappingColumnForData);
+		$("#additionalCsvColumns").val(attributes.additionalCsvColumns);
+		$("#fileExtension").val(attributes.fileExtension);
+		changeUsageCondition();
+		changeMappingCondition(attributes.attributeType);
+	});
+
+	$("input[name='attributeType']:radio").change(function () {
+		if($("input:radio[name=attributeType]:checked").val()=== "shape") {
+			$("#displayShapeMappingColumnForData").css("display", "");
+			$("#displayCsvMappingColumnForData").css("display", "none");
+			$("#displayAdditionalCsvColumns").css("display", "none");
+		} else if($("input:radio[name=attributeType]:checked").val()=== "csv") {
+			$("#displayShapeMappingColumnForData").css("display", "none");
+			$("#displayCsvMappingColumnForData").css("display", "");
+			$("#displayAdditionalCsvColumns").css("display", "none");
+		} else if($("input:radio[name=attributeType]:checked").val()=== "shapeAndCsv") {
+			$("#displayShapeMappingColumnForData").css("display", "none");
+			$("#displayCsvMappingColumnForData").css("display", "");
+			$("#displayAdditionalCsvColumns").css("display", "");
+		}
+	});
+
+	function validate() {
+		if( $("#ruleName").val() === "" ) {
+			alert("Rule 명을 입력하여 주십시오.");
+			$("#ruleName").focus();
+			return false;
+		}
+	}
+
+	// 저장
+	var updateRuleFlag = true;
+	function update() {
+		if (validate() == false) {
+			return false;
+		}
+		if(updateRuleFlag) {
+			updateRuleFlag = false;
+			var formData = $("#rule").serialize();
+			$.ajax({
+				url: "/rule/layers/attributes/[[${rule.ruleId}]]",
+				type: "POST",
+				headers: {"X-Requested-With": "XMLHttpRequest"},
+				data: formData,
+				success: function(msg){
+					if(msg.statusCode <= 200) {
+						alert(JS_MESSAGE["update"]);
+						//window.location.reload();
+					} else {
+						alert(JS_MESSAGE[msg.errorCode]);
+						console.log("---- " + msg.message);
+					}
+					updateRuleFlag = true;
+				},
+				error:function(request, status, error){
+					alert(JS_MESSAGE["ajax.error.message"]);
+					updateRuleFlag = true;
+				}
+			});
+		} else {
+			alert(JS_MESSAGE["button.dobule.click"]);
+		}
+	}
+
+	function changeUsageCondition() {
+		var usage = $("#usage").val();
+		if(usage === "background") {
+			$("#displayApplyEvent").css("display", "none");
+			$("#displayAttributeType").css("display", "none");
+			$("#displayShapeMappingColumnForData").css("display", "none");
+			$("#displayCsvMappingColumnForData").css("display", "none");
+			$("#displayAdditionalCsvColumns").css("display", "none");
+			$("#displayFileExtension").css("display", "none");
+		} else if(usage === "extrusion") {
+			$("#displayApplyEvent").css("display", "");
+			$("#displayAttributeType").css("display", "");
+			$("#displayShapeMappingColumnForData").css("display", "");
+			$("#displayCsvMappingColumnForData").css("display", "");
+			$("#displayAdditionalCsvColumns").css("display", "");
+			$("#displayFileExtension").css("display", "");
+		}
+	}
+
+	function changeMappingCondition(attributeType) {
+		if(attributeType === "shape") {
+			$("#displayShapeMappingColumnForData").css("display", "");
+			$("#displayCsvMappingColumnForData").css("display", "none");
+			$("#displayAdditionalCsvColumns").css("display", "none");
+		} else if(attributeType === "csv") {
+			$("#displayShapeMappingColumnForData").css("display", "none");
+			$("#displayCsvMappingColumnForData").css("display", "");
+			$("#displayAdditionalCsvColumns").css("display", "none");
+		} else if(attributeType === "shapeAndCsv") {
+			$("#displayShapeMappingColumnForData").css("display", "none");
+			$("#displayCsvMappingColumnForData").css("display", "");
+			$("#displayAdditionalCsvColumns").css("display", "");
+		}
+	}
+</script>
+</th:block>
+</body>
+</html>

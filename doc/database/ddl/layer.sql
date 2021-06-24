@@ -39,6 +39,7 @@ create table layer (
 	layer_key					varchar(100)					not null,
 	layer_name					varchar(256)					not null,
 	user_id						varchar(32),
+	rule_id                     integer,
 	
 	sharing						varchar(30)						default 'public',
 	ogc_web_services			varchar(30),
@@ -71,6 +72,7 @@ comment on column layer.layer_group_id is '레이어 그룹 고유번호';
 comment on column layer.layer_key is '레이어 고유키(API용)';
 comment on column layer.layer_name is '레이어명';
 comment on column layer.user_id is '사용자명';
+comment on column layer.rule_id is '룰 고유번호';
 comment on column layer.sharing is '공유 유형. common : 공통, public : 공개, private : 개인, group : 그룹';
 comment on column layer.ogc_web_services is 'OGC Web Services (wms, wfs, wcs, wps)';
 comment on column layer.layer_type is '레이어 타입 (Raster, Vector)';

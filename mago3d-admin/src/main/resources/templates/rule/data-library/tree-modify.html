@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
 <head>
-	<title>Rule 수정</title>
+	<title>나무 Rule 수정</title>
 	<th:block layout:fragment="pageCustomStyle">
 		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
 		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
@@ -75,18 +75,6 @@
 							</tr>
 							<tr>
 								<th class="col-label l" scope="row">
-									사용 여부
-									<span class="icon-glyph glyph-emark-dot color-warning"></span>
-								</th>
-								<td class="col-input radio-set">
-									<input type="radio" id="availableTrue" name="available" value="true" checked />
-									<label for="availableTrue">사용</label>
-									<input type="radio" id="availableFalse" name="available" value="false" />
-									<label for="availableFalse">미사용</label>
-								</td>
-							</tr>
-							<tr>
-								<th class="col-label l" scope="row">
 									그리기 유형
 								</th>
 								<td class="col-input">
@@ -95,6 +83,18 @@
 										<option th:value="line"> 라인(Line) </option>
 										<option th:value="both"> 혼합(Point, Line) </option>
 									</select>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									사용 여부
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input radio-set">
+									<input type="radio" id="availableTrue" name="available" value="true" checked />
+									<label for="availableTrue">사용</label>
+									<input type="radio" id="availableFalse" name="available" value="false" />
+									<label for="availableFalse">미사용</label>
 								</td>
 							</tr>
 							<tr>
@@ -150,7 +150,7 @@
 			updateRuleFlag = false;
 			var formData = $("#rule").serialize();
 			$.ajax({
-				url: "/rules/trees/[[${rule.ruleId}]]",
+				url: "/rule/data-libraries/trees/[[${rule.ruleId}]]",
 				type: "POST",
 				headers: {"X-Requested-With": "XMLHttpRequest"},
 				data: formData,

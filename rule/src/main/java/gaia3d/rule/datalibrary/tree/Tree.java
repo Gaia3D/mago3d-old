@@ -1,6 +1,6 @@
-package gaia3d.datalibrary.tree;
+package gaia3d.rule.datalibrary.tree;
 
-import gaia3d.datalibrary.BaseRule;
+import gaia3d.rule.DataLibraryRule;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,7 +13,7 @@ import lombok.ToString;
 //@NoArgsConstructor
 //@AllArgsConstructor
 @ToString(callSuper = true)
-public class Tree extends BaseRule {
+public class Tree extends DataLibraryRule {
     // 계절
     private String season;
 
