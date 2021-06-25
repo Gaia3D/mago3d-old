@@ -19,7 +19,7 @@ src: url("font/NotoSans-Regular.eot");
 src: url("font/NotoSans-Regular.eot?#iefix") format('embedded-opentype'),
 url("font/NotoSans-Regular.woff2") format('woff2'),
 url("font/NotoSans-Regular.woff") format('woff'),
-url("font/NotoSans-Regular.ttf") format('truetype');
+url("font/NotoSans-Regular.otf") format('truetype');
 }
 @font-face {
 font-family: 'NotoKrM';
@@ -30,7 +30,7 @@ src: url("font/NotoSans-Medium.eot");
 src: url("font/NotoSans-Medium.eot?#iefix") format('embedded-opentype'),
 url("font/NotoSans-Medium.woff2") format('woff2'),
 url("font/NotoSans-Medium.woff") format('woff'),
-url("font/NotoSans-Medium.ttf") format('truetype');
+url("font/NotoSans-Medium.otf") format('truetype');
 }
 @font-face {
 font-family: 'NotoKrB';
@@ -40,7 +40,7 @@ src: url("font/NotoSans-Bold.eot");
 src: url("font/NotoSans-Bold.eot?#iefix") format('embedded-opentype'),
 url("font/NotoSans-Bold.woff2") format('woff2'),
 url("font/NotoSans-Bold.woff") format('woff'),
-url("font/NotoSans-Bold.ttf") format('truetype');
+url("font/NotoSans-Bold.otf") format('truetype');
 }
 
 
