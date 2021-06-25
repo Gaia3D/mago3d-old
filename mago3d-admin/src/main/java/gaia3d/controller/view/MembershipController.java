@@ -46,15 +46,16 @@ public class MembershipController implements AuthorizationController {
 	 * @param request
 	 * @param membershipUsage
 	 * @param pageNo
-	 * @param pageRows
 	 * @param model
 	 * @return
 	 */
 	@GetMapping(value = "/usage/list")
 	public String usageList(HttpServletRequest request, @RequestParam(defaultValue="1") String pageNo, MembershipUsage membershipUsage, Model model) {
 
+		log.info("..........................." + membershipUsage);
 		membershipUsage.setSearchWord(SQLInjectSupport.replaceSqlInection(membershipUsage.getSearchWord()));
 		membershipUsage.setOrderWord(SQLInjectSupport.replaceSqlInection(membershipUsage.getOrderWord()));
+		//membershipUsage.setSearchMembershipId(Integer.parseInt(SQLInjectSupport.replaceSqlInection(String.valueOf(membershipUsage.getSearchMembershipId()))));
 
 		String roleCheckResult = roleValidate(request);
 		if(roleValidate(request) != null) return roleCheckResult;

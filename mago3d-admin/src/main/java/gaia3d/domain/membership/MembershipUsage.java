@@ -36,6 +36,9 @@ public class MembershipUsage extends Search implements Serializable {
 	private Integer uploadFileSize;
 	// 허용 횟수
 	private Integer convertFileCount;
+
+	// 멤버십 검색
+	private Integer searchMembershipId;
 	
 	// 멤버십 변경 날짜
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")

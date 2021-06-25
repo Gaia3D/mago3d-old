@@ -36,11 +36,25 @@
 										</select>
 										<input type="search" id="searchValue" name="searchValue" class="m" style="float: right;" />
 									</div>
+
+                                    <div class="input-set">
+                                        <label for="searchMembershipId" th:text="#{search.membership}"></label>
+                                        <select id="searchMembershipId" name="searchMembershipId" class="selectBoxClass">
+                                            <option value="" th:text="#{select}"></option>
+                                            <option value="1">BASIC</option>
+                                            <option value="2">SILVER</option>
+                                            <option value="3">GOLD</option>
+                                            <option value="4">PLATINUM</option>
+                                        </select>
+                                    </div>
+
 									<div class="input-set">
 										<label for="orderWord" th:text="#{search.order}"></label>
 										<select id="orderWord" name="orderWord" class="selectBoxClass">
 											<option value="" th:text="#{search.basic}"></option>
 											<option value="user_id">아이디</option>
+											<option value="use_upload_file_size">업로드 용량</option>
+											<option value="use_convert_file_count">변환 건수</option>
 											<option value="insert_date" th:text="#{search.insert.date}"></option>
 										</select>
 										<select id="orderValue" name="orderValue" class="selectBoxClass">

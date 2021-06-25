@@ -37,12 +37,16 @@
 		SELECT COUNT(membership_usage_id)
 		FROM membership_usage
 		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="searchMembershipId != null and searchMembershipId != ''">
+				membership_id = #{searchMembershipId}
+			</if>
 			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
 				AND ${searchWord} = #{searchValue}
 			</if>
 			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
 				AND ${searchWord} LIKE '%' || #{searchValue} || '%'
 			</if>
+
 		</trim>
 	</select>
 
@@ -68,6 +72,9 @@
 		FROM membership_usage X LEFT JOIN membership Y
 								ON X.membership_id = Y.membership_id
 		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="searchMembershipId != null and searchMembershipId != ''">
+				X.membership_id = #{searchMembershipId}
+			</if>
 			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
 				AND ${searchWord} = #{searchValue}
 			</if>
