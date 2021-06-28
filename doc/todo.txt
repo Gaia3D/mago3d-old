@@ -1,7 +1,11 @@
+Rule 관련 처리 개발시
 
-bulk upload 시 해야 할 사항
+함수형 인터페이스를 사용
+public interface RuleFilter {
+  public boolean isMatched(Rule rule);
+}
 
-data_count
-data_type
-속성 존재 유무
-그룹 좌표 update
+메스드 (RuleFilter ruleFilter) {
+  for(xxxx; x; );
+    if(ruleFilter.isMatched(rule);
+}
