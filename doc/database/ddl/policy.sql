@@ -63,7 +63,7 @@ create table policy(
 	user_converter_type						varchar(256)		default '3ds,obj,dae,collada,ifc,las,gml,citygml,indoorgml,fbx',
 	user_upload_max_filesize				integer				default 10000,
 	user_upload_max_count					integer				default 500,
-	shape_upload_type						varchar(256)		default 'cpg,dbf,idx,sbn,sbx,shp,shx,prj,qpj,zip',
+	shape_upload_type						varchar(256)		default 'cpg,dbf,idx,sbn,sbx,shp,shx,prj,qpj,csv,zip',
 
     social_signin_google_client_id			varchar(256)        default '441453727719-u2i244q6lnvc3vpl7csno7hdabi71e83.apps.googleusercontent.com',
     social_signin_google_client_secret		varchar(256)        default 'PumSTaqaw_ZuqzPoibcSteXu',

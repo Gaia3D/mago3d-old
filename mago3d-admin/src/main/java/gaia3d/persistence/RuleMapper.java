@@ -22,6 +22,11 @@ public interface RuleMapper {
 
 	/**
 	 * 룰 목록
+	 */
+	List<Rule> getListAllRuleByRuleType(Rule rule);
+
+	/**
+	 * 룰 목록
 	 * @param ruleGroupId
 	 * @return
 	 */

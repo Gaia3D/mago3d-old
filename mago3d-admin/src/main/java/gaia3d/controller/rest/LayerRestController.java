@@ -10,13 +10,14 @@ import gaia3d.domain.layer.LayerType;
 import gaia3d.domain.policy.GeoPolicy;
 import gaia3d.domain.policy.Policy;
 import gaia3d.domain.user.UserSession;
-import gaia3d.geospatial.ShapeFileParser;
 import gaia3d.service.GeoPolicyService;
 import gaia3d.service.LayerFileInfoService;
 import gaia3d.service.LayerService;
 import gaia3d.service.PolicyService;
 import gaia3d.support.LogMessageSupport;
 import gaia3d.support.ZipSupport;
+import gaia3d.utils.DateUtils;
+import gaia3d.utils.FormatUtils;
 import gaia3d.utils.WebUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -153,31 +154,9 @@ public class LayerRestController implements AuthorizationController {
 			Policy policy = policyService.getPolicy();
 			GeoPolicy geoPolicy = geoPolicyService.getGeoPolicy();
 			String shapeEncoding = replaceInvalidValue(request.getParameter("shapeEncoding"));
-			String today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+			String today = DateUtils.getToday(FormatUtils.YEAR_MONTH_DAY_TIME14);
 			// 레이어 객체 생성
-			Layer layer = Layer.builder()
-							.layerGroupId(Integer.valueOf(request.getParameter("layerGroupId")))
-							.sharing(request.getParameter("sharing"))
-							.layerName(request.getParameter("layerName"))
-							.layerKey(request.getParameter("layerKey"))
-							.ogcWebServices(request.getParameter("ogcWebServices"))
-							.layerType(request.getParameter("layerType"))
-							.layerInsertType(request.getParameter("layerInsertType"))
-							.geometryType(request.getParameter("geometryType"))
-							.layerLineColor(request.getParameter("layerLineColor"))
-							.layerLineStyle(Float.valueOf(request.getParameter("layerLineStyle")))
-							.layerFillColor(request.getParameter("layerFillColor"))
-							.layerAlphaStyle(Float.valueOf(request.getParameter("layerAlphaStyle")))
-							.defaultDisplay(Boolean.valueOf(request.getParameter("defaultDisplay")))
-							.available(Boolean.valueOf(request.getParameter("available")))
-							.labelDisplay(Boolean.valueOf(request.getParameter("labelDisplay")))
-							.coordinate(request.getParameter("coordinate"))
-							.description(request.getParameter("description"))
-							.zIndex(Integer.valueOf(request.getParameter("zIndex")))
-							.cacheAvailable(Boolean.valueOf(request.getParameter("cacheAvailable")))
-							.viewOrder(Integer.valueOf(request.getParameter("viewOrder")))
-							.userId(userId)
-							.build();
+			Layer layer = getLayerFromRequest(request, userId);
 			log.info("@@ layer = {}", layer);
 
 			// layer 변경 횟수가 많지 않아서 년 단위로 관리할 예정
@@ -235,31 +214,7 @@ public class LayerRestController implements AuthorizationController {
 						saveFileName = saveFileName + "." + extension;
 					}
 
-					long size = 0L;
-					try (	InputStream inputStream = multipartFile.getInputStream();
-							OutputStream outputStream = new FileOutputStream(makedDirectory + saveFileName)) {
-
-						int bytesRead;
-						byte[] buffer = new byte[BUFFER_SIZE];
-						while ((bytesRead = inputStream.read(buffer, 0, BUFFER_SIZE)) != -1) {
-							size += bytesRead;
-							outputStream.write(buffer, 0, bytesRead);
-						}
-						layerFileInfo.setFileExt(extension);
-						layerFileInfo.setFileName(multipartFile.getOriginalFilename());
-						layerFileInfo.setFileRealName(saveFileName);
-						layerFileInfo.setFilePath(makedDirectory);
-						layerFileInfo.setFileSize(String.valueOf(size));
-						layerFileInfo.setShapeEncoding(shapeEncoding);
-					} catch(IOException e) {
-						LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ IOException. message = {}", e.getMessage());
-						layerFileInfo.setErrorMessage(e.getMessage());
-					} catch(Exception e) {
-						LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ Exception. message = {}", e.getMessage());
-						layerFileInfo.setErrorMessage(e.getMessage());
-					}
-
-					layerFileInfoList.add(layerFileInfo);
+					layerFileInfoList.add(getCopiedLayerFileInfo(layerFileInfo, multipartFile, makedDirectory, saveFileName, extension, shapeEncoding));
 				}
 			}
 
@@ -272,28 +227,31 @@ public class LayerRestController implements AuthorizationController {
 	            return result;
 			}
 
+			// TODO 문제가 없으면 삭제 예정. version_id, enable_yn 은 alter 문으로 추가할 예정
 			// shp 파일 필수 필드 확인
-			ShapeFileParser shapeFileParser = new ShapeFileParser(makedDirectory + groupFileName + "." + ShapeFileExt.SHP.getValue());
-			if(!shapeFileParser.fieldValidate()) {
-				result.put("statusCode", HttpStatus.BAD_REQUEST.value());
-				result.put("errorCode", "upload.shpfile.requried");
-				return result;
-			}
+//			ShapeFileParser shapeFileParser = new ShapeFileParser(makedDirectory + groupFileName + "." + ShapeFileExt.SHP.getValue());
+//			if(!shapeFileParser.fieldValidate()) {
+//				result.put("statusCode", HttpStatus.BAD_REQUEST.value());
+//				result.put("errorCode", "upload.shpfile.requried");
+//				return result;
+//			}
 			// 3. 레이어 기본 정보 및 레이어 이력 정보 등록
 			updateLayerMap = layerService.insertLayer(layer, layerFileInfoList);
 			if (!layerFileInfoList.isEmpty()) {
 				// 4. org2ogr 실행
-				layerService.insertOgr2Ogr(layer, isLayerFileInfoExist, (String) updateLayerMap.get("shapeFileName"),
-						(String) updateLayerMap.get("shapeEncoding"));
+				layerService.insertOgr2Ogr(layer, isLayerFileInfoExist, (String) updateLayerMap.get("shapeFileName"), (String) updateLayerMap.get("shapeEncoding"));
+				layer.setSchema(propertiesConfig.getOgr2ogrSchema());
+				layer.setTableName(layer.getLayerKey());
+				layerService.addColumnToLayer(layer);
 
 				// org2ogr 로 등록한 데이터의 version을 갱신
-				Map<String, String> orgMap = new HashMap<>();
-				orgMap.put("fileVersion", ((Integer) updateLayerMap.get("fileVersion")).toString());
-				orgMap.put("tableName", layer.getLayerKey());
-				orgMap.put("enableYn", "Y");
+				layer.setSchema(propertiesConfig.getOgr2ogrSchema());
+				layer.setVersionId((Integer) updateLayerMap.get("fileVersion"));
+				layer.setEnableYn("Y");
 				// 5. shape 파일 테이블의 현재 데이터의 활성화 하고 날짜를 업데이트
-				layerFileInfoService.updateOgr2OgrDataFileVersion(orgMap);
-				// 6. geoserver에 신규 등록일 경우 등록, 아닐경우 통과
+				layerService.updateOgr2OgrDataFileVersion(layer);
+				// 6. TODO rule 처리를 해야 함
+				// 7. geoserver에 신규 등록일 경우 등록, 아닐경우 통과
 				layerService.registerLayer(geoPolicy, layer.getLayerKey());
 				String layerType = layer.getLayerType();
 				// 레이어 타입이 vector일 경우에만 스타일 설정 
@@ -342,6 +300,64 @@ public class LayerRestController implements AuthorizationController {
 		result.put("errorCode", errorCode);
 		result.put("message", message);
 		return result;
+	}
+
+	private Layer getLayerFromRequest(MultipartHttpServletRequest request, String userId) {
+		return Layer.builder()
+				.layerGroupId(Integer.valueOf(request.getParameter("layerGroupId")))
+				.sharing(request.getParameter("sharing"))
+				.layerName(request.getParameter("layerName"))
+				.layerKey(request.getParameter("layerKey"))
+				.ruleId(Integer.valueOf(request.getParameter("ruleId")))
+				.ogcWebServices(request.getParameter("ogcWebServices"))
+				.layerType(request.getParameter("layerType"))
+				.layerInsertType(request.getParameter("layerInsertType"))
+				.geometryType(request.getParameter("geometryType"))
+				.layerLineColor(request.getParameter("layerLineColor"))
+				.layerLineStyle(Float.valueOf(request.getParameter("layerLineStyle")))
+				.layerFillColor(request.getParameter("layerFillColor"))
+				.layerAlphaStyle(Float.valueOf(request.getParameter("layerAlphaStyle")))
+				.defaultDisplay(Boolean.valueOf(request.getParameter("defaultDisplay")))
+				.available(Boolean.valueOf(request.getParameter("available")))
+				.labelDisplay(Boolean.valueOf(request.getParameter("labelDisplay")))
+				.coordinate(request.getParameter("coordinate"))
+				.description(request.getParameter("description"))
+				.zIndex(Integer.valueOf(request.getParameter("zIndex")))
+				.cacheAvailable(Boolean.valueOf(request.getParameter("cacheAvailable")))
+				.viewOrder(Integer.valueOf(request.getParameter("viewOrder")))
+				.userId(userId)
+				.build();
+	}
+
+	private LayerFileInfo getCopiedLayerFileInfo(
+			LayerFileInfo layerFileInfo, MultipartFile multipartFile, String makedDirectory, String saveFileName, String extension, String shapeEncoding) {
+		log.info(">>>>>>>>>>>>>>>>>>>> makedDirectory = {}, saveFileName = {}", makedDirectory, saveFileName);
+
+		long size = 0L;
+		try (	InputStream inputStream = multipartFile.getInputStream();
+				OutputStream outputStream = new FileOutputStream(makedDirectory + saveFileName)) {
+
+			int bytesRead;
+			byte[] buffer = new byte[BUFFER_SIZE];
+			while ((bytesRead = inputStream.read(buffer, 0, BUFFER_SIZE)) != -1) {
+				size += bytesRead;
+				outputStream.write(buffer, 0, bytesRead);
+			}
+
+			layerFileInfo.setFileExt(extension);
+			layerFileInfo.setFileName(multipartFile.getOriginalFilename());
+			layerFileInfo.setFileRealName(saveFileName);
+			layerFileInfo.setFilePath(makedDirectory);
+			layerFileInfo.setFileSize(String.valueOf(size));
+			layerFileInfo.setShapeEncoding(shapeEncoding);
+		} catch(IOException e) {
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ IOException. message = {}", e.getMessage());
+			layerFileInfo.setErrorMessage(e.getMessage());
+		} catch(Exception e) {
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ Exception. message = {}", e.getMessage());
+			layerFileInfo.setErrorMessage(e.getMessage());
+		}
+		return layerFileInfo;
 	}
 	
 	@PostMapping(value = "/update-geoserver")
@@ -409,7 +425,7 @@ public class LayerRestController implements AuthorizationController {
             Policy policy = policyService.getPolicy();
 			GeoPolicy geoPolicy = geoPolicyService.getGeoPolicy();
 			String shapeEncoding = replaceInvalidValue(request.getParameter("shapeEncoding"));
-			String today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+			String today = DateUtils.getToday(FormatUtils.YEAR_MONTH_DAY_TIME14);
 
             // layer 변경 횟수가 많지 않아서 년 단위로 관리할 예정
             String makedDirectory = propertiesConfig.getLayerUploadDir();
@@ -507,19 +523,21 @@ public class LayerRestController implements AuthorizationController {
  	            return result;
  			}
 
-            // shp 파일 필수 필드 확인
- 			ShapeFileParser shapeFileParser = new ShapeFileParser(makedDirectory + groupFileName + "." + ShapeFileExt.SHP.getValue());
- 			if(!shapeFileParser.fieldValidate()) {
- 				result.put("statusCode", HttpStatus.BAD_REQUEST.value());
- 				result.put("errorCode", "upload.shpfile.requried");
- 				return result;
- 			}
+			// TODO 문제가 없으면 삭제 예정. version_id, enable_yn 은 alter 문으로 추가할 예정
+//            // shp 파일 필수 필드 확인
+// 			ShapeFileParser shapeFileParser = new ShapeFileParser(makedDirectory + groupFileName + "." + ShapeFileExt.SHP.getValue());
+// 			if(!shapeFileParser.fieldValidate()) {
+// 				result.put("statusCode", HttpStatus.BAD_REQUEST.value());
+// 				result.put("errorCode", "upload.shpfile.requried");
+// 				return result;
+// 			}
 
             layer.setLayerId(layerId);
             layer.setLayerGroupId(Integer.valueOf(request.getParameter("layerGroupId")));
             layer.setSharing(request.getParameter("sharing"));
             layer.setLayerName(request.getParameter("layerName"));
 			layer.setLayerKey(request.getParameter("layerKey"));
+			layer.setRuleId(Integer.valueOf(request.getParameter("ruleId")));
 			layer.setOgcWebServices(request.getParameter("ogcWebServices"));
 			layer.setLayerType(request.getParameter("layerType"));
 			layer.setGeometryType(request.getParameter("geometryType"));
@@ -556,13 +574,13 @@ public class LayerRestController implements AuthorizationController {
                 layerService.insertOgr2Ogr(layer, isLayerFileInfoExist, (String)updateLayerMap.get("shapeFileName"), (String)updateLayerMap.get("shapeEncoding"));
 
                 // org2ogr 로 등록한 데이터의 version을 갱신
-                Map<String, String> orgMap = new HashMap<>();
-                orgMap.put("fileVersion", ((Integer)updateLayerMap.get("fileVersion")).toString());
-                orgMap.put("tableName", layer.getLayerKey());
-                orgMap.put("enableYn", "Y");
+                layer.setSchema(propertiesConfig.getOgr2ogrSchema());
+				layer.setVersionId((Integer) updateLayerMap.get("fileVersion"));
+				layer.setEnableYn("Y");
                 // 5. shape 파일 테이블의 현재 데이터의 활성화 하고 날짜를 업데이트
-                layerFileInfoService.updateOgr2OgrDataFileVersion(orgMap);
-                // 6. geoserver에 신규 등록일 경우 등록, 아닐경우 통과
+				layerService.updateOgr2OgrDataFileVersion(layer);
+				// 6. TODO rule 처리를 해야 함
+                // 7. geoserver에 신규 등록일 경우 등록, 아닐경우 통과
                 layerService.registerLayer(geoPolicy, layer.getLayerKey());
             }
             String layerType = layer.getLayerType();
@@ -571,7 +589,7 @@ public class LayerRestController implements AuthorizationController {
 				layerService.updateLayerStyle(layer);
 			}
 
-            statusCode = HttpStatus.OK.value();
+			statusCode = HttpStatus.OK.value();
         } catch(DataAccessException e) {
         	if(isRollback) {
                 // rollback 처리

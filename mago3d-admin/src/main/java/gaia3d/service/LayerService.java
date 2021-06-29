@@ -1,11 +1,11 @@
 package gaia3d.service;
 
-import java.util.List;
-import java.util.Map;
-
 import gaia3d.domain.layer.Layer;
 import gaia3d.domain.layer.LayerFileInfo;
 import gaia3d.domain.policy.GeoPolicy;
+
+import java.util.List;
+import java.util.Map;
 
 public interface LayerService {
 
@@ -42,12 +42,12 @@ public interface LayerService {
      */
     Boolean isLayerKeyDuplication(String layerKey);
     
-    /**
-    * 레이어 테이블의 컬럼 타입이 어떤 geometry 타입인지를 구함
-    * @param layerKey
-    * @return
-    */
-    String getGeometryType(String layerKey);
+//    /**
+//    * 레이어 테이블의 컬럼 타입이 어떤 geometry 타입인지를 구함
+//    * @param layerKey
+//    * @return
+//    */
+//    String getGeometryType(String layerKey);
 
     /**
      * 레이어의 칼럼 목록을 조회 
@@ -84,6 +84,12 @@ public interface LayerService {
     void insertOgr2Ogr(Layer layer, boolean isLayerFileInfoExist, String shapeFileName, String shapeEncoding) throws Exception;
 
     /**
+     * ogr2ogr로 실행된 테이블에 이력 관리를 위한 version_id, enable_yn 컬럼 추가
+     * @param layer
+     */
+    void addColumnToLayer(Layer layer);
+
+    /**
      * shp파일 정보를 db정보를 기준으로 갱신
      * @param layerFileInfo
      * @param layer
@@ -105,6 +111,13 @@ public interface LayerService {
 	 * @return
 	 */
 	int updateLayerStyle(Layer layer) throws Exception;
+
+    /**
+     * org2org를 이용해서 생성한 테이블을 데이터 version 갱신
+     * @param layer
+     * @return
+     */
+    int updateOgr2OgrDataFileVersion(Layer layer);
 
     /**
     * 레이어 롤백 처리

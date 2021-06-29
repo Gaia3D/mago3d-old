@@ -98,4 +98,5 @@ public class PropertiesConfig {
     private String gdalCommandPath;
     private String ogr2ogrHost;
     private String ogr2ogrPort;
+    private String ogr2ogrSchema;
 }

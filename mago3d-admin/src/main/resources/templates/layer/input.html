@@ -100,7 +100,7 @@
 								</th>
 								<td class="col-input">
 									<input type="hidden" id="layerGroupId" name="layerGroupId" th:field="*{layerGroupId}" />
-									<input type="text" id="layerGroupName" name="layerGroupName" th:field="*{layerGroupName}" class="m" readonly="readonly" />
+									<input type="text" id="layerGroupName" name="layerGroupName" th:field="*{layerGroupName}" class="ml" readonly="readonly" />
 									<input type="button" id="layerGroupButton" value="Layer 그룹 찾기" />
 								</td>
 								<th class="col-label" scope="row">
@@ -121,14 +121,14 @@
 			                        <span class="icon-glyph glyph-emark-dot color-warning"></span>
 			                    </th>
 			                    <td class="col-input">
-			                        <input type="text" id="layerName" name="layerName" th:field="*{layerName}" class="m" maxlength="256" />
+			                        <input type="text" id="layerName" name="layerName" th:field="*{layerName}" class="ml" maxlength="256" />
 			                    </td>
 			                    <th class="col-label" scope="row">
 			                        <label for="layerKey">Layer Key</label>
 			                        <span class="icon-glyph glyph-emark-dot color-warning"></span>
 			                    </th>
 			                    <td class="col-input">
-			                        <input type="text" id="layerKey" name="layerKey" th:field="*{layerKey}" class="m" maxlength="100" />
+			                        <input type="text" id="layerKey" name="layerKey" th:field="*{layerKey}" class="ml" maxlength="100" />
 			                        <label for="layerKeySelect" class="hiddenTag">geoserver layerKey</label>
 			                        <select id="layerKeySelect" class="selectBoxClass" style="display:none;">
 										<option value="">선택</option>
@@ -268,10 +268,12 @@
 									<label for="labelDisplayFalse">비표시</label>
 			                    </td>
 			                    <th class="col-label" scope="row">
-			                        <label for="description">설명</label>
+			                        <label for="ruleName">Rule</label>
 			                    </th>
 			                    <td class="col-input">
-			                        <input type="text" id="description" name="description" th:field="*{description}" class="l"/>
+			                        <input type="hidden" id="ruleId" name="ruleId" value="0" />
+									<input type="text" id="ruleName" name="ruleName" value="기본" class="ml" readonly="readonly" />
+									<input type="button" id="ruleButton" value="룰 찾기" />
 			                    </td>
 			                </tr>
 			                <tr class="uploadLayerArea">
@@ -317,6 +319,15 @@
 				                    </select>
 			                    </td>
 			                </tr>
+
+							<tr>
+								<th class="col-label" scope="row">
+									<label for="description">설명</label>
+								</th>
+								<td colspan="3" class="col-input">
+									<input type="text" id="description" name="description" th:field="*{description}" class="xl"/>
+								</td>
+							</tr>
 						</table>
 						</form>
 
@@ -354,6 +365,7 @@
 	<div th:replace="~{/layer/spinner-dialog :: #fileUploadDialog}"></div>
 	<div th:replace="~{/layer/loading-dialog :: #layerLoadingDialog}"></div>
 	<div th:replace="~{/layer/layer-group-dialog :: #layerGroupDialog}"></div>
+	<div th:replace="~{/layer/rule-dialog :: #ruleListDialog}"></div>
 </th:block>
 
 <th:block layout:fragment="pageCustomScript">
@@ -396,12 +408,14 @@
 			$("#layerInsertType").val("upload");
 			$("#layerKey").show();
 			$("#layerKeySelect").hide();
+			$("#ruleButton").show();
 		} else {
 			$("#geoserverLayerButton").addClass("onArea");
 			$(".uploadLayerArea").hide();
 			$("#layerInsertType").val("geoserver");
 			$("#layerKey").hide();
 			$("#layerKeySelect").show();
+			$("#ruleButton").hide();
 		}
 	});
 
@@ -514,6 +528,28 @@
 		$("#layerGroupId").val(parent);
 		$("#layerGroupName").val(parentName);
 		layerGroupDialog.dialog( "close" );
+	}
+
+	var ruleDialog = $( "#ruleListDialog" ).dialog({
+		autoOpen: false,
+		height: 600,
+		width: 1200,
+		modal: true,
+		overflow : "auto",
+		resizable: false
+	});
+
+	// rule 선택
+	$( "#ruleButton" ).on( "click", function() {
+		ruleDialog.dialog( "open" );
+		ruleDialog.dialog( "option", "title", "레이어 룰 선택");
+	});
+
+	// 상위 Node
+	function confirmRule(ruleId, ruleName) {
+		$("#ruleId").val(ruleId);
+		$("#ruleName").val(ruleName);
+		ruleDialog.dialog( "close" );
 	}
 
 	function check() {
@@ -682,6 +718,7 @@
                 formData.append("shapeEncoding", $("#shapeEncoding").val());
                 formData.append("layerInsertType", $("#layerInsertType").val());
                 formData.append("cacheAvailable", $(':radio[name="cacheAvailable"]:checked').val());
+				formData.append("ruleId", $("#ruleId").val());
                 var zIndex = 0;
                 var viewOrder = 1;
                 if($("#zIndex").val()) zIndex = $("#zIndex").val();

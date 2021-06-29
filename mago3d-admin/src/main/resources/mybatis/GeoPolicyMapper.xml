@@ -69,6 +69,7 @@
 			geoserver_data_url = #{geoserverDataUrl},
 			geoserver_data_workspace = #{geoserverDataWorkspace},
 			geoserver_data_store = #{geoserverDataStore},
+			geoserver_data_store_layer = #{geoserverDataStoreLayer},
 			geoserver_user = #{geoserverUser},
 			geoserver_password = #{geoserverPassword},
 			geoserver_imageprovider_enable = #{geoserverImageproviderEnable},

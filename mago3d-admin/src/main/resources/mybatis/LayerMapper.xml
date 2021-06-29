@@ -7,9 +7,8 @@
     <select id="getLayerTotalCount" parameterType="layer" resultType="long">
         /* getLayerTotalCount */
         SELECT COUNT(layer_id)
-        FROM layer a
-        LEFT JOIN layer_group b
-        ON a.layer_group_id = b.layer_group_id
+        FROM layer a LEFT JOIN layer_group b
+			ON a.layer_group_id = b.layer_group_id
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="layerGroupId != null and layerGroupId gt 0">
 			AND a.layer_group_id = #{layerGroupId}
@@ -37,9 +36,8 @@
     <select id="getListLayer" parameterType="layer" resultType="layer">
         /* getListLayer */
         SELECT a.*, b.layer_group_name
-        FROM layer a
-        LEFT JOIN layer_group b
-        ON a.layer_group_id = b.layer_group_id
+        FROM layer a LEFT JOIN layer_group b
+        	ON a.layer_group_id = b.layer_group_id
 		<trim prefix="WHERE" prefixOverrides="AND">
         	<if test="layerGroupId != null and layerGroupId gt 0">
 			AND a.layer_group_id = #{layerGroupId}
@@ -75,9 +73,11 @@
     <!-- layer 정보 취득 -->
     <select id="getLayer" parameterType="int" resultType="layer">
         /* getLayer */
-        SELECT A.*, B.layer_group_name
-        FROM layer A
-        LEFT JOIN layer_group B on B.layer_group_id = A.layer_group_id
+        SELECT A.*, B.layer_group_name, C.rule_name
+        FROM layer A LEFT JOIN layer_group B
+            	ON B.layer_group_id = A.layer_group_id
+			LEFT JOIN rule C
+			   ON A.rule_id = C.rule_id
         WHERE A.layer_id = #{layerId}
     </select>
     
@@ -104,35 +104,15 @@
         SELECT COUNT(layer_id) FROM layer WHERE parent = #{layerId}
     </select>
 
-    <!-- 레이어 트리 부모와 순서로 그룹 정보 취득 -->
-<!--     <select id="getLayerByParentAndViewOrder" parameterType="layer" resultType="layer"> -->
-<!--         /* getLayerByParentAndViewOrder */ -->
-<!--         SELECT * -->
-<!--         FROM layer -->
-<!--         WHERE parent = #{parent} -->
-<!--         <if test="updateType == 'up'.toString()"> -->
-<!--             <![CDATA[ -->
-<!--             AND view_order < #{viewOrder} -->
-<!--             ]]> -->
-<!--         ORDER BY view_order DESC -->
-<!--         </if> -->
-<!--         <if test="updateType == 'down'.toString()"> -->
-<!--             <![CDATA[ -->
-<!--             AND view_order > #{viewOrder} -->
-<!--             ]]> -->
-<!--         ORDER BY view_order -->
-<!--         </if> -->
-<!--         LIMIT 1 -->
-<!--     </select> -->
-
+	<!-- 사용안함. 삭제해야 함 -->
     <!-- 레이어 테이블의 컬럼 타입이 어떤 geometry 타입인지를 구함 -->
-    <select id="getGeometryType" parameterType="string" resultType="string">
-        /* getGeometryType */
-        SELECT ST_GeometryType(wkb_geometry) AS geometryType
-        FROM ${value}
-        WHERE enable_yn = 'Y'
-        LIMIT 1
-    </select>
+<!--    <select id="getGeometryType" parameterType="layer" resultType="string">-->
+<!--        /* getGeometryType */-->
+<!--        SELECT ST_GeometryType(wkb_geometry) AS geometryType-->
+<!--        FROM ${schema}.${tableName}-->
+<!--        WHERE enable_yn = 'Y'-->
+<!--        LIMIT 1-->
+<!--    </select>-->
 
     <select id="getLayerColumn" parameterType="string" resultType="string">
     	/* getLayerColumn */
@@ -146,13 +126,17 @@
 	    	)
     </select>
 
-	<select id="isLayerExists" parameterType="string" resultType="string">
+	<select id="isLayerExists" parameterType="layer" resultType="string">
         /* isLayerExists */
-        SELECT tablename
-			FROM pg_tables
-		WHERE schemaname = 'public'
-		AND tablename = #{value}
+        SELECT tablename FROM pg_tables WHERE schemaname = #{schema} AND tablename = #{tableName}
     </select>
+
+	<select id="addColumnToLayer" parameterType="layer">
+		/* addColumnToLayer */
+		ALTER TABLE ${schema}.${tableName}
+			ADD COLUMN       version_id INTEGER DEFAULT 0,
+			ADD COLUMN       enable_yn CHAR(1)
+	</select>
 
     <!-- layer 등록 -->
     <insert id="insertLayer" parameterType="layer">
@@ -161,44 +145,21 @@
             SELECT NEXTVAL('layer_seq')
         </selectKey>
         INSERT INTO layer (
-            layer_id, layer_group_id, sharing, layer_name, layer_key, ogc_web_services, layer_type, geometry_type,
+            layer_id, layer_group_id, sharing, layer_name, layer_key, rule_id, ogc_web_services, layer_type, geometry_type,
             layer_line_color, layer_line_style, layer_fill_color, layer_alpha_style, default_display, available,
-            label_display, coordinate, description, z_index, user_id, layer_insert_type, cache_available
+        	label_display, coordinate, description, z_index, user_id, layer_insert_type, cache_available
             <if test="viewOrder != null and viewOrder gt 0">
 				, view_order
 			</if>
         ) VALUES (
-         #{layerId}, #{layerGroupId}, #{sharing}, #{layerName}, #{layerKey}, #{ogcWebServices}, #{layerType}, #{geometryType},
-         #{layerLineColor}, #{layerLineStyle}, #{layerFillColor}, #{layerAlphaStyle}, #{defaultDisplay}, #{available},
-         #{labelDisplay}, #{coordinate}, #{description}, #{zIndex}, #{userId}, #{layerInsertType}, #{cacheAvailable}
-         <if test="viewOrder != null and viewOrder gt 0">
-			, #{viewOrder}
-		 </if>
+			#{layerId}, #{layerGroupId}, #{sharing}, #{layerName}, #{layerKey}, #{ruleId}, #{ogcWebServices}, #{layerType}, #{geometryType},
+			#{layerLineColor}, #{layerLineStyle}, #{layerFillColor}, #{layerAlphaStyle}, #{defaultDisplay}, #{available},
+			#{labelDisplay}, #{coordinate}, #{description}, #{zIndex}, #{userId}, #{layerInsertType}, #{cacheAvailable}
+			<if test="viewOrder != null and viewOrder gt 0">
+				, #{viewOrder}
+			</if>
         )
     </insert>
-
-    <!-- 레이어 트리 정보 수정 -->
-<!--     <update id="updateTreeLayer" parameterType="layer"> -->
-<!--         /* updateTreeLayer */ -->
-<!--         UPDATE layer -->
-<!--         SET layer_name = #{layerName}, -->
-<!--             layer_key = #{layerKey}, -->
-<!--             <if test="viewType != null and viewType != ''"> -->
-<!--                 view_type = #{viewType}, -->
-<!--             </if> -->
-<!--             <if test="sharing != null and sharing != ''"> -->
-<!--                 sharing, -->
-<!--             </if> -->
-<!--             use_yn = #{useYn}, -->
-<!--             shape_insert_yn = #{shapeInsertYn} -->
-<!--         WHERE layer_id = #{layerId} -->
-<!--     </update> -->
-
-    <!-- 레이어 트리  순서 수정 -->
-<!--     <update id="updateViewOrderLayer" parameterType="layer"> -->
-<!--         /* updateViewOrderLayer */ -->
-<!--         UPDATE layer SET view_order = #{viewOrder} WHERE layer_id = #{layerId} -->
-<!--     </update> -->
 
     <!-- layer 정보 수정 -->
     <update id="updateLayer" parameterType="layer">
@@ -208,6 +169,7 @@
 	        layer_group_id = #{layerGroupId},
 	        sharing = #{sharing},
 	        layer_key = #{layerKey},
+            rule_id = #{ruleId},
 			ogc_web_services = #{ogcWebServices},
 	        layer_type = #{layerType},
 	        geometry_type = #{geometryType},
@@ -230,14 +192,37 @@
         WHERE layer_id = #{layerId}
     </update>
 
+	<!-- 해당 레이어의 이전 데이터를 전부 비활성화 상태로 수정 -->
+	<update id="updateShapePreDataDisable" parameterType="layer">
+		/* updateShapePreDataDisable */
+		UPDATE ${schema}.${tableName} SET enable_yn = 'N'
+	</update>
+
+	<!-- org2org를 이용해서 생성한 테이블을 데이터 버전 갱신 -->
+	<update id="updateOgr2OgrDataFileVersion" parameterType="layer">
+		/* updateOgr2OgrDataFileVersion */
+		UPDATE ${schema}.${tableName}
+		SET enable_yn = 'Y',
+			version_id = CAST(#{versionId} AS integer)
+		WHERE enable_yn IS NULL OR enable_yn = 'Y'
+	</update>
+
+	<!-- shape 테이블 데이터 상태 변경 -->
+	<update id="updateOgr2OgrStatus" parameterType="layer">
+		/* updateOgr2OgrStatus */
+		UPDATE ${schema}.${tableName}
+		SET enable_yn = 'Y'
+		WHERE version_id = CAST(#{versionId} AS integer)
+	</update>
+
     <!-- 레이어 삭제 -->
     <delete id="deleteLayer" parameterType="int">
         /* deleteLayer */
         DELETE FROM layer WHERE layer_id = #{layerId}
     </delete>
 
-    <delete id="deleteLayerTable" parameterType="string">
-        /* deleteLayer */
-        DROP TABLE ${value}
+    <delete id="dropLayerDetail" parameterType="layer">
+        /* dropLayerDetail */
+        DROP TABLE ${schema}.${tableName}
     </delete>
 </mapper>

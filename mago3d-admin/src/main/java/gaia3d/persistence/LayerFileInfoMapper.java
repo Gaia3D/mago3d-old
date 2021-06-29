@@ -4,7 +4,6 @@ import gaia3d.domain.layer.LayerFileInfo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * layer shape 파일 정보
@@ -110,27 +109,6 @@ public interface LayerFileInfoMapper {
 	 * @return
 	 */
 	int updateLayerFileInfoByTeamId(LayerFileInfo layerFileInfo);
-	
-	/**
-	 * 해당 레이어의 이전 데이터를 전부 비활성화 상태로 수정
-	 * @param tableName
-	 * @return
-	 */
-	int updateShapePreDataDisable(String tableName);
-	
-	/**
-	 * org2org를 이용해서 생성한 테이블을 데이터 version 갱신
-	 * @param map
-	 * @return
-	 */
-	int updateOgr2OgrDataFileVersion(Map<String, String> map);
-	
-	/**
-	 * shape 테이블 데이터 상태 변경
-	 * @param map
-	 * @return
-	 */
-	int updateOgr2OgrStatus(Map<String, String> map);
 	
 	/**
 	 * 레이어 삭제

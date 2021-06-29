@@ -132,15 +132,15 @@ public class LayerServiceImpl implements LayerService {
     	return layerMapper.isLayerKeyDuplication(layerKey);
     }
 
-    /**
-    * 레이어 테이블의 컬럼 타입이 어떤 geometry 타입인지를 구함
-    * @param layerKey
-    * @return
-    */
-    @Transactional(readOnly=true)
-    public String getGeometryType(String layerKey) {
-        return layerMapper.getGeometryType(layerKey);
-    }
+//    /**
+//    * 레이어 테이블의 컬럼 타입이 어떤 geometry 타입인지를 구함
+//    * @param layerKey
+//    * @return
+//    */
+//    @Transactional(readOnly=true)
+//    public String getGeometryType(String layerKey) {
+//        return layerMapper.getGeometryType(layerKey);
+//    }
 
     @Transactional(readOnly = true)
     public String getLayerColumn(String layerKey) {
@@ -236,7 +236,9 @@ public class LayerServiceImpl implements LayerService {
                 // 모든 layer_file_info 의 shape 상태를 비활성화로 update 함
                 layerFileInfoMapper.updateLayerFileInfoAllDisabledByLayerId(layerId);
                 // 이 레이어의 지난 데이터를 비 활성화 상태로 update 함
-                layerFileInfoMapper.updateShapePreDataDisable(tableName);
+                layer.setSchema(propertiesConfig.getOgr2ogrSchema());
+                layer.setTableName(layer.getLayerKey());
+                layerMapper.updateShapePreDataDisable(layer);
             }
 
             Integer layerFileInfoTeamId = 0;
@@ -294,6 +296,7 @@ public class LayerServiceImpl implements LayerService {
         String gdalCommandPath =  propertiesConfig.getGdalCommandPath();
         String ogr2ogrPort = propertiesConfig.getOgr2ogrPort();
         String ogr2ogrHost = propertiesConfig.getOgr2ogrHost();
+        String schema = propertiesConfig.getOgr2ogrSchema();
         String dbName = Crypt.decrypt(url);
         dbName = dbName.substring(dbName.lastIndexOf("/") + 1);
         String driver = "PG:host=" + ogr2ogrHost + " port=" + ogr2ogrPort + " dbname=" + dbName + " user=" + Crypt.decrypt(username) + " password=" + Crypt.decrypt(password);
@@ -316,8 +319,22 @@ public class LayerServiceImpl implements LayerService {
 		//shapeFileParser.parse(shapeFileName);
         //String enviromentPath = propertiesConfig.getOgr2ogrEnviromentPath();
 
-        Ogr2OgrExecute ogr2OgrExecute = new Ogr2OgrExecute(gdalCommandPath, driver, shapeFileName, shapeEncoding, layer.getLayerKey(), updateOption, layerSourceCoordinate, layerTargetCoordinate);
+        Ogr2OgrExecute ogr2OgrExecute = new Ogr2OgrExecute(gdalCommandPath, driver, shapeFileName, shapeEncoding, schema, layer.getLayerKey(), updateOption, layerSourceCoordinate, layerTargetCoordinate);
         ogr2OgrExecute.insert();
+    }
+
+    /**
+     * ogr2ogr로 실행된 테이블에 이력 관리를 위한 version_id, enable_yn 컬럼 추가
+     * @param layer
+     */
+    @Transactional
+    public void addColumnToLayer(Layer layer) {
+        layerMapper.addColumnToLayer(layer);
+    }
+
+    @Transactional
+    public int updateOgr2OgrDataFileVersion(Layer layer) {
+        return layerMapper.updateOgr2OgrDataFileVersion(layer);
     }
     
     /**
@@ -358,12 +375,13 @@ public class LayerServiceImpl implements LayerService {
         int result = 0;
         // layer 정보 수정
         Layer layer = layerMapper.getLayer(layerId);
-        String tableName = layer.getLayerKey();
 
         // 모든 layer_file_info 의 shape 상태를 비활성화로 update 함
         layerFileInfoMapper.updateLayerFileInfoAllDisabledByLayerId(layerId);
         // shape table 모든 데이터를 비활성화 함
-        layerFileInfoMapper.updateShapePreDataDisable(tableName);
+        layer.setSchema(propertiesConfig.getOgr2ogrSchema());
+        layer.setTableName(layer.getLayerKey());
+        layerMapper.updateShapePreDataDisable(layer);
 
         LayerFileInfo layerFileInfo = new LayerFileInfo();
         layerFileInfo.setLayerId(layerId);
@@ -372,11 +390,10 @@ public class LayerServiceImpl implements LayerService {
         layerFileInfoMapper.updateLayerFileInfoByTeamId(layerFileInfo);
 
         Integer fileVersion = layerFileInfoMapper.getLayerShapeFileVersion(layerFileInfoId);
-        Map<String, String> orgMap = new HashMap<>();
-        orgMap.put("fileVersion", fileVersion.toString());
-        orgMap.put("tableName", tableName);
-        orgMap.put("enableYn", "Y");
-        result = layerFileInfoMapper.updateOgr2OgrStatus(orgMap);
+        layer.setSchema(propertiesConfig.getOgr2ogrSchema());
+        layer.setEnableYn("Y");
+        layer.setVersionId(fileVersion);
+        result = layerMapper.updateOgr2OgrStatus(layer);
 
         return result;
     }
@@ -389,8 +406,7 @@ public class LayerServiceImpl implements LayerService {
      * @param deleteLayerFileInfoTeamId
      */
 	@Transactional
-	public void rollbackLayer(Layer layer, boolean isLayerFileInfoExist, LayerFileInfo layerFileInfo,
-			Integer deleteLayerFileInfoTeamId) {
+	public void rollbackLayer(Layer layer, boolean isLayerFileInfoExist, LayerFileInfo layerFileInfo, Integer deleteLayerFileInfoTeamId) {
 		layerMapper.updateLayer(layer);
 		if (isLayerFileInfoExist) {
 			layerFileInfoMapper.deleteLayerFileInfoByTeamId(deleteLayerFileInfoTeamId);
@@ -398,16 +414,18 @@ public class LayerServiceImpl implements LayerService {
 			// 모든 layer_file_info 의 shape 상태를 비활성화로 update 함
 			layerFileInfoMapper.updateLayerFileInfoAllDisabledByLayerId(layer.getLayerId());
 			// 이 레이어의 지난 데이터를 비 활성화 상태로 update 함
-			layerFileInfoMapper.updateShapePreDataDisable(layer.getLayerKey());
+            layer.setSchema(propertiesConfig.getOgr2ogrSchema());
+            layer.setTableName(layer.getLayerKey());
+            layerMapper.updateShapePreDataDisable(layer);
 
 			// 이전 레이어 이력을 활성화
 			layerFileInfoMapper.updateLayerFileInfoByTeamId(layerFileInfo);
 			// 이전 shape 데이터를 활성화
-			Map<String, String> orgMap = new HashMap<>();
-			orgMap.put("fileVersion", layerFileInfo.getVersionId().toString());
-			orgMap.put("tableName", layer.getLayerKey());
-			orgMap.put("enableYn", "Y");
-			layerFileInfoMapper.updateOgr2OgrStatus(orgMap);
+
+            layer.setSchema(propertiesConfig.getOgr2ogrSchema());
+            layer.setEnableYn("Y");
+            layer.setVersionId(layerFileInfo.getVersionId());
+            layerMapper.updateOgr2OgrStatus(layer);
 		} else {
 			layerFileInfoMapper.deleteLayerFileInfo(layer.getLayerId());
 			// TODO shape 파일에도 이력이 있음 지워 줘야 하나?
@@ -440,9 +458,11 @@ public class LayerServiceImpl implements LayerService {
 			// layer_file_info 히스토리 삭제
 			layerFileInfoMapper.deleteLayerFileInfo(layerId);
 			// 공간정보 테이블 삭제
-			String layerExists = layerMapper.isLayerExists(layer.getLayerKey());
+            layer.setSchema(propertiesConfig.getOgr2ogrSchema());
+            layer.setTableName(layer.getLayerKey());
+			String layerExists = layerMapper.isLayerExists(layer);
 			if(layerExists != null) {
-				layerMapper.deleteLayerTable(layer.getLayerKey());
+				layerMapper.dropLayerDetail(layer);
 			}
 		}
 		// 레이어 메타정보 삭제 
@@ -483,7 +503,7 @@ public class LayerServiceImpl implements LayerService {
 
             HttpEntity<String> entity = new HttpEntity<>(xmlString, headers);
             String url = geoPolicy.getGeoserverDataUrl() + "/rest/workspaces/"
-                    + geoPolicy.getGeoserverDataWorkspace() + "/datastores/" + geoPolicy.getGeoserverDataStore() + "/featuretypes?recalculate=nativebbox,latlonbbox";
+                    + geoPolicy.getGeoserverDataWorkspace() + "/datastores/" + geoPolicy.getGeoserverDataStoreLayer() + "/featuretypes?recalculate=nativebbox,latlonbbox";
 
             ResponseEntity<?> response = restTemplate.postForEntity(url, entity, String.class);
 
@@ -518,6 +538,7 @@ public class LayerServiceImpl implements LayerService {
              throw new Exception();
          }
 
+         // TODO enum == 같은데...
          if(HttpStatus.OK.equals(httpStatus)) {
              log.info("styleName = {} 는 이미 존재하는 layerStyle 입니다.", layer.getLayerKey());
              // 이미 등록 되어 있음, update
@@ -568,7 +589,7 @@ public class LayerServiceImpl implements LayerService {
 
 			HttpEntity<String> entity = new HttpEntity<>(headers);
 			String url = geopolicy.getGeoserverDataUrl() + "/rest/workspaces/" + geopolicy.getGeoserverDataWorkspace()
-					+ "/datastores/" + geopolicy.getGeoserverDataStore() + "/featuretypes/" + layerKey;
+					+ "/datastores/" + geopolicy.getGeoserverDataStoreLayer() + "/featuretypes/" + layerKey;
 			log.info("-------- url = {}", url);
 			ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
 			httpStatus = response.getStatusCode();
@@ -883,7 +904,7 @@ public class LayerServiceImpl implements LayerService {
 			HttpEntity<String> entity = new HttpEntity<>(headers);
 
 			String url = geopolicy.getGeoserverDataUrl() + "/rest/workspaces/" + geopolicy.getGeoserverDataWorkspace()
-					+ "/datastores/" + geopolicy.getGeoserverDataStore() + "/featuretypes/" + layerKey + "?recurse=true";
+					+ "/datastores/" + geopolicy.getGeoserverDataStoreLayer() + "/featuretypes/" + layerKey + "?recurse=true";
 			log.info("-------- url = {}", url);
 			ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.DELETE, entity, String.class);
 			httpStatus = response.getStatusCode();

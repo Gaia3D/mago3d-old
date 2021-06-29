@@ -1,8 +1,8 @@
 package gaia3d.support;
 
 import gaia3d.domain.rule.RuleGroup;
-import gaia3d.domain.rule.RuleGroupType;
-import gaia3d.domain.rule.RuleType;
+import gaia3d.rule.RuleGroupType;
+import gaia3d.rule.RuleType;
 
 /**
  * 룰 도움

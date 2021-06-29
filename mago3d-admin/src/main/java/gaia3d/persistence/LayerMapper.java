@@ -1,10 +1,9 @@
 package gaia3d.persistence;
 
-import java.util.List;
-
+import gaia3d.domain.layer.Layer;
 import org.springframework.stereotype.Repository;
 
-import gaia3d.domain.layer.Layer;
+import java.util.List;
 
 @Repository
 public interface LayerMapper {
@@ -59,11 +58,25 @@ public interface LayerMapper {
     Layer getLayerByParentAndViewOrder(Layer layer);
 
     /**
-    * 레이어 테이블의 컬럼 타입이 어떤 geometry 타입인지를 구함
-    * @param layerKey
-    * @return
-    */
-    String getGeometryType(String layerKey);
+     * 레이어의 칼럼 목록을 조회
+     * @param layerKey
+     * @return
+     */
+    String getLayerColumn(String layerKey);
+
+    /**
+     * 테이블이 존재 하는지 확인
+     * @param layerKey
+     * @return
+     */
+    String isLayerExists(Layer layer);
+
+//    /**
+//    * 레이어 테이블의 컬럼 타입이 어떤 geometry 타입인지를 구함
+//    * @param layerKey
+//    * @return
+//    */
+//    String getGeometryType(String layerKey);
 
     /**
     * 레이어 등록
@@ -71,6 +84,12 @@ public interface LayerMapper {
     * @return
     */
     int insertLayer(Layer layer);
+
+    /**
+     * ogr2ogr로 실행된 테이블에 이력 관리를 위한 version_id, enable_yn 컬럼 추가
+     * @param layer
+     */
+    void addColumnToLayer(Layer layer);
 
     /**
     * 레이어 트리 정보 수정
@@ -94,6 +113,27 @@ public interface LayerMapper {
     int updateLayer(Layer layer);
 
     /**
+     * 해당 레이어의 이전 데이터를 전부 비활성화 상태로 수정
+     * @param layer
+     * @return
+     */
+    int updateShapePreDataDisable(Layer layer);
+
+    /**
+     * org2org를 이용해서 생성한 테이블을 데이터 version 갱신
+     * @param layer
+     * @return
+     */
+    int updateOgr2OgrDataFileVersion(Layer layer);
+
+    /**
+     * shape 테이블 데이터 상태 변경
+     * @param layer
+     * @return
+     */
+    int updateOgr2OgrStatus(Layer layer);
+
+    /**
     * 레이어 삭제
     * @param layerId
     * @return
@@ -101,23 +141,9 @@ public interface LayerMapper {
     int deleteLayer(Integer layerId);
     
     /**
-     * 공간정보 테이블 삭제
-     * @param layerKey
+     * ogr2ogr로 등록한 레이어 삭제
+     * @param layer
      * @return
      */
-    int deleteLayerTable(String layerKey);
-    
-    /**
-     * 레이어의 칼럼 목록을 조회 
-     * @param layerKey
-     * @return
-     */
-    String getLayerColumn(String layerKey);
-    
-    /**
-     * 테이블이 존재 하는지 확인 
-     * @param layerKey
-     * @return
-     */
-    String isLayerExists(String layerKey);
+    int dropLayerDetail(Layer layer);
 }

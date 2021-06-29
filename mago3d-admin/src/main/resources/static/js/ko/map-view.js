@@ -10,7 +10,7 @@ var mapViewer = function(policy, layer, versionId) {
     // geoPolicy 정보
     var geoserverDataUrl = policy.geoserverDataUrl;
 	var geoserverDataWorkspace = policy.geoserverDataWorkspace;
-	var geoserverDataStore = policy.geoserverDataStore;
+	var geoserverDataStore = policy.geoserverDataStoreLayer;
 	var coordinate = policy.layerTargetCoordinate;
 	
 	// cql_flter값 : versionId가 있을 경우 해당 버전 보여주고 없을경우 현재 활성화된 레이어 보여줌 

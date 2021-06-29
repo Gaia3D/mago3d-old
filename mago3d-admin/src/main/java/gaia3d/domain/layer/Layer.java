@@ -55,6 +55,12 @@ public class Layer extends Search implements Serializable {
     
 	// style file 내용
 	private String styleFileContent;
+
+	// ogr2ogr 레이어용
+	private String schema;
+	private String tableName;
+	private String enableYn;
+	private Integer versionId;
     
     // DB
     // layer 아이디
@@ -71,7 +77,7 @@ public class Layer extends Search implements Serializable {
     // 업로딩 아이디
     private String userId;
 
-    // 룰셋 아이디
+    // 룰 아이디
     private Integer ruleId;
     private String ruleName;
     

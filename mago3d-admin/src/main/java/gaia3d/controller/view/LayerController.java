@@ -13,7 +13,9 @@ import gaia3d.domain.layer.LayerInsertType;
 import gaia3d.domain.policy.GeoPolicy;
 import gaia3d.domain.policy.Policy;
 import gaia3d.domain.role.RoleKey;
+import gaia3d.domain.rule.Rule;
 import gaia3d.domain.user.UserSession;
+import gaia3d.rule.RuleType;
 import gaia3d.service.*;
 import gaia3d.support.LogMessageSupport;
 import gaia3d.support.SQLInjectSupport;
@@ -50,6 +52,8 @@ public class LayerController implements AuthorizationController {
     private ObjectMapper objectMapper;
     @Autowired
     private PolicyService policyService;
+    @Autowired
+    private RuleService ruleService;
 
     // 파일 copy 시 버퍼 사이즈
     public static final int BUFFER_SIZE = 8192;
@@ -111,10 +115,12 @@ public class LayerController implements AuthorizationController {
 
         Policy policy = policyService.getPolicy();
         List<LayerGroup> layerGroupList = layerGroupService.getListLayerGroup();
+        List<Rule> ruleList = ruleService.getListAllRuleByRuleType(Rule.builder().ruleType(RuleType.LAYER.toString().toLowerCase()).build());
 
         model.addAttribute("policy", policy);
         model.addAttribute("layer", new Layer());
         model.addAttribute("layerGroupList", layerGroupList);
+        model.addAttribute("ruleList", ruleList);
 
         return "/layer/input";
     }
@@ -133,10 +139,12 @@ public class LayerController implements AuthorizationController {
         Policy policy = policyService.getPolicy();
         Layer layer = layerService.getLayer(layerId);
         List<LayerGroup> layerGroupList = layerGroupService.getListLayerGroup();
+        List<Rule> ruleList = ruleService.getListAllRuleByRuleType(Rule.builder().ruleType(RuleType.LAYER.toString().toLowerCase()).build());
 
         model.addAttribute("policy", policy);
         model.addAttribute("layer", layer);
         model.addAttribute("layerGroupList", layerGroupList);
+        model.addAttribute("ruleList", ruleList);
 
         // 파일업로드로 레이어를 등록한 경우
         if (LayerInsertType.UPLOAD == LayerInsertType.valueOf(layer.getLayerInsertType().toUpperCase())) {
@@ -147,6 +155,7 @@ public class LayerController implements AuthorizationController {
                     layerFileInfo = fileInfo;
                 }
             }
+
             model.addAttribute("layerFileInfo", layerFileInfo);
             model.addAttribute("layerFileInfoList", layerFileInfoList);
             model.addAttribute("layerFileInfoListSize", layerFileInfoList.size());

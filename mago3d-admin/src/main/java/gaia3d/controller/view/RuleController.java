@@ -14,7 +14,6 @@ import gaia3d.service.*;
 import gaia3d.support.RuleSupport;
 import gaia3d.support.SQLInjectSupport;
 import gaia3d.utils.DateUtils;
-import gaia3d.utils.FormatUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -66,15 +65,10 @@ public class RuleController {
 		rule.setSearchWord(SQLInjectSupport.replaceSqlInection(rule.getSearchWord()));
 		rule.setOrderWord(SQLInjectSupport.replaceSqlInection(rule.getOrderWord()));
 
-		String today = DateUtils.getToday(FormatUtils.YEAR_MONTH_DAY);
-		if(StringUtils.isEmpty(rule.getStartDate())) {
-			rule.setStartDate(today.substring(0,4) + DateUtils.START_DAY_TIME);
-		} else {
+		if(!StringUtils.isEmpty(rule.getStartDate())) {
 			rule.setStartDate(rule.getStartDate().substring(0, 8) + DateUtils.START_TIME);
 		}
-		if(StringUtils.isEmpty(rule.getEndDate())) {
-			rule.setEndDate(today + DateUtils.END_TIME);
-		} else {
+		if(!StringUtils.isEmpty(rule.getEndDate())) {
 			rule.setEndDate(rule.getEndDate().substring(0, 8) + DateUtils.END_TIME);
 		}
 

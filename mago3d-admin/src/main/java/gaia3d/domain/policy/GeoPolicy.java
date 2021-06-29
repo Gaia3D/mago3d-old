@@ -1,18 +1,11 @@
 package gaia3d.domain.policy;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
-import javax.validation.constraints.NotNull;
-
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * 2D, 3D 운영 정책
@@ -57,6 +50,8 @@ public class GeoPolicy {
 	private String geoserverDataWorkspace;
 	// geoserver 데이터 저장소
 	private String geoserverDataStore;
+	// geoserver ogr2ogr 레이어 데이터 저장소
+	private String geoserverDataStoreLayer;
 	// geoserver 계정
 	private String geoserverUser;
 	// geoserver 비밀번호

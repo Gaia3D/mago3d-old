@@ -14,6 +14,11 @@ public interface RuleService {
 
     /**
      * 룰 목록
+     */
+    List<Rule> getListAllRuleByRuleType(Rule rule);
+
+    /**
+     * 룰 목록
      * @param ruleGroupId
      * @return
      */

@@ -1,4 +1,4 @@
-package gaia3d.domain.rule;
+package gaia3d.rule;
 
 public enum RuleGroupType {
     // 나무

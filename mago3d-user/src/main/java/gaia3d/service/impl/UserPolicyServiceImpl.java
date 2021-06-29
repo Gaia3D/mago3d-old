@@ -95,7 +95,7 @@ public class UserPolicyServiceImpl implements UserPolicyService {
 //    private String defaultLayers() {
 //    	List<LayerGroup> layerGroupList = layerGroupMapper.getListLayerGroup();
 //    	List<String> baseLayerList = new ArrayList<>();
-//    	String dataStore = geoPolicyService.getGeoPolicy().getGeoserverDataStore();
+//    	String dataStore = geoPolicyService.getGeoPolicy().getGeoserverDataStoreLayer();
 //		layerGroupList.stream()
 //						.forEach(group -> {
 //							Layer layer = Layer.builder()

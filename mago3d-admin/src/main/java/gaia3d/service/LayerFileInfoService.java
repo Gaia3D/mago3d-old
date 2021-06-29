@@ -1,9 +1,8 @@
 package gaia3d.service;
 
-import java.util.List;
-import java.util.Map;
-
 import gaia3d.domain.layer.LayerFileInfo;
+
+import java.util.List;
 
 public interface LayerFileInfoService {
 
@@ -62,13 +61,6 @@ public interface LayerFileInfoService {
 	 * @throws Exception 
 	 */
 	int updateLayerFileInfo(LayerFileInfo layerFileInfo);
-	
-	/**
-	 * org2org를 이용해서 생성한 테이블을 데이터 version 갱신
-	 * @param map
-	 * @return
-	 */
-	int updateOgr2OgrDataFileVersion(Map<String, String> map);
 	
 	/**
 	 * team id 로 레이어 파일 이력을 삭제

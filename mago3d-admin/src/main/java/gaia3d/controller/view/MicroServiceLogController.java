@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,17 +36,18 @@ public class MicroServiceLogController {
 
 		microServiceLog.setSearchWord(SQLInjectSupport.replaceSqlInection(microServiceLog.getSearchWord()));
 		microServiceLog.setOrderWord(SQLInjectSupport.replaceSqlInection(microServiceLog.getOrderWord()));
+
 		String today = DateUtils.getToday(FormatUtils.YEAR_MONTH_DAY);
-//		if(StringUtils.isEmpty(microServiceLog.getStartDate())) {
-//			microServiceLog.setStartDate(today.substring(0,4) + DateUtils.START_DAY_TIME);
-//		} else {
-//			microServiceLog.setStartDate(microServiceLog.getStartDate().substring(0, 8) + DateUtils.START_TIME);
-//		}
-//		if(StringUtils.isEmpty(microServiceLog.getEndDate())) {
-//			microServiceLog.setEndDate(today + DateUtils.END_TIME);
-//		} else {
-//			microServiceLog.setEndDate(microServiceLog.getEndDate().substring(0, 8) + DateUtils.END_TIME);
-//		}
+		if(StringUtils.isEmpty(microServiceLog.getStartDate())) {
+			microServiceLog.setStartDate(today.substring(0,4) + DateUtils.START_DAY_TIME);
+		} else {
+			microServiceLog.setStartDate(microServiceLog.getStartDate().substring(0, 8) + DateUtils.START_TIME);
+		}
+		if(StringUtils.isEmpty(microServiceLog.getEndDate())) {
+			microServiceLog.setEndDate(today + DateUtils.END_TIME);
+		} else {
+			microServiceLog.setEndDate(microServiceLog.getEndDate().substring(0, 8) + DateUtils.END_TIME);
+		}
 
 		Long totalCount = microServiceService.getMicroServiceLogTotalCount(microServiceLog);
 		Pagination pagination = new Pagination(request.getRequestURI(), microServiceLog.getSearchParameters(), totalCount, Long.parseLong(pageNo), microServiceLog.getListCounter());

@@ -16,8 +16,7 @@
     
     <select id="getListLayerFilePath" parameterType="int" resultType="string">
         /* getListLayerFilePath */
-        SELECT CONCAT(file_path, file_real_name) FROM layer_File_info
-        WHERE layer_id =#{layerId}
+        SELECT CONCAT(file_path, file_real_name) FROM layer_File_info WHERE layer_id =#{layerId}
     </select>
 
     <!-- 파일 정보 취득 -->
@@ -108,31 +107,6 @@
             update_date = NOW()
             <!-- update_date = TO_TIMESTAMP(#{updateDate}, 'YYYYMMDDHH24MISSUS') -->
         WHERE layer_file_info_id = #{layerFileInfoId}
-    </update>
-
-    <!-- 해당 레이어의 이전 데이터를 전부 비활성화 상태로 수정 -->
-    <update id="updateShapePreDataDisable" parameterType="string">
-        /* updateShapePreDataDisable */
-        UPDATE ${value} SET enable_yn = 'N'
-    </update>
-
-    <!-- org2org를 이용해서 생성한 테이블을 데이터 버전 갱신 -->
-    <update id="updateOgr2OgrDataFileVersion" parameterType="map">
-        /* updateOgr2OgrDataFileVersion */
-        UPDATE ${tableName}
-        SET enable_yn = 'Y',
-            <!-- update = #{updateDate} -->
-            version_id = CAST(#{fileVersion} AS integer)
-        WHERE enable_yn IS NULL OR enable_yn = 'Y'
-    </update>
-
-    <!-- shape 테이블 데이터 상태 변경 -->
-    <update id="updateOgr2OgrStatus" parameterType="map">
-        /* updateOgr2OgrStatus */
-        UPDATE ${tableName}
-        SET enable_yn = 'Y'
-        <!-- WHERE update = #{updateDate} -->
-        WHERE version_id = CAST(#{fileVersion} AS integer)
     </update>
 
     <!-- 레이어 삭제 -->

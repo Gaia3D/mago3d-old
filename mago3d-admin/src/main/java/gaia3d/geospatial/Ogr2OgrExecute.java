@@ -1,12 +1,12 @@
 package gaia3d.geospatial;
 
+import gaia3d.support.ProcessBuilderSupport;
+import lombok.extern.slf4j.Slf4j;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
-import lombok.extern.slf4j.Slf4j;
-import gaia3d.support.ProcessBuilderSupport;
 
 @Slf4j
 public class Ogr2OgrExecute {
@@ -17,6 +17,7 @@ public class Ogr2OgrExecute {
     private String driver;
     private String shapeFile;
     private String shapeEncoding;
+    private String schema;
     private String tableName;
     // 새로 생성할건지, update 할건지, append 인지..... update가 upsert를 지원하는지 모르겠다.
     private String updateOption;
@@ -26,11 +27,13 @@ public class Ogr2OgrExecute {
     private String sql;
     //private String environmentPath;
 
-    public Ogr2OgrExecute(String gdalCommandPath, String driver, String shapeFile, String shapeEncoding, String tableName, String updateOption, String layerSourceCoordinate, String layerTargetCoordinate) {
+    public Ogr2OgrExecute(  String gdalCommandPath, String driver, String shapeFile, String shapeEncoding, String schema, String tableName,
+                            String updateOption, String layerSourceCoordinate, String layerTargetCoordinate) {
         this.gdalCommandPath = gdalCommandPath;
         this.driver = driver;
         this.shapeFile = shapeFile;
         this.shapeEncoding = shapeEncoding;
+        this.schema = schema;
         this.tableName = tableName;
         this.updateOption = updateOption;
         this.layerSourceCoordinate = layerSourceCoordinate;
@@ -78,11 +81,11 @@ public class Ogr2OgrExecute {
         command.add(this.shapeFile);
         command.add("-nlt");
         command.add("PROMOTE_TO_MULTI");
-        // schema 옵션이라서.... 현재는 빼고
-//		command.add("-lco");
-//		command.add("schema=");
         command.add("-nln");
-        command.add(this.tableName);
+        command.add(this.schema + "." + this.tableName);
+        // -lco schema=스키마 를 사용하면 append 옵션이 동작하지 않음
+//		command.add("-lco");
+//		command.add("schema=" + this.schema);
 
         log.info(" >>>>>> insert command = {}", String.join(" ", command));
         ProcessBuilderSupport.execute(command, null);

@@ -1,15 +1,13 @@
 package gaia3d.service.impl;
 
-import java.util.List;
-import java.util.Map;
-
+import gaia3d.domain.layer.LayerFileInfo;
+import gaia3d.persistence.LayerFileInfoMapper;
+import gaia3d.service.LayerFileInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import gaia3d.domain.layer.LayerFileInfo;
-import gaia3d.persistence.LayerFileInfoMapper;
-import gaia3d.service.LayerFileInfoService;
+import java.util.List;
 
 @Service
 public class LayerFileInfoServiceImpl implements LayerFileInfoService {
@@ -95,17 +93,7 @@ public class LayerFileInfoServiceImpl implements LayerFileInfoService {
 	public int updateLayerFileInfo(LayerFileInfo layerFileInfo) {
 		return layerFileInfoMapper.updateLayerFileInfo(layerFileInfo);
 	}
-	
-	/**
-	 * org2org를 이용해서 생성한 테이블을 데이터 버전 갱신
-	 * @param map
-	 * @return
-	 */
-	@Transactional
-	public int updateOgr2OgrDataFileVersion(Map<String, String> map) {
-		return layerFileInfoMapper.updateOgr2OgrDataFileVersion(map);
-	}
-	
+
 	/**
 	 * team id 로 레이어 파일 이력을 삭제
 	 * @param layerFileInfoTeamId

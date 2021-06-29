@@ -12,7 +12,6 @@ import gaia3d.service.PolicyService;
 import gaia3d.service.TileService;
 import gaia3d.support.SQLInjectSupport;
 import gaia3d.utils.DateUtils;
-import gaia3d.utils.FormatUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,15 +52,10 @@ public class TileController {
 		tileInfo.setSearchWord(SQLInjectSupport.replaceSqlInection(tileInfo.getSearchWord()));
 		tileInfo.setOrderWord(SQLInjectSupport.replaceSqlInection(tileInfo.getOrderWord()));
 
-		String today = DateUtils.getToday(FormatUtils.YEAR_MONTH_DAY);
-		if(ObjectUtils.isEmpty(tileInfo.getStartDate())) {
-			tileInfo.setStartDate(today.substring(0,4) + DateUtils.START_DAY_TIME);
-		} else {
+		if(!ObjectUtils.isEmpty(tileInfo.getStartDate())) {
 			tileInfo.setStartDate(tileInfo.getStartDate().substring(0, 8) + DateUtils.START_TIME);
 		}
-		if(ObjectUtils.isEmpty(tileInfo.getEndDate())) {
-			tileInfo.setEndDate(today + DateUtils.END_TIME);
-		} else {
+		if(!ObjectUtils.isEmpty(tileInfo.getEndDate())) {
 			tileInfo.setEndDate(tileInfo.getEndDate().substring(0, 8) + DateUtils.END_TIME);
 		}
 
