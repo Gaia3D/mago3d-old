@@ -17,3 +17,5 @@ include ':mago3d-converter'
 include ':mago3d-tiler'
 include ':html'
 include ':doc'
+include ':weather'
+
