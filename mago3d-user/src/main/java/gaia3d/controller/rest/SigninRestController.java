@@ -29,6 +29,12 @@ public class SigninRestController {
 				"&scope=email%20profile%20openid" +
 				"&access_type=offline";
 
+		String facebookUrl = "https://www.facebook.com/dialog/oauth?" +
+				"client_id=" + policy.getSocialSigninFacebookClientId() +
+				"&redirect_uri=" + policy.getSocialSigninFacebookRedirectUri() +
+				"&scope=email%2Cpublic_profile" +
+				"&resource_type=token";
+
 		String naverUrl = "https://nid.naver.com/oauth2.0/authorize?" +
 				"client_id="+policy.getSocialSigninNaverClientId() +
 				"&redirect_uri=" + policy.getSocialSigninNaverRedirectUri() +
@@ -46,7 +52,7 @@ public class SigninRestController {
 		switch (SocialType.findBy(domain)){
 			case GOOGLE : redirectURL = googleUrl;
 			break;
-			case FACEBOOK : redirectURL = googleUrl;
+			case FACEBOOK : redirectURL = facebookUrl;
 			break;
 			case NAVER : redirectURL = naverUrl;
 			break;
