@@ -41,6 +41,13 @@ public interface UserMapper {
 	UserInfo getUserByEmail(String email);
 
 	/**
+	 * 사용자 정보 취득(비밀번호 찾기)
+	 * @param userInfo
+	 * @return
+	 */
+	UserInfo getUserForFindPassword(UserInfo userInfo);
+
+	/**
 	 * 사용자 등록
 	 * @param userInfo
 	 * @return
@@ -60,5 +67,5 @@ public interface UserMapper {
 	 * @return
 	 */
     int deleteUser(String userId);
-
+    
 }

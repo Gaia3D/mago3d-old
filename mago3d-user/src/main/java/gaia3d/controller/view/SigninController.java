@@ -95,6 +95,7 @@ public class SigninController {
 
 		String errorCode = validate(request, policy, signinForm, userSession);
 		if(errorCode != null) {
+			log.error("@@ 비밀번호 " + errorCode);
 			if("usersession.password.invalid".equals(errorCode)) {
 				userSession.setFailSigninCount(userSession.getFailSigninCount() + 1);
 				// 실패 횟수가 운영 정책의 횟수와 일치할 경우 잠금(비밀번호 실패횟수 초과)
@@ -143,6 +144,7 @@ public class SigninController {
 
 		// 패스워드 변경 기간이 오버 되었거나 , 6:임시 비밀번호(비밀번호 찾기, 관리자 설정에 의한 임시 비밀번호 발급 시)
 		if(userSession.getPasswordChangeTermOver() || UserStatus.TEMP_PASSWORD == UserStatus.findBy(userSession.getStatus())){
+
 			return "redirect:/user/modify-password";
 		}
 
@@ -221,6 +223,7 @@ public class SigninController {
 		}
 
 		if(UserStatus.USE != UserStatus.findBy(userSession.getStatus()) && UserStatus.TEMP_PASSWORD != UserStatus.findBy(userSession.getStatus())) {
+			log.info("tempPassword---------" + UserStatus.findBy(userSession.getStatus()));
 			// 0:사용중, 1:사용중지(관리자), 2:잠금(비밀번호 실패횟수 초과), 3:휴면(사인인 기간), 4:만료(사용기간 종료), 5:삭제(화면 비표시)
 			switch(UserStatus.findBy(userSession.getStatus())){
 				case WAITING_APPROVAL : return "usersession.status.wait";

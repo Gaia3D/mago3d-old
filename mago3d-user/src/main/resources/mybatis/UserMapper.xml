@@ -45,6 +45,15 @@
 		  AND A.user_group_id = B.user_group_id
 	</select>
 
+	<!-- 사용자 정보(비밀번호 찾기) -->
+	<select id="getUserForFindPassword" parameterType="userInfo" resultType="userInfo">
+		/* getUserForFindPassword */
+		SELECT A.*
+		FROM user_info A
+		WHERE A.email = #{email}
+		  AND A.user_name = #{userName}
+	</select>
+
 	<!-- 사용자 등록 -->
 	<insert id="insertUser" parameterType="userInfo">
 		/* insertUser */

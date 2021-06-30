@@ -70,6 +70,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
+	 * 사용자 정보 취득(비밀번호 찾기)
+	 * @param userInfo
+	 * @return
+	 */
+	@Transactional(readOnly=true)
+	public UserInfo getUserForFindPassword(UserInfo userInfo) {
+		return userMapper.getUserForFindPassword(userInfo);
+	}
+
+	/**
 	 * 사용자 등록
 	 * @param userInfo
 	 * @return

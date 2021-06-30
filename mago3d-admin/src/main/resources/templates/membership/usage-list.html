@@ -149,7 +149,7 @@
         </div>
     </div>
     <!-- 사용자 그룹 -->
-    <!--<div th:replace="~{/user-group/user-group-info-dialog :: #userGroupInfoDialog}"></div>-->
+    <div th:replace="~{/user-group/user-group-info-dialog :: #userGroupInfoDialog}"></div>
 </th:block>
 <th:block layout:fragment="pageCustomScript">
 <script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
@@ -176,13 +176,13 @@
 	});
 
 	// 사용자 그룹 정보
-	/*var userGroupDialog = $("#userGroupInfoDialog").dialog({
+	var userGroupDialog = $("#userGroupInfoDialog").dialog({
 		autoOpen: false,
 		width: 700,
 		height: 400,
 		modal: true,
 		resizable: false
-	});*/
+	});
 
 	// 사용자 그룹 정보
 	/*function detailUserGroup(userGroupId) {

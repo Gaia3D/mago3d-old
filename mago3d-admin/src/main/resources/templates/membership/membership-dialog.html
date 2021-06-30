@@ -1,0 +1,26 @@
+<html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org">
+<body>
+	<!-- 멤버십 정보 보기 -->
+	<div id="membershipDialog" title="멤버십 정보" class="dialog">
+		<table class="inner-table scope-row" summary="멤버십 정보 보기">
+			<caption class="hiddenTag">멤버십 정보</caption>
+			<colgroup>
+				<col class="col-label"></col>
+				<col class="col-data"></col>
+			</colgroup>
+			<tr>
+				<th class="col-label" scope="row">멤버십</th>
+				<td id="membershipName" class="col-data ellipsis"></td>
+			</tr>
+			<tr>
+				<th class="col-label" scope="row">업로드 가능 용량</th>
+				<td id="uploadFileSize" class="col-data"></td>
+			</tr>
+			<tr>
+				<th class="col-label" scope="row">변환 가능 건수</th>
+				<td id="convertFileSize" class="col-data"></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

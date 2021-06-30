@@ -116,7 +116,6 @@ public class SignupController {
 			return "/sign/signup";
 		}
 
-		// 회원 가입
 		signupForm.setUserGroupId(UserGroupType.USER.getValue());
 		signupForm.setStatus(UserStatus.WAITING_APPROVAL.getValue());
 		log.info("signupForm  "+signupForm);
