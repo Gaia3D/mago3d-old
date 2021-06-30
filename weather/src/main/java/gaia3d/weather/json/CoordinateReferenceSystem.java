@@ -4,10 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import ucar.nc2.Attribute;
-import ucar.nc2.AttributeContainer;
-import ucar.nc2.NetcdfFile;
-import ucar.nc2.Variable;
 import ucar.nc2.dt.GridCoordSystem;
 
 import java.util.HashMap;
