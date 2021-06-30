@@ -16,6 +16,8 @@ import gaia3d.utils.DateUtils;
 import gaia3d.utils.FileUtils;
 import gaia3d.utils.FormatUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.ObjectUtils;
@@ -29,8 +31,6 @@ import javax.validation.Valid;
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 /**
  * 3D 데이터 파일 업로더
@@ -64,6 +64,24 @@ public class UploadDataRestController {
 	@SuppressWarnings("unchecked")
 	@PostMapping
 	public Map<String, Object> insert(MultipartHttpServletRequest request) throws Exception {
+
+		/*String header = request.getHeader("User-Agent");
+		if (header.contains("Edge")){
+			name = URLEncoder.encode(title, "UTF-8").replaceAll("\\+", "%20");
+			response.setHeader("Content-Disposition", "attachment;filename=\"" + name + "\".xls;");
+		} else if (header.contains("MSIE") || header.contains("Trident")) { // IE 11버전부터 Trident로 변경되었기때문에 추가해준다.
+			name = URLEncoder.encode(title, "UTF-8").replaceAll("\\+", "%20");
+			response.setHeader("Content-Disposition", "attachment;filename=" + name + ".xls;");
+		} else if (header.contains("Chrome")) {
+			name = new String(title.getBytes("UTF-8"), "ISO-8859-1");
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + name + "\".xls");
+		} else if (header.contains("Opera")) {
+			name = new String(title.getBytes("UTF-8"), "ISO-8859-1");
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + name + "\".xls");
+		} else if (header.contains("Firefox")) {
+			name = new String(title.getBytes("UTF-8"), "ISO-8859-1");
+			response.setHeader("Content-Disposition", "attachment; filename=" + name + ".xls");
+		}*/
 		
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
@@ -323,13 +341,13 @@ public class UploadDataRestController {
 			String subDirectoryPath = "";
 			String directoryName = null;
 			int depth = 1;
-			Enumeration<? extends ZipEntry> entries = zipFile.entries();
+			Enumeration<? extends ZipArchiveEntry> entries = zipFile.getEntries();
 			log.info("entries : " + entries);
 			
 			while( entries.hasMoreElements() ) {
             	UploadDataFile uploadDataFile = new UploadDataFile();
             	
-            	ZipEntry entry = entries.nextElement();
+            	ZipArchiveEntry entry = entries.nextElement();
             	log.info("zip : " + entry);
             	String unzipfileName = targetDirectory + entry.getName();
             	boolean converterTarget = false;
@@ -506,7 +524,7 @@ public class UploadDataRestController {
 	/*
 	 * unzip 로직 안에서 파일 복사
 	 */
-	private UploadDataFile fileCopyInUnzip(UploadDataFile uploadDataFile, ZipFile zipFile, ZipEntry entry, String directoryPath, String saveFileName,
+	private UploadDataFile fileCopyInUnzip(UploadDataFile uploadDataFile, ZipFile zipFile, ZipArchiveEntry entry, String directoryPath, String saveFileName,
 										   String extension, String fileName, String subDirectoryPath, int depth) {
 		long size = 0L;
     	try ( 	InputStream inputStream = zipFile.getInputStream(entry);
@@ -519,7 +537,10 @@ public class UploadDataRestController {
                 outputStream.write(buffer, 0, bytesRead);
             }
 
-    		uploadDataFile.setFileType(FileType.FILE.name());
+            ///
+
+
+			uploadDataFile.setFileType(FileType.FILE.name());
     		uploadDataFile.setFileExt(extension);
     		uploadDataFile.setFileName(fileName);
     		uploadDataFile.setFileRealName(saveFileName);
@@ -738,4 +759,7 @@ public class UploadDataRestController {
 		
 		return null;
 	}
+
+
+
 }

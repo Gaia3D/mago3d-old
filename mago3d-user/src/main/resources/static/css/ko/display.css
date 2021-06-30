@@ -121,6 +121,7 @@ h2 {color:black; font-size:30px; }
 h3 {color:#343434; font-size:18px;}
 h1.sc-tit {margin-top:36px;}
 h2.join {padding-top:100px; padding-bottom:50px;}
+h2.find-password {padding-top:100px; padding-bottom:50px;}
 h3.data {clear:both; height:29px; color:#0764cd; line-height:28px; vertical-align:middle; display:inline-block; margin:0; padding:0; font-weight:600;}
 h3.data a {color:#0764cd;}
 h3.sttl {height:28px; color:#0764cd; font-size:18px !important;  width:200px;vertical-align:middle; display:inline-block; margin:6px 0 0 0; padding:0px; font-weight:600;}
@@ -190,6 +191,22 @@ span.mago {color:#6649ca;}
 #signup-complete .btn-go-login:hover, #join .btn-join:focus  {background:#2a5bd3;}
 .emailtxt {display:inline-block; float:left; font-size:16px; width:20px; text-align:center; line-height:42px;}
 .join-key {font-size:18px; color:#fb522b; margin-left:3px;}
+.input-key {font-size:18px; color:#fb522b; margin-left:3px;}
+
+/* 비밀번호 찾기 */
+#find-password {width:500px; margin:0 auto; padding:0 50px; background:white; height:100%;}
+#find-password form, #find-password fieldset  {margin:0; padding:0;}
+#find-password label {clear:both; float:left; display:inline-block; float:left; width:150px; line-height:42px; margin:0; padding:0; font-size:16px;}
+#find-password .inputid, #find-password .inputMobilePhone {padding:0; margin:0 0 0 0; width:340px; text-align:left; height:42px; line-height:42px;font-size:16px; color:#444444; border:1px solid #e2e0e0;}
+#find-password .inputpwd {float:left;padding:0; margin:0 0 0 0; width:340px; text-align:left; height:42px; line-height:42px;font-size:16px; color:#444444; border:1px solid #e2e0e0;}
+#find-password .inputname {padding:0; margin:0 0 0 0; width:340px; text-align:left; height:42px; line-height:42px;font-size:16px; color:#444444; border:1px solid #e2e0e0;}
+#find-password .inputemail {float:left; padding:0; margin:0 0 0 0; width:340px; text-align:left; height:42px; line-height:42px;font-size:16px; color:#444444; border:1px solid #e2e0e0;}
+#find-password .btn-find-password:hover, #find-password .btn-find-password:focus  {background:#2a5bd3;}
+.btn-go-login:hover, .btn-go-login:focus  {background:#2a5bd3;}
+.btn-go-login, .btn-find-password {clear:both; display:inline-block; margin-top:20px; font-size:23px;color:white; cursor:pointer; padding:10px 30px 10px 30px; line-height:20px; margin-left:140px; background:#396ce8; border-radius:3px; color:white; text-align:center; }
+#signup-complete .btn-go-login:hover, #find-password .btn-find-password:focus  {background:#2a5bd3;}
+.emailtxt {display:inline-block; float:left; font-size:16px; width:20px; text-align:center; line-height:42px;}
+.find-password-key {font-size:18px; color:#fb522b; margin-left:3px;}
 .input-key {font-size:18px; color:#fb522b; margin-left:3px;}
 
 /* 레이아웃 */

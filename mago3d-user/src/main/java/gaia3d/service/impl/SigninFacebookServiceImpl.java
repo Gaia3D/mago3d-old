@@ -5,7 +5,6 @@ import gaia3d.domain.policy.Policy;
 import gaia3d.domain.user.UserInfo;
 import gaia3d.service.SigninSocialService;
 import lombok.AllArgsConstructor;
-import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -28,11 +27,11 @@ public class SigninFacebookServiceImpl implements SigninSocialService {
 
 		MultiValueMap<String, Object> parameters = setParameters(authCode, policy);
 
-		String getTokenUrl = policy.getSocialSigninNaverAccessTokenUri();
+		String getTokenUrl = policy.getSocialSigninFacebookAccessTokenUri();
 
 		String accessToken = getAccessToken(restTemplate, parameters, getTokenUrl);
 
-		Map responseBody = getSocialUserInfo(restTemplate, accessToken, policy.getSocialSigninNaverUserInfoUri());
+		Map responseBody = getSocialUserInfo(restTemplate, accessToken, policy.getSocialSigninFacebookUserInfoUri());
 
 		UserInfo userInfo = setUserInfo(responseBody);
 
@@ -44,9 +43,9 @@ public class SigninFacebookServiceImpl implements SigninSocialService {
 
 		MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
 		parameters.set("grant_type", "authorization_code");
-		parameters.set("client_id", policy.getSocialSigninNaverClientId());
-		parameters.set("redirect_uri", policy.getSocialSigninNaverRedirectUri());
-		parameters.set("client_secret", policy.getSocialSigninNaverClientSecret());
+		parameters.set("client_id", policy.getSocialSigninFacebookClientId());
+		parameters.set("redirect_uri", policy.getSocialSigninFacebookRedirectUri());
+		parameters.set("client_secret", policy.getSocialSigninFacebookClientSecret());
 		parameters.set("code", authCode);
 		parameters.set("session_state", "oauth_state");
 
@@ -55,12 +54,10 @@ public class SigninFacebookServiceImpl implements SigninSocialService {
 
 	public UserInfo setUserInfo(Map responseBody){
 
-		JSONObject jsonObject = new JSONObject((Map)responseBody.get("response"));
-
 		UserInfo userInfo = new UserInfo();
 
-		String email = jsonObject.get("email").toString();
-		String name = jsonObject.get("name").toString();
+		String email = responseBody.get("email").toString();
+		String name = responseBody.get("name").toString();
 
 		userInfo.setEmail(email);
 		userInfo.setUserName(name);

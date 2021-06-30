@@ -18,8 +18,10 @@
 <div id="join">
 	<h2 class="join">회원가입</h2>
 	<form class="join-select " id="signupForm" th:object="${signupForm}" method="post" action="/sign/process-signup" onsubmit="return check()">
-		<input type="hidden" name="signupType" th:feild="${signupForm.signupType}"/>
+		<input type="hidden" id="signupType" name="signupType" th:value="*{signupType}"/>
+		<input type="hidden" id="signinType" name="signinType" th:value="*{signupType}"/>
 		<fieldset>
+
 			<legend>회원가입</legend>
 			<label for="userId">아이디<span class="join-key">*</span></label>
 			<input type="text" id="userId" name="userId" class="inputid" />
@@ -118,7 +120,7 @@
 		email.value = _val + this.value;
 	}
 
-	function check() {userId
+	function check() {
 
 		if ($("#userId").val() == "") {
 			alert("아이디를 입력하여 주십시오.");

@@ -199,7 +199,7 @@
                                             </td>
                                             <td class="col-type">
                                                 <label th:for="|membershipName_${user.membershipName}|" class="hiddenTag"></label>
-                                                <a href="/membership/usage/list" th:text="${user.membershipName}"></a>
+                                                <a th:href="@{/membership/usage/list(userId=${user.userId})}" th:text="${user.membershipName}"></a>
                                             </td>
                                             <td class="col-type">
                                                 <a th:href="@{/user/modify(userId=${user.userId}, type=password)}" class="image-button button-edit" th:text="#{modified}"></a>

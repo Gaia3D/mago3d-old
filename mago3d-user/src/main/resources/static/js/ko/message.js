@@ -80,8 +80,10 @@ JS_MESSAGE["user.session.closed"] = "세션 종료 처리 하였습니다.";
 JS_MESSAGE["user.session.close"] = "선택하신 사용자의 세션을 종료 하시겠습니까?";
 JS_MESSAGE["user.insert"] = "사용자를 등록 하였습니다.";
 JS_MESSAGE["user.info.update"] = "사용자 정보를 수정 하였습니다.";
+JS_MESSAGE["user.info.notexist"] = "사용자 정보가 존재하지 않습니다.";
 JS_MESSAGE["user.id.notexist"] = "아이디가 존재하지 않습니다.";
 JS_MESSAGE["user.email.invalid"] = "이메일 형식이 유효하지 않습니다.";
+JS_MESSAGE["user.signin.social"] = "소셜 가입 회원입니다. 소셜 로그인을 이용해 주세요.";
 
 JS_MESSAGE["data.name.empty"] = "데이터명을 입력하여 주십시오.";
 JS_MESSAGE["data.name.invalid"] = "데이터명이 유효하지 않습니다.";

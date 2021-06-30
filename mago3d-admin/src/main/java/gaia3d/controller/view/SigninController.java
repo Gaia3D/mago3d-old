@@ -67,6 +67,11 @@ public class SigninController {
 	public String signin(HttpServletRequest request, Model model) {
 		Policy policy = policyService.getPolicy();
 		log.info("@@ policy = {}", policy);
+
+		/*ScheduleManager scheduleManager = new ScheduleManager();
+		UserSession userSession = new UserSession();
+		userSession.setUserId("admin");
+		scheduleManager.addSchedule(MembershipJobExecutor.class, userSession);*/
 		
 		UserInfo signinForm = new UserInfo();
 		model.addAttribute("signinForm", signinForm);
