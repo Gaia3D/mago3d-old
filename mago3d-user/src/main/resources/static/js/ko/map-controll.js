@@ -145,7 +145,7 @@ var mapControllEventHandler = function(magoInstance) {
 	selectInteraction.on(Mago3D.PointSelectInteraction.EVENT_TYPE.DEACTIVE, function(){
 		$('div.buttonModeWrap button').removeClass('on');
 		translateInteraction.setActive(false);
-		MAGO.selectedDataController.toggleWrap(false);
+		//MAGO.selectedDataController.toggleWrap(false);
 	});
 	
 	

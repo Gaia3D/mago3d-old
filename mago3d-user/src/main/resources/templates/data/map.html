@@ -222,7 +222,7 @@
 		cesiumViewerOption.defaultControl.tools = false;
 		cesiumViewerOption.defaultControl.attribution = false;
 		cesiumViewerOption.defaultControl.overviewMap = false;
-
+		
 		/**
 		 * @param {Stirng} containerId container div id. required.
 		 * @param {object} serverPolicy mage3d geopolicy. required.
@@ -267,7 +267,11 @@
         mapDataInfoList(1, null, null, null);
 
 		// 시뮬레이션
-        Simulation(magoInstance);
+        var simul = Simulation(magoInstance);
+		setTimeout(function() {
+			SmltWater.runOnLoaded(simul.water);	
+		},3000);
+        
 
         // 사물인터넷
 		if (MAGO.microService && MAGO.microService['SENSOR_THINGS']) {

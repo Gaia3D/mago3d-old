@@ -1,6 +1,5 @@
-
-
 const Simulation = function(magoInstance) {
+	const waterSimulator = new SmltWater(magoInstance);
 	const _ui = function() {
 		const ON_CLASS_NAME = 'on';
 		const cssName = {
@@ -124,7 +123,7 @@ const Simulation = function(magoInstance) {
 				
 				const smlts = {
 					wind : new SmltWind(magoInstance),
-					water : new SmltWater(magoInstance)
+					water : waterSimulator
 				}
 				
 				return {
@@ -245,4 +244,8 @@ const Simulation = function(magoInstance) {
 	
 	//프로그램 실행
 	_run();
+	
+	return {
+		water : waterSimulator
+	}
 }

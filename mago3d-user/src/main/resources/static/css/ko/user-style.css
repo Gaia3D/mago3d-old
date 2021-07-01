@@ -2441,7 +2441,8 @@ ul.simulation-menu li.on, ul.simulation-menu li:hover {border-top:2px solid #2f9
 .smlt {width:330px; margin:0 auto; display:block;}
 .smlt .sub {display : none;}
 .sub > .sublist {clear:both; height:28px; margin-left:20px; font-size:12px; margin-top:5px; width:310px; line-height:28px; margin-bottom:0px;}
-.sub > .sublist > label.smlt-sub {clear:both; float:left; display:inline-block; width:80px; height:28px; line-height:28px; }
+.sub > .sublist > label.smlt-sub, .sub > .sublist > span.smlt-sub {clear:both; float:left; display:inline-block; width:80px; height:28px; line-height:28px; }
+.sub > .sublist > button.on {border:1px solid #2F94F3; background:#2F94F3;}
 .sub > .sublist > .smlt-value {width:220px;}
 .sub > .sublist > .inputtype {display:inline-block; border-radius:0; height:28px; border: 1px solid #d8d8d8; font-size:12px; color:#464646;}
 .sub > .sublist > .checkbox {margin-top:-2px; vertical-align:middle;}

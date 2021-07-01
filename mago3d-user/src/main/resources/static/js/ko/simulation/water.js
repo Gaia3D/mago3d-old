@@ -5,7 +5,7 @@ const SmltWater =(function() {
 		this._step = SmltWater.STATUS.UNREADY;
 		this._mode = SmltWater.MODE.WAITING;
 		this._createType = SmltWater.CREATE_TYPE.NONE;
-		this.action;
+		this._action;
 		
 		const viewer = this.magoInstance.getViewer();
 		this.cesiumEventHandler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
@@ -21,12 +21,34 @@ const SmltWater =(function() {
 				
 				if(mode === SmltWater.MODE.CLOSE) return;
 				
-				SmltWater.offButton();
-				$clicked.addClass('on');
-				
-				self.mode = mode;
 				self.createType = undefined;
-				if(mode === SmltWater.MODE.CREATE) self.createType = $clicked.data('type'); 
+				if(!$clicked.hasClass('on')) {
+					SmltWater.offButton();
+					$clicked.addClass('on');
+					
+					self.mode = mode;
+					self.createType = undefined;
+					if(mode === SmltWater.MODE.CREATE) self.createType = $clicked.data('type');
+					
+					const action = _getModeAction(mode);
+					self.action = action;
+					self.action.run.call(self);
+				} else {
+					$clicked.removeClass('on');
+					
+					self.mode = SmltWater.MODE.WAITING;
+					
+					if(self.action && self.action.terminate) {
+						self.action.terminate.call(self);
+						self.action = undefined;
+					}
+				}
+			});
+			
+			self.magoInstance.getMagoManager().on(Mago3D.MagoManager.EVENT_TYPE.SELECTEDGENERALOBJECT, function(e) {
+				if(self.mode === SmltWater.MODE.DELETE) {
+					self.action.delete.call(self, e.selected);
+				}
 			});
 		}
 		
@@ -42,7 +64,7 @@ const SmltWater =(function() {
 		WAITING : 'waiting',
 		AREA : 'area',
 		CREATE : 'create',
-		MOVING : 'moving',
+		MOVING : 'move',
 		DELETE : 'delete',
 		CLOSE : 'close',
 		CLEAR : 'clear'
@@ -92,12 +114,16 @@ const SmltWater =(function() {
 				return this._mode;
 			},
 			set : function(mode) {
-				const action = _getModeAction(mode);
-				if(action) {
-					this.action = action;
-					this.action.run.call(this);
-				}
 				this._mode = mode;
+			}
+		},
+		action : {
+			get : function () {
+				return this._action;
+			},
+			set : function(action) {
+				this._action = action;
+
 			}
 		},
 		createType : {
@@ -113,7 +139,7 @@ const SmltWater =(function() {
 	SmltWater.prototype.bindMouseEvent = function() {
 		if(!this.action) return;
 		
-		const bindEventList = this.action.eventList;
+		const bindEventList = [Cesium.ScreenSpaceEventType.LEFT_DOWN, Cesium.ScreenSpaceEventType.LEFT_UP, Cesium.ScreenSpaceEventType.MOUSE_MOVE];
 		
 		for(let key in bindEventList) {
 			let eventType = bindEventList[key];
@@ -127,7 +153,11 @@ const SmltWater =(function() {
 		this.cesiumEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOWN);
 		this.cesiumEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_UP);
 		this.cesiumEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-		this.cesiumEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.RIGHT_CLICK);
+		
+		const magoManager = this.magoInstance.getMagoManager();
+		
+		_toggleDeleteResource(magoManager, false);
+		_toggleMovingResource(magoManager, false);
 	}
 	
 	SmltWater.prototype.clear = function() {
@@ -146,31 +176,49 @@ const SmltWater =(function() {
 	
 	let objects = {};
 	
-	const _Area = {
-		type : SmltWater.MODULE_TYPE.CESIUM,
-		eventList : [Cesium.ScreenSpaceEventType.LEFT_DOWN, Cesium.ScreenSpaceEventType.LEFT_UP, Cesium.ScreenSpaceEventType.MOUSE_MOVE]
-	}
-	_Area['run'] = function() {
+	const _Area = function() {}
+	
+	_Area.run = function() {
+		this.step = SmltWater.STATUS.UNREADY;
 		_clear(this.magoInstance);
 		this.unbindMouseEvent();
 		this.bindMouseEvent();
 	}
-	_Area['terminate'] = function() {
+	_Area.terminate = function() {
 		_clearGuidePoint(this.magoInstance.getViewer());
 		leftDownCoord = undefined;
 		leftUpCoord = undefined;
 		leftDown = false;
 		
 		this.magoInstance.getMagoManager().setCameraMotion(true);
-		this.step = SmltWater.STATUS.READY;
 		this.mode = SmltWater.MODE.WAITING;
-		
-		this.action = undefined;
 		this.unbindMouseEvent();
 		
 		SmltWater.offButton();
 	}
-	_Area[Cesium.ScreenSpaceEventType.LEFT_DOWN] = function(event) {
+	_Area._createRectangle = function(rectCoordinates) {
+		_createRectangle(this.magoInstance.getViewer(), rectCoordinates);	
+	}
+	_Area.done = function(rectCoordinates) {
+		this.step = SmltWater.STATUS.READY;
+		
+		let minLon = API.Converter.radToDeg(rectCoordinates.west);
+		let minLat = API.Converter.radToDeg(rectCoordinates.south);
+		let maxLon = API.Converter.radToDeg(rectCoordinates.east);
+		let maxLat = API.Converter.radToDeg(rectCoordinates.north);
+		
+		let geoExtent = new Mago3D.GeographicExtent(minLon, minLat, 0, maxLon, maxLat, 0);
+		
+		const magoManager = this.magoInstance.getMagoManager();
+		const waterOptions = {};
+		waterOptions.terrainDemSourceType = "QUANTIZEDMESH";
+		waterOptions.terrainProvider = this.magoInstance.getViewer().terrainProvider;
+		waterOptions.simulationGeographicExtent = geoExtent;
+		magoManager.waterManager = new Mago3D.WaterManager(magoManager, waterOptions);
+		
+		magoManager.waterManager.bSsimulateWater = true;
+	}
+ 	_Area[Cesium.ScreenSpaceEventType.LEFT_DOWN] = function(event) {
 		if(!this.active || !guidePoint) return;
 		const magoManager = this.magoInstance.getMagoManager();
 		
@@ -178,8 +226,10 @@ const SmltWater =(function() {
 	}
 	_Area[Cesium.ScreenSpaceEventType.LEFT_UP] = function(event) {
 		if(!this.active) return;
+		const rectCoordinates = rectangle.rectangle.coordinates.getValue();
+		rectangle.rectangle.coordinates = rectCoordinates;
 		
-		rectangle.rectangle.coordinates = rectangle.rectangle.coordinates.getValue();
+		this.action.done.call(this, rectCoordinates); 
 		
 		this.action.terminate.call(this);
 	}
@@ -197,7 +247,7 @@ const SmltWater =(function() {
 			if(!guidePoint) return;
 			
 			guidePoint.position = leftUpCoord = position;
-			if(!rectangle) _createRectangle(magoInstance.getViewer());
+			if(!rectangle) _createRectangle(magoInstance.getViewer(), new Cesium.CallbackProperty(_areaRectangleCoordinates));
 		}
 		
 		if(!this.active) return;
@@ -210,25 +260,45 @@ const SmltWater =(function() {
 		}
 	}
 	
-	const _Create = {
-		type : SmltWater.MODULE_TYPE.CESIUM,
-		eventList : [Cesium.ScreenSpaceEventType.LEFT_DOWN, Cesium.ScreenSpaceEventType.LEFT_UP, Cesium.ScreenSpaceEventType.MOUSE_MOVE]	
-	}
-	_Create['run'] = function() {
+	const _Create = function() {}
+	
+	_Create.run = function() {
+		_clearCreateResource(this.magoInstance.getViewer());
 		this.unbindMouseEvent();
 		this.bindMouseEvent();
 	}
-	_Create['terminate'] = function() {
-		_clearGuidePoint(this.magoInstance.getViewer());
-		_clearPolyline(this.magoInstance.getViewer());
-		leftDownCoord = undefined;
-		leftUpCoord = undefined;
-		leftDown = false;
+	_Create.done = function(crts) {
+		let entity;
+		const magoManager = this.magoInstance.getMagoManager();
+		const DEPTH = 6;
+		if(this.createType !== SmltWater.CREATE_TYPE.WEIR) {
+			let name = 'waterGenerator';
+			let color = {r:0.2, g:0.5, b:1.0, a:1.0};
+			
+			if(this.createType !== SmltWater.CREATE_TYPE.WATER) {
+				name = 'contaminationGenerator';
+				color = {r:1, g:0.5, b:0.2, a:1.0};
+			}
+			
+			let initialPosition = API.Converter.Cartesian3ToMagoGeographicCoord(crts);
+			entity = new Mago3D.Box(20, 20, 40, name);
+			entity.setGeographicPosition(initialPosition, 0, 0, 0);
+			entity.attributes.isMovable = true;
+		  	entity.setOneColor(color.r, color.b, color.b, color.a);
+		  	entity.options = {};
+	
+			magoManager.waterManager.addObject(entity, DEPTH);
+		} else {
+			let geoCoordsArray = _polylineCoordinates().map(API.Converter.Cartesian3ToMagoGeographicCoord);
+			entity = Mago3D.GeographicCoordsList.getRenderableObjectOfGeoCoordsArray(geoCoordsArray, magoManager);
+			magoManager.modeler.addObject(entity, DEPTH);
+		}
 		
+		objects[entity.guid] = entity;
+	}
+	_Create.terminate = function() {
+		_clearCreateResource(this.magoInstance.getViewer());
 		this.magoInstance.getMagoManager().setCameraMotion(true);
-		this.mode = SmltWater.MODE.WAITING;
-		
-		this.action = undefined;
 		this.unbindMouseEvent();
 		
 		SmltWater.offButton();
@@ -236,50 +306,20 @@ const SmltWater =(function() {
 	_Create[Cesium.ScreenSpaceEventType.LEFT_DOWN] = function(event) {
 		if(!this.active || !guidePoint) return;
 		
+		const position = event.position;
+		
 		if(this.createType !== SmltWater.CREATE_TYPE.WEIR) {
-			leftDownCoord = event.position;	
+			leftDownCoord = position;	
 		} else {
-			_leftDown(event.position, '보를 완성할 지점에서 왼쪽 버튼에서 손떼시요ㅋ', this.magoInstance.getMagoManager());
+			const magoManager = this.magoInstance.getMagoManager();
+			const cartesian = _screenToCartesian3(position, magoManager);
+			if(!_checkAreaContainPoint(cartesian)) {
+				return false;
+			}
+			_leftDown(position, '보를 완성할 지점에서 왼쪽 버튼에서 손떼시요ㅋ', magoManager);
 		}
 	}
 	_Create[Cesium.ScreenSpaceEventType.LEFT_UP] = function(event) {
-		const self = this;
-		
-		const _createObject = function(crts, type) {
-			let entity;
-			const viewer = self.magoInstance.getViewer();
-			if(type !== SmltWater.CREATE_TYPE.WEIR) {
-				entity = viewer.entities.add({
-					position : crts,
-					point : {
-						color : (type === SmltWater.CREATE_TYPE.WATER) ? Cesium.Color.ALICEBLUE : Cesium.Color.DARKRED,
-						pixelSize : 30
-					},
-					label : {
-						text: (type === SmltWater.CREATE_TYPE.WATER) ? '물나오는곳':'똥나오는곳',
-			            scale :0.5,
-			            font: "normal normal bolder 35px Helvetica",
-			            fillColor: Cesium.Color.BLACK,
-			            outlineColor: Cesium.Color.WHITE,
-			            outlineWidth: 1,
-						pixelOffset : new Cesium.Cartesian2(50,0), 
-			            heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
-			            style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-			            distanceDisplayCondition : new Cesium.DistanceDisplayCondition(0.0, 100000)
-					}
-				});
-			} else {
-				entity = viewer.entities.add({
-					polyline : {
-						positions : _polylineCoordinates(),
-						material : Cesium.Color.DARKORANGE.withAlpha(1),
-						width : 20
-					}
-				});
-			}
-			
-			objects[entity.id] = entity;
-		}
 		if(!this.active) return;
 		
 		if(!leftDownCoord) return;
@@ -293,7 +333,7 @@ const SmltWater =(function() {
 			return false;
 		}
 		
-		_createObject(cartesian, this.createType);
+		this.action.done.call(this, cartesian);
 		
 		this.action.terminate.call(this);
 	}
@@ -322,10 +362,7 @@ const SmltWater =(function() {
 				}
 			}
 			
-			return {
-				text,
-				pixelOffset
-			}
+			return { text, pixelOffset}
 		} 
 		const cartesian = _screenToCartesian3(event.endPosition, this.magoInstance.getMagoManager());
 		const viewer = this.magoInstance.getViewer();
@@ -351,34 +388,85 @@ const SmltWater =(function() {
 		}
 	}
 	
-	const _Clear = {
-		type : SmltWater.MODULE_TYPE.NORMAL	
-	}
-	_Clear['run'] = function() {
+	const _Clear = function() {}
+	
+	_Clear.run = function() {
 		if(confirm('초기화하시겠습니까?')) {
 			_clear(this.magoInstance);
 			this.step = SmltWater.STATUS.UNREADY;
 			this.mode = SmltWater.MODE.WAITING;
-			this.action = undefined;
 			this.unbindMouseEvent();	
 		}
 		
 		SmltWater.offButton();
 	}
+	
+	let isMoving = false;
+	const _Moving = function() {}
+	_Moving.run = function() {
+		_clearCreateResource(this.magoInstance.getViewer());
+		this.unbindMouseEvent();
+		_toggleDeleteResource(this.magoInstance.getMagoManager(), false);
+		_toggleMovingResource(this.magoInstance.getMagoManager(), true);
+	}
+	_Moving.terminate = function() {
+		this.unbindMouseEvent();
+		_toggleMovingResource(this.magoInstance.getMagoManager(), false);
+	}
+	
+	let isDelete = false;
+	const _Delete = function() {}
+	_Delete.run = function() {
+		_clearCreateResource(this.magoInstance.getViewer());
+		this.unbindMouseEvent();
+		_toggleMovingResource(this.magoInstance.getMagoManager(), false);
+		_toggleDeleteResource(this.magoInstance.getMagoManager(), true);
+	}
+	_Delete.delete = function(selected) {
+		if(confirm('삭제하시겠습니까?')) {
+			delete objects[selected.guid];
+			const magoManager = this.magoInstance.getMagoManager(); 
+			if(selected.name) {
+				magoManager.waterManager.removeObject(selected);	
+			} else {
+				magoManager.modeler.removeObject(selected);
+			}
+			
+		}
+	}
+	_Delete.terminate = function() {
+		this.unbindMouseEvent();
+		_toggleDeleteResource(this.magoInstance.getMagoManager(), false);
+	}
 
 	const _clear = function(magoInstance) {
 		const viewer = magoInstance.getViewer();
-		_clearGuidePoint(viewer);
+		const magoManager = magoInstance.getMagoManager();
 		_clearRectangle(viewer);
-		_clearPolyline(viewer);
-		_clearObjects(viewer);
+		_clearCreateResource(viewer);
+		_toggleMovingResource(magoManager, false);
 		
-		leftDown = false;
+		_clearObjects(magoManager);
+		magoManager.setCameraMotion(true);
+		magoManager.waterManager = undefined;
+	}
+	const _clearCreateResource = function(viewer) {
+		_clearGuidePoint(viewer);
+		_clearPolyline(viewer);
 		leftDownCoord = undefined;
 		leftUpCoord = undefined;
-		
-		magoInstance.getMagoManager().setCameraMotion(true);
+		leftDown = false;
 	}
+	const _toggleMovingResource = function(magoManager, is) {
+		isMoving = is;
+		_setSelect(magoManager, isMoving);
+		_setTranslate(magoManager, isMoving);
+	}
+	const _toggleDeleteResource = function(magoManager, is) {
+		isDelete = is;
+		_setSelect(magoManager, isDelete);
+	}
+	
 	const _leftDown = function(position, text, magoManager) {
 		magoManager.setCameraMotion(false);
 		leftDownCoord = _screenToCartesian3(position, magoManager);
@@ -387,9 +475,21 @@ const SmltWater =(function() {
 		guidePoint.label.text = text;
 	}
 	
-	const _clearObjects = function(viewer) {
+	const _setSelect = function(magoManager, active) {
+		const select = magoManager.defaultSelectInteraction;
+		select.setActive(active);
+		if(active) select.setTargetType(Mago3D.DataType.NATIVE);
+	}
+	
+	const _setTranslate = function(magoManager, active) {
+		const translate = magoManager.defaultTranslateInteraction;
+		translate.setActive(active);
+		if(active) translate.setTargetType(Mago3D.DataType.NATIVE);
+	}
+	
+	const _clearObjects = function(magoManager) {
 		for(let id in objects) {
-			viewer.entities.removeById(id);
+			magoManager.modeler.removeObject(objects[id]);
 		}
 		objects = {};
 	}
@@ -438,11 +538,11 @@ const SmltWater =(function() {
 		return new Cesium.Rectangle(west, south, east, north);
 	};
 	
-	const _createRectangle = function(viewer) {
+	const _createRectangle = function(viewer, coordinates) {
 		rectangle = viewer.entities.add({
 			rectangle : {
-				coordinates : new Cesium.CallbackProperty(_areaRectangleCoordinates),
-				material : Cesium.Color.DODGERBLUE.withAlpha(0.2)
+				coordinates : coordinates,
+				material : Cesium.Color.DODGERBLUE.withAlpha(0.1)
 			}
 		});
 		return rectangle;
@@ -488,14 +588,13 @@ const SmltWater =(function() {
 	}
 	
 	const _getModeAction = function(mode) {
-		let action;
 		switch(mode) {
-			case SmltWater.MODE.AREA : action = _Area;break;
-			case SmltWater.MODE.CREATE : action = _Create;break;
-			case SmltWater.MODE.CLEAR : action = _Clear;break;
+			case SmltWater.MODE.AREA : return _Area;
+			case SmltWater.MODE.CREATE : return _Create;
+			case SmltWater.MODE.CLEAR : return _Clear;
+			case SmltWater.MODE.MOVING : return _Moving;
+			case SmltWater.MODE.DELETE : return _Delete;
 		}
-		
-		return action;
 	}
 	
 	return SmltWater;
@@ -505,11 +604,32 @@ SmltWater.offButton = function() {
 	$('#smlt-natural-water-sub button').removeClass('on');	
 }
 
-
 SmltWater.hideActionButton = function() {
 	$('.water-action-btn').hide();
 }
 SmltWater.showActionButton = function() {
 	$('.water-action-btn').show();
 }
-
+SmltWater.runOnLoaded = function(water) {
+	$('#simulationMenu').trigger('click');
+	$('#smlt_menu_natural').trigger('click');
+	$('#smlt-natural-water-div').trigger('click');
+	
+	water.active = true;
+	
+	$('#smlt-natural-water-sub button[data-mode="area"]').trigger('click');
+	
+	const areaRectangle = new Cesium.Rectangle(2.211531907441813, 0.6522354413337594, 2.2123220907997396, 0.6525887920226009);
+	water.action._createRectangle.call(water, areaRectangle);
+	water.action.done.call(water, areaRectangle);
+	water.action.terminate.call(water);
+	
+	$('#smlt-natural-water-sub button[data-type="water"]').trigger('click');
+	
+	water.action.done.call(water, new Cesium.Cartesian3(-3036417.5716179544, 4066337.2004766855, 3850501.0127405995));
+	water.action.done.call(water, new Cesium.Cartesian3(-3034676.251204022, 4066273.9352724017, 3851874.314876525));
+	
+	water.createType = 'polution';
+	water.action.done.call(water, new Cesium.Cartesian3(-3034917.6619269657, 4066136.2482842696, 3851845.5637445394));
+	water.action.terminate.call(water);
+}
