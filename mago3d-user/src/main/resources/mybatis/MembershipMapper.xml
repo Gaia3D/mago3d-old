@@ -6,9 +6,9 @@
 	<!-- 멤버십 정보 조회 -->
 	<select id="getMembershipById" parameterType="int" resultType="membership">
 		/* getMembershipByUserId */
-		SELECT A.*
-		FROM membership A
-		WHERE A.membership_id = #{membershipId}
+		SELECT *
+		FROM membership
+		WHERE membership_id = #{membershipId}
 	</select>
 
 	<!-- 멤버십 정보 조회 -->
@@ -18,17 +18,18 @@
 			   B.membership_name AS membershipName,
 			   B.upload_file_size AS uploadFileSize,
 			   B.convert_file_count AS convertFileCount
-		FROM membership_usage A LEFT OUTER JOIN membership B ON A.membership_id = B.membership_id
+		FROM membership_usage A LEFT OUTER JOIN membership B
+			ON A.membership_id = B.membership_id
 		WHERE A.user_id = #{userId}
 	</select>
 
 	<!-- 멤버십 마지막 로그 상태 조회 -->
 	<select id="getLastLog" parameterType="string" resultType="membershipLog">
 		/* getLastLog */
-		SELECT A.*
-		FROM membership_log A
-		WHERE A.user_id = #{userId}
-		ORDER BY A.membership_log_id DESC LIMIT 1
+		SELECT *
+		FROM membership_log
+		WHERE user_id = #{userId}
+		ORDER BY membership_log_id DESC LIMIT 1
 	</select>
 
 
@@ -41,8 +42,8 @@
 		INSERT INTO membership_usage(
 			membership_usage_id, membership_id, user_id, update_date
 		) values(
-					#{membershipUsageId}, #{membershipId}, #{userId}, NOW()
-				)
+			#{membershipUsageId}, #{membershipId}, #{userId}, NOW()
+		)
 	</insert>
 
 	<!-- 멤버십 로그 등록 -->
@@ -52,9 +53,9 @@
 			SELECT NEXTVAL('membership_log_seq')
 		</selectKey>
 		INSERT INTO membership_log(
-		membership_log_id, current_membership_id, request_membership_id, user_id, status
+			membership_log_id, current_membership_id, request_membership_id, user_id, status
 		) values(
-		#{membershipLogId}, #{currentMembershipId}, #{requestMembershipId}, #{userId}, #{status}
+			#{membershipLogId}, #{currentMembershipId}, #{requestMembershipId}, #{userId}, #{status}
 		)
 	</insert>
 
@@ -85,7 +86,7 @@
 	<update id="updateUsageFileCount" parameterType="membershipUsage">
 		/* updateUsageFileCount */
 		UPDATE membership_usage
-		SET use_convert_file_count = use_convert_file_count+1,
+		SET use_convert_file_count = use_convert_file_count + 1,
 			update_date = NOW()
 		WHERE user_id = #{userId}
 	</update>

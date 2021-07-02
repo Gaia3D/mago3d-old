@@ -7,8 +7,8 @@
 	<insert id="insert" parameterType="userInfo">
 		/* insert */
 		INSERT INTO user_info (
-			user_id, user_group_id, user_name, password, status, user_role_check_yn, last_signin_date
+			user_id, user_group_id, user_name, password, status, signin_type, user_role_check_yn, last_signin_date
 		) VALUES (
-			#{userId}, #{userGroupId}, #{userName}, #{userId}, #{status}, 'N', now())
+			#{userId}, #{userGroupId}, #{userName}, #{userId}, #{status}, #{signinType}, 'N', now())
 	</insert>
 </mapper>

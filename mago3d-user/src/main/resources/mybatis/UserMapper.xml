@@ -60,8 +60,8 @@
 		INSERT INTO user_info(
 			user_id, user_group_id, user_name, password, email, mobile_phone, signin_type, status, update_date
 		) values(
-					#{userId}, #{userGroupId}, #{userName}, #{password}, #{email}, #{mobilePhone}, #{signinType}, COALESCE(#{status}, '0'), NOW()
-				)
+			#{userId}, #{userGroupId}, #{userName}, #{password}, #{email}, #{mobilePhone}, #{signinType}, COALESCE(#{status}, '0'), NOW()
+		)
 	</insert>
 
 	<!-- 사용자 기본 정보 중 비밀번호 정보 수정 -->

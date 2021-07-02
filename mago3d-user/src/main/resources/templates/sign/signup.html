@@ -2,12 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <head>
 	<meta charset="UTF-8">
-	<meta name="Description" content="실내외 3차원 통합 플랫폼, mago3D" />
-	<meta name="Keywords" content="" />
-	<meta name="author" content="Gaia3D" />
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
-	<title>실내외 3차원 통합 플랫폼, mago3D</title>
+	<meta name="viewport" content="width=device-width">
+	<title><th:block th:text="#{signup.page.title}"></th:block></title>
 	<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
 	<link rel="stylesheet" th:href="@{/css/{lang}/display.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
 	<script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
@@ -18,23 +14,20 @@
 <div id="join">
 	<h2 class="join">회원가입</h2>
 	<form class="join-select " id="signupForm" th:object="${signupForm}" method="post" action="/sign/process-signup" onsubmit="return check()">
-		<input type="hidden" id="signupType" name="signupType" th:value="*{signupType}"/>
-		<input type="hidden" id="signinType" name="signinType" th:value="*{signupType}"/>
 		<fieldset>
-
 			<legend>회원가입</legend>
+
 			<label for="userId">아이디<span class="join-key">*</span></label>
 			<input type="text" id="userId" name="userId" class="inputid" />
 
 			<label for="userName">이름<span class="join-key">*</span></label>
-			<input type="text" name="userName" class="inputname" th:field="*{userName}" th:if="${signupForm.signupType} == '2'" readonly/>
-			<input type="text" id="userName" name="userName" class="inputname" th:field="*{userName}" th:unless="${signupForm.signupType} == '2'" />
+			<input type="text" id="userName" name="userName" class="inputname" th:field="*{userName}" />
 
-			<div th:unless="${signupForm.signupType} == '2'">
-				<label for="newPassword">비밀번호<span class="join-key">*</span></label>
-				<input type="password" id="newPassword" name="newPassword" class="inputpwd" />
-				<span class="txt-guide" th:text="|영문 대문자 ${policy.passwordEngUpperCount}개, 소문자 ${policy.passwordEngLowerCount}개, 숫자 ${policy.passwordNumberCount}개, 특수문자 ${policy.passwordCreateChar}중 ${policy.passwordSpecialCharCount}개 이상을 포함하여 ${policy.passwordMinLength} 이상 ${policy.passwordMaxLength} 이하|"></span>
-
+			<div >
+				<label for="password">비밀번호<span class="join-key">*</span></label>
+				<input type="password" id="password" name="password" class="inputpwd" />
+					<span class="txt-guide" th:text="|영문 대문자 ${policy.passwordEngUpperCount}개, 소문자 ${policy.passwordEngLowerCount}개, 숫자 ${policy.passwordNumberCount}개,
+					특수문자 ${policy.passwordCreateChar}중 ${policy.passwordSpecialCharCount}개 이상을 포함하여 ${policy.passwordMinLength} 이상 ${policy.passwordMaxLength} 이하|"></span>
 				<label for="passwordConfirm">비밀번호 확인<span class="join-key">*</span></label>
 				<input type="password" id="passwordConfirm" name="passwordConfirm" class="inputpwd" />
 
@@ -43,17 +36,15 @@
 			</div>
 
 			<label for="email">이메일<span class="join-key">*</span></label>
-			<input type="text" name="email" class="inputemail" th:field="*{email}" th:if="${signupForm.signupType} == '2'" readonly/>
-			<input type="text" id="preEmail" class="inputemail" th:unless="${signupForm.signupType} == '2'"/>
-			<form th:unless="${signupForm.signupType} == '2'">
-				<select id="selectEmail" class="select-email">
-					<option value="">직접입력</option>
-					<option value="@naver.com">@naver.com</option>
-					<option value="@daum.net">@daum.net</option>
-					<option value="@gmail.com">@gmail.com</option>
-				</select>
-			</form>
-			<input type="hidden" id="email" name="email" value="" th:unless="${signupForm.signupType} == '2'" />
+			<input type="text" id="preEmail" name="preEmail" class="inputemail" />
+			<select id="selectEmail" name="selectEmail" class="select-email">
+				<option value="">직접입력</option>
+				<option value="@naver.com">@naver.com</option>
+				<option value="@daum.net">@daum.net</option>
+				<option value="@gmail.com">@gmail.com</option>
+			</select>
+			<input type="hidden" id="email" name="email" value="" />
+
 			<button type="submit" class="btn-join">가입하기</button>
 		</fieldset>
 	</form>

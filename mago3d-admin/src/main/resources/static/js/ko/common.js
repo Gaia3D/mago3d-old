@@ -249,7 +249,7 @@ function changeLanguage(lang) {
 			}
 		});
 	} else {
-		alert(JS_MESSAGE["button.dobule.click"]);
+		alert(JS_MESSAGE["button.double.click"]);
 		return;
 	}
 }

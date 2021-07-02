@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * TODO 관리자를 등록하는 경우, 디렉토리도 생성해 줘야 함
  * 사용자
  * @author kimhj
  *

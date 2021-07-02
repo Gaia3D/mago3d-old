@@ -44,6 +44,92 @@ public class PasswordSupport {
 		}
 		return result;
 	}
+
+	/**
+	 * @param policy
+	 * @param userInfo
+	 * @return
+	 */
+	public static String validatePassword(Policy policy, UserInfo userInfo) {
+		// 임시 비밀번호 변경 화면
+		String password = userInfo.getPassword();
+		if(userInfo.getPassword() == null || "".equals(userInfo.getPassword())
+				|| userInfo.getPassword().length() < policy.getPasswordMinLength()
+				|| userInfo.getPassword().length() > policy.getPasswordMaxLength()
+				|| userInfo.getPasswordConfirm() == null || "".equals(userInfo.getPasswordConfirm())
+				|| userInfo.getPasswordConfirm().length() < policy.getPasswordMinLength()
+				|| userInfo.getPasswordConfirm().length() > policy.getPasswordMaxLength() ) {
+			log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ userInfo = {}", userInfo);
+			return "user.password.invalid";
+		}
+
+		String passwordExceptionChar = policy.getPasswordExceptionChar();
+		int exceptionCount = 0;
+		if(passwordExceptionChar != null && !"".equals(passwordExceptionChar)) {
+			// TODO ', " 도 특수기호 처리 해야 함
+			passwordExceptionChar += "'\"";
+			exceptionCount = passwordExceptionChar.length();
+			for(int i=0; i< exceptionCount; i++) {
+				log.info("@@@@@ i = {}, String = {}", i, passwordExceptionChar.substring(i, i+1));
+				if(password.indexOf(passwordExceptionChar.substring(i, i+1)) >= 0 ) {
+					return "user.password.exception.char";
+				}
+			}
+		}
+
+		// 숫자 개수
+		int digitCount = 0;
+		// 소문자 개수
+		int lowerCount = 0;
+		// 대문자 개수
+		int upperCount = 0;
+		// 특수문자 개수
+		int specialCount = 0;
+		// 연속된 동일문자 반복 개수
+		int continuousCharCount = 1;
+//		char beforeChar = 'a';
+		int count = password.length();
+		for(int i=0; i < count; i++) {
+			char ch = password.charAt(i);
+			if(Character.isDigit(ch)) {
+				digitCount++;
+			} else if(Character.isUpperCase(ch)) {
+				upperCount++;
+			} else if(Character.isLowerCase(ch)) {
+				lowerCount++;
+			} else {
+				specialCount++;
+			}
+
+		}
+
+		if(digitCount < policy.getPasswordNumberCount()) {
+			return "user.password.digit.invalid";
+		}
+		if(upperCount < policy.getPasswordEngUpperCount()) {
+			return "user.password.upper.invalid";
+		}
+		if(lowerCount < policy.getPasswordEngLowerCount()) {
+			return "user.password.lower.invalid";
+		}
+		if(specialCount < policy.getPasswordSpecialCharCount()) {
+			return "user.password.special.invalid";
+		}
+
+		// 연속된 동일 문자 체크
+		if(isContinueSameChar(password, policy.getPasswordContinuousCharCount())) {
+			return "user.password.continuous.char.invalid";
+		}
+//		if(continuousCharCount > policy.getPassword_continuous_char_count()) {
+//			return "user.password.continuous.char.invalid";
+//		}
+		// 연속된 순서 체크
+		if(isSequenceChar(password, policy.getPasswordContinuousCharCount())) {
+			return "user.password.continuous.char.invalid";
+		}
+
+		return null;
+	}
 	
 	/**
 	 * @param policy

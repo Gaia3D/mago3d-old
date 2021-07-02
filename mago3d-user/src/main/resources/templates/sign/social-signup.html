@@ -1,0 +1,63 @@
+﻿<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title><th:block th:text="#{signup.page.title}"></th:block></title>
+	<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+	<link rel="stylesheet" th:href="@{/css/{lang}/display.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+	<script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+</head>
+<body class="bggray">
+<div id="join">
+	<h2 class="join">회원가입</h2>
+	<form class="join-select " id="signupForm" th:object="${signupForm}" method="post" action="/sign/process-social-signup" onsubmit="return check()">
+		<fieldset>
+			<legend>회원가입</legend>
+
+			<label for="userId">아이디<span class="join-key">*</span></label>
+			<input type="text" id="userId" name="userId" class="inputid" />
+
+			<label for="userName">이름<span class="join-key">*</span></label>
+			<input type="text" id="userName" name="userName" class="inputname" th:field="*{userName}" readonly/>
+
+			<label for="email">이메일<span class="join-key">*</span></label>
+			<input type="text" id="email" name="email" class="inputemail" th:field="*{email}" style="width: 340px;" readonly/>
+
+			<button type="submit" class="btn-join">가입하기</button>
+		</fieldset>
+	</form>
+	<div class="copyright">ⓒ Gaia3d Corp. All Rights Reserved.</div>
+</div>
+<!-- /.join -->
+</body>
+<script type="text/javascript">
+	$(document).ready(function() {
+		if("[[${signupForm.errorCode}]]"){
+			var errorCode = "[[${signupForm.errorCode}]]";
+			alert(JS_MESSAGE[errorCode]);
+		}
+	});
+
+	function check() {
+		if ($("#userId").val() == "") {
+			alert("아이디를 입력하여 주십시오.");
+			$("#userId").focus();
+			return false;
+		}
+		if ($("#userName").val() == "") {
+			alert("이름을 입력하여 주십시오.");
+			$("#userName").focus();
+			return false;
+		}
+		if ($("#email").val() == "") {
+			alert("이메일을 입력하여 주십시오.");
+			$("#email").focus();
+			return false;
+		}
+	}
+
+</script>
+</html>

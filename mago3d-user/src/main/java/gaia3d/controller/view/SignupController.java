@@ -2,6 +2,7 @@ package gaia3d.controller.view;
 
 import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.SharingType;
+import gaia3d.domain.SigninType;
 import gaia3d.domain.SignupType;
 import gaia3d.domain.cache.CacheManager;
 import gaia3d.domain.data.DataGroup;
@@ -13,6 +14,7 @@ import gaia3d.service.DataGroupService;
 import gaia3d.service.UserService;
 import gaia3d.support.PasswordSupport;
 import gaia3d.utils.FileUtils;
+import gaia3d.utils.LocaleUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -26,10 +28,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static gaia3d.utils.LocaleUtils.getUserLocale;
 
 /**
  * Sign up 처리
@@ -62,13 +63,32 @@ public class SignupController {
 		log.info("@@ policy = {}", policy);
 
 		UserInfo userInfo = new UserInfo();
-		userInfo.setSignupType(SignupType.BASIC.getValue());
 
 		model.addAttribute("signupForm", userInfo);
 		model.addAttribute("policy", policy);
 		model.addAttribute("contentCacheVersion", policy.getContentCacheVersion());
 
 		return "/sign/signup";
+	}
+
+	/**
+	 * Social Sign up 페이지
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/social-signup")
+	public String socialSignup(HttpServletRequest request, Model model) {
+		Policy policy = CacheManager.getPolicy();
+		log.info("@@ policy = {}", policy);
+
+		UserInfo userInfo = new UserInfo();
+
+		model.addAttribute("signupForm", userInfo);
+		model.addAttribute("policy", policy);
+		model.addAttribute("contentCacheVersion", policy.getContentCacheVersion());
+
+		return "/sign/social-signup";
 	}
 
 	/**
@@ -86,50 +106,104 @@ public class SignupController {
 
 		Boolean userIdDuplication = userService.isUserIdDuplication(signupForm);
 		Boolean emailDuplication = userService.isEmailDuplication(signupForm.getEmail());
-		log.info("@@ signupForm = {}", signupForm);
+		log.info("@@ userIdDuplication = {}, emailDuplication = {}", userIdDuplication, emailDuplication);
 		if(userIdDuplication || emailDuplication) {
-			if(userIdDuplication)
-				signupForm.setErrorCode("user.id.duplication");
-			else
-				signupForm.setErrorCode("user.email.duplication");
+			if(userIdDuplication) signupForm.setErrorCode("user.id.duplication");
+			else signupForm.setErrorCode("user.email.duplication");
 
 			signupForm.setPassword(null);
+			signupForm.setPasswordConfirm(null);
 			model.addAttribute("signupForm", signupForm);
 			model.addAttribute("policy", policy);
-
 			return "/sign/signup";
 		}
 
-		signupForm.setPassword(signupForm.getNewPassword());
-		signupForm.setNewPassword(signupForm.getNewPassword());
-		signupForm.setNewPasswordConfirm(signupForm.getPasswordConfirm());
-		String errorcode = userValidate(policy, signupForm);
-
-		log.info("@@error = {}", errorcode);
-
-		if(errorcode != null){
+		String errorcode = validate(policy, signupForm);
+		if(errorcode != null) {
+			log.info("@@errorcode = {}", errorcode);
 			signupForm.setErrorCode(errorcode);
 			signupForm.setPassword(null);
+			signupForm.setPasswordConfirm(null);
 			model.addAttribute("signupForm", signupForm);
 			model.addAttribute("policy", policy);
 
 			return "/sign/signup";
 		}
 
+		signupForm.setSigninType(SigninType.BASIC.toString());
+		signupForm.setSignupType(SignupType.BASIC.toString());
 		signupForm.setUserGroupId(UserGroupType.USER.getValue());
 		signupForm.setStatus(UserStatus.WAITING_APPROVAL.getValue());
-		log.info("signupForm  "+signupForm);
+		userService.insertUser(signupForm);
 
-		String dataGroupPath = signupForm.getUserId() + "/basic/";
-
-		try{
-			userService.insertUser(signupForm);
-			initUserDir(request, signupForm);
-		}catch (Exception e){
-			FileUtils.deleteFileRecursive(dataGroupPath);
+		try {
+			createUserDataGroupDirectory(LocaleUtils.getUserLocale(request), signupForm.getUserId(), signupForm.getUserId() + "/basic/");
+		} catch (Exception e) {
+			FileUtils.deleteFileRecursive(propertiesConfig.getUserDataServicePath() + signupForm.getUserId() + "/basic/");
 			userService.deleteUser(signupForm.getUserId());
+			signupForm.setErrorCode("user.data.group.directory.make.fail");
+			signupForm.setPassword(null);
+			signupForm.setPasswordConfirm(null);
 			model.addAttribute("signupForm", signupForm);
 			return "/sign/signup";
+		}
+
+		return "redirect:/sign/signup-complete";
+	}
+
+	/**
+	 * Sign up 처리
+	 * @param request
+	 * @param signupForm
+	 * @param bindingResult
+	 * @param model
+	 * @return
+	 */
+	@PostMapping(value = "/process-social-signup")
+	public String processSocialSignup(HttpServletRequest request, @Valid @ModelAttribute("signupForm") UserInfo signupForm, BindingResult bindingResult, Model model) {
+		log.info("@@ signupForm = {}", signupForm);
+		Policy policy = CacheManager.getPolicy();
+
+		Boolean userIdDuplication = userService.isUserIdDuplication(signupForm);
+		Boolean emailDuplication = userService.isEmailDuplication(signupForm.getEmail());
+		log.info("@@ userIdDuplication = {}, emailDuplication = {}", userIdDuplication, emailDuplication);
+		if(userIdDuplication || emailDuplication) {
+			if(userIdDuplication) signupForm.setErrorCode("user.id.duplication");
+			else signupForm.setErrorCode("user.email.duplication");
+
+			signupForm.setPassword(null);
+			signupForm.setPasswordConfirm(null);
+			model.addAttribute("signupForm", signupForm);
+			model.addAttribute("policy", policy);
+			return "/sign/social-signup";
+		}
+
+		if(!isValidEmail(signupForm.getEmail())){
+			log.info("@@ invalid email = {}", signupForm.getEmail());
+			signupForm.setErrorCode("user.email.invalid");
+			signupForm.setPassword(null);
+			signupForm.setPasswordConfirm(null);
+			model.addAttribute("signupForm", signupForm);
+			model.addAttribute("policy", policy);
+			return "/sign/social-signup";
+		}
+
+		signupForm.setSigninType(SigninType.SOCIAL.toString());
+		signupForm.setSignupType(SignupType.SOCIAL.toString());
+		signupForm.setUserGroupId(UserGroupType.USER.getValue());
+		signupForm.setStatus(UserStatus.WAITING_APPROVAL.getValue());
+		userService.insertUser(signupForm);
+
+		try {
+			createUserDataGroupDirectory(LocaleUtils.getUserLocale(request), signupForm.getUserId(), signupForm.getUserId() + "/basic/");
+		}catch (Exception e){
+			FileUtils.deleteFileRecursive(propertiesConfig.getUserDataServicePath() + signupForm.getUserId() + "/basic/");
+			userService.deleteUser(signupForm.getUserId());
+			signupForm.setErrorCode("user.data.group.directory.make.fail");
+			signupForm.setPassword(null);
+			signupForm.setPasswordConfirm(null);
+			model.addAttribute("signupForm", signupForm);
+			return "/sign/social-signup";
 		}
 
 		return "redirect:/sign/signup-complete";
@@ -143,7 +217,6 @@ public class SignupController {
 	 */
 	@GetMapping("/signup-complete")
 	public String signupComplete(HttpServletRequest request, Model model) {
-
 		return "/sign/signup-complete";
 	}
 
@@ -152,12 +225,10 @@ public class SignupController {
 	 * @param userInfo
 	 * @return
 	 */
-	private String userValidate(Policy policy, UserInfo userInfo) {
-		String errorCode = null;
-		if(SignupType.findBy(userInfo.getSignupType()) == SignupType.BASIC)
-			errorCode = PasswordSupport.validateUserPassword(policy, userInfo);
-		if(errorCode != null)
-			return errorCode;
+	private String validate(Policy policy, UserInfo userInfo) {
+		String errorCode = PasswordSupport.validatePassword(policy, userInfo);
+		if(errorCode != null) return errorCode;
+
 		if(!isValidEmail(userInfo.getEmail())){
 			log.info(userInfo.getEmail());
 			return "user.email.invalid";
@@ -177,30 +248,18 @@ public class SignupController {
 		return err;
 	}
 
-	private void initUserDir(HttpServletRequest request, UserInfo userInfo) throws Exception {
+	private void createUserDataGroupDirectory(Locale locale, String userId, String dataGroupPath) throws Exception {
 		// 데이터 업로딩 경로 생성
-		String userId = userInfo.getUserId();
 		DataGroup dataGroup = new DataGroup();
-		dataGroup.setUserId(userId);
-
-		String dataGroupPath = userId + "/basic/";
-
-		DataGroup basicDataGroup = dataGroupService.getBasicDataGroup(dataGroup);
-		if(basicDataGroup == null) {
-			dataGroup.setDataGroupKey("basic");
-			dataGroup.setDataGroupName(messageSource.getMessage("common.basic", null, getUserLocale(request)));
-			dataGroup.setDataGroupPath(propertiesConfig.getUserDataServicePath() + dataGroupPath);
-			dataGroup.setSharing(SharingType.PUBLIC.name().toLowerCase());
-			dataGroup.setMetainfo("{\"isPhysical\": false}");
-
-			dataGroupService.insertBasicDataGroup(dataGroup);
-		}
-
+		dataGroup.setDataGroupKey("basic");
+		dataGroup.setDataGroupName(messageSource.getMessage("common.basic", null, locale));
+		dataGroup.setDataGroupPath(propertiesConfig.getUserDataServicePath() + dataGroupPath);
+		dataGroup.setSharing(SharingType.PUBLIC.name().toLowerCase());
+		dataGroup.setMetainfo("{\"isPhysical\": false}");
+		dataGroupService.insertBasicDataGroup(dataGroup);
 		if(!FileUtils.makeDirectoryByPath(propertiesConfig.getUserDataServiceDir(), dataGroupPath)) {
 			dataGroupService.deleteDataGroup(dataGroup);
-			throw new Exception();
+			throw new Exception("user.data.group.directory.make.fail");
 		}
-
 	}
-
 }

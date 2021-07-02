@@ -160,6 +160,6 @@ function mapDataInfoList(pageNo, searchDataName, searchDataGroupId, searchDataTy
 			}
 		});
 	} else {
-		alert(JS_MESSAGE["button.dobule.click"]);
+		alert(JS_MESSAGE["button.double.click"]);
 	}
 }

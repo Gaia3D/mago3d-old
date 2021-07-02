@@ -45,7 +45,7 @@ public class FindPasswordController {
 		log.info("@@ policy = {}", policy);
 
 		UserInfo userInfo = new UserInfo();
-		userInfo.setSignupType(SignupType.BASIC.getValue());
+		userInfo.setSignupType(SignupType.BASIC.toString());
 
 		model.addAttribute("userInfo", userInfo);
 		model.addAttribute("policy", policy);
@@ -76,7 +76,7 @@ public class FindPasswordController {
 
 		if(findUserInfo == null)
 			errorcode = "user.info.notexist";
-		else if(findUserInfo.getSigninType().equals(SignupType.SOCIAL.getValue()))
+		else if(SignupType.SOCIAL == SignupType.valueOf(findUserInfo.getSigninType().toUpperCase()))
 			errorcode = "user.signin.social";
 
 		log.info("@@error = {}", errorcode);

@@ -22,7 +22,7 @@ create table user_info(
 	address						varchar(256),
 	address_etc					varchar(1000),
 	status						varchar(20)							default '0',
-    signin_type					varchar(20)							default '1',
+    signin_type					varchar(20)							default 'BASIC',
 	user_role_check_yn			char(1)								default 'Y',
 	signin_count				bigint								default 0,
 	fail_signin_count			integer								default 0,

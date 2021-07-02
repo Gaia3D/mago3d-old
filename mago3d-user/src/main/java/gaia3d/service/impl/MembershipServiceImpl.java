@@ -25,7 +25,7 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @param membershipId
 	 * @return
 	 */
-	@Transactional
+	@Transactional(readOnly=true)
 	public Membership getMembershipById(Integer membershipId) {
 		return membershipMapper.getMembershipById(membershipId);
 	}
@@ -35,7 +35,7 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @param userId
 	 * @return
 	 */
-	@Transactional
+	@Transactional(readOnly=true)
 	public Membership getMembershipByUserId(String userId) {
 		return membershipMapper.getMembershipByUserId(userId);
 	}
@@ -45,7 +45,7 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @param userId
 	 * @return
 	 */
-	@Transactional
+	@Transactional(readOnly=true)
 	public MembershipUsage getUsageByUserId(String userId) {
 		return membershipMapper.getUsageByUserId(userId);
 	}
@@ -55,7 +55,7 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @param userId
 	 * @return
 	 */
-	@Transactional
+	@Transactional(readOnly=true)
 	public MembershipLog getLastLog(String userId) {
 		return membershipMapper.getLastLog(userId);
 	}
