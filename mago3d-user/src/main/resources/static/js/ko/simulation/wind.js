@@ -2,7 +2,7 @@ const SmltWind = function(magoInstance) {
 	this.magoInstance = magoInstance;
 	this._active = false;
 	this.position = {
-		destination : Cesium.Cartesian3.fromDegrees(127.00268356518497, 37.433816500134114, 1000),
+		destination : Cesium.Cartesian3.fromDegrees(126.69918823242188, 37.34914779663086, 1000),
 		orientation : {
 			heading : 0.004374180535735128,
 			pitch : -0.6638900518113893,
@@ -34,24 +34,34 @@ SmltWind.prototype.initCamera = function() {
 SmltWind.prototype.run = function() {
 	this.initCamera();
 	const orgin = this.magoInstance;
+	$.ajax({
+		url: "/api/wind/date",
+		type: "GET",
+		data: { date : '2019100708' },
+		dataType: "json",
+		headers: {"X-Requested-With": "XMLHttpRequest"},
+		success: function(geojson){
+			orgin.getMagoManager().weatherStation.addWind(geojson);
+		}
+	});
+
+	/*
 	MapControll.divideMap(function(e) {
 		const divided = e;
-		
 		$.ajax({
-			url: "/api/wind",
+			url: "/api/wind/date",
 			type: "GET",
-			data: { direction  : 'n', causality : 'before'},
+			data: { date : '2019090807' },
 			dataType: "json",
 			headers: {"X-Requested-With": "XMLHttpRequest"},
 			success: function(geojson){
 				divided.getMagoManager().weatherStation.addWind(geojson);
 			}
 		});
-		
 		$.ajax({
-			url: "/api/wind",
+			url: "/api/wind/date",
 			type: "GET",
-			data: { direction  : 'n', causality : 'after'},
+			data: { date : '2019090700' },
 			dataType: "json",
 			headers: {"X-Requested-With": "XMLHttpRequest"},
 			success: function(geojson){
@@ -59,6 +69,7 @@ SmltWind.prototype.run = function() {
 			}
 		});
 	});
+	*/
 }
 
 SmltWind.prototype.clear = function() {

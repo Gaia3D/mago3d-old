@@ -3,7 +3,9 @@ package gaia3d.weather.wind.service;
 import gaia3d.weather.json.Band;
 import gaia3d.weather.json.Color;
 import gaia3d.weather.json.Image;
+import gaia3d.weather.util.WindImageUtil;
 import gaia3d.weather.wind.domain.Wind;
+import gaia3d.weather.wind.domain.WindVariable;
 import gaia3d.weather.wind.service.Grib2Reader;
 import gaia3d.weather.wind.service.Reader;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,7 +59,7 @@ class Grib2ReaderTest {
 
     @Test
     void read() {
-        File file = Paths.get("src", "test", "resources", "OBS-QWM_2019090809.grib2").toFile();
+        File file = Paths.get("src", "test", "resources", "OBS-QWM_2019090700.grib2").toFile();
         Reader reader = new Grib2Reader();
         Wind wind = reader.read(file);
 
@@ -78,7 +80,7 @@ class Grib2ReaderTest {
 
     @Test
     void readVariable() {
-        File file = Paths.get("src", "test", "resources", "OBS-QWM_2019090809.grib2").toFile();
+        File file = Paths.get("src", "test", "resources", "OBS-QWM_2019100700.grb2").toFile();
         String location = file.getAbsolutePath();
 
         try (NetcdfFile netcdfFile = NetcdfFiles.open(location)) {

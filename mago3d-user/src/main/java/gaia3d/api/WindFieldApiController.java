@@ -29,4 +29,10 @@ public class WindFieldApiController extends WeatherApiController {
         return getJsonData(importer);
     }
 
+    @GetMapping("/date")
+    public ResponseEntity<?> getSimulationWindDate(SimulationWindDto param) {
+        SimulationJsonImporter importer = param.toSimulationWindDate(propertiesConfig);
+        return getJsonData(importer);
+    }
+
 }

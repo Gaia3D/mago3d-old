@@ -23,21 +23,26 @@ repositories {
 dependencies {
 
     // 참고 : https://docs.unidata.ucar.edu/netcdf-java/7.0/userguide/using_netcdf_java_artifacts.html
+
+    // 기상 데이터 관련 라이브러리
     implementation "edu.ucar:cdm-core:5.3.3"
-//    implementation "org.slf4j:slf4j-jdk14:1.7.30"
+    implementation "edu.ucar:grib:5.3.3"
+
+    // 로그
     implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.14.1'
     implementation 'org.apache.logging.log4j:log4j-core:2.14.1'
 
-    implementation "edu.ucar:grib:5.3.3"
-
+    // lombok
     compileOnly 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
     testCompileOnly 'org.projectlombok:lombok:1.18.20'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
 
+    // junit
     testImplementation(platform('org.junit:junit-bom:5.7.2'))
     testImplementation('org.junit.jupiter:junit-jupiter', 'org.assertj:assertj-core:3.20.2')
 
+    // jackson (json 파일 생성)
     implementation 'com.fasterxml.jackson.core:jackson-core:2.12.3'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.3'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'

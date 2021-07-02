@@ -20,7 +20,11 @@ public interface SimulationJsonImporter {
             for (Map<?, ?> feature : features) {
                 Map<?, ?> properties = (Map<?, ?>) feature.get("properties");
                 Map<String, String> image = (Map<String, String>) properties.get("image");
-                image.put("serviceUri", servicePath + image.get("uri"));
+                String serviceUri = image.get("uri");
+                if (servicePath != null) {
+                    serviceUri = servicePath + image.get("uri");
+                }
+                image.put("serviceUri", serviceUri);
             }
         } catch (IOException e) {
             LogMessageSupport.printMessage(e);

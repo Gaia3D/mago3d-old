@@ -20,11 +20,12 @@ class VariableUtilTest {
     @Test
     void getZVariableValues() throws IOException {
         // given
-        File file = Paths.get("src", "test", "resources", "OBS-QWM_2019090809.grib2").toFile();
+        //File file = Paths.get("src", "test", "resources", "OBS-QWM_2019090809.grib2").toFile();
+        File file = Paths.get("src", "test", "resources", "OBS-QWM_2019100700.grb2").toFile();
         String location = file.getAbsolutePath();
         NetcdfFile netcdfFile = NetcdfFiles.open(location);
         GridDataset gridDataset = GridDataset.open(location);
-        GridDatatype gridDataType = gridDataset.findGridDatatype("u-component_of_wind_isobaric");
+        GridDatatype gridDataType = gridDataset.findGridDatatype("v-component_of_wind_surface");
         // when
         float[] zValues = VariableUtil.getZVariableValues(gridDataType, netcdfFile);
         // then

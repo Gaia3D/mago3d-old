@@ -39,4 +39,22 @@ class WindImageUtilTest {
         assertThat(denormalize).isEqualTo(10.5f, withPrecision(0.1f));
     }
 
+    @Test
+    void denormalize1() {
+        float min = 0.18294367f, max = 1.659079f, value = 58;
+        int size = 255;
+        float denormalize = WindImageUtil.denormalize(min, max, value, size);
+        log.info(denormalize + "");
+        //assertThat(denormalize).isEqualTo(10.5f, withPrecision(0.1f));
+    }
+
+    @Test
+    void denormalize2() {
+        float min = 0.64571613f, max = 0.9848427f, value = 73;
+        int size = 255;
+        float denormalize = WindImageUtil.denormalize(min, max, value, size);
+        log.info(denormalize + "");
+        //assertThat(denormalize).isEqualTo(10.5f, withPrecision(0.1f));
+    }
+
 }

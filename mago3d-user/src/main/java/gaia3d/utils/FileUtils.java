@@ -274,21 +274,22 @@ public class FileUtils {
 		}
 		return result;
 	}
-	
-	public static String makeDirectory(String userId, UploadDirectoryType uploadDirectoryType, String targetDirectory) {
-		String today = DateUtils.getToday(FormatUtils.YEAR_MONTH_DAY_TIME14);
+
+	public static String makeDirectory(String userId, UploadDirectoryType uploadDirectoryType, String targetDirectory, String date) {
+		//String today = DateUtils.getToday(FormatUtils.YEAR_MONTH_DAY_TIME14);
+		String today = date;
 		String year = today.substring(0,4);
 		String month = today.substring(4,6);
 		String day = today.substring(6,8);
 		String sourceDirectory = targetDirectory;
-		
+
 		File rootDirectory = new File(sourceDirectory);
 		if(!rootDirectory.exists()) {
 			rootDirectory.mkdir();
 		}
-		
+
 		// 사용자 디렉토리
-		if(UploadDirectoryType.USERID_YEAR == uploadDirectoryType 
+		if(UploadDirectoryType.USERID_YEAR == uploadDirectoryType
 				|| UploadDirectoryType.USERID_YEAR_MONTH == uploadDirectoryType
 				|| UploadDirectoryType.USERID_YEAR_MONTH_DAY == uploadDirectoryType) {
 			sourceDirectory = sourceDirectory + userId + File.separator;
@@ -297,9 +298,9 @@ public class FileUtils {
 				userDirectory.mkdir();
 			}
 		}
-		
+
 		// 년
-		if(UploadDirectoryType.USERID_YEAR == uploadDirectoryType 
+		if(UploadDirectoryType.USERID_YEAR == uploadDirectoryType
 				|| UploadDirectoryType.USERID_YEAR_MONTH == uploadDirectoryType
 				|| UploadDirectoryType.USERID_YEAR_MONTH_DAY == uploadDirectoryType
 				|| UploadDirectoryType.YEAR  == uploadDirectoryType
@@ -314,7 +315,7 @@ public class FileUtils {
 				yearDirectory.mkdir();
 			}
 		}
-		
+
 		// 월
 		if(UploadDirectoryType.USERID_YEAR_MONTH == uploadDirectoryType
 				|| UploadDirectoryType.USERID_YEAR_MONTH_DAY == uploadDirectoryType
@@ -328,7 +329,7 @@ public class FileUtils {
 				monthDirectory.mkdir();
 			}
 		}
-		
+
 		// 일
 		if(UploadDirectoryType.USERID_YEAR_MONTH_DAY == uploadDirectoryType
 				|| UploadDirectoryType.YEAR_MONTH_DAY == uploadDirectoryType
@@ -339,10 +340,10 @@ public class FileUtils {
 				dayDirectory.mkdir();
 			}
 		}
-		
+
 		// 사용자 디렉토리
 		if(UploadDirectoryType.YEAR_USERID == uploadDirectoryType
-				|| UploadDirectoryType.YEAR_MONTH_USERID == uploadDirectoryType 
+				|| UploadDirectoryType.YEAR_MONTH_USERID == uploadDirectoryType
 				|| UploadDirectoryType.YEAR_MONTH_DAY_USERID == uploadDirectoryType) {
 			sourceDirectory = sourceDirectory + userId + File.separator;
 			File userDirectory = new File(sourceDirectory);
@@ -350,8 +351,13 @@ public class FileUtils {
 				userDirectory.mkdir();
 			}
 		}
-		
+
 		return sourceDirectory;
+	}
+
+	public static String makeDirectory(String userId, UploadDirectoryType uploadDirectoryType, String targetDirectory) {
+		String today = DateUtils.getToday(FormatUtils.YEAR_MONTH_DAY_TIME14);
+		return makeDirectory(userId, uploadDirectoryType, targetDirectory, today);
 	}
 	
 	public static String getFilePath(String dataGroupPath) {

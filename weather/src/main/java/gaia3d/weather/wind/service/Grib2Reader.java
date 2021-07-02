@@ -37,6 +37,7 @@ public class Grib2Reader implements Reader {
             GridDataset gridDataset = GridDataset.open(location);
 
             Map<WindVariable, List<Band>> bandMap = new HashMap<>();
+
             int[][][] u = null, v = null;
 
             for (WindVariable windVariable : WindVariable.values()) {
@@ -51,7 +52,7 @@ public class Grib2Reader implements Reader {
                 zValues = wind.getZValues();
 
                 // initialize
-                wind.init(gridDataType);
+                if (wind.getCoordinateSystem() == null) wind.init(gridDataType);
                 u = wind.getU();
                 v = wind.getV();
 
@@ -60,6 +61,7 @@ public class Grib2Reader implements Reader {
                 for (int z = 0; z < Objects.requireNonNull(zValues).length; z++) {
                     // read data (index < 0, get all values)
                     Array array = gridDataType.readDataSlice(0, z, -1, -1);
+                    array = array.flip(0);
                     float[][] datas = (float[][]) array.copyToNDJavaArray();
 
                     // create band
