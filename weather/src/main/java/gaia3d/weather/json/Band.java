@@ -1,31 +1,31 @@
 package gaia3d.weather.json;
 
-import gaia3d.weather.wind.WindVariable;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@Builder
 public class Band {
 
-    private BandInfo r;
-    private BandInfo g;
-    private BandInfo b;
+    private final double THRESHOLD = .0001;
+    private float min;
+    private float max;
 
-    public static List<Band> mapToList(Map<WindVariable, List<BandInfo>> bandMap) {
-        List<BandInfo> uBands = bandMap.get(WindVariable.U);
-        List<BandInfo> vBands = bandMap.get(WindVariable.V);
-        List<Band> bands = new ArrayList<>();
-        for (int i = 0; i < uBands.size(); i++) {
-            bands.add(new Band(uBands.get(i), vBands.get(i), new BandInfo()));
-        }
-        return bands;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Band bandInfo = (Band) o;
+        return Math.abs(min - bandInfo.min) < THRESHOLD &&
+                Math.abs(max - bandInfo.max) < THRESHOLD;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(THRESHOLD, min, max);
+    }
 }

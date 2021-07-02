@@ -23,10 +23,12 @@ repositories {
 dependencies {
 
     // 참고 : https://docs.unidata.ucar.edu/netcdf-java/7.0/userguide/using_netcdf_java_artifacts.html
-    implementation "edu.ucar:cdm-core:${netcdfJavaVersion}"
-    implementation "org.slf4j:slf4j-jdk14:${slf4jVersion}"
+    implementation "edu.ucar:cdm-core:5.3.3"
+//    implementation "org.slf4j:slf4j-jdk14:1.7.30"
+    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.14.1'
+    implementation 'org.apache.logging.log4j:log4j-core:2.14.1'
 
-    implementation "edu.ucar:grib:${netcdfJavaVersion}"
+    implementation "edu.ucar:grib:5.3.3"
 
     compileOnly 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'

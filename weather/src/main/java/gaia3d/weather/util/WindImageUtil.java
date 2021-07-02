@@ -1,4 +1,4 @@
-package gaia3d.weather.wind;
+package gaia3d.weather.util;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -14,12 +14,13 @@ public class WindImageUtil {
         int[] bands = new int[2];
         BigDecimal bitSize = new BigDecimal(255);
         BigDecimal floatValue = new BigDecimal(value);
-
+        // band0 = value / 255
         BigDecimal band0 = floatValue.divide(bitSize, MathContext.DECIMAL64);
+        // band1 = band0 - (band0의 정수 부분) : band0의 소수 부분
         BigDecimal band1 = band0.subtract(new BigDecimal(band0.intValue()), MathContext.DECIMAL64);
 
-        bands[0] = band0.intValue();
-        bands[1] = band1.multiply(bitSize).intValue();
+        bands[0] = band0.intValue();    // band0의 정수 부분
+        bands[1] = band1.multiply(bitSize).intValue();  // (band1 * 255)의 정수 부분
         return bands;
     }
 
@@ -30,6 +31,7 @@ public class WindImageUtil {
      */
     public static float bandsToFloat(int[] bands) {
         BigDecimal bitSize = new BigDecimal(255);
+        // band0 * 255 + band1
         return new BigDecimal(bands[0])
                 .multiply(bitSize)
                 .add(new BigDecimal(bands[1])).floatValue();
@@ -44,9 +46,11 @@ public class WindImageUtil {
      * @return 정규화 된 값
      */
     public static float normalize(float min, float max, float value, int size) {
+        // range = max - min
         BigDecimal range = new BigDecimal(max).subtract(new BigDecimal(min));
-        return new BigDecimal(value)
-                .subtract(new BigDecimal(min))
+        // normalize = (value - min) / (max - min) * size
+        return (new BigDecimal(value)
+                .subtract(new BigDecimal(min)))
                 .divide(range, MathContext.DECIMAL64)
                 .multiply(new BigDecimal(size)).floatValue();
     }
@@ -60,7 +64,9 @@ public class WindImageUtil {
      * @return 실제 값
      */
     public static float denormalize(float min, float max, float value, int size) {
+        // range = max - min
         BigDecimal range = new BigDecimal(max).subtract(new BigDecimal(min));
+        // denormalize = value / size * (max - min) + min
         return new BigDecimal(value)
                 .divide(new BigDecimal(size), MathContext.DECIMAL64)
                 .multiply(range)

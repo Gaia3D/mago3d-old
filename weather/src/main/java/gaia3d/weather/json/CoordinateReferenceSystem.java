@@ -1,30 +1,36 @@
 package gaia3d.weather.json;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 import ucar.nc2.dt.GridCoordSystem;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Slf4j
-@ToString
 @Getter
-@AllArgsConstructor
+@Builder
+@ToString
 public class CoordinateReferenceSystem {
-    private String type;
-    private Map<String, Object> properties;
 
+    public static final String NAME = "name";
+    private final String type;
+    private final Map<String, Object> properties;
+
+    /**
+     * CoordinateReferenceSystem(CRS) 생성
+     * @param coordinateSystem GridCoordSystem
+     * @return CoordinateReferenceSystem 지리좌표체계
+     */
     public static CoordinateReferenceSystem valueOf(GridCoordSystem coordinateSystem) {
-        String type = "name";
         Map<String, Object> properties = new HashMap<>();
-
         if (coordinateSystem.isLatLon()) {
-            properties.put("name", "urn:ogc:def:crs:EPSG::4326");
+            properties.put(NAME, "urn:ogc:def:crs:EPSG::4326");
         }
-        return new CoordinateReferenceSystem(type, properties);
+        return CoordinateReferenceSystem.builder()
+                .type(NAME)
+                .properties(properties)
+                .build();
     }
 
 }
