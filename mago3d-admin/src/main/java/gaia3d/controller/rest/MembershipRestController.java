@@ -1,8 +1,6 @@
 package gaia3d.controller.rest;
 
 import gaia3d.controller.AuthorizationController;
-import gaia3d.domain.Status;
-import gaia3d.domain.membership.MembershipLog;
 import gaia3d.service.MembershipService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,17 +33,15 @@ public class MembershipRestController implements AuthorizationController {
 	 * @param userId
 	 * @return
 	 */
-	@PostMapping(value = "/{userId}/approvals")
-	public Map<String, Object> approval(HttpServletRequest request, @PathVariable String userId) {
-		log.info("@@@@@@@ approval , userId = {}", userId);
+	@PostMapping(value = "/approvals/{membershipLogId}")
+	public Map<String, Object> approval(HttpServletRequest request, @PathVariable Long membershipLogId) {
+		log.info("@@@@@@@ approval , membershipLogId = {}", membershipLogId);
 
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
 		String message = null;
 
-		MembershipLog membershipLog = membershipService.getLastLog(userId);
-		membershipLog.setStatus(Status.APPROVAL.getValue());
-		membershipService.updateLogStatus(membershipLog);
+		membershipService.updateUserMembership(membershipLogId);
 		int statusCode = HttpStatus.OK.value();
 
 		result.put("statusCode", statusCode);

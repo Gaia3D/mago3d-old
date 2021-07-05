@@ -41,10 +41,10 @@
                                         <label for="searchMembershipId" th:text="#{search.membership}"></label>
                                         <select id="searchMembershipId" name="searchMembershipId" class="selectBoxClass">
                                             <option value="" th:text="#{select}"></option>
-                                            <option value="1">BASIC</option>
-                                            <option value="2">SILVER</option>
-                                            <option value="3">GOLD</option>
-                                            <option value="4">PLATINUM</option>
+                                            <option value="BASIC">BASIC</option>
+                                            <option value="SILVER">SILVER</option>
+                                            <option value="GOLD">GOLD</option>
+                                            <option value="PLATINUM">PLATINUM</option>
                                         </select>
                                     </div>
 
@@ -97,14 +97,14 @@
                                         <col class="col-number"></col>
                                         <col class="col-name"></col>
                                         <col class="col-name"></col>
-                                        <col class="col-name"></col>
-                                        <col class="col-name"></col>
-                                        <col class="col-name"></col>
-                                        <col class="col-name"></col>
+                                        <col class="col-number"></col>
+                                        <col class="col-number"></col>
+                                        <col class="col-functions"></col>
                                     </colgroup>
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="col-checkbox"><label for="chkAll" class="hiddenTag"></label><input type="checkbox" id="chkAll" name="chkAll" /></th>
+                                            <th scope="col" class="col-checkbox">
+                                                <label for="chkAll" class="hiddenTag"></label><input type="checkbox" id="chkAll" name="chkAll" /></th>
                                             <th scope="col" class="col-number" th:text="#{number}"></th>
                                             <th scope="col">멤버십</th>
                                             <th scope="col">아이디</th>
@@ -116,7 +116,7 @@
                                     <tbody>
 <th:block th:if="${#lists.isEmpty(membershipUsageList)}">
                                         <tr>
-                                            <td colspan="11" class="col-none">사용량 목록이 존재하지 않습니다.</td>
+                                            <td colspan="7" class="col-none">사용량 목록이 존재하지 않습니다.</td>
                                         </tr>
 </th:block>
 <th:block th:unless="${#lists.isEmpty(membershipUsageList)}" th:each="membershipUsage : ${membershipUsageList}">
@@ -128,8 +128,8 @@
                                             <td class="col-number" th:text="${pagination.rowNumber - membershipUsageStat.index}"></td>
                                             <td class="col-name" th:text="${membershipUsage.membershipName}"></td>
                                             <td class="col-name" th:text="${membershipUsage.userId}"></td>
-                                            <td class="col-name" th:text="|${membershipUsage.useUploadFileSize} / ${membershipUsage.uploadFileSize} MB |"></td>
-                                            <td class="col-name" th:text="|${membershipUsage.useConvertFileCount} / ${membershipUsage.convertFileCount} 건 |"></td>
+                                            <td class="col-count" th:text="|${membershipUsage.useUploadFileSize} / ${membershipUsage.uploadFileSize} MB |"></td>
+                                            <td class="col-count" th:text="|${membershipUsage.useConvertFileCount} / ${membershipUsage.convertFileCount} 건 |"></td>
                                             <td class="col-type">
                                                 <p th:text="${#temporals.format(membershipUsage.insertDate, 'yyyy-MM-dd HH:mm')}"></p>
                                             </td>
@@ -174,102 +174,6 @@
 	$("#chkAll").click(function() {
 		$(":checkbox[name=userId]").prop("checked", this.checked);
 	});
-
-	// 사용자 그룹 정보
-	var userGroupDialog = $("#userGroupInfoDialog").dialog({
-		autoOpen: false,
-		width: 700,
-		height: 400,
-		modal: true,
-		resizable: false
-	});
-
-	// 사용자 그룹 정보
-	/*function detailUserGroup(userGroupId) {
-		userGroupDialog.dialog("open");
-
-		$.ajax({
-			url: "/user-groups/detail",
-			data: {"userGroupId": userGroupId},
-			type: "GET",
-			headers: {"X-Requested-With": "XMLHttpRequest"},
-			dataType: "json",
-			success: function(msg){
-				if(msg.statusCode <= 200) {
-					$("#userGroupNameInfo").html(msg.userGroup.userGroupName);
-					$("#userGroupKeyInfo").html(msg.userGroup.userGroupKey);
-					$("#basicInfo").html(msg.userGroup.basic?'기본':'선택');
-					$("#availableInfo").html(msg.userGroup.available?'사용':'미사용');
-					$("#descriptionInfo").html(msg.userGroup.description);
-				} else {
-					alert(JS_MESSAGE[msg.errorCode]);
-				}
-			},
-			error: function(request, status, error){
-				alert(JS_MESSAGE["ajax.error.message"]);
-			}
-		});
-	}*/
-
-    // 대기 사용자 승인
-    /*var approvalFlag = true;
-    function approval(userId) {
-        if(approvalFlag) {
-            approvalFlag = false;
-            var formData = $("#searchForm").serialize();
-            $.ajax({
-                url: "/users/" + userId + "/approvals",
-                type: "POST",
-                headers: {"X-Requested-With": "XMLHttpRequest"},
-                data: formData,
-                success: function(msg){
-                    if(msg.statusCode <= 200) {
-                        alert(JS_MESSAGE["update"]);
-                        location.reload();
-                    } else {
-                        alert(JS_MESSAGE[msg.errorCode]);
-                    }
-                    approvalFlag = true;
-                },
-                error:function(request,status,error){
-                    alert(JS_MESSAGE["ajax.error.message"]);
-                    approvalFlag = true;
-                }
-            });
-        } else {
-            alert(JS_MESSAGE["button.double.click"]);
-        }
-    }*/
-
-    // 멤버십 승인
-    /*var approvalMembershipFlag = true;
-    function approvalMembership(userId) {
-        if(approvalMembershipFlag) {
-            approvalMembershipFlag = false;
-            var formData = $("#searchForm").serialize();
-            $.ajax({
-                url: "/memberships/" + userId + "/approvals",
-                type: "POST",
-                headers: {"X-Requested-With": "XMLHttpRequest"},
-                data: formData,
-                success: function(msg){
-                    if(msg.statusCode <= 200) {
-                        alert(JS_MESSAGE["update"]);
-                        location.reload();
-                    } else {
-                        alert(JS_MESSAGE[msg.errorCode]);
-                    }
-                    approvalMembershipFlag = true;
-                },
-                error:function(request,status,error){
-                    alert(JS_MESSAGE["ajax.error.message"]);
-                    approvalFlag = true;
-                }
-            });
-        } else {
-            alert(JS_MESSAGE["button.double.click"]);
-        }
-    }*/
 
 	function searchCheck() {
 		if($("#searchOption").val() == "1") {

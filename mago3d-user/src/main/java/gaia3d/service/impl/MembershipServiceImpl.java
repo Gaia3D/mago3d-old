@@ -46,8 +46,8 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @return
 	 */
 	@Transactional(readOnly=true)
-	public MembershipUsage getUsageByUserId(String userId) {
-		return membershipMapper.getUsageByUserId(userId);
+	public MembershipUsage getMembershipUsageByUserId(String userId) {
+		return membershipMapper.getMembershipUsageByUserId(userId);
 	}
 
 	/**
@@ -66,8 +66,8 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @return
 	 */
 	@Transactional
-	public int insertUsage(MembershipUsage membershipUsage) {
-		return membershipMapper.insertUsage(membershipUsage);
+	public int insertMembershipUsage(MembershipUsage membershipUsage) {
+		return membershipMapper.insertMembershipUsage(membershipUsage);
 	}
 	
 	/**
@@ -76,8 +76,8 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @return
 	 */
 	@Transactional
-	public int insertLog(MembershipLog membershipLog) {
-		return membershipMapper.insertLog(membershipLog);
+	public int insertMembershipLog(MembershipLog membershipLog) {
+		return membershipMapper.insertMembershipLog(membershipLog);
 	}
 
 	/**
@@ -86,8 +86,8 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @return
 	 */
 	@Transactional
-	public int updateUsageFileCount(MembershipUsage membershipUsage) {
-		return membershipMapper.updateUsageFileCount(membershipUsage);
+	public int updateMembershipUsageFileCount(MembershipUsage membershipUsage) {
+		return membershipMapper.updateMembershipUsageFileCount(membershipUsage);
 	}
 
 	/**
@@ -96,8 +96,8 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @return
 	 */
 	@Transactional
-	public int updateLogStatus(MembershipLog membershipLog) {
-		return membershipMapper.updateLogStatus(membershipLog);
+	public int updateMembershipLog(MembershipLog membershipLog) {
+		return membershipMapper.updateMembershipLog(membershipLog);
 	}
 
 	/**

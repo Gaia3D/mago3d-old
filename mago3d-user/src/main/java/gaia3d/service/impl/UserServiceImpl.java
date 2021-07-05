@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
 		membershipUsage.setMembershipId(membership.getMembershipId());
 		membershipUsage.setMembershipName(membership.getMembershipName());
 		membershipUsage.setUserId(userInfo.getUserId());
-		membershipService.insertUsage(membershipUsage);
+		membershipService.insertMembershipUsage(membershipUsage);
 
 		// 멤버십 로그
 		MembershipLog membershipLog = new MembershipLog();
@@ -112,7 +112,7 @@ public class UserServiceImpl implements UserService {
 		membershipLog.setCurrentMembershipId(membership.getMembershipId());
 		membershipLog.setRequestMembershipId(membership.getMembershipId());
 		membershipLog.setStatus(Status.APPROVAL.getValue());
-		membershipService.insertLog(membershipLog);
+		membershipService.insertMembershipLog(membershipLog);
 
 		return userMapper.insertUser(userInfo);
 	}

@@ -273,7 +273,7 @@ public class UploadDataRestController {
 		log.info("@@@@@@@@@@@@ uploadData = {}", uploadData);
 		uploadDataService.insertUploadData(uploadData, uploadDataFileList);
 
-		MembershipUsage membershipUsage = membershipService.getUsageByUserId(userId);
+		MembershipUsage membershipUsage = membershipService.getMembershipUsageByUserId(userId);
 		membershipUsage.setUseUploadFileSize(Double.valueOf(request.getParameter("fileSize")));
 		membershipService.updateUsage(membershipUsage);
 

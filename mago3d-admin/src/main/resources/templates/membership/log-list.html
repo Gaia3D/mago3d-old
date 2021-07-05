@@ -80,28 +80,28 @@
                                     <caption class="hiddenTag">멤버십 변경 요청 이력 목록</caption>
                                     <colgroup>
                                         <col class="col-checkbox"></col>
-                                        <col class="col-number"></col>
                                         <col class="col-name"></col>
                                         <col class="col-name"></col>
+                                        <col class="col-functions"></col>
+                                        <col class="col-functions"></col>
                                         <col class="col-name"></col>
-                                        <col class="col-name"></col>
-                                        <col class="col-name"></col>
-                                        <col class="col-name"></col>
+                                        <col class="col-functions"></col>
                                     </colgroup>
                                     <thead>
                                         <tr>
                                             <th scope="col" class="col-checkbox"><label for="chkAll" class="hiddenTag"></label><input type="checkbox" id="chkAll" name="chkAll" /></th>
                                             <th scope="col" class="col-number" th:text="#{number}"></th>
                                             <th scope="col">아이디</th>
-                                            <th scope="col">요청 사항</th>
-                                            <th scope="col">상태</th>
+                                            <th scope="col">변경 전</th>
+                                            <th scope="col">변경 후</th>
+                                            <th scope="col">멤버십 상태</th>
                                             <th scope="col">등록일</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 <th:block th:if="${#lists.isEmpty(membershipLogList)}">
                                         <tr>
-                                            <td colspan="11" class="col-none">멤버십 변경 요청 이력 목록이 존재하지 않습니다.</td>
+                                            <td colspan="7" class="col-none">멤버십 변경 요청 이력 목록이 존재하지 않습니다.</td>
                                         </tr>
 </th:block>
 <th:block th:unless="${#lists.isEmpty(membershipLogList)}" th:each="membershipLog : ${membershipLogList}">
@@ -112,13 +112,15 @@
                                             </td>
                                             <td class="col-number" th:text="${pagination.rowNumber - membershipLogStat.index}"></td>
                                             <td class="col-name" th:text="${membershipLog.userId}"></td>
-                                            <td class="col-name" th:text="|${membershipLog.currentMembershipName} 에서 ${membershipLog.requestMembershipName} 로 변경 |"></td>
+                                            <td class="col-functions" th:text="${membershipLog.currentMembershipName}"></td>
+                                            <td class="col-functions" th:text="${membershipLog.requestMembershipName}"></td>
                                             <td class="col-type" th:switch="${membershipLog.status}">
 
                                                 <th:block th:case="REQUEST">
                                                     <span class="icon-glyph glyph-emark off" style="margin-right:3px;"></span>
                                                     <span class="icon-text">대기중</span>
-                                                    <a href="#" th:onclick="approvalMembership([[${membershipLog.userId}]]); return false;" class="button" style="margin-left: 5px; text-decoration: none;">승인</a>
+                                                    <a href="#" th:onclick="approval([[${membershipLog.membershipLogId}]]); return false;" class="button"
+                                                       style="margin-left: 5px; text-decoration: none;">승인</a>
                                                 </th:block>
                                                 <th:block th:case="APPROVAL">
                                                     <span class="icon-glyph glyph-on on" style="margin-right:3px;"></span>
@@ -176,23 +178,14 @@
 		$(":checkbox[name=userId]").prop("checked", this.checked);
 	});
 
-	// 사용자 그룹 정보
-	/*var userGroupDialog = $("#userGroupInfoDialog").dialog({
-		autoOpen: false,
-		width: 700,
-		height: 400,
-		modal: true,
-		resizable: false
-	});*/
-
     // 멤버십 승인
-    var approvalMembershipFlag = true;
-    function approvalMembership(userId) {
-        if(approvalMembershipFlag) {
-            approvalMembershipFlag = false;
+    var approvalFlag = true;
+    function approval(membershipLogId) {
+        if(approvalFlag) {
+            approvalFlag = false;
             var formData = $("#searchForm").serialize();
             $.ajax({
-                url: "/memberships/" + userId + "/approvals",
+                url: "/memberships/approvals/" + membershipLogId,
                 type: "POST",
                 headers: {"X-Requested-With": "XMLHttpRequest"},
                 data: formData,
@@ -203,7 +196,7 @@
                     } else {
                         alert(JS_MESSAGE[msg.errorCode]);
                     }
-                    approvalMembershipFlag = true;
+                    approvalFlag = true;
                 },
                 error:function(request,status,error){
                     alert(JS_MESSAGE["ajax.error.message"]);

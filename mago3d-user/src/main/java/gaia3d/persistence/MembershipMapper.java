@@ -32,7 +32,7 @@ public interface MembershipMapper {
 	 * @param userId
 	 * @return
 	 */
-	MembershipUsage getUsageByUserId(String userId);
+	MembershipUsage getMembershipUsageByUserId(String userId);
 
 	/**
 	 * 멤버십 마지막 로그 상태 조회
@@ -46,28 +46,28 @@ public interface MembershipMapper {
 	 * @param membershipUsage
 	 * @return
 	 */
-	int insertUsage(MembershipUsage membershipUsage);
+	int insertMembershipUsage(MembershipUsage membershipUsage);
 
 	/**
 	 * 멤버십 로그 등록
 	 * @param membershipLog
 	 * @return
 	 */
-	int insertLog(MembershipLog membershipLog);
+	int insertMembershipLog(MembershipLog membershipLog);
 
 	/**
 	 * 멤버십 변환 횟수 갱신
 	 * @param membershipUsage
 	 * @return
 	 */
-	int updateUsageFileCount(MembershipUsage membershipUsage);
+	int updateMembershipUsageFileCount(MembershipUsage membershipUsage);
 
 	/**
 	 * 멤버십 로그 상태 변경
 	 * @param membershipLog
 	 * @return
 	 */
-	int updateLogStatus(MembershipLog membershipLog);
+	int updateMembershipLog(MembershipLog membershipLog);
 
 	/**
 	 * 멤버십 사용량 갱신

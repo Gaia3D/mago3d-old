@@ -1,6 +1,5 @@
 package gaia3d.service.impl;
 
-import gaia3d.domain.Status;
 import gaia3d.domain.membership.Membership;
 import gaia3d.domain.membership.MembershipLog;
 import gaia3d.domain.membership.MembershipUsage;
@@ -34,8 +33,8 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @return
 	 */
 	@Transactional
-	public Membership getMembershipById(Integer membershipId) {
-		return membershipMapper.getMembershipById(membershipId);
+	public Membership getMembership(Integer membershipId) {
+		return membershipMapper.getMembership(membershipId);
 	}
 
 	/**
@@ -54,18 +53,8 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @return
 	 */
 	@Transactional
-	public MembershipUsage getUsageByUserId(String userId) {
-		return membershipMapper.getUsageByUserId(userId);
-	}
-
-	/**
-	 * 멤버십 마지막 로그 상태 조회
-	 * @param userId
-	 * @return
-	 */
-	@Transactional
-	public MembershipLog getLastLog(String userId) {
-		return membershipMapper.getLastLog(userId);
+	public MembershipUsage getMembershipUsageByUserId(String userId) {
+		return membershipMapper.getMembershipUsageByUserId(userId);
 	}
 
 	/**
@@ -74,8 +63,8 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @return
 	 */
 	@Transactional
-	public Long getUsageTotalCount(MembershipUsage membershipUsage) {
-		return membershipMapper.getUsageTotalCount(membershipUsage);
+	public Long getMembershipUsageTotalCount(MembershipUsage membershipUsage) {
+		return membershipMapper.getMembershipUsageTotalCount(membershipUsage);
 	}
 
 	/**
@@ -84,8 +73,8 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @return
 	 */
 	@Transactional
-	public Long getLogTotalCount(MembershipLog membershipLog) {
-		return membershipMapper.getLogTotalCount(membershipLog);
+	public Long getMembershipLogTotalCount(MembershipLog membershipLog) {
+		return membershipMapper.getMembershipLogTotalCount(membershipLog);
 	}
 
 	/**
@@ -94,8 +83,8 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @return
 	 */
 	@Transactional
-	public List<MembershipUsage> getListUsage(MembershipUsage membershipUsage) {
-		return membershipMapper.getListUsage(membershipUsage);
+	public List<MembershipUsage> getListMembershipUsage(MembershipUsage membershipUsage) {
+		return membershipMapper.getListMembershipUsage(membershipUsage);
 	}
 
 	/**
@@ -104,8 +93,8 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @return
 	 */
 	@Transactional
-	public List<MembershipLog> getListLog(MembershipLog membershipLog) {
-		return membershipMapper.getListLog(membershipLog);
+	public List<MembershipLog> getListMembershipLog(MembershipLog membershipLog) {
+		return membershipMapper.getListMembershipLog(membershipLog);
 	}
 
 	/**
@@ -114,8 +103,8 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @return
 	 */
 	@Transactional
-	public int insertUsage(MembershipUsage membershipUsage) {
-		return membershipMapper.insertUsage(membershipUsage);
+	public int insertMembershipUsage(MembershipUsage membershipUsage) {
+		return membershipMapper.insertMembershipUsage(membershipUsage);
 	}
 	
 	/**
@@ -124,8 +113,8 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @return
 	 */
 	@Transactional
-	public int insertLog(MembershipLog membershipLog) {
-		return membershipMapper.insertLog(membershipLog);
+	public int insertMembershipLog(MembershipLog membershipLog) {
+		return membershipMapper.insertMembershipLog(membershipLog);
 	}
 
 	/**
@@ -134,30 +123,26 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @return
 	 */
 	@Transactional
-	public int updateUsageFileCount(MembershipUsage membershipUsage) {
-		return membershipMapper.updateUsageFileCount(membershipUsage);
+	public int updateMembershipUsageFileCount(MembershipUsage membershipUsage) {
+		return membershipMapper.updateMembershipUsageFileCount(membershipUsage);
 	}
 
 	/**
 	 * 멤버십 로그 상태 변경
-	 * @param membershipLog
+	 * @param membershipLogId
 	 * @return
 	 */
 	@Transactional
-	public int updateLogStatus(MembershipLog membershipLog) {
-		System.out.println(membershipLog.getStatus());
-		if(membershipLog.getStatus().equals(Status.APPROVAL.getValue())){
-			System.out.println("membershipLog.getStatus()");
-			UserInfo userInfo = new UserInfo();
-			userInfo.setUserId(membershipLog.getUserId());
-			userInfo.setMembershipId(membershipLog.getRequestMembershipId());
-			userMapper.updateUser(userInfo);
+	public int updateUserMembership(Long membershipLogId) {
+		MembershipLog dbMembershipLog = membershipMapper.getMembershipLog(membershipLogId);
 
-			MembershipUsage membershipUsage = new MembershipUsage();
-			membershipUsage.setUserId(membershipLog.getUserId());
-			membershipUsage.setMembershipId(membershipLog.getRequestMembershipId());
-			membershipMapper.updateUsage(membershipUsage);
-		}
-		return membershipMapper.updateLogStatus(membershipLog);
+		UserInfo userInfo = UserInfo.builder().userId(dbMembershipLog.getUserId()).membershipId(dbMembershipLog.getRequestMembershipId()).build();
+		userMapper.updateUser(userInfo);
+
+		MembershipUsage membershipUsage = MembershipUsage.builder().userId(dbMembershipLog.getUserId()).membershipId(dbMembershipLog.getRequestMembershipId()).build();
+		membershipMapper.updateMembershipUsage(membershipUsage);
+
+		MembershipLog membershipLog = MembershipLog.builder().membershipLogId(dbMembershipLog.getMembershipLogId()).build();
+		return membershipMapper.updateMembershipLog(membershipLog);
 	}
 }

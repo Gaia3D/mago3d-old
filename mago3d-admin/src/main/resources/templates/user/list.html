@@ -198,7 +198,6 @@
                                                 </th:block>
                                             </td>
                                             <td class="col-type">
-                                                <label th:for="|membershipName_${user.membershipName}|" class="hiddenTag"></label>
                                                 <a th:href="@{/membership/usage/list(userId=${user.userId})}" th:text="${user.membershipName}"></a>
                                             </td>
                                             <td class="col-type">

@@ -12,8 +12,8 @@
 	</select>
 
 	<!-- 멤버십 정보 조회 -->
-	<select id="getUsageByUserId" parameterType="string" resultType="membershipUsage">
-		/* getUsageByUserId */
+	<select id="getMembershipUsageByUserId" parameterType="string" resultType="membershipUsage">
+		/* getMembershipUsageByUserId */
 		SELECT A.*,
 			   B.membership_name AS membershipName,
 			   B.upload_file_size AS uploadFileSize,
@@ -34,8 +34,8 @@
 
 
 	<!-- 멤버십 등록 -->
-	<insert id="insertUsage" parameterType="membershipUsage">
-		/* insertUsage */
+	<insert id="insertMembershipUsage" parameterType="membershipUsage">
+		/* insertMembershipUsage */
 		<selectKey keyProperty="membershipUsageId" resultType="long" order="BEFORE">
 			SELECT NEXTVAL('membership_usage_seq')
 		</selectKey>
@@ -47,8 +47,8 @@
 	</insert>
 
 	<!-- 멤버십 로그 등록 -->
-	<insert id="insertLog" parameterType="membershipLog">
-		/* insertLog */
+	<insert id="insertMembershipLog" parameterType="membershipLog">
+		/* insertMembershipLog */
 		<selectKey keyProperty="membershipLogId" resultType="long" order="BEFORE">
 			SELECT NEXTVAL('membership_log_seq')
 		</selectKey>
@@ -60,8 +60,8 @@
 	</insert>
 
 	<!-- 멤버십 로그 상태 변경 -->
-	<update id="updateLogStatus" parameterType="membershipLog">
-		/* updateLogStatus */
+	<update id="updateMembershipLog" parameterType="membershipLog">
+		/* updateMembershipLog */
 		UPDATE membership_log
 		SET status = #{status}
 		WHERE membership_log_id = #{membershipLogId}
@@ -83,8 +83,8 @@
 	</update>
 
 	<!-- 멤버십 변환 횟수 갱신 -->
-	<update id="updateUsageFileCount" parameterType="membershipUsage">
-		/* updateUsageFileCount */
+	<update id="updateMembershipUsageFileCount" parameterType="membershipUsage">
+		/* updateMembershipUsageFileCount */
 		UPDATE membership_usage
 		SET use_convert_file_count = use_convert_file_count + 1,
 			update_date = NOW()

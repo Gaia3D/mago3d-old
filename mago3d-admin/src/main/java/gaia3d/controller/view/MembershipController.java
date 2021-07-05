@@ -11,10 +11,13 @@ import gaia3d.domain.user.UserSession;
 import gaia3d.service.MembershipService;
 import gaia3d.service.PolicyService;
 import gaia3d.support.SQLInjectSupport;
+import gaia3d.utils.DateUtils;
+import gaia3d.utils.FormatUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,8 +42,6 @@ public class MembershipController implements AuthorizationController {
 	@Autowired
 	private PolicyService policyService;
 
-	private static final long PAGE_LIST_COUNT = 5L;
-
 	/**
 	 * 사용량 목록
 	 * @param request
@@ -51,29 +52,35 @@ public class MembershipController implements AuthorizationController {
 	 */
 	@GetMapping(value = "/usage/list")
 	public String usageList(HttpServletRequest request, @RequestParam(defaultValue="1") String pageNo, MembershipUsage membershipUsage, Model model) {
+		log.info("@@ membershipUsage = {}", membershipUsage);
 
-		log.info("..........................." + membershipUsage);
 		membershipUsage.setSearchWord(SQLInjectSupport.replaceSqlInection(membershipUsage.getSearchWord()));
 		membershipUsage.setOrderWord(SQLInjectSupport.replaceSqlInection(membershipUsage.getOrderWord()));
-		//membershipUsage.setSearchMembershipId(Integer.parseInt(SQLInjectSupport.replaceSqlInection(String.valueOf(membershipUsage.getSearchMembershipId()))));
 
 		String roleCheckResult = roleValidate(request);
 		if(roleValidate(request) != null) return roleCheckResult;
 
-		long totalCount = membershipService.getUsageTotalCount(membershipUsage);
+		String today = DateUtils.getToday(FormatUtils.YEAR_MONTH_DAY);
+		if(!ObjectUtils.isEmpty(membershipUsage.getStartDate())) {
+			membershipUsage.setStartDate(membershipUsage.getStartDate().substring(0, 8) + DateUtils.START_TIME);
+		}
+		if(!ObjectUtils.isEmpty(membershipUsage.getEndDate())) {
+			membershipUsage.setEndDate(membershipUsage.getEndDate().substring(0, 8) + DateUtils.END_TIME);
+		}
+
+		long totalCount = membershipService.getMembershipUsageTotalCount(membershipUsage);
 		Pagination pagination = new Pagination(request.getRequestURI(),
 										getSearchParameters(PageType.LIST, membershipUsage),
 										totalCount,
 										Long.parseLong(pageNo),
-										membershipUsage.getListCounter(),
-										PAGE_LIST_COUNT);
+										membershipUsage.getListCounter());
 
 		membershipUsage.setOffset(pagination.getOffset());
 		membershipUsage.setLimit(pagination.getPageRows());
 
 		List<MembershipUsage> membershipUsageList = new ArrayList<>();
 		if(totalCount > 0l) {
-			membershipUsageList = membershipService.getListUsage(membershipUsage);
+			membershipUsageList = membershipService.getListMembershipUsage(membershipUsage);
 		}
 
 		model.addAttribute(pagination);
@@ -98,25 +105,31 @@ public class MembershipController implements AuthorizationController {
 		String roleCheckResult = roleValidate(request);
 		if(roleValidate(request) != null) return roleCheckResult;
 
-		long totalCount = membershipService.getLogTotalCount(membershipLog);
+		String today = DateUtils.getToday(FormatUtils.YEAR_MONTH_DAY);
+		if(!ObjectUtils.isEmpty(membershipLog.getStartDate())) {
+			membershipLog.setStartDate(membershipLog.getStartDate().substring(0, 8) + DateUtils.START_TIME);
+		}
+		if(!ObjectUtils.isEmpty(membershipLog.getEndDate())) {
+			membershipLog.setEndDate(membershipLog.getEndDate().substring(0, 8) + DateUtils.END_TIME);
+		}
+
+		long totalCount = membershipService.getMembershipLogTotalCount(membershipLog);
 		Pagination pagination = new Pagination(request.getRequestURI(),
 				getSearchParameters(PageType.LIST, membershipLog),
 				totalCount,
 				Long.parseLong(pageNo),
-				membershipLog.getListCounter(),
-				PAGE_LIST_COUNT);
+				membershipLog.getListCounter());
 
 		membershipLog.setOffset(pagination.getOffset());
 		membershipLog.setLimit(pagination.getPageRows());
 
 		List<MembershipLog> membershipLogList = new ArrayList<>();
 		if(totalCount > 0l) {
-			membershipLogList = membershipService.getListLog(membershipLog);
+			membershipLogList = membershipService.getListMembershipLog(membershipLog);
 		}
 
 		model.addAttribute(pagination);
 		model.addAttribute("membershipLogList", membershipLogList);
-
 
 		return "/membership/log-list";
 	}

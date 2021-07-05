@@ -53,7 +53,7 @@ public class MembershipController {
 	 * @return
 	 */
 	@GetMapping(value = "/insert/log/{membershipId}")
-	public String insertLog(HttpServletRequest request, Model model, @PathVariable String membershipId) {
+	public String insertMembershipLog(HttpServletRequest request, Model model, @PathVariable String membershipId) {
 
 		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
 
@@ -70,7 +70,7 @@ public class MembershipController {
 		newMembershipLog.setRequestMembershipId(Integer.parseInt(membershipId));
 		newMembershipLog.setStatus(Status.REQUEST.getValue());
 		newMembershipLog.setUserId(userSession.getUserId());
-		membershipService.insertLog(newMembershipLog);
+		membershipService.insertMembershipLog(newMembershipLog);
 
 		return "/membership/insert-complete";
 	}
@@ -88,7 +88,7 @@ public class MembershipController {
 		MembershipLog membershipLog = membershipService.getLastLog(userSession.getUserId());
 		membershipLog.setStatus(Status.CANCEL.getValue());
 
-		membershipService.updateLogStatus(membershipLog);
+		membershipService.updateMembershipLog(membershipLog);
 
 		return "/membership/cancel-complete";
 	}

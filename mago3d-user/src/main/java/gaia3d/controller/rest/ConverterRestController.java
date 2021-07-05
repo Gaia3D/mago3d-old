@@ -72,8 +72,8 @@ public class ConverterRestController {
 		converterService.insertConverter(converterJob);
 
 		// 멤버십 변환 횟수 갱신
-		MembershipUsage membershipUsage = membershipService.getUsageByUserId(userSession.getUserId());
-		membershipService.updateUsageFileCount(membershipUsage);
+		MembershipUsage membershipUsage = membershipService.getMembershipUsageByUserId(userSession.getUserId());
+		membershipService.updateMembershipUsageFileCount(membershipUsage);
 
 		int statusCode = HttpStatus.OK.value();
 		

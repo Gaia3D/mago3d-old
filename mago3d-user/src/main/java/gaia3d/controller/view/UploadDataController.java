@@ -112,7 +112,7 @@ public class UploadDataController {
 		if(totalCount > 0L) {
 			uploadDataList = uploadDataService.getListUploadData(uploadData);
 		}
-		MembershipUsage membershipUsage = membershipService.getUsageByUserId(userSession.getUserId());
+		MembershipUsage membershipUsage = membershipService.getMembershipUsageByUserId(userSession.getUserId());
 
 		model.addAttribute("membershipUsage", membershipUsage);
 		model.addAttribute(pagination);
@@ -162,7 +162,7 @@ public class UploadDataController {
 		
 		String acceptedFiles = policyService.getUserUploadType();
 
-		MembershipUsage membershipUsage = membershipService.getUsageByUserId(userSession.getUserId());
+		MembershipUsage membershipUsage = membershipService.getMembershipUsageByUserId(userSession.getUserId());
 
 		model.addAttribute("membershipUsage", membershipUsage);
 		model.addAttribute("uploadData", uploadData);

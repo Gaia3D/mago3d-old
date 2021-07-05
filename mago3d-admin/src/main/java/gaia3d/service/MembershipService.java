@@ -13,7 +13,7 @@ public interface MembershipService {
      * @param membershipId
      * @return
      */
-    Membership getMembershipById(Integer membershipId);
+    Membership getMembership(Integer membershipId);
 
     /**
      * 멤버십 조회
@@ -27,69 +27,62 @@ public interface MembershipService {
      * @param userId
      * @return
      */
-    MembershipUsage getUsageByUserId(String userId);
-
-    /**
-     * 멤버십 마지막 로그 상태 조회
-     * @param userId
-     * @return
-     */
-    MembershipLog getLastLog(String userId);
+    MembershipUsage getMembershipUsageByUserId(String userId);
     
     /**
      * 멤버십 사용량 총 건수
      * @param membershipUsage
      * @return
      */
-    Long getUsageTotalCount(MembershipUsage membershipUsage);
+    Long getMembershipUsageTotalCount(MembershipUsage membershipUsage);
 
     /**
      * 멤버십 로그 총 건수
      * @param membershipLog
      * @return
      */
-    Long getLogTotalCount(MembershipLog membershipLog);
+    Long getMembershipLogTotalCount(MembershipLog membershipLog);
 
     /**
      * 사용량 목록
      * @param membershipUsage
      * @return
      */
-    List<MembershipUsage> getListUsage(MembershipUsage membershipUsage);
+    List<MembershipUsage> getListMembershipUsage(MembershipUsage membershipUsage);
 
     /**
      * 멤버십 로그 목록
      * @param membershipLog
      * @return
      */
-    List<MembershipLog> getListLog(MembershipLog membershipLog);
+    List<MembershipLog> getListMembershipLog(MembershipLog membershipLog);
 
     /**
      * 멤버십 사용량 등록
      * @param membershipUsage
      * @return
      */
-    int insertUsage(MembershipUsage membershipUsage);
+    int insertMembershipUsage(MembershipUsage membershipUsage);
 
     /**
      * 멤버십 로그 등록
      * @param membershipLog
      * @return
      */
-    int insertLog(MembershipLog membershipLog);
+    int insertMembershipLog(MembershipLog membershipLog);
 
     /**
      * 멤버십 변환 횟수 갱신
      * @param membershipUsage
      * @return
      */
-    int updateUsageFileCount(MembershipUsage membershipUsage);
+    int updateMembershipUsageFileCount(MembershipUsage membershipUsage);
     
     /**
      * 멤버십 로그 상태 변경
-     * @param membershipLog
+     * @param membershipLogId
      * @return
      */
-    int updateLogStatus(MembershipLog membershipLog);
+    int updateUserMembership(Long membershipLogId);
 
 }

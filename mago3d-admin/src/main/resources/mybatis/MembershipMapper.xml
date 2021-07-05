@@ -4,36 +4,28 @@
 <mapper namespace="gaia3d.persistence.MembershipMapper">
 
 	<!-- 멤버십 정보 조회 -->
-	<select id="getMembershipById" parameterType="int" resultType="membership">
-		/* getMembershipByUserId */
-		SELECT A.*
-		FROM membership A
-		WHERE A.membership_id = #{membershipId}
+	<select id="getMembership" parameterType="int" resultType="membership">
+		/* getMembership */
+		SELECT *
+		FROM membership
+		WHERE membership_id = #{membershipId}
 	</select>
 
 	<!-- 멤버십 정보 조회 -->
-	<select id="getUsageByUserId" parameterType="string" resultType="membershipUsage">
-		/* getUsageByUserId */
+	<select id="getMembershipUsageByUserId" parameterType="string" resultType="membershipUsage">
+		/* getMembershipUsageByUserId */
 		SELECT A.*,
 			   B.membership_name AS membershipName,
 			   B.upload_file_size AS uploadFileSize,
 			   B.convert_file_count AS convertFileCount
-		FROM membership_usage A LEFT OUTER JOIN membership B ON A.membership_id = B.membership_id
+		FROM membership_usage A LEFT OUTER JOIN membership B
+		    ON A.membership_id = B.membership_id
 		WHERE A.user_id = #{userId}
-	</select>
-
-	<!-- 멤버십 마지막 로그 상태 조회 -->
-	<select id="getLastLog" parameterType="string" resultType="membershipLog">
-		/* getLastLog */
-		SELECT A.*
-		FROM membership_log A
-		WHERE A.user_id = #{userId}
-		ORDER BY A.membership_log_id DESC LIMIT 1
 	</select>
 
 	<!-- 사용량 총 건수 -->
-	<select id="getUsageTotalCount" parameterType="membershipUsage" resultType="long">
-		/* getUsageTotalCount */
+	<select id="getMembershipUsageTotalCount" parameterType="membershipUsage" resultType="long">
+		/* getMembershipUsageTotalCount */
 		SELECT COUNT(membership_usage_id)
 		FROM membership_usage
 		<trim prefix="WHERE" prefixOverrides="AND">
@@ -46,13 +38,12 @@
 			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '1'.toString()">
 				AND ${searchWord} LIKE '%' || #{searchValue} || '%'
 			</if>
-
 		</trim>
 	</select>
 
 	<!-- 로그 총 건수 -->
-	<select id="getLogTotalCount" parameterType="membershipLog" resultType="long">
-		/* getLogTotalCount */
+	<select id="getMembershipLogTotalCount" parameterType="membershipLog" resultType="long">
+		/* getMembershipLogTotalCount */
 		SELECT COUNT(membership_log_id)
 		FROM membership_log
 		<trim prefix="WHERE" prefixOverrides="AND">
@@ -66,11 +57,11 @@
 	</select>
 
 	<!-- 사용량 목록 -->
-	<select id="getListUsage" parameterType="membershipUsage" resultType="membershipUsage">
-		/* getListUsage */
+	<select id="getListMembershipUsage" parameterType="membershipUsage" resultType="membershipUsage">
+		/* getListMembershipUsage */
 		SELECT X.*, Y.membership_name AS membershipName, Y.upload_file_size AS uploadFileSize, Y.convert_file_count AS convertFileCount
 		FROM membership_usage X LEFT JOIN membership Y
-								ON X.membership_id = Y.membership_id
+			ON X.membership_id = Y.membership_id
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="searchMembershipId != null and searchMembershipId != ''">
 				X.membership_id = #{searchMembershipId}
@@ -94,13 +85,13 @@
 	</select>
 
 	<!-- 로그 목록 -->
-	<select id="getListLog" parameterType="membershipLog" resultType="membershipLog">
-		/* getListLog */
+	<select id="getListMembershipLog" parameterType="membershipLog" resultType="membershipLog">
+		/* getListMembershipLog */
 		SELECT X.*, Y.membership_name AS currentMembershipName, Z.membership_name AS requestMembershipName
 		FROM membership_log X LEFT JOIN membership Y
-		ON X.current_membership_id = Y.membership_id
-		LEFT JOIN membership Z
-		ON X.request_membership_id = Z.membership_id
+				ON X.current_membership_id = Y.membership_id
+			LEFT JOIN membership Z
+				ON X.request_membership_id = Z.membership_id
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="searchWord != null and searchWord != '' and searchValue != null and searchValue != '' and searchOption == '0'.toString()">
 				AND ${searchWord} = #{searchValue}
@@ -120,52 +111,60 @@
 		OFFSET #{offset} LIMIT #{limit}
 	</select>
 
+	<!-- 멤버십 로그 정보 조회 -->
+	<select id="getMembershipLog" parameterType="int" resultType="membershipLog">
+		/* getMembershipLog */
+		SELECT *
+		FROM membership_log
+		WHERE membership_log_id = #{membershipLogId}
+	</select>
+
 	<!-- 멤버십 등록 -->
-	<insert id="insertUsage" parameterType="membershipUsage">
-		/* insertUsage */
+	<insert id="insertMembershipUsage" parameterType="membershipUsage">
+		/* insertMembershipUsage */
 		<selectKey keyProperty="membershipUsageId" resultType="long" order="BEFORE">
 			SELECT NEXTVAL('membership_usage_seq')
 		</selectKey>
 		INSERT INTO membership_usage(
 			membership_usage_id, membership_id, user_id, update_date
 		) values(
-					#{membershipUsageId}, #{membershipId}, #{userId}, NOW()
-				)
+			#{membershipUsageId}, #{membershipId}, #{userId}, NOW()
+		)
 	</insert>
 
 	<!-- 멤버십 로그 등록 -->
-	<insert id="insertLog" parameterType="membershipLog">
-		/* insertLog */
+	<insert id="insertMembershipLog" parameterType="membershipLog">
+		/* insertMembershipLog */
 		<selectKey keyProperty="membershipLogId" resultType="long" order="BEFORE">
 			SELECT NEXTVAL('membership_log_seq')
 		</selectKey>
 		INSERT INTO membership_log(
-		membership_log_id, current_membership_id, request_membership_id, user_id, status
+			membership_log_id, current_membership_id, request_membership_id, user_id, status
 		) values(
-		#{membershipLogId}, #{currentMembershipId}, #{requestMembershipId}, #{userId}, #{status}
+			#{membershipLogId}, #{currentMembershipId}, #{requestMembershipId}, #{userId}, #{status}
 		)
 	</insert>
 
 	<!-- 멤버십 변환 횟수 갱신 -->
-	<update id="updateUsageFileCount" parameterType="membershipUsage">
-		/* updateUsageFileCount */
+	<update id="updateMembershipUsageFileCount" parameterType="membershipUsage">
+		/* updateMembershipUsageFileCount */
 		UPDATE membership_usage
-		SET use_convert_file_count = use_convert_file_count+1,
+		SET use_convert_file_count = use_convert_file_count + 1,
 			update_date = NOW()
 		WHERE user_id = #{userId}
 	</update>
 
 	<!-- 멤버십 로그 상태 변경 -->
-	<update id="updateLogStatus" parameterType="membershipLog">
-		/* updateLogStatus */
+	<update id="updateMembershipLog" parameterType="membershipLog">
+		/* updateMembershipLog */
 		UPDATE membership_log
 		SET status = #{status}
 		WHERE membership_log_id = #{membershipLogId}
 	</update>
 
 	<!-- 사용량 수정 -->
-	<update id="updateUsage" parameterType="membershipUsage">
-		/* updateUsage */
+	<update id="updateMembershipUsage" parameterType="membershipUsage">
+		/* updateMembershipUsage */
 		UPDATE membership_usage
 		SET
 		<if test="membershipId != null and membershipId != ''">
