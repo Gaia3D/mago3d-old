@@ -54,4 +54,5 @@ test {
     testLogging {
         events "passed", "skipped", "failed"
     }
+    ignoreFailures = true
 }
