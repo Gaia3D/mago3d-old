@@ -1,12 +1,7 @@
 package gaia3d.service.impl;
 
-import gaia3d.domain.quartz.SimpleTrigger;
-import gaia3d.persistence.QuartzMapper;
 import gaia3d.service.QuartzService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * 쿼츠
@@ -16,15 +11,15 @@ import java.util.List;
 @Service
 public class QuartzServiceImpl implements QuartzService {
 
-	@Autowired
+	/*@Autowired
 	private QuartzMapper quartzMapper;
 
-	/**
+	*//**
 	 * SimpleTrigger 목록
 	 * @return
-	 */
+	 *//*
 	public List<SimpleTrigger> getListSimpleTrigger(){;
 		return quartzMapper.getListSimpleTrigger();
-	}
+	}*/
 
 }

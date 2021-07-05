@@ -1,27 +1,13 @@
 package gaia3d.config;
 
-import gaia3d.domain.JobExecutor;
-import gaia3d.domain.quartz.SimpleTrigger;
-import gaia3d.quartz.MyJobListener;
-import gaia3d.quartz.MyTriggerListener;
-import gaia3d.service.QuartzService;
 import lombok.extern.slf4j.Slf4j;
-import org.quartz.*;
-import org.quartz.impl.StdSchedulerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import java.util.List;
-
-import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
-import static org.quartz.TriggerBuilder.newTrigger;
 
 @Slf4j
 @Component
 public class QuartzConfig {
 
-    @Autowired
+    /*@Autowired
     QuartzService quartzService;
 
     @PostConstruct
@@ -57,11 +43,11 @@ public class QuartzConfig {
                         .setJobData(jobDataMap)
                         .build();
 
-                /*Trigger trigger = newTrigger()
+                *//*Trigger trigger = newTrigger()
                         .withIdentity("trigger3", "group1")
                         .withSchedule(cronSchedule("0/10 * 8-19 * * ?"))
                         .forJob("job_name", "job_group")
-                        .build();*/
+                        .build();*//*
 
                 Trigger trigger = newTrigger()
                         .withIdentity(simpleTrigger.getQrtzSimpleTriggerName(), simpleTrigger.getQrtzSimpleTriggerGroup())
@@ -81,5 +67,5 @@ public class QuartzConfig {
             e.printStackTrace();
         }
 
-    }
+    }*/
 }

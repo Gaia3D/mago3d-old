@@ -1,17 +1,5 @@
 package gaia3d.service;
 
-import gaia3d.domain.JobExecutor;
-import gaia3d.domain.quartz.SimpleTrigger;
-import gaia3d.quartz.MyJobListener;
-import gaia3d.quartz.MyTriggerListener;
-import org.quartz.*;
-import org.quartz.impl.StdSchedulerFactory;
-
-import java.util.List;
-
-import static org.quartz.CronScheduleBuilder.cronSchedule;
-import static org.quartz.TriggerBuilder.newTrigger;
-
 /**
  * 쿼츠
  * @author hansang
@@ -23,7 +11,7 @@ public interface QuartzService {
 	 * SimpleTrigger 목록
 	 * @return
 	 */
-	List<SimpleTrigger> getListSimpleTrigger();
+	/*List<SimpleTrigger> getListSimpleTrigger();
 
 	default <T> void addSchedule(Class<? extends Job> job, SimpleTrigger simpleTrigger, T t) {
 		try {
@@ -109,6 +97,6 @@ public interface QuartzService {
 		} catch (SchedulerException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 }
