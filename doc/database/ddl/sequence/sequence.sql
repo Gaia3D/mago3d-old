@@ -37,6 +37,7 @@ drop sequence if exists menu_seq;
 drop sequence if exists micro_service_seq;
 drop sequence if exists micro_service_log_seq;
 drop sequence if exists policy_seq;
+drop sequence if exists qrtz_simple_trigger_seq;
 drop sequence if exists role_seq;
 drop sequence if exists rule_seq;
 drop sequence if exists rule_group_seq;
@@ -91,6 +92,7 @@ create sequence menu_seq increment 1 minvalue 1 maxvalue 999999999999 start 1000
 create sequence micro_service_seq increment 1 minvalue 1 maxvalue 999999999999 start 10000 cache 1;
 create sequence micro_service_log_seq increment 1 minvalue 1 maxvalue 999999999999 start 10000 cache 1;
 create sequence policy_seq increment 1 minvalue 1 maxvalue 999999999999 start 2 cache 1;
+create sequence qrtz_simple_trigger_seq increment 1 minvalue 1 maxvalue 999999999999 start 2 cache 1;
 create sequence role_seq increment 1 minvalue 1 maxvalue 999999999999 start 2000 cache 1;
 create sequence rule_seq increment 1 minvalue 1 maxvalue 999999999999 start 2022 cache 1;
 create sequence rule_group_seq increment 1 minvalue 1 maxvalue 999999999999 start 2004 cache 1;

@@ -36,6 +36,7 @@
 		<typeAlias type="gaia3d.domain.datalibrary.DataLibraryUploadFile" alias="dataLibraryUploadFile" />
 
 		<typeAlias type="gaia3d.domain.policy.GeoPolicy" alias="geoPolicy" />
+		<typeAlias type="gaia3d.domain.quartz.SimpleTrigger" alias="simpleTrigger" />
 		<typeAlias type="gaia3d.domain.healthcheck.HealthCheckLog" alias="healthCheckLog" />
 		<typeAlias type="gaia3d.domain.issue.Issue" alias="issue" />
     	<typeAlias type="gaia3d.domain.layer.Layer" alias="layer" />

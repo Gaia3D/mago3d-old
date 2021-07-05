@@ -3,7 +3,7 @@ drop table if exists policy cascade;
 -- 운영정책
 create table policy(
 	policy_id								integer,
-	
+
 	user_id_min_length						integer				default 5,
 	user_fail_signin_count					integer				default 3,
 	user_fail_lock_release					varchar(3)			default '30',
@@ -14,7 +14,7 @@ create table policy(
 	user_delete_check						char(1)				default '0',
 	user_delete_type						char(1)				default '0',
 	signup_type                             varchar(20)         default 'auto',
-	
+
 	password_change_term 					varchar(3)			default '30',
 	password_min_length						integer				default 8,
 	password_max_length						integer				default 32,
@@ -26,7 +26,7 @@ create table policy(
 	password_create_type					char(1)				default '0',
 	password_create_char					varchar(32)			default '!@#',
 	password_exception_char					varchar(10)			default '<>&',
-	
+
 	notice_service_yn						char(1)				default 'Y',
 	notice_service_send_type				char(1)				default '0',
 	notice_approval_request_yn				char(1)				default 'N',
@@ -46,7 +46,7 @@ create table policy(
 	security_dynamic_block_yn				char(1)				default 'N',
 	security_api_result_secure_yn			char(1)				default 'N',
 	security_masking_yn						char(1)				default 'Y',
-	
+
 	content_cache_version					integer				default 1,
 	content_main_widget_count				integer				default 6,
 	content_main_widget_interval			integer				default 65,
@@ -58,30 +58,30 @@ create table policy(
 	content_layer_group_root				varchar(60)			default 'mago3D',
 	content_data_group_root					varchar(60)			default 'mago3D',
     content_data_library_group_root			varchar(60)			default 'mago3D',
-	
+
 	user_upload_type						varchar(256)		default '3ds,obj,dae,collada,ifc,las,gml,citygml,indoorgml,fbx,jpg,jpeg,gif,png,bmp,dds,zip,mtl,max',
 	user_converter_type						varchar(256)		default '3ds,obj,dae,collada,ifc,las,gml,citygml,indoorgml,fbx',
 	user_upload_max_filesize				integer				default 10000,
 	user_upload_max_count					integer				default 500,
 	shape_upload_type						varchar(256)		default 'cpg,dbf,idx,sbn,sbx,shp,shx,prj,qpj,csv,zip',
 
-    social_signin_google_client_id			varchar(256)        default '441453727719-u2i244q6lnvc3vpl7csno7hdabi71e83.apps.googleusercontent.com',
-    social_signin_google_client_secret		varchar(256)        default 'PumSTaqaw_ZuqzPoibcSteXu',
-    social_signin_google_redirect_uri		varchar(256)        default 'http://localhost/sign/social-process-signin/GOOGLE',
+    social_signin_google_client_id			varchar(256)        default 'google_client_id',
+    social_signin_google_client_secret		varchar(256)        default 'google_client_secret',
+    social_signin_google_redirect_uri		varchar(256)        default 'http://localhost/sign/process-social-signin/GOOGLE',
     social_signin_google_access_token_uri	varchar(256)        default 'https://oauth2.googleapis.com/token',
     social_signin_google_user_info_uri		varchar(256)        default 'https://www.googleapis.com/userinfo/v2/me?access_token=',
-    social_signin_facebook_client_id		varchar(256)        default '175371304564910',
-    social_signin_facebook_client_secret	varchar(256)        default '8bebb1f05648bc25740b3e8c219bff64',
-    social_signin_facebook_redirect_uri		varchar(256)        default 'http://localhost/sign/social-process-signin/FACEBOOK',
+    social_signin_facebook_client_id		varchar(256)        default 'facebook_client_id',
+    social_signin_facebook_client_secret	varchar(256)        default 'facebook_client_secret',
+    social_signin_facebook_redirect_uri		varchar(256)        default 'http://localhost/sign/process-social-signin/FACEBOOK',
     social_signin_facebook_access_token_uri	varchar(256)        default 'https://graph.facebook.com/v2.4/oauth/access_token',
     social_signin_facebook_user_info_uri		varchar(256)        default 'https://graph.facebook.com/v2.4/me?fields=email,name',
-    social_signin_naver_client_id			varchar(256)        default 'te6KttPWNCiXwWdXVGI6',
-    social_signin_naver_client_secret		varchar(256)        default 'Yj478xU4Mt',
-    social_signin_naver_redirect_uri		varchar(256)        default 'http://localhost/sign/social-process-signin/NAVER',
+    social_signin_naver_client_id			varchar(256)        default 'naver_client_id',
+    social_signin_naver_client_secret		varchar(256)        default 'naver_client_secret',
+    social_signin_naver_redirect_uri		varchar(256)        default 'http://localhost/sign/process-social-signin/NAVER',
     social_signin_naver_access_token_uri	varchar(256)        default 'https://nid.naver.com/oauth2.0/token',
     social_signin_naver_user_info_uri		varchar(256)        default 'https://openapi.naver.com/v1/nid/me',
-    social_signin_kakao_client_id			varchar(256)        default '038101f62718f9e63150e1ceb1d0e3b1',
-    social_signin_kakao_redirect_uri		varchar(256)        default 'http://localhost/sign/social-process-signin/KAKAO',
+    social_signin_kakao_client_id			varchar(256)        default 'kakao_client_id',
+    social_signin_kakao_redirect_uri		varchar(256)        default 'http://localhost/sign/process-social-signin/KAKAO',
     social_signin_kakao_access_token_uri	varchar(256)        default 'https://kauth.kakao.com/oauth/token',
     social_signin_kakao_user_info_uri		varchar(256)        default 'https://kapi.kakao.com/v2/user/me',
 
@@ -90,7 +90,7 @@ create table policy(
     notice_email_admin                      varchar(20)         default '관리자 이메일',
 
 	insert_date								timestamp with time zone			default now(),
-	constraint policy_pk primary key (policy_id)	
+	constraint policy_pk primary key (policy_id)
 );
 
 comment on table policy is '운영정책';

@@ -307,4 +307,9 @@ values
     (1, 4, 4, 'admin', 'APPROVAL'),
     (2, 4, 4, 'mago3d', 'APPROVAL');
 
+INSERT INTO qrtz_simple_trigger(
+    qrtz_simple_trigger_id, qrtz_simple_trigger_name, qrtz_simple_trigger_group, executor_name, repeat_count, repeat_interval, times_triggered)
+values
+(1, 'TRIGGER_TEST_1', 'TRIGGER_TEST', 'TEST', 5, 100, 0);
+
 commit;

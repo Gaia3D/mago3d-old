@@ -53,17 +53,16 @@ CREATE TABLE qrtz_triggers
         REFERENCES QRTZ_JOB_DETAILS(SCHED_NAME,JOB_NAME,JOB_GROUP)
 );
 
-CREATE TABLE qrtz_simple_triggers
+CREATE TABLE qrtz_simple_trigger
 (
-    SCHED_NAME VARCHAR(120) NOT NULL,
-    TRIGGER_NAME VARCHAR(200) NOT NULL,
-    TRIGGER_GROUP VARCHAR(200) NOT NULL,
-    REPEAT_COUNT BIGINT NOT NULL,
-    REPEAT_INTERVAL BIGINT NOT NULL,
-    TIMES_TRIGGERED BIGINT NOT NULL,
-    PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
-    FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
-        REFERENCES QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+    qrtz_simple_trigger_id                  INTEGER,
+    qrtz_simple_trigger_name                VARCHAR(200)            NOT NULL,
+    qrtz_simple_trigger_group               VARCHAR(200)            NOT NULL,
+    executor_name                           VARCHAR(200)            NOT NULL,
+    repeat_count                            BIGINT                  NOT NULL,
+    repeat_interval                         BIGINT                  NOT NULL,
+    times_triggered                         BIGINT                  NOT NULL,
+    constraint qrtz_simple_trigger_pk primary key (qrtz_simple_trigger_id)
 );
 
 CREATE TABLE qrtz_cron_triggers
