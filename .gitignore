@@ -43,3 +43,7 @@ mago3d-admin/src/main/java/gaia3d/service/impl/AccessLogServiceImpl.java.bak
 mago3d-admin/src/main/java/gaia3d/service/impl/AMQPPublishServiceImpl.java.bak
 mago3d-admin/src/main/java/gaia3d/service/impl/ConverterServiceImpl.java.bak
 mago3d-admin/src/main/java/gaia3d/service/impl/DataAttributeServiceImpl.java.bak
+weather/src/test/resources/OBS-QWM_2019090809.grib2.gbx9
+weather/src/test/resources/OBS-QWM_2019090809.grib2.ncx4
+weather/src/test/resources/OBS-QWM_2019100700.grb2.gbx9
+weather/src/test/resources/OBS-QWM_2019100700.grb2.ncx4
