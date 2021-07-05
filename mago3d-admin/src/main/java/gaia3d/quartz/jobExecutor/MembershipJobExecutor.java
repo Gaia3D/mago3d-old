@@ -1,16 +1,6 @@
 package gaia3d.quartz.jobExecutor;
 
-import gaia3d.quartz.AutowiringSpringBeanJobFactory;
-import gaia3d.service.UserService;
-import org.quartz.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.scheduling.quartz.QuartzJobBean;
-import org.springframework.stereotype.Component;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+/*
 @PersistJobDataAfterExecution
 @DisallowConcurrentExecution
 @Component
@@ -40,4 +30,4 @@ public class MembershipJobExecutor extends QuartzJobBean {
 
         System.out.println(String.format("[%-18s][%s] %s", "execute", currentDate, message ));
     }
-}
+}*/

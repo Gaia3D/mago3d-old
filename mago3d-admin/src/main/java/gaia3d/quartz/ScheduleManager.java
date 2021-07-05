@@ -1,13 +1,6 @@
 package gaia3d.quartz;
 
-import org.quartz.*;
-import org.quartz.impl.StdSchedulerFactory;
-import org.springframework.stereotype.Component;
-
-import static org.quartz.CronScheduleBuilder.cronSchedule;
-import static org.quartz.TriggerBuilder.newTrigger;
-
-@PersistJobDataAfterExecution
+/*@PersistJobDataAfterExecution
 @DisallowConcurrentExecution
 @Component
 public class ScheduleManager {
@@ -94,7 +87,7 @@ public class ScheduleManager {
             e.printStackTrace();
         }
     }
-}
+}*/
 
 
 

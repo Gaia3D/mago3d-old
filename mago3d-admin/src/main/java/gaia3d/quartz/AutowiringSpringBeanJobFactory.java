@@ -1,11 +1,6 @@
 package gaia3d.quartz;
 
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.scheduling.quartz.SpringBeanJobFactory;
-import org.springframework.stereotype.Component;
-
+/*
 @Component
 public class AutowiringSpringBeanJobFactory extends SpringBeanJobFactory implements ApplicationContextAware {
 
@@ -20,4 +15,4 @@ public class AutowiringSpringBeanJobFactory extends SpringBeanJobFactory impleme
         return applicationContext;
     }
 
-}
+}*/

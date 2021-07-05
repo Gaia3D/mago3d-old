@@ -1,8 +1,6 @@
 package gaia3d.domain;
 
-import gaia3d.quartz.jobExecutor.MembershipJobExecutor;
-
-public enum JobExecutor {
+/*public enum JobExecutor {
 
 	// JOB EXECUTOR
 	TEST(MembershipJobExecutor.class);
@@ -24,4 +22,4 @@ public enum JobExecutor {
 		return null;
 	}
 
-}
+}*/
