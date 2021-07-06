@@ -41,6 +41,7 @@ drop sequence if exists qrtz_simple_trigger_seq;
 drop sequence if exists role_seq;
 drop sequence if exists rule_seq;
 drop sequence if exists rule_group_seq;
+drop sequence if exists terrain_seq;
 drop sequence if exists tile_info_seq;
 drop sequence if exists tile_data_group_seq;
 drop sequence if exists tile_log_seq;
@@ -96,6 +97,7 @@ create sequence qrtz_simple_trigger_seq increment 1 minvalue 1 maxvalue 99999999
 create sequence role_seq increment 1 minvalue 1 maxvalue 999999999999 start 2000 cache 1;
 create sequence rule_seq increment 1 minvalue 1 maxvalue 999999999999 start 2022 cache 1;
 create sequence rule_group_seq increment 1 minvalue 1 maxvalue 999999999999 start 2004 cache 1;
+create sequence terrain_seq increment 1 minvalue 1 maxvalue 999999999999 start 100 cache 1;
 create sequence tile_info_seq increment 1 minvalue 1 maxvalue 999999999999 start 100 cache 1;
 create sequence tile_data_group_seq increment 1 minvalue 1 maxvalue 999999999999 start 100 cache 1;
 create sequence tile_log_seq increment 1 minvalue 1 maxvalue 999999999999 start 100 cache 1;
