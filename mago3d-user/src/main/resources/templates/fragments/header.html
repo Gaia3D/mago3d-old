@@ -1,15 +1,15 @@
-<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
+﻿<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <body>
     <header id="headerWrap">
-        <h1 class="magologo"><span class="blind">mago3D Digital Twin Platform</span></h1>
+        <h1>mago3D 디지털트윈 플랫폼</h1>
         <div class="gnb">
             <th:block th:if="${session.USER_SESSION}">
                 <ul>
-                    <li>
-                        <span class=user th:text="${session.USER_SESSION.userName}"><th:block th:text="#{common.sir}"></th:block></span>
+                    <li class="user">
+                        <span th:text="${session.USER_SESSION.userName}"><th:block th:text="#{common.sir}"></th:block></span>
                         <a href="/membership/list" title="Membership" th:text="${session.USER_SESSION.membershipName}"></a>
                         <a href="/guide/help" th:title="#{common.api.document}" onclick="goMagoAPIGuide(this.href);return false;"><th:block th:text="#{common.api.document}"></th:block></a>
-                        <a href="/sign/signout" title="Sign out">Sign out</a>
+                        <a href="/sign/signout" title="Sign out" class="signout"><span class="blind">Sign out</span></a>
                     </li>
                 </ul>
             </th:block>
@@ -18,7 +18,7 @@
                     <li>
                         <a href="/guide/help" th:title="#{common.api.document}" onclick="goMagoAPIGuide(this.href);return false;"><th:block th:text="#{common.api.document}"></th:block></a>
                     </li>
-                    <li><a href="/sign/signin">Sign in</a></li>
+                    <li class="user"><a href="/sign/signin">Sign in</a></li>
                 </ul>
             </th:block>
         </div>
