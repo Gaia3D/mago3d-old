@@ -8,6 +8,7 @@ create table geopolicy(
 	cesium_ion_token									varchar(256),
 	terrain_type										varchar(30)			default 'cesium-default',
 	terrain_value										varchar(256),
+	opengxt_enable                                      boolean             default false,
 	
 	data_api_url										varchar(256),
 	data_service_path									varchar(256)		default '/f4d/',
@@ -85,6 +86,7 @@ comment on column geopolicy.basic_globe is 'javascript library 3D globe. 기본 
 comment on column geopolicy.cesium_ion_token is 'Cesium ion token 발급. 기본 mago3D';
 comment on column geopolicy.terrain_type is	'Terrain 유형. geoserver, cesium-default, cesium-ion-default, cesium-ion-cdn : 우리 dem 을 업로딩, cesium-customer : cesium docker provier';
 comment on column geopolicy.terrain_value is 'url 또는 cesium ion code 값';
+comment on column geopolicy.opengxt_enable is '공간분석(Opengxt) 사용유무. true : 사용, false : 미사용(기본값)';
 
 comment on column geopolicy.data_api_url is 'F4D converter file 정보 취득 api url';
 comment on column geopolicy.data_service_path is '데이터 서비스 Root Path';

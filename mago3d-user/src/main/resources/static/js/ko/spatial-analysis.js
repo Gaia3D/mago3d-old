@@ -7,26 +7,19 @@ var SpatialAnalysis = function(magoInstance) {
 	var entities = viewer.entities;
 	var entityObject = {};
 	//wps 관련 스키마가 추가될때까지 하드코딩, 각자 환경에 맞는 이름으로..
-	var layerDEM = 'mago3d:sejong_dem';
-	var layerDSM = 'mago3d:dsm_busan';
 	var selectedLayer;
 	var wpsLayerInfo = {
 		'DEM' : [
 			{
-				layerName : 'mago3d:dem-sejong',
-				bbox : [127.19931049066805, 36.44941898280123, 127.32576852118987, 36.55053669535394],
-				zOrderDesc : 0
-			},
-			{
-				layerName : 'mago3d:dem-busan',
-				bbox : [128.77438057131027, 34.97492185956165, 128.99999225329736, 35.25002326361886],
+				layerName : 'mago3d:sh_dem',
+				bbox : [125.38169592273529, 36.59951187372373, 127.51682260330873, 37.928984086827455],
 				zOrderDesc : 0
 			}
 		],
 		'DSM' : [
 			{
-				layerName : 'mago3d:dsm-busan',
-				bbox : [128.89494444444443, 35.08860597796337, 128.94109344142657, 35.16472222222223],
+				layerName : 'mago3d:sh_dsm',
+				bbox : [126.6991426725538, 37.349120369430814, 126.74740149496635, 37.38688636402422],
 				zOrderDesc : 0
 			}
 		]
@@ -256,13 +249,13 @@ var SpatialAnalysis = function(magoInstance) {
 			var dataType = parentDiv.find('.dataType').val();
 			if(!drawType) return false;
 			
-			var geographicCoord = result.clickCoordinate.geographicCoordinate;
+			var geographicCoord = result.point.geographicCoordinate;
 			if(analysisType !== 'analysisRangeDome' && !checkValidArea(geographicCoord, dataType, analysisType)) {
 				alert('유효범위를 벗어났습니다.');
 				return false;
 			}
 			
-			var worldCoordinate = result.clickCoordinate.worldCoordinate;
+			var worldCoordinate = result.point.worldCoordinate;
 			
 			if(drawType === 'POINT') {
 				var pointType = selectedBtn.attr('class').indexOf('Observer') > 0 ? 'observer' : 'target';
@@ -338,10 +331,6 @@ var SpatialAnalysis = function(magoInstance) {
 	// 방사형 가시권 분석 - 분석실행
 	$('#analysisRadialLineOfSight .execute').click(function(e) {
 		var dataType = $('#analysisRadialLineOfSight .dataType').val();
-		/*if(dataType === 'DSM') {
-			notyetAlram();
-			return;
-		}*/
 		var observerOffset = $('#analysisRadialLineOfSight .observerOffset').val();
 	    var radius = $('#analysisRadialLineOfSight .radius').val();
 	    var sides = $('#analysisRadialLineOfSight .sides').val();
@@ -351,6 +340,11 @@ var SpatialAnalysis = function(magoInstance) {
 	        alert("관찰자 위치를 선택해주세요.");
 	        return;
 	    }
+
+	   if (!MAGO.policy.opengxtEnable) {
+	    	alert("관리자 화면에서 공간분석 기능의 활성화 및 OpenGXT 별도 설치가 필요합니다.");
+	    	return;
+		}
 	    startLoading();
 		
 		var xml = requestBodyRadialLineOfSight(selectedLayer, observerPoint, observerOffset, radius, sides);
@@ -409,6 +403,11 @@ var SpatialAnalysis = function(magoInstance) {
 			alert("대상 위치를 선택해주세요.");
 			return;
 		}
+
+		if (!MAGO.policy.opengxtEnable) {
+			alert("관리자 화면에서 공간분석 기능의 활성화 및 OpenGXT 별도 설치가 필요합니다.");
+			return;
+		}
 		startLoading();
 		var xml = requestBodyLinearLineOfSight(selectedLayer, observerOffset, observerPoint, targetPoint);
 
@@ -449,12 +448,17 @@ var SpatialAnalysis = function(magoInstance) {
 			notyetAlram();
 			return;
 		}*/
-		var inputCoverage = layerDEM;
+//		var inputCoverage = layerDEM;
 		var interval = $('#analysisRasterProfile .interval').val();
 		var userLine = $('#analysisRasterProfile .userLine').val();
 
 		if (userLine == "" || !selectedLayer) {
 			alert("사용자 입력 선분을 선택헤주세요.");
+			return;
+		}
+
+		if (!MAGO.policy.opengxtEnable) {
+			alert("관리자 화면에서 공간분석 기능의 활성화 및 OpenGXT 별도 설치가 필요합니다.");
 			return;
 		}
 		startLoading();
@@ -522,8 +526,8 @@ var SpatialAnalysis = function(magoInstance) {
 			notyetAlram();
 			return;
 		}*/
-		var inputCoverage = layerDEM;
-		
+//		var inputCoverage = layerDEM;
+
 		var areaType = $('#analysisRasterHighLowPoints .areaType').val();
 		var cropShape;
 		var positions;
@@ -572,6 +576,12 @@ var SpatialAnalysis = function(magoInstance) {
 			alert("영역 그리기로 분석할 영역을 선택해주세요.");
 			return;
 		}
+
+		if (!MAGO.policy.opengxtEnable) {
+			alert("관리자 화면에서 공간분석 기능의 활성화 및 OpenGXT 별도 설치가 필요합니다.");
+			return;
+		}
+
 		startLoading();
 		
 		var xml = requestBodyRasterHighLowPoints(selectedLayer, cropShape, valueType);
@@ -637,9 +647,10 @@ var SpatialAnalysis = function(magoInstance) {
 		var observerPoint = $("#analysisRangeDome .observerPoint").val();
 
 	    if (observerPoint == "") {
-	        alert("Please select the observer point!!");
+	        alert("관찰자 위치를 선택해 주세요.");
 	        return;
 	    }
+
 	    var coords = Mago3D.ManagerUtils.getCoordinateFromWKT(observerPoint,'POINT');
 
         var dome = viewer.entities.add({
@@ -1045,6 +1056,7 @@ var SpatialAnalysis = function(magoInstance) {
 			}
 		}
 
-		return valid
+		return valid;
 	}
+
 }

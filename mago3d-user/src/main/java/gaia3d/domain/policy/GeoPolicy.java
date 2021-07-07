@@ -39,6 +39,8 @@ public class GeoPolicy {
 	private String terrainType;
 	// url 또는 cesium ion code 값
 	private String terrainValue;
+	// 공간 분석(OpexGXT) 사용 유무 Y : 사용, N : 미사용(기본값)
+	private Boolean opengxtEnable;
 	
 	// F4D converter file 정보 취득 api url
 	private String dataApiUrl;

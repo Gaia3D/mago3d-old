@@ -16,6 +16,8 @@
 		SET cesium_ion_token = #{cesiumIonToken},
 			terrain_type = #{terrainType},
 			terrain_value = #{terrainValue},
+		    opengxt_enable = #{opengxtEnable},
+
 			data_api_url = #{dataApiUrl},
 			data_service_path = #{dataServicePath},
 			data_change_request_decision = #{dataChangeRequestDecision}

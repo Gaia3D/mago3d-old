@@ -61,6 +61,18 @@
 						<input type="text" id="terrainValue" name="terrainValue" th:field="*{terrainValue}" class="l" maxlength="256" />
 					</td>
 				</tr>
+				<tr>
+					<th class="col-label l" scope="row">
+						<label>공간 분석(OpenGXT) 사용 유무 </label>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input radio-set">
+						<input type="radio" id="opengxtEnable1" name="opengxtEnable" th:field="*{opengxtEnable}" value="true" />
+						<label for="opengxtEnable1">사용</label>
+						<input type="radio" id="opengxtEnable2" name="opengxtEnable" th:field="*{opengxtEnable}" value="false" />
+						<label for="opengxtEnable2">미사용</label>
+					</td>
+				</tr>
 			</table>
 			<div class="button-group">
 				<div class="center-buttons">
