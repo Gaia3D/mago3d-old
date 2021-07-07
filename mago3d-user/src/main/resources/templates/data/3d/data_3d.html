@@ -1,0 +1,112 @@
+﻿<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
+<div id="dataContent" class="sb-page" >
+	<!-- 데이터명 검색 -->
+	<input type="text" class="datasearch" placeholder="데이터명을 입력하세요" />
+	<a class="btn-datasearch" href="#"><span class="blind">데이터명 검색</span></a>
+	<!-- 전체-필터더보기 -->
+	<div class="dataselect">
+		<form>
+			<select class="dataselect-item">
+				<option>전체</option>
+				<option>1</option>
+				<option>2</option>
+			</select>
+		</form>
+		<a href="#" class="data-filter" onclick="view_layer('layer2');">필터 더보기</a>
+	</div>
+	<hr class="h5" />
+	<!-- 전체건수-페이지 -->
+	<div class="pgcount">
+		<div class="pgcount-total">전체 <span class="txt-blue">87건</span></div>
+		<div class="pgcount-number"><span class="txt-red">3</span>/15 페이지</div>
+	</div>
+	<!-- datalist  -->
+	<div class="datalist">
+		<h3 class="data"><a href="#" onclick="view_layer('layer1');">계양구청</a></h3>
+		<span class="data-username">슈퍼관리자</span>
+		<div class="data-group">
+			<span class="ttl">그룹명</span> 인천계양
+			<span class="gap"></span>
+			<span class="ttl">파일타입</span> IFC
+		</div>
+		<div class="data-go">
+			<a class="move" href="">이동</a>
+			<div class="switch">
+				<input type="checkbox"/>
+				<span class="slider"></span>
+			</div>
+			<label class="switch">표시</label>
+		</div>
+	</div>
+	<hr class="datalist-line" />
+	<div class="datalist">
+		<h3 class="data">계양구청</h3>
+		<span class="data-username">관리자</span>
+		<div class="data-group">
+			<span class="ttl">그룹명</span> 인천계양
+			<span class="gap"></span>
+			<span class="ttl">파일타입</span> IFC
+		</div>
+		<div class="data-go">
+			<a class="move" href="">이동</a>
+			<div class="switch">
+				<input type="checkbox"/>
+				<span class="slider"></span>
+			</div>
+			<label class="switch">표시</label>
+		</div>
+	</div>
+	<hr class="datalist-line" />
+	<div class="datalist">
+		<h3 class="data">계양푸르지오</h3>
+		<span class="data-username">관리자</span>
+		<div class="data-group">
+			<span class="ttl">그룹명</span> 인천계양
+			<span class="gap"></span>
+			<span class="ttl">파일타입</span> IFC
+		</div>
+		<div class="data-go">
+			<a class="move" href="">이동</a>
+			<div class="switch">
+				<input type="checkbox"/>
+				<span class="slider"></span>
+			</div>
+			<label class="switch">표시</label>
+		</div>
+	</div>
+	<hr class="datalist-line" />
+	<div class="datalist">
+		<h3 class="data">계양2블럭</h3>
+		<span class="data-username">관리자</span>
+		<div class="data-group">
+			<span class="ttl">그룹명</span> 인천계양
+			<span class="gap"></span>
+			<span class="ttl">파일타입</span> IFC
+		</div>
+		<div class="data-go">
+			<a class="move" href="">이동</a>
+			<div class="switch">
+				<input type="checkbox"/>
+				<span class="slider"></span>
+			</div>
+			<label class="switch">표시</label>
+		</div>
+	</div>
+	<hr class="datalist-line" />
+	<!-- /.datalist -->
+	<!-- paging -->
+	<div class="paging">
+		<div class="paging-wrapper">
+			<a class="pre01"></a>
+			<a class="pre"></a>
+			<a class="current">1</a>
+			<a class="lnk">2</a>
+			<a class="lnk">3</a>
+			<a class="lnk">4</a>
+			<a class="lnk">5</a>
+			<a class="next"></a>
+			<a class="next01"></a>
+		</div>
+	</div>
+</div>
+</html>

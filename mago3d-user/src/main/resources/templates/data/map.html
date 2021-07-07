@@ -13,6 +13,7 @@
 	<link rel="stylesheet" th:href="@{/externlib/kotSlider/range.css(cacheVersion=${contentCacheVersion})}" />
 	<link rel="stylesheet" th:href="@{/externlib/tuidatepicker-4.0.3/tui-date-picker.min.css(cacheVersion=${contentCacheVersion})}" />
 	<link rel="stylesheet" th:href="@{/css/{lang}/user-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
+	<link rel="stylesheet" th:href="@{/css/{lang}/data-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
 	<link rel="stylesheet" th:href="@{/css/{lang}/iot-style.css(lang=${lang}, cacheVersion=${contentCacheVersion})}" />
 	<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.css(cacheVersion=${contentCacheVersion})}" />
 	<link rel="stylesheet" th:href="@{/externlib/json-viewer/json-viewer.css(cacheVersion=${contentCacheVersion})}" />
@@ -76,16 +77,24 @@
 				<div th:replace="~{/data/map-data :: #dataInfoContent}"></div>
 				<div th:replace="~{/data/map-data-group :: #dataGroupInfoContent}"></div>
 			</div>
-			<!-- E: 데이터 -->
+
+			<div id="dataContentNew" class="contents-margin-default fullHeight">
+				<!-- 데이터 tabmenu -->
+				<div class="tabmenu tabmenu-data">
+					<ul>
+						<li><a href="#">2D</a></li>
+						<li class="actived"><a href="#">3D</a></li>
+						<li><a href="#">주소</a></li>
+					</ul>
+				</div>
+				<div th:replace="~{/data/2d/data_2d :: #layerContent}"></div>
+				<div th:replace="~{/data/3d/data_3d :: #dataContent}"></div>
+			</div>
 
 			<div th:replace="~{/spatial/spatial :: #spatialContent}"></div>
-
 			<div th:replace="~{/simulation/simulation :: #simulationContent}"></div>
-
 			<div th:replace="~{/iot/list :: #iotContent}"></div>
-
-			<div th:replace="~{/layer/list :: #layerContent}"></div>
-
+			<!--<div th:replace="~{/layer/list :: #layerContent}"></div>-->
 			<!-- E: CONTENTSBTN -->
 		</div>
 		<div class="contentsBtn">
