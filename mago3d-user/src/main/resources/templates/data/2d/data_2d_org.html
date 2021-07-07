@@ -1,0 +1,279 @@
+﻿<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="Description" content="실내외 3차원 통합 플랫폼, mago3D" />
+<meta name="Keywords" content="" />
+<meta name="author" content="Gaia3D" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<title>실내외 3차원 통합 플랫폼, mago3D</title>
+<link rel="stylesheet" href="css/display.css" />
+<script src="https://cesium.com/downloads/cesiumjs/releases/1.81/Build/Cesium/Cesium.js"></script>
+<link href="https://cesium.com/downloads/cesiumjs/releases/1.81/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+
+<script type="text/javascript">
+	function view_layer(name) { 
+  	document.getElementById(name).style.display='block'; 
+	}
+	function close_layer(name) { 
+  	document.getElementById(name).style.display='none'; 
+	}
+</script>
+</head>
+<body id="map">
+	<div id="wrap">
+		<!-- main -->
+		<main>
+			<div class="main-wrapper">
+				<!-- nav 메뉴 -->
+				<div class="nav">
+					<a class="go-menu" href="#" title="메뉴보기"></a>
+					<ul>
+						<li class="actived"><a href="">데이터</a></li>
+						<li><a href="">변환</a></li>
+						<li><a href="">사물인터넷</a></li>
+						<li><a href="">실내공간</a></li>
+						<li><a href="">분석</a></li>
+						<li><a href="">시뮬레이션</a></li>
+						<li><a href="">길찾기</a></li>
+						<li><a href="">더보기</a></li>
+					</ul>
+					<div class="usermenu">
+						<ul>							
+							<li class="user-name"><a href="#">관리자님</a></li>
+							<li class="user-logout"><a href="#">로그아웃</a></li>
+						</ul>
+					</div>
+				</div>
+				<!-- /.nav -->
+				<!-- sb-page -->
+				<div class="sb-page">
+					<!-- 데이터 tabmenu -->
+					<div class="tabmenu tabmenu-data">
+						<ul>
+							<li class="actived"><a href="#">2D</a></li>
+							<li><a href="#">3D</a></li>
+							<li><a href="#">주소</a></li>
+						</ul>
+					</div>							
+					<!-- datalist  -->					
+					<div class="data-layer">
+						<span class="data-layer-ttld">대전</span>
+						<span class="view-option">
+								<label class="switch">
+									<input type="checkbox">
+									<span class="slider"></span>
+								</label> 켜기								
+							</span>		
+					</div>	
+					<div class="data-layer">
+						<span class="data-layer-ttl">배경영상</span>
+						<span class="view-option">
+								<label class="switch">
+									<input type="checkbox">
+									<span class="slider"></span>
+								</label> 켜기								
+							</span>		
+					</div>	
+					<div class="data-layerlist-bx">	
+						<div class="data-layerlist">
+							<span class="data-layerlist-ttl">항공영상 세종</span>
+							<span class="view-option">
+								<label class="switch">
+									<input type="checkbox">
+									<span class="slider"></span>
+								</label> 켜기
+								<a class="move" href="">이동</a>
+							</span>						
+						</div>
+						<div class="data-layerlist">
+							<span class="data-layerlist-ttl">부산 강서구 세종</span>
+							<span class="view-option">
+								<label class="switch">
+									<input type="checkbox">
+									<span class="slider"></span>
+								</label> 켜기
+								<a class="move" href="">이동</a>
+							</span>						
+						</div>
+						<div class="data-layerlist">
+							<span class="data-layerlist-ttl">항공영상_부산_scm 세종</span>
+							<span class="view-option">
+								<label class="switch">
+									<input type="checkbox">
+									<span class="slider"></span>
+								</label> 켜기
+								<a class="move" href="">이동</a>
+							</span>						
+						</div>												
+					</div>	
+					<div class="data-layer">
+						<span class="data-layer-ttl">세종</span>
+						<span class="view-option">
+								<label class="switch">
+									<input type="checkbox">
+									<span class="slider"></span>
+								</label> 켜기								
+							</span>		
+					</div>	
+					<div class="data-layerlist-bx">	
+						<div class="data-layerlist">
+							<span class="data-layerlist-ttl">가구획지</span>
+							<span class="view-option">
+								<label class="switch">
+									<input type="checkbox">
+									<span class="slider"></span>
+								</label> 켜기
+								<a class="move" href="">이동</a>
+							</span>						
+						</div>
+						<div class="data-layerlist">
+							<span class="data-layerlist-ttl">토지이용 Blocktype별</span>
+							<span class="view-option">
+								<label class="switch">
+									<input type="checkbox">
+									<span class="slider"></span>
+								</label> 켜기
+								<a class="move" href="">이동</a>
+							</span>						
+						</div>
+						<div class="data-layerlist">
+							<span class="data-layerlist-ttl">토지이용</span>
+							<span class="view-option">
+								<label class="switch">
+									<input type="checkbox">
+									<span class="slider"></span>
+								</label> 켜기
+								<a class="move" href="">이동</a>
+							</span>						
+						</div>												
+					</div>	
+					<div class="data-layer">
+						<span class="data-layer-ttld">인천</span>
+						<span class="view-option">
+								<label class="switch">
+									<input type="checkbox">
+									<span class="slider"></span>
+								</label> 켜기								
+							</span>		
+					</div>
+					<div class="data-layer">
+						<span class="data-layer-ttl">행정구역</span>
+						<span class="view-option">
+								<label class="switch">
+									<input type="checkbox">
+									<span class="slider"></span>
+								</label> 켜기								
+							</span>		
+					</div>
+					<div class="data-layerlist-bx">	
+						<div class="data-layerlist">
+							<span class="data-layerlist-ttl">행정구역시도</span>
+							<span class="view-option">
+								<label class="switch">
+									<input type="checkbox">
+									<span class="slider"></span>
+								</label> 켜기
+								<a class="move" href="">이동</a>
+							</span>						
+						</div>
+						<div class="data-layerlist">
+							<span class="data-layerlist-ttl">행정구역 시군구</span>
+							<span class="view-option">
+								<label class="switch">
+									<input type="checkbox">
+									<span class="slider"></span>
+								</label> 켜기
+								<a class="move" href="">이동</a>
+							</span>						
+						</div>
+						<div class="data-layerlist">
+							<span class="data-layerlist-ttl">행정구역 읍면동</span>
+							<span class="view-option">
+								<label class="switch">
+									<input type="checkbox">
+									<span class="slider"></span>
+								</label> 켜기
+								<a class="move" href="">이동</a>
+							</span>						
+						</div>												
+					</div>	
+					<!-- /.datalist -->	
+					<hr class="h10" />
+					<!-- /버튼 -->	
+					<div class="right-area margin-r20">
+						<button type="button" class="btn m-btn general"/>설정 저장</button>
+					</div>
+					<!-- paging -->
+					<div class="paging">
+						<div class="paging-wrapper">
+							<a class="pre01"></a>
+							<a class="pre"></a>
+							<a class="current">1</a>
+							<a class="lnk">2</a>
+							<a class="lnk">3</a>
+							<a class="lnk">4</a>
+							<a class="lnk">5</a>
+							<a class="next"></a>
+							<a class="next01"></a>
+						</div>
+					</div>	
+					<!-- /.paging -->			
+				</div>				
+				<!-- /.sb-page -->
+				<!-- content -->
+				<div class="content">
+					<div class="content-wrapper">
+						<!-- mago3D 지도 -->
+						<div class="mago3d-map">
+							<div id="cesiumContainer"></div>
+							<script>
+    // Your access token can be found at: https://cesium.com/ion/tokens.
+    Cesium.Ion.defaultAccessToken = 'your_access_token';
+    // Initialize the Cesium Viewer in the HTML element with the `cesiumContainer` ID.
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+      terrainProvider: Cesium.createWorldTerrain()
+    });    
+    // Add Cesium OSM Buildings, a global 3D buildings layer.
+    const buildingTileset = viewer.scene.primitives.add(Cesium.createOsmBuildings());   
+    // Fly the camera to San Francisco at the given longitude, latitude, and height.
+    viewer.camera.flyTo({
+      destination : Cesium.Cartesian3.fromDegrees(-122.4175, 37.655, 400),
+      orientation : {
+        heading : Cesium.Math.toRadians(0.0),
+        pitch : Cesium.Math.toRadians(-15.0),
+      }
+    });
+  </script>
+						</div>
+						<!-- 툴박스 기능메뉴 -->
+						<div class="toolbox-menu">
+							<button type="button" href="">처음</button>
+							<button type="button" href="">전체화면</button>
+							<button type="button" href="">레이어</button>
+							<button type="button" href="">측정</button>
+							<button type="button" href="">화면분할</button>
+							<button type="button" href="">시점고정</button>
+							<button type="button" href="">위치조회</button>
+							<button type="button" href="">설정</button>
+						</div>
+						<!-- 툴박스 확대/축소 -->
+						<div class="toolbox-zooming">
+							<button type="button"><span class="blind">확대</span></button>
+							<button type="button"><span class="blind">축소</span></button>
+						</div>							
+					</div>					
+				</div>
+				<!-- /.content -->
+			</div>
+		</main>
+		<!-- /.main -->
+		<!-- footer -->
+		<footer>
+			<div class="copyright"></div>
+		</footer>
+		<!-- /.footer -->
+	</div>
+</body>
+</html>

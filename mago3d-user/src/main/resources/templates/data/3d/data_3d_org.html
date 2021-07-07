@@ -1,0 +1,362 @@
+﻿<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="Description" content="실내외 3차원 통합 플랫폼, mago3D" />
+<meta name="Keywords" content="" />
+<meta name="author" content="Gaia3D" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<title>실내외 3차원 통합 플랫폼, mago3D</title>
+<link rel="stylesheet" href="css/display.css" />
+<!-- Include the CesiumJS JavaScript and CSS files -->
+<script src="https://cesium.com/downloads/cesiumjs/releases/1.81/Build/Cesium/Cesium.js"></script>
+<link href="https://cesium.com/downloads/cesiumjs/releases/1.81/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+<script type="text/javascript">
+	function view_layer(name) { 
+  	document.getElementById(name).style.display='block'; 
+	} 
+	function close_layer(name) { 
+  	document.getElementById(name).style.display='none'; 
+	} 
+</script>
+</head>
+<body id="map">
+	<div id="wrap">
+		<!-- main -->
+		<main>
+			<div class="main-wrapper">
+				<!-- nav 메뉴 -->
+				<div class="nav">
+					<a class="go-menu" href="#" title="메뉴보기"></a>
+					<ul>
+						<li class="actived"><a href="">데이터</a></li>
+						<li><a href="">변환</a></li>
+						<li><a href="">사물인터넷</a></li>
+						<li><a href="">실내공간</a></li>
+						<li><a href="">분석</a></li>
+						<li><a href="">시뮬레이션</a></li>
+						<li><a href="">길찾기</a></li>
+						<li><a href="">더보기</a></li>
+					</ul>
+					<div class="usermenu">
+						<ul>							
+							<li class="user-name"><a href="#">관리자님</a></li>
+							<li class="user-logout"><a href="#">로그아웃</a></li>
+						</ul>
+					</div>
+				</div>
+				<!-- /.nav -->
+				<!-- sb-page -->
+				<div class="sb-page">
+					<!-- 데이터 tabmenu -->
+					<div class="tabmenu tabmenu-data">
+						<ul>
+							<li><a href="#">2D</a></li>
+							<li class="actived"><a href="#">3D</a></li>
+							<li><a href="#">주소</a></li>
+						</ul>
+					</div>
+					<!-- 데이터명 검색 -->
+					<input type="text" class="datasearch" placeholder="데이터명을 입력하세요" />
+					<a class="btn-datasearch" href="#"><span class="blind">데이터명 검색</span></a>
+					<!-- 전체-필터더보기 -->
+					<div class="dataselect">
+						<form>
+							<select class="dataselect-item">
+								<option>전체</option>
+								<option>1</option>
+								<option>2</option>
+							</select>
+						</form>
+						<a href="#" class="data-filter" onclick="view_layer('layer2');">필터 더보기</a>						
+					</div>
+					<hr class="h5" />
+					<!-- 전체건수-페이지 -->
+					<div class="pgcount">
+						<div class="pgcount-total">전체 <span class="txt-blue">87건</span></div>
+						<div class="pgcount-number"><span class="txt-red">3</span>/15 페이지</div>
+					</div>
+					<!-- datalist  -->					
+					<div class="datalist">
+						<h3 class="data"><a href="#" onclick="view_layer('layer1');">계양구청</a></h3>
+						<span class="data-username">슈퍼관리자</span>
+						<div class="data-group">
+							<span class="ttl">그룹명</span> 인천계양
+							<span class="gap"></span>
+							<span class="ttl">파일타입</span> IFC
+						</div>
+						<div class="data-go">
+							<a class="move" href="">이동</a>
+							<label class="switch">
+								<input type="checkbox" />
+								<span class="slider"></span>
+							</label> 표시
+						</div>
+					</div>
+					<hr class="datalist-line" />			
+					<div class="datalist">
+						<h3 class="data">계양구청</h3>
+						<span class="data-username">관리자</span>
+						<div class="data-group">
+							<span class="ttl">그룹명</span> 인천계양
+							<span class="gap"></span>
+							<span class="ttl">파일타입</span> IFC
+						</div>
+						<div class="data-go">
+							<a class="move" href="">이동</a>
+							<label class="switch">
+								<input type="checkbox" />
+								<span class="slider"></span>
+							</label> 표시						
+						</div>
+					</div>
+					<hr class="datalist-line" />			
+					<div class="datalist">
+						<h3 class="data">계양푸르지오</h3>
+						<span class="data-username">관리자</span>
+						<div class="data-group">
+							<span class="ttl">그룹명</span> 인천계양
+							<span class="gap"></span>
+							<span class="ttl">파일타입</span> IFC
+						</div>
+						<div class="data-go">
+							<a class="move" href="">이동</a>
+							<label class="switch">
+								<input type="checkbox" />
+								<span class="slider"></span>
+							</label> 표시						
+						</div>
+					</div>
+					<hr class="datalist-line" />	
+					<div class="datalist">
+						<h3 class="data">계양2블럭</h3>
+						<span class="data-username">관리자</span>
+						<div class="data-group">
+							<span class="ttl">그룹명</span> 인천계양
+							<span class="gap"></span>
+							<span class="ttl">파일타입</span> IFC
+						</div>
+						<div class="data-go">
+							<a class="move" href="">이동</a>
+							<label class="switch">
+								<input type="checkbox" />
+								<span class="slider"></span>
+							</label> 표시						
+						</div>
+					</div>
+					<hr class="datalist-line" />			
+					<!-- /.datalist -->	
+					<!-- paging -->
+					<div class="paging">
+						<div class="paging-wrapper">
+							<a class="pre01"></a>
+							<a class="pre"></a>
+							<a class="current">1</a>
+							<a class="lnk">2</a>
+							<a class="lnk">3</a>
+							<a class="lnk">4</a>
+							<a class="lnk">5</a>
+							<a class="next"></a>
+							<a class="next01"></a>
+						</div>
+					</div>			
+				</div>				
+				<!-- /.sb-page -->
+				<!-- content -->
+				<div class="content">
+					<div class="content-wrapper">
+						<!-- mago3D 지도 -->
+						<div class="mago3d-map">
+							<div id="cesiumContainer"></div>
+							<script>
+  				 		 // Your access token can be found at: https://cesium.com/ion/tokens.
+  				 		Cesium.Ion.defaultAccessToken = 'your_access_token';
+  				 		 // Initialize the Cesium Viewer in the HTML element with the `cesiumContainer` ID.
+  						 const viewer = new Cesium.Viewer('cesiumContainer', {
+  				 		 terrainProvider: Cesium.createWorldTerrain()
+  				 		 });    
+ 				  		 // Add Cesium OSM Buildings, a global 3D buildings layer.
+ 				  		 const buildingTileset = viewer.scene.primitives.add(Cesium.createOsmBuildings());   
+ 				 	 		 // Fly the camera to San Francisco at the given longitude, latitude, and height.
+				  		 viewer.camera.flyTo({
+ 				   		 destination : Cesium.Cartesian3.fromDegrees(-122.4175, 37.655, 400),
+  				  	 orientation : {
+   				     heading : Cesium.Math.toRadians(0.0),
+   				     pitch : Cesium.Math.toRadians(-15.0),
+   				  	 }
+ 				  		 });
+ 							</script>
+						</div>
+						<!-- 툴박스 기능메뉴 -->
+						<div class="toolbox-menu">
+							<button type="button" href="">처음</button>
+							<button type="button" href="">전체화면</button>
+							<button type="button" href="">레이어</button>
+							<button type="button" href="">측정</button>
+							<button type="button" href="">화면분할</button>
+							<button type="button" href="">시점고정</button>
+							<button type="button" href="">위치조회</button>
+							<button type="button" href="">설정</button>
+						</div>
+						<!-- 툴박스 확대/축소 -->
+						<div class="toolbox-zooming">
+							<button type="button"><span class="blind">확대</span></button>
+							<button type="button"><span class="blind">축소</span></button>
+						</div>							
+					</div>					
+				</div>
+				<!-- /.content -->
+			</div>
+		</main>
+		<!-- /.main -->
+		<!-- footer -->
+		<footer>
+			<div class="copyright"></div>
+		</footer>
+		<!-- /.footer -->
+	</div>
+	<!-- 팝업레이어/데이타정보 -->
+	<div id="layer1" class="detaildata popuplayer">
+		<button type="button" class="close" href="#" onclick="close_layer('layer1');"><span class="blind">팝업레이어 닫기</span></button>
+		<div class="datalist">
+			<h3 class="popup-data">계양구청</h3>
+			<span class="data-username">슈퍼관리자</span>
+			<div class="data-group">
+				<span class="ttl">그룹명</span> 인천계양
+				<span class="gap"></span>
+				<span class="ttl">파일타입</span> IFC
+			</div>
+			<div class="data-go">
+				<a class="move" href="">이동</a>
+				<label class="switch">
+					<input type="checkbox" />
+					<span class="slider"></span>
+				</label> 표시
+			</div>
+		</div>
+		<div class="thumbnail"></div>
+		<div class="popup-datatype">
+			<table>
+				<caption>상세 데이터정보 보기</caption>
+				<colgroup>
+					<col width="37%" />
+					<col width="63%" />
+				</colgroup>
+				<tr>
+					<td>사용자 아이디</td>
+					<td>kikiee</td>
+				</tr>
+				<tr>
+					<td>기본유무</td>
+					<td>기본</td>
+				</tr>
+				<tr>
+					<td>사용유무</td>
+					<td>사용</td>
+				</tr>
+				<tr>
+					<td>데이터건수</td>
+					<td>133</td>
+				</tr>
+				<tr>
+					<td>경도</td>
+					<td>127.24</td>
+				</tr>
+				<tr>
+					<td>위도</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>높이</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>이동시간</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>예타정보</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>설명</td>
+					<td>세종신도시 5-1 주택그룹</td>
+				</tr>
+				<tr>
+					<td>수정일</td>
+					<td>2021-05-21 16:46:21</td>
+				</tr>
+				<tr>
+					<td>등록일</td>
+					<td>2021-05-21 16:46:21</td>
+				</tr>
+			</table>
+		</div>
+		<a class="more-info">상세정보1</a>
+		<a class="more-info">상세정보2</a>
+		<a class="more-info">상세정보3</a>	
+	</div>
+	<!-- 팝업레이어/필터 -->
+	<div id="layer2" class="filter popuplayer-s">
+		<button type="button" class="close-s" href="#" onclick="close_layer('layer2');"><span class="blind">팝업레이어 닫기</span></button>
+		<span class="layer-ttl">공유유형</span>
+		<div class="layer-bx">
+			<div class="layer-list">
+				<a class="icon common"></a>
+				<a class="txt">공통</a>
+			</div>
+			<div class="layer-list">
+				<a class="icon open"></a>
+				<a class="txt">공개</a>
+			</div>
+			<div class="layer-list">
+				<a class="icon notopen"></a>
+				<a class="txt">비공개</a>
+			</div>
+			<div class="layer-list">
+				<a class="icon group"></a>
+				<a class="txt">그룹</a>
+			</div>
+		</div>
+		<hr class="h5" />
+		<span class="layer-ttl">데이터 타입</span>
+		<div class="layer-bx">
+			<div class="layer-list">
+				<a class="icon file"></a>
+				<a class="txt">CityGML</a>
+			</div>
+			<div class="layer-list">
+				<a class="icon file"></a>
+				<a class="txt">IndoorGML</a>
+			</div>
+			<div class="layer-list">
+				<a class="icon file"></a>
+				<a class="txt">LAS</a>
+			</div>
+			<div class="layer-list">
+				<a class="icon file"></a>
+				<a class="txt">IFC</a>
+			</div>
+			<div class="layer-list">
+				<a class="icon file"></a>
+				<a class="txt">DAE</a>
+			</div>
+			<div class="layer-list">
+				<a class="icon file"></a>
+				<a class="txt">OBJ</a>
+			</div>
+			<div class="layer-list">
+				<a class="icon file"></a>
+				<a class="txt">3DS</a>
+			</div>
+		</div>
+		<hr class="h5" />
+		<div class="popuplayer-btn">
+			<button type="button" class="p-btn general">적용</button>
+			<button type="button" class="p-btn cancel">필터초기화</button>
+		</div>
+	</div>
+</body>
+</html>
+
