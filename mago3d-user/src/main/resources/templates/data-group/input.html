@@ -50,7 +50,7 @@
 			<tr>
 				<th class="col-label" scope="row">
 					<label for="dataGroupName"><th:block th:text="#{data.group.name}"></th:block></label>
-					<span class="essentail">*</span>
+					<span class="icon-glyph glyph-emark-dot color-warning"></span>
 				</th>
 				<td class="col-input">
 					<input type="text" id="dataGroupName" name="dataGroupName" class="l" maxlength="100" />
@@ -68,7 +68,7 @@
 			<tr>
 				<th class="col-label" scope="row">
 					<label for="parentName"><th:block th:text="#{data.group.parent}"></th:block></label>
-					<span class="essentail">*</span>
+					<span class="icon-glyph glyph-emark-dot color-warning"></span>
 				</th>
 				<td class="col-input">
 					<input type="hidden" id="parent" name="parent" />
@@ -79,7 +79,7 @@
 			<tr>
 				<th class="col-label" scope="row">
                 	<label for="sharing"><th:block th:text="#{data.group.sharing}"></th:block></label>
-                   <span class="essentail">*</span>
+					<span class="icon-glyph glyph-emark-dot color-warning"></span>
 				</th>
 				<td class="col-input">
                 	<select id="sharing" name="sharing" class="selectBoxClass">
@@ -93,7 +93,7 @@
 			<tr>
 				<th class="col-label l" scope="row">
 					<th:block th:text="#{data.group.available}"></th:block>
-					<span class="essentail">*</span>
+					<span class="icon-glyph glyph-emark-dot color-warning"></span>
 				</th>
 				<td class="col-input radio-set">
 					<input type="radio" id="availableTrue" name="available" value="true" checked />
@@ -138,7 +138,7 @@
 			<tr>
 				<th class="col-label" scope="row">
 					<label for="metainfo"><th:block th:text="#{common.meta.information}"></th:block></label>
-					<span class="essentail">*</span>
+					<span class="icon-glyph glyph-emark-dot color-warning"></span>
 				</th>
 				<td class="col-input">
 					<input type="text" id="metainfo" name="metainfo" class="xl" value='{"isPhysical": false}' />

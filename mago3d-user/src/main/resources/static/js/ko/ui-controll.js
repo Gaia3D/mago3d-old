@@ -53,9 +53,6 @@ $(function() {
 			} else if( currentUrl.indexOf("#simulation") >= 0) {
 				$("#simulationMenu").addClass('on');
 				$('#simulationContent').toggle(true);
-			} else if( currentUrl.indexOf("#userPolicy") >= 0) {
-				$("#userPolicyMenu").addClass('on');
-				$('#userPolicyContent').toggle(true);
 			} else if( currentUrl.indexOf("#layer") >= 0) {
 				$("#layerMenu").addClass('on');
 				$('#layerContent').toggle(true);
@@ -64,6 +61,18 @@ $(function() {
 				$('#dataContent').toggle(true);
 			}
 			$('#contentsWrap').toggle(true);
+		} else if( currentUrl.indexOf("/mypage/") >= 0) {
+			// MyPage
+			$("#mypageMenu").addClass('on');
+			// MyPage 탭 변경 시
+			$(".tab > li").siblings().removeClass("on");
+			if(location.href.indexOf("/mypage/user-modify") > 0) {
+				$("#tabMyPageUserInfo").addClass("on");
+			} else if (location.href.indexOf("/mypage/membership") > 0) {
+				$("#tabMyPageMembership").addClass("on");
+			} else if (location.href.indexOf("/mypage/user-policy") > 0) {
+				$("#tabMyPageUserPolicy").addClass("on");
+			}
 		} else {
 			// 데이터 변환
 			$("#converterMenu").addClass('on');
@@ -94,7 +103,6 @@ $(function() {
 				$("#tabConverterJobFileList").addClass("on");
 			}
 		}
-		
 	}
 	
 	// 상세 메뉴 닫기
@@ -118,7 +126,8 @@ $(function() {
         	|| location.href.indexOf("/data/list") > 0 
         	|| location.href.indexOf("/data/modify") > 0 
         	|| location.href.indexOf("/data-adjust-log") > 0
-        	|| location.href.indexOf("/data-log") > 0) {
+        	|| location.href.indexOf("/data-log") > 0
+			|| location.href.indexOf("/mypage/") > 0) {
         	$(this).removeClass('on');
         	var classId = $(this).attr('class');
         	window.location="../data/map#" + classId;
@@ -127,7 +136,9 @@ $(function() {
         // 변환 클릭 이벤트시 url 변경 
         if(active === "converterContent") {
         	window.location="../upload-data/list";
-        }
+        } else if(active === "mypageContent") {
+			window.location="../mypage/user-modify";
+		}
         
         $("ul.nav li[data-nav]:not(:empty)").not($(this)).each(function() {
             $(this).removeClass('on');

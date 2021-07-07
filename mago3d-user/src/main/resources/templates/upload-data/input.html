@@ -73,7 +73,6 @@
 	
 	<div class="container" style="float:left; width: calc(100% - 78px);">
 		<div style="padding: 40px 20px 30px 10px; font-size: 28px; color:black; font-weight:600;"><th:block th:text="#{converter.subtitle}"></th:block></div>
-        <!-- TAB -->
         <div class="tabs">
             <ul class="tab">
 				<li id="tabDataGroupList"><a href="/data-group/list"><th:block th:text="#{data.group.list.tab.menu}"></th:block></a></li>
@@ -99,14 +98,14 @@
 				<tr>
 					<th class="col-label" scope="row">
 						<label for="dataName"><th:block th:text="#{common.data.name}"></th:block></label>
-						<span class="essentail">*</span>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
 					<td class="col-input">
 						<input type="text" id="dataName" name="dataName" class="l" maxlength="255" />
 					</td>
 					<th class="col-label" scope="row">
 						<label for="dataGroupName"><th:block th:text="#{common.data.group.name}"></th:block></label>
-						<span class="essentail">*</span>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
 					<td class="col-input">
 						<input type="hidden" id="dataGroupId" name="dataGroupId" />
@@ -117,7 +116,7 @@
 				<tr>
 					<th class="col-label" scope="row">
 						<label for="sharing"><th:block th:text="#{common.sharing}"></th:block></label>
-						<span class="essentail">*</span>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
 					<td class="col-input">
 						<select id="sharing" name="sharing" class="selectBoxClass">
@@ -129,7 +128,7 @@
 					</td>
 					<th class="col-label m" scope="row">
 						<label for="dataType"><th:block th:text="#{common.data.type}"></th:block></label>
-						<span class="essentail">*</span>
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
 					<td class="col-input">
 						<select id="dataType" name="dataType" class="selectBoxClass">
@@ -169,10 +168,20 @@
 					</td>
 				</tr>
 				<tr>
+					<th class="col-label l" scope="row">
+						용도
+						<span class="icon-glyph glyph-emark-dot color-warning"></span>
+					</th>
+					<td class="col-input radio-set">
+						<input type="radio" id="assembleFalse" name="assemble" value="false" checked />
+						<label for="assembleFalse">단일형</label>
+						<input type="radio" id="assembleTrue" name="assemble" value="true"/>
+						<label for="assembleTrue">복합형</label>
+					</td>
 					<th class="col-label" scope="row">
 						<label for="description" th:text="#{common.description}"></label>
 					</th>
-					<td colspan="3" class="col-input">
+					<td class="col-input">
 						<input type="text" id="description" name="description" class="xl" maxlength="255" />
 					</td>
 				</tr>
@@ -256,7 +265,7 @@
 		// 병렬 처리
 		parallelUploads: 500,
 		// 최대 파일 업로드 갯수
-		maxFiles: 500,
+		maxFiles: 20000,
 		// 최대 업로드 용량 Mb단위
 		maxFilesize: 5000,
 		dictDefaultMessage: JS_MESSAGE["upload.guide"],
@@ -274,8 +283,7 @@
 	    	return;
 	    },
 		init: function() {
-			var myDropzone = this; // closure
-
+			var myDropzone = this;
 			var uploadTask = document.querySelector("#allFileUpload");
 			var clearTask = document.querySelector("#allFileClear");
 			
@@ -306,24 +314,6 @@
 	            }
 	        });
 
-			// 멤버십 1일 업로드 가능 용량 체크
-			var totalFileSize = 0;
-			this.on("addedfiles", function (files) {
-				for(var i = 0; i < files.length; i++){
-					totalFileSize+=files[i].size;
-				}
-				/*alert('File added - ' + files.length + ' - Size - ' + total);
-				alert("[[${membershipUsage.uploadFileSize}]]" - total*0.000000001);*/
-				var useUploadFileSize = Number("[[${membershipUsage.useUploadFileSize}]]");
-				var uploadFileSize = Number("[[${membershipUsage.uploadFileSize}]]");
-				if((useUploadFileSize + totalFileSize*0.000001) > uploadFileSize){
-					alert(JS_MESSAGE["membership.file.size.exceed"]);
-					totalFileSize = 0;
-					myDropzone.removeAllFiles(true);
-					return;
-				}
-			});
-
 			this.on("sending", function(file, xhr, formData) {
 				formData.append("dataName", $("#dataName").val());
 				formData.append("dataGroupId", $("#dataGroupId").val());
@@ -334,7 +324,7 @@
 				formData.append("latitude", $("#latitude").val());
 				formData.append("altitude", $("#altitude").val());
 				formData.append("description", $("#description").val());
-				formData.append("fileSize", totalFileSize*0.000001);
+				formData.append("assemble", $(':radio[name="assemble"]:checked').val());
 			});
 			
 			// maxFiles 카운터를 초과하면 경고창
@@ -350,8 +340,7 @@
 	                fileUploadDialog.dialog( "close" );
 	                if(response.statusCode <= 200) {
 	                	if(response.errorCode === undefined || response.errorCode === null) {
-							totalFileSize = 0;
-	                		uploadFileResultCount ++;
+							uploadFileResultCount ++;
 							if(uploadFileCount === uploadFileResultCount) {
 								alert(JS_MESSAGE["upload.complete"]);
 							    uploadFileCount = 0;

@@ -5,6 +5,7 @@ import gaia3d.domain.Status;
 import gaia3d.domain.cache.CacheManager;
 import gaia3d.domain.membership.Membership;
 import gaia3d.domain.membership.MembershipLog;
+import gaia3d.domain.membership.MembershipUsage;
 import gaia3d.domain.policy.Policy;
 import gaia3d.domain.user.UserSession;
 import gaia3d.service.MembershipService;
@@ -25,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @Controller
-@RequestMapping("/membership")
+@RequestMapping("/mypage")
 public class MembershipController {
 
 	@Autowired
@@ -36,15 +37,15 @@ public class MembershipController {
 	 * @param request
 	 * @return
 	 */
-	@GetMapping("/list")
-	public String list(HttpServletRequest request, Model model) {
+	@GetMapping("/membership")
+	public String membership(HttpServletRequest request, Model model) {
 		Policy policy = CacheManager.getPolicy();
-
 		UserSession userSession = (UserSession) request.getSession().getAttribute(Key.USER_SESSION.name());
-		int membershipId = userSession.getMembershipId();
-		model.addAttribute("membershipId", membershipId);
 
-		return "/membership/list";
+		MembershipUsage membershipUsage = membershipService.getMembershipUsageByUserId(userSession.getUserId());
+		model.addAttribute("membershipUsage", membershipUsage);
+
+		return "/mypage/membership";
 	}
 
 	/**

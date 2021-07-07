@@ -20,7 +20,8 @@ public class URLSupport {
 			"/upload-data/list", "/upload-data/input", "/upload-data/modify",
 			"/converter/list", "/converter/converter-job-file-list", "/converter/modify",
 			"/data-adjust-log/list", "/data-adjust-log/modify",
-			"/data-log/list", "/data-log/modify", "/membership/insert/log", "/membership/list", "/membership/cancel"
+			"/data-log/list", "/data-log/modify",
+			"/mypage/user-modify", "/mypage/membership", "/mypage/user-policy"
 	};
 
     // 파일 업로딩 URL

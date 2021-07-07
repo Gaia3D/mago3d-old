@@ -60,9 +60,10 @@ public interface UploadDataService {
 	 * 사용자 파일 정보 업로딩
 	 * @param uploadData
 	 * @param uploadDataFileList
+	 * @param totalFileSize
 	 * @return
 	 */
-	int insertUploadData(UploadData uploadData, List<UploadDataFile> uploadDataFileList);
+	int insertUploadData(UploadData uploadData, List<UploadDataFile> uploadDataFileList, Long totalFileSize);
 	
 	/**
 	 * 사용자 파일 정보 수정

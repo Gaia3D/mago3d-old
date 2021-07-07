@@ -1,10 +1,12 @@
 package gaia3d.service.impl;
 
 import gaia3d.domain.FileType;
+import gaia3d.domain.membership.MembershipUsage;
 import gaia3d.domain.uploaddata.UploadData;
 import gaia3d.domain.uploaddata.UploadDataFile;
 import gaia3d.domain.uploaddata.UploadDataType;
 import gaia3d.persistence.UploadDataMapper;
+import gaia3d.service.MembershipService;
 import gaia3d.service.UploadDataService;
 import gaia3d.support.LogMessageSupport;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,9 @@ import java.util.List;
 @Slf4j
 @Service
 public class UploadDataServiceImpl implements UploadDataService {
+
+	@Autowired
+	private MembershipService membershipService;
 
 	@Autowired
 	private UploadDataMapper uploadDataMapper;
@@ -102,16 +107,14 @@ public class UploadDataServiceImpl implements UploadDataService {
 	 * 사용자 파일 정보 업로딩
 	 * @param uploadData
 	 * @param uploadDataFileList
+	 * @param totalFileSize
 	 * @return
 	 */
 	@Transactional
-	public int insertUploadData(UploadData uploadData, List<UploadDataFile> uploadDataFileList) {
+	public int insertUploadData(UploadData uploadData, List<UploadDataFile> uploadDataFileList, Long totalFileSize) {
 		int result = uploadDataMapper.insertUploadData(uploadData);
 		
 		Long uploadDataId = uploadData.getUploadDataId();
-//		Integer dataGroupId = uploadData.getDataGroupId();
-//		String sharing = uploadData.getSharing();
-//		String dataType = uploadData.getDataType();
 		String userId = uploadData.getUserId();
 		for(UploadDataFile uploadDataFile : uploadDataFileList) {
 			uploadDataFile.setUploadDataId(uploadDataId);
@@ -119,6 +122,11 @@ public class UploadDataServiceImpl implements UploadDataService {
 			uploadDataMapper.insertUploadDataFile(uploadDataFile);
 			result++;
 		}
+
+		MembershipUsage membershipUsage = membershipService.getMembershipUsageByUserId(userId);
+		membershipUsage.setUseUploadFileSize(Double.valueOf(totalFileSize));
+		membershipService.updateUsage(membershipUsage);
+
 		return result;
 	}
 	

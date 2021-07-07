@@ -42,9 +42,6 @@ $(function() {
 			} else if( currentUrl.indexOf("#simulation") >= 0) {
 				$("#simulationMenu").addClass('on');
 				$('#simulationContent').toggle(true);
-			} else if( currentUrl.indexOf("#userPolicy") >= 0) {
-				$("#userPolicyMenu").addClass('on');
-				$('#userPolicyContent').toggle(true);
 			} else if( currentUrl.indexOf("#layer") >= 0) {
 				$("#layerMenu").addClass('on');
 				$('#layerContent').toggle(true);

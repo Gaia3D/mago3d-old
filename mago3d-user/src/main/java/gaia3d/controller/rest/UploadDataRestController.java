@@ -4,14 +4,12 @@ import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.FileType;
 import gaia3d.domain.Key;
 import gaia3d.domain.cache.CacheManager;
-import gaia3d.domain.membership.MembershipUsage;
 import gaia3d.domain.policy.Policy;
 import gaia3d.domain.uploaddata.UploadData;
 import gaia3d.domain.uploaddata.UploadDataFile;
 import gaia3d.domain.uploaddata.UploadDataType;
 import gaia3d.domain.uploaddata.UploadDirectoryType;
 import gaia3d.domain.user.UserSession;
-import gaia3d.service.MembershipService;
 import gaia3d.service.UploadDataService;
 import gaia3d.support.LogMessageSupport;
 import gaia3d.utils.DateUtils;
@@ -53,9 +51,6 @@ public class UploadDataRestController {
 	
 	@Autowired
 	private UploadDataService uploadDataService;
-
-	@Autowired
-	private MembershipService membershipService;
 	
 	/**
 	 * TODO 비동기로 처리해야 할듯
@@ -73,6 +68,7 @@ public class UploadDataRestController {
 		
 		// converter 변환 대상 파일 수
 		int converterTargetCount = 0;
+		long totalFileSize = 0L;
 		
 		Policy policy = CacheManager.getPolicy();
 		// 여긴 null 체크를 안 하는게 맞음. 없음 장애가 나야 함
@@ -110,6 +106,7 @@ public class UploadDataRestController {
 					isZipFile = true;
 					// zip 파일
 					uploadMap = unzip(policy, uploadTypeList, converterTypeList, today, userId, multipartFile, makedDirectory, dataType);
+					totalFileSize = (Long)uploadMap.get("totalFileSize");
 					log.info("@@@@@@@ uploadMap = {}", uploadMap);
 					
 					// validation 체크
@@ -229,6 +226,8 @@ public class UploadDataRestController {
         			uploadDataFile.setFileSize(String.valueOf(size));
         			uploadDataFile.setConverterTarget(converterTarget);
         			uploadDataFile.setDepth(1);
+
+					totalFileSize += size;
 				} catch(IOException e) {
 					log.info("@@@@@@@@@@@@ io exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 					return getResultMap(result, HttpStatus.INTERNAL_SERVER_ERROR.value(), "io.exception", message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
@@ -271,11 +270,7 @@ public class UploadDataRestController {
 		uploadData.setDescription(request.getParameter("description"));
 		
 		log.info("@@@@@@@@@@@@ uploadData = {}", uploadData);
-		uploadDataService.insertUploadData(uploadData, uploadDataFileList);
-
-		MembershipUsage membershipUsage = membershipService.getMembershipUsageByUserId(userId);
-		membershipUsage.setUseUploadFileSize(Double.valueOf(request.getParameter("fileSize")));
-		membershipService.updateUsage(membershipUsage);
+		uploadDataService.insertUploadData(uploadData, uploadDataFileList, totalFileSize);
 
 		int statusCode = HttpStatus.OK.value();
 		
@@ -309,6 +304,8 @@ public class UploadDataRestController {
 		Map<String, Object> result = new HashMap<>();
 		// converter 변환 대상 파일 수
 		int converterTargetCount = 0;
+		// 전체 파일 사이즈
+		long totalFileSize = 0L;
 		
 		String errorCode = fileValidate(policy, uploadTypeList, multipartFile);
 		if(!ObjectUtils.isEmpty(errorCode)) {
@@ -494,6 +491,7 @@ public class UploadDataRestController {
             			}
             		}	
             		uploadDataFile = fileCopyInUnzip(uploadDataFile, zipFile, entry, directoryPath, saveFileName, extension, fileName, subDirectoryPath, depth);
+					totalFileSize += Long.valueOf(uploadDataFile.getFileSize());
                 }
             	
             	uploadDataFile.setConverterTarget(converterTarget);
@@ -508,6 +506,7 @@ public class UploadDataRestController {
 		
 		result.put("converterTargetCount", converterTargetCount);
 		result.put("uploadDataFileList", uploadDataFileList);
+		result.put("totalFileSize", totalFileSize);
 		return result;
 	}
 	
