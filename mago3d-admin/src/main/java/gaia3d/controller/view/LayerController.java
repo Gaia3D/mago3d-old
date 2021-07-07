@@ -189,7 +189,7 @@ public class LayerController implements AuthorizationController {
             policyJson = objectMapper.writeValueAsString(policy);
             layerJson = objectMapper.writeValueAsString(layer);
         } catch (JsonProcessingException e) {
-            LogMessageSupport.printMessage(e, "@@ JsonProcessingException. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+            LogMessageSupport.printMessage(e, "@@ JsonProcessingException. message = {}", e.getClass().getName());
         }
 
         model.addAttribute("policyJson", policyJson);

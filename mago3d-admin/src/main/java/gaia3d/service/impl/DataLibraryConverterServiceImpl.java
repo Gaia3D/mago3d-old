@@ -301,7 +301,7 @@ public class DataLibraryConverterServiceImpl implements DataLibraryConverterServ
             dataLibraryConverterJob.setStatus(ConverterJobStatus.WAITING.name());
             dataLibraryConverterJob.setErrorCode(e.getMessage());
             dataLibraryConverterMapper.updateDataLibraryConverterJob(dataLibraryConverterJob);
-            LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ AmqpException. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+            LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ AmqpException. message = {}", e.getClass().getName());
         }
     }
 

@@ -54,17 +54,17 @@ public class ConverterAPIController implements APIController {
         } catch (DataAccessException e) {
             statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
             errorCode = messageSource.getMessage("db.exception", null, locale);
-            message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+            message = e.getClass().getName();
             LogMessageSupport.printMessage(e, "@@ db.exception. message = {}", message);
         } catch (RuntimeException e) {
             statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
             errorCode = messageSource.getMessage("runtime.exception", null, locale);
-            message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+            message = e.getClass().getName();
             LogMessageSupport.printMessage(e, "@@ runtime.exception. message = {}", message);
         } catch (Exception e) {
             statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
             errorCode = messageSource.getMessage("unknown.exception", null, locale);
-            message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+            message = e.getClass().getName();
             LogMessageSupport.printMessage(e, "@@ exception. message = {}", message);
         }
         converterJob.setErrorCode(errorCode);
@@ -89,17 +89,17 @@ public class ConverterAPIController implements APIController {
         } catch (DataAccessException e) {
             statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
             errorCode = messageSource.getMessage("db.exception", null, locale);
-            message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+            message = e.getClass().getName();
             LogMessageSupport.printMessage(e, "@@ db.exception. message = {}", message);
         } catch (RuntimeException e) {
             statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
             errorCode = messageSource.getMessage("runtime.exception", null, locale);
-            message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+            message = e.getClass().getName();
             LogMessageSupport.printMessage(e, "@@ runtime.exception. message = {}", message);
         } catch (Exception e) {
             statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
             errorCode = messageSource.getMessage("unknown.exception", null, locale);
-            message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+            message = e.getClass().getName();
             LogMessageSupport.printMessage(e, "@@ exception. message = {}", message);
         }
         converterResultLog.setFailureLog(errorCode);

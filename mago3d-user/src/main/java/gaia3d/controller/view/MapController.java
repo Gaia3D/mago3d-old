@@ -55,7 +55,7 @@ public class MapController {
 		try {
 			dataInfoJson = objectMapper.writeValueAsString(dataInfo);
 		} catch(JsonProcessingException e) {
-            LogMessageSupport.printMessage(e, "@@ objectMapper exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+            LogMessageSupport.printMessage(e, "@@ objectMapper exception. message = {}", e.getClass().getName());
 		}
 		
 		model.addAttribute("referrer", referrer);
@@ -94,7 +94,7 @@ public class MapController {
         try {
             model.addAttribute("geoPolicyJson", objectMapper.writeValueAsString(geoPolicy));
         } catch(JsonProcessingException e) {
-            LogMessageSupport.printMessage(e, "@@ objectMapper exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+            LogMessageSupport.printMessage(e, "@@ objectMapper exception. message = {}", e.getClass().getName());
 		}
 //        
 //        model.addAttribute("baseLayers", userPolicy.getBaseLayers());

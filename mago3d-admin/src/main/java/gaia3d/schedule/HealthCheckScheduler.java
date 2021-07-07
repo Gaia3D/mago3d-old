@@ -77,7 +77,7 @@ public class HealthCheckScheduler {
         } catch (Exception e) {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
             health = Health.UNKNOWN.name().toLowerCase();
-            LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+            LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ exception. message = {}", e.getClass().getName());
         }
         log.info("@@ httpStatus = {}, serviceUrl = {}", status, serviceUrl);
         return health;

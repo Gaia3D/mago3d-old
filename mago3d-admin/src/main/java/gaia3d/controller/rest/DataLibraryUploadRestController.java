@@ -245,16 +245,16 @@ public class DataLibraryUploadRestController {
         			dataLibraryUploadFile.setConverterTarget(converterTarget);
         			dataLibraryUploadFile.setDepth(1);
 				} catch(IOException e) {
-					LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ io exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+					LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ io exception. message = {}", e.getClass().getName());
 					result.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
 					result.put("errorCode", "io.exception");
-					result.put("message", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+					result.put("message", e.getClass().getName());
 		            return result;
 				} catch(Exception e) {
 					LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ file copy exception.");
 					result.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
 					result.put("errorCode", "file.copy.exception");
-					result.put("message", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+					result.put("message", e.getClass().getName());
 		            return result;
 				}
 
@@ -557,10 +557,10 @@ public class DataLibraryUploadRestController {
                 		dataLibraryUploadFile.setFileSize(String.valueOf(size));
                 		
                 	} catch(IOException e) {
-                		LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ io exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+                		LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ io exception. message = {}", e.getClass().getName());
                 		dataLibraryUploadFile.setErrorMessage(e.getMessage());
                     } catch(Exception e) {
-                		LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+                		LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ exception. message = {}", e.getClass().getName());
                     	dataLibraryUploadFile.setErrorMessage(e.getMessage());
                     }
                 }
@@ -570,9 +570,9 @@ public class DataLibraryUploadRestController {
             	dataLibraryUploadFileList.add(dataLibraryUploadFile);
             }
 		} catch(RuntimeException ex) {
-			LogMessageSupport.printMessage(ex, "@@@@@@@@@@@@ RuntimeException. message = {}", ex.getCause() != null ? ex.getCause().getMessage() : ex.getMessage());
+			LogMessageSupport.printMessage(ex, "@@@@@@@@@@@@ RuntimeException. message = {}", ex.getClass().getName());
 		} catch(IOException ex) {
-			LogMessageSupport.printMessage(ex, "@@@@@@@@@@@@ IOException. message = {}", ex.getCause() != null ? ex.getCause().getMessage() : ex.getMessage());
+			LogMessageSupport.printMessage(ex, "@@@@@@@@@@@@ IOException. message = {}", ex.getClass().getName());
 		}
 		
 		result.put("converterTargetCount", converterTargetCount);

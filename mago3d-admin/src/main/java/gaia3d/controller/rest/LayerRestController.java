@@ -270,7 +270,7 @@ public class LayerRestController implements AuthorizationController {
 			
 			statusCode = HttpStatus.INTERNAL_SERVER_ERROR.value();
 			errorCode = "db.exception";
-			message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+			message = e.getClass().getName();
 			LogMessageSupport.printMessage(e, "@@ db.exception. message = {}", message);
 		} catch(RuntimeException e) {
 			// ogr2ogr2 실행하다가 에러날경우 이미 들어간 레이어, 레이러 파일정보 삭제 
@@ -281,7 +281,7 @@ public class LayerRestController implements AuthorizationController {
 			
 			statusCode = HttpStatus.INTERNAL_SERVER_ERROR.value();
 			errorCode = "runtime.exception";
-			message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+			message = e.getClass().getName();
 			LogMessageSupport.printMessage(e, "@@ runtime.exception. message = {}", message);
 		} catch(Exception e) {
 			// ogr2ogr2 실행하다가 에러날경우 이미 들어간 레이어, 레이러 파일정보 삭제 
@@ -292,7 +292,7 @@ public class LayerRestController implements AuthorizationController {
 			
 			statusCode = HttpStatus.INTERNAL_SERVER_ERROR.value();
 			errorCode = "unknown.exception";
-			message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+			message = e.getClass().getName();
 			LogMessageSupport.printMessage(e, "@@ exception. message = {}", message);
 		}
 
@@ -598,7 +598,7 @@ public class LayerRestController implements AuthorizationController {
         	
 			statusCode = HttpStatus.INTERNAL_SERVER_ERROR.value();
 			errorCode = "db.exception";
-			message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+			message = e.getClass().getName();
 			LogMessageSupport.printMessage(e, "@@ db.exception. message = {}", message);
 		} catch(RuntimeException e) {
 			if(isRollback) {
@@ -608,7 +608,7 @@ public class LayerRestController implements AuthorizationController {
 			
 			statusCode = HttpStatus.INTERNAL_SERVER_ERROR.value();
 			errorCode = "runtime.exception";
-			message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+			message = e.getClass().getName();
 			LogMessageSupport.printMessage(e, "@@ runtime.exception. message = {}", message);
 		} catch(Exception e) {
 			if(isRollback) {
@@ -618,7 +618,7 @@ public class LayerRestController implements AuthorizationController {
 			
 			statusCode = HttpStatus.INTERNAL_SERVER_ERROR.value();
 			errorCode = "unknown.exception";
-			message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+			message = e.getClass().getName();
 			LogMessageSupport.printMessage(e, "@@ exception. message = {}", message);
         }
 
@@ -730,13 +730,13 @@ public class LayerRestController implements AuthorizationController {
             	throw new RuntimeException(e.getMessage());
             }
         } catch(DataAccessException e) {
-        	LogMessageSupport.printMessage(e, "@@ DataAccessException. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+        	LogMessageSupport.printMessage(e, "@@ DataAccessException. message = {}", e.getClass().getName());
         } catch(RuntimeException e) {
-			LogMessageSupport.printMessage(e, "@@ RuntimeException. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@ RuntimeException. message = {}", e.getClass().getName());
         } catch(IOException e) {
-			LogMessageSupport.printMessage(e, "@@ FileNotFoundException. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@ FileNotFoundException. message = {}", e.getClass().getName());
         } catch(Exception e) {
-			LogMessageSupport.printMessage(e, "@@ Exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@ Exception. message = {}", e.getClass().getName());
 		}
     }
 
@@ -870,9 +870,9 @@ public class LayerRestController implements AuthorizationController {
                 }
             }
         } catch(RuntimeException ex) {
-        	LogMessageSupport.printMessage(ex, "@@ RuntimeException. message = {}", ex.getCause() != null ? ex.getCause().getMessage() : ex.getMessage());
+        	LogMessageSupport.printMessage(ex, "@@ RuntimeException. message = {}", ex.getClass().getName());
         } catch(Exception ex) {
-        	LogMessageSupport.printMessage(ex, "@@ RuntimeException. message = {}", ex.getCause() != null ? ex.getCause().getMessage() : ex.getMessage());
+        	LogMessageSupport.printMessage(ex, "@@ RuntimeException. message = {}", ex.getClass().getName());
         }
 
         log.info("##################### unzip layerFileInfoList = {}", layerFileInfoList.size());

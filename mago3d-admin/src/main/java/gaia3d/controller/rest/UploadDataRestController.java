@@ -16,8 +16,6 @@ import gaia3d.utils.DateUtils;
 import gaia3d.utils.FileUtils;
 import gaia3d.utils.FormatUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.ObjectUtils;
@@ -31,6 +29,8 @@ import javax.validation.Valid;
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * 3D 데이터 파일 업로더
@@ -64,25 +64,6 @@ public class UploadDataRestController {
 	@SuppressWarnings("unchecked")
 	@PostMapping
 	public Map<String, Object> insert(MultipartHttpServletRequest request) throws Exception {
-
-		/*String header = request.getHeader("User-Agent");
-		if (header.contains("Edge")){
-			name = URLEncoder.encode(title, "UTF-8").replaceAll("\\+", "%20");
-			response.setHeader("Content-Disposition", "attachment;filename=\"" + name + "\".xls;");
-		} else if (header.contains("MSIE") || header.contains("Trident")) { // IE 11버전부터 Trident로 변경되었기때문에 추가해준다.
-			name = URLEncoder.encode(title, "UTF-8").replaceAll("\\+", "%20");
-			response.setHeader("Content-Disposition", "attachment;filename=" + name + ".xls;");
-		} else if (header.contains("Chrome")) {
-			name = new String(title.getBytes("UTF-8"), "ISO-8859-1");
-			response.setHeader("Content-Disposition", "attachment; filename=\"" + name + "\".xls");
-		} else if (header.contains("Opera")) {
-			name = new String(title.getBytes("UTF-8"), "ISO-8859-1");
-			response.setHeader("Content-Disposition", "attachment; filename=\"" + name + "\".xls");
-		} else if (header.contains("Firefox")) {
-			name = new String(title.getBytes("UTF-8"), "ISO-8859-1");
-			response.setHeader("Content-Disposition", "attachment; filename=" + name + ".xls");
-		}*/
-		
 		Map<String, Object> result = new HashMap<>();
 		String errorCode = null;
 		String message = null;
@@ -90,6 +71,7 @@ public class UploadDataRestController {
 		
 		// converter 변환 대상 파일 수
 		int converterTargetCount = 0;
+		long totalFileSize = 0L;
 		
 		Policy policy = policyService.getPolicy();
 		// 여긴 null 체크를 안 하는게 맞음. 없음 장애가 나야 함
@@ -127,6 +109,7 @@ public class UploadDataRestController {
 					isZipFile = true;
 					// zip 파일
 					uploadMap = unzip(policy, uploadTypeList, converterTypeList, today, userId, multipartFile, makedDirectory, dataType);
+					totalFileSize = (Long)uploadMap.get("totalFileSize");
 					log.info("@@@@@@@ uploadMap = {}", uploadMap);
 					
 					// validation 체크
@@ -246,12 +229,14 @@ public class UploadDataRestController {
         			uploadDataFile.setFileSize(String.valueOf(size));
         			uploadDataFile.setConverterTarget(converterTarget);
         			uploadDataFile.setDepth(1);
+
+					totalFileSize += size;
 				} catch(IOException e) {
-					log.info("@@@@@@@@@@@@ io exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
-					return getResultMap(result, HttpStatus.INTERNAL_SERVER_ERROR.value(), "io.exception", message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+					log.info("@@@@@@@@@@@@ io exception. message = {}", e.getClass().getName());
+					return getResultMap(result, HttpStatus.INTERNAL_SERVER_ERROR.value(), "io.exception", message = e.getClass().getName());
 				} catch(Exception e) {
 					log.info("@@@@@@@@@@@@ file copy exception.");
-					return getResultMap(result, HttpStatus.INTERNAL_SERVER_ERROR.value(), "file.copy.exception", message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+					return getResultMap(result, HttpStatus.INTERNAL_SERVER_ERROR.value(), "file.copy.exception", message = e.getClass().getName());
 				}
 
 				uploadDataFileList.add(uploadDataFile);
@@ -306,19 +291,23 @@ public class UploadDataRestController {
 	 * @throws Exception
 	 */
 	private Map<String, Object> unzip(	Policy policy,
-										List<String> uploadTypeList, 
-										List<String> converterTypeList, 
-										String today, 
-										String userId, 
-										MultipartFile multipartFile, 
+										List<String> uploadTypeList,
+										List<String> converterTypeList,
+										String today,
+										String userId,
+										MultipartFile multipartFile,
 										String targetDirectory,
 										String dataType) throws Exception {
 		
 		Map<String, Object> result = new HashMap<>();
+		String errorCode = null;
+		String message = null;
 		// converter 변환 대상 파일 수
 		int converterTargetCount = 0;
-		
-		String errorCode = fileValidate(policy, uploadTypeList, multipartFile);
+		// 전체 파일 사이즈
+		long totalFileSize = 0L;
+
+		errorCode = fileValidate(policy, uploadTypeList, multipartFile);
 		if(!ObjectUtils.isEmpty(errorCode)) {
 			result.put("errorCode", errorCode);
 			return result;
@@ -334,23 +323,19 @@ public class UploadDataRestController {
 		Map<String, String> fileNameMatchingMap = new HashMap<>();
 		List<UploadDataFile> uploadDataFileList = new ArrayList<>();
 		// zip 파일을 압축할때 한글이나 다국어가 포함된 경우 java.lang.IllegalArgumentException: malformed input off 같은 오류가 발생. 윈도우가 CP949 인코딩으로 파일명을 저장하기 때문.
-		// Charset CP949 = Charset.forName("UTF-8");
-//		try ( ZipFile zipFile = new ZipFile(uploadedFile, CP949);) {
 		try ( ZipFile zipFile = new ZipFile(uploadedFile)) {
 			String directoryPath = targetDirectory;
 			String subDirectoryPath = "";
 			String directoryName = null;
 			int depth = 1;
-			Enumeration<? extends ZipArchiveEntry> entries = zipFile.getEntries();
-			log.info("entries : " + entries);
-			
+			Enumeration<? extends ZipEntry> entries = zipFile.entries();
+
 			while( entries.hasMoreElements() ) {
             	UploadDataFile uploadDataFile = new UploadDataFile();
-            	
-            	ZipArchiveEntry entry = entries.nextElement();
-            	log.info("zip : " + entry);
-            	String unzipfileName = targetDirectory + entry.getName();
-            	boolean converterTarget = false;
+
+				ZipEntry entry = entries.nextElement();
+				String unzipfileName = targetDirectory + entry.getName();
+				boolean converterTarget = false;
             	
             	if( entry.isDirectory() ) {
             		// 디렉토리인 경우
@@ -504,6 +489,7 @@ public class UploadDataRestController {
             			}
             		}
             		uploadDataFile = fileCopyInUnzip(uploadDataFile, zipFile, entry, directoryPath, saveFileName, extension, fileName, subDirectoryPath, depth);
+					totalFileSize += Long.valueOf(uploadDataFile.getFileSize());
                 }
 
             	uploadDataFile.setConverterTarget(converterTarget);
@@ -511,20 +497,29 @@ public class UploadDataRestController {
             	uploadDataFileList.add(uploadDataFile);
             }
 		} catch(RuntimeException ex) {
-			log.info("@@@@@@@@@@@@ RuntimeException. message = {}", ex.getCause() != null ? ex.getCause().getMessage() : ex.getMessage());
+			errorCode = "runtime.exception";
+			message = ex.getClass().getName();
+			LogMessageSupport.printMessage(ex);
+			log.info("@@@@@@@@@@@@ RuntimeException. message = {}", ex.getClass().getName());
 		} catch(IOException ex) {
-			log.info("@@@@@@@@@@@@ IOException. message = {}", ex.getCause() != null ? ex.getCause().getMessage() : ex.getMessage());
+			errorCode = "io.exception";
+			message = ex.getClass().getName();
+			LogMessageSupport.printMessage(ex);
+			log.info("@@@@@@@@@@@@ IOException. message = {}", ex.getClass().getName());
 		}
 
+		result.put("errorCode", errorCode);
+		result.put("message", message);
 		result.put("converterTargetCount", converterTargetCount);
 		result.put("uploadDataFileList", uploadDataFileList);
+		result.put("totalFileSize", totalFileSize);
 		return result;
 	}
 
 	/*
 	 * unzip 로직 안에서 파일 복사
 	 */
-	private UploadDataFile fileCopyInUnzip(UploadDataFile uploadDataFile, ZipFile zipFile, ZipArchiveEntry entry, String directoryPath, String saveFileName,
+	private UploadDataFile fileCopyInUnzip(UploadDataFile uploadDataFile, ZipFile zipFile, ZipEntry entry, String directoryPath, String saveFileName,
 										   String extension, String fileName, String subDirectoryPath, int depth) {
 		long size = 0L;
     	try ( 	InputStream inputStream = zipFile.getInputStream(entry);
@@ -537,9 +532,6 @@ public class UploadDataRestController {
                 outputStream.write(buffer, 0, bytesRead);
             }
 
-            ///
-
-
 			uploadDataFile.setFileType(FileType.FILE.name());
     		uploadDataFile.setFileExt(extension);
     		uploadDataFile.setFileName(fileName);
@@ -551,11 +543,11 @@ public class UploadDataRestController {
 
     	} catch(IOException e) {
 			LogMessageSupport.printMessage(e);
-    		log.info("@@@@@@@@@@@@ io exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+    		log.info("@@@@@@@@@@@@ io exception. message = {}", e.getClass().getName());
     		uploadDataFile.setErrorMessage(e.getMessage());
         } catch(Exception e) {
 			LogMessageSupport.printMessage(e);
-        	log.info("@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+        	log.info("@@@@@@@@@@@@ exception. message = {}", e.getClass().getName());
         	uploadDataFile.setErrorMessage(e.getMessage());
         }
 
@@ -759,7 +751,4 @@ public class UploadDataRestController {
 		
 		return null;
 	}
-
-
-
 }

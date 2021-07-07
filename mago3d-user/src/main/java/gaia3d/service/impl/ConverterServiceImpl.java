@@ -433,7 +433,7 @@ public class ConverterServiceImpl implements ConverterService {
 			converterJob.setStatus(ConverterJobStatus.WAITING.name());
 			converterJob.setErrorCode(e.getMessage());
 			converterMapper.updateConverterJob(converterJob);
-			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ AmqpException. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ AmqpException. message = {}", e.getClass().getName());
 		}
 	}
 

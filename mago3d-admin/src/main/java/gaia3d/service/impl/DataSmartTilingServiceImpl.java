@@ -85,19 +85,19 @@ public class DataSmartTilingServiceImpl implements DataSmartTilingService {
 					updateSuccessCount++;
 				}
 			} catch(DataAccessException e) {
-				LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ dataAccess exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+				LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ dataAccess exception. message = {}", e.getClass().getName());
 				dataSmartTilingFileParseLog.setIdentifierValue(dataSmartTilingFileInfo.getUserId());
 				dataSmartTilingFileParseLog.setErrorCode(e.getMessage());
 				dataSmartTilingMapper.insertDataSmartTilingFileParseLog(dataSmartTilingFileParseLog);
 				insertErrorCount++;
 			} catch(RuntimeException e) {
-				LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ runtime exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+				LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ runtime exception. message = {}", e.getClass().getName());
 				dataSmartTilingFileParseLog.setIdentifierValue(dataSmartTilingFileInfo.getUserId());
 				dataSmartTilingFileParseLog.setErrorCode(e.getMessage());
 				dataSmartTilingMapper.insertDataSmartTilingFileParseLog(dataSmartTilingFileParseLog);
 				insertErrorCount++;
 			} catch(Exception e) {
-				LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+				LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ exception. message = {}", e.getClass().getName());
 				dataSmartTilingFileParseLog.setIdentifierValue(dataSmartTilingFileInfo.getUserId());
 				dataSmartTilingFileParseLog.setErrorCode(e.getMessage());
 				dataSmartTilingMapper.insertDataSmartTilingFileParseLog(dataSmartTilingFileParseLog);

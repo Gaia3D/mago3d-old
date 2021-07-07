@@ -1,15 +1,14 @@
 package gaia3d.config;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
+import gaia3d.support.LogMessageSupport;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import gaia3d.support.LogMessageSupport;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * RestController Exception 처리
@@ -24,7 +23,7 @@ public class RestControllerExceptionHandler {
 		Map<String, Object> result = new HashMap<>();
 		int statusCode = HttpStatus.INTERNAL_SERVER_ERROR.value();
 		String errorCode = "db.exception";
-		String message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+		String message = e.getClass().getName();
 		
 		if(message == null) {
 			if(e.getCause() != null && e.getCause().toString().length() > 10) {
@@ -47,7 +46,7 @@ public class RestControllerExceptionHandler {
 		Map<String, Object> result = new HashMap<>();
 		int statusCode = HttpStatus.INTERNAL_SERVER_ERROR.value();
 		String errorCode = "runtime.exception";
-		String message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+		String message = e.getClass().getName();
 		if(message == null) {
 			if(e.getCause() != null && e.getCause().toString().length() > 10) {
 				message = e.getCause().toString();
@@ -69,7 +68,7 @@ public class RestControllerExceptionHandler {
 		Map<String, Object> result = new HashMap<>();
 		int statusCode = HttpStatus.INTERNAL_SERVER_ERROR.value();
 		String errorCode = "runtime.exception";
-		String message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+		String message = e.getClass().getName();
 		if(message == null) {
 			if(e.getCause() != null && e.getCause().toString().length() > 10) {
 				message = e.getCause().toString();
@@ -91,7 +90,7 @@ public class RestControllerExceptionHandler {
 		Map<String, Object> result = new HashMap<>();
 		int statusCode = HttpStatus.INTERNAL_SERVER_ERROR.value();
 		String errorCode = "unknown.exception";
-		String message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+		String message = e.getClass().getName();
 		if(message == null) {
 			if(e.getCause() != null && e.getCause().toString().length() > 10) {
 				message = e.getCause().toString();

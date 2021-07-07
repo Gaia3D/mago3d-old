@@ -164,11 +164,11 @@ public class UserGroupController implements AuthorizationController {
 			List<UserGroupMenu> userGroupMenuList = userGroupService.getListUserGroupMenu(userGroupMenu);
 			userGroupMenuJson = objectMapper.writeValueAsString(userGroupMenuList);
 		} catch(JsonProcessingException e) {
-			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ jsonProcessing exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ jsonProcessing exception. message = {}", e.getClass().getName());
 		} catch(RuntimeException e) {
-			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ runtime exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ runtime exception. message = {}", e.getClass().getName());
 		} catch(Exception e) {
-			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ exception. message = {}", e.getClass().getName());
 		}
 
 		model.addAttribute("userGroup", userGroup);
@@ -206,11 +206,11 @@ public class UserGroupController implements AuthorizationController {
 			List<UserGroupRole> userGroupRoleList = userGroupService.getListUserGroupRole(userGroupRole);
 			userGroupRoleJson = objectMapper.writeValueAsString(userGroupRoleList);
 		} catch(JsonProcessingException e) {
-			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ jsonProcessing exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ jsonProcessing exception. message = {}", e.getClass().getName());
 		} catch(RuntimeException e) {
-			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ runtime exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ runtime exception. message = {}", e.getClass().getName());
 		} catch(Exception e) {
-			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ exception. message = {}", e.getClass().getName());
 		}
 
 		model.addAttribute("userGroup", userGroup);

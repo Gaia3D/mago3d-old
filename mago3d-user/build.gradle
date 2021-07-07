@@ -93,6 +93,7 @@ dependencies {
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.5.3'
 
     implementation 'org.apache.commons:commons-compress:1.20'
+    implementation 'commons-io:commons-io:2.10.0'
     implementation 'org.apache.httpcomponents:httpclient'
 	implementation 'org.modelmapper:modelmapper:2.3.6'
 

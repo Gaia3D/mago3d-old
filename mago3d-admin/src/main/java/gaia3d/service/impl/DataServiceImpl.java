@@ -230,19 +230,19 @@ public class DataServiceImpl implements DataService {
 					updateSuccessCount++;
 				}
 			} catch(DataAccessException e) {
-				LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ dataAccess exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+				LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ dataAccess exception. message = {}", e.getClass().getName());
 				dataFileParseLog.setIdentifierValue(dataFileInfo.getUserId());
 				dataFileParseLog.setErrorCode(e.getMessage());
 				dataMapper.insertDataFileParseLog(dataFileParseLog);
 				insertErrorCount++;
 			} catch(RuntimeException e) {
-				LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ runtime exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+				LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ runtime exception. message = {}", e.getClass().getName());
 				dataFileParseLog.setIdentifierValue(dataFileInfo.getUserId());
 				dataFileParseLog.setErrorCode(e.getMessage());
 				dataMapper.insertDataFileParseLog(dataFileParseLog);
 				insertErrorCount++;
 			} catch(Exception e) {
-				LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+				LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ exception. message = {}", e.getClass().getName());
 				dataFileParseLog.setIdentifierValue(dataFileInfo.getUserId());
 				dataFileParseLog.setErrorCode(e.getMessage());
 				dataMapper.insertDataFileParseLog(dataFileParseLog);

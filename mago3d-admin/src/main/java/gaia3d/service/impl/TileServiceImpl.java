@@ -204,7 +204,7 @@ public class TileServiceImpl implements TileService {
 			aMQPPublishService.tileMessageSend(propertiesConfig.getRabbitmqConverterExchange(), propertiesConfig.getRabbitmqTilerRoutingKey(), tileMessage);
 		} catch(AmqpException e) {
 
-			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ AmqpException. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ AmqpException. message = {}", e.getClass().getName());
 		}
 	}
     

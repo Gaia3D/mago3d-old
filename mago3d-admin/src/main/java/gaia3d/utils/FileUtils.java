@@ -247,10 +247,10 @@ public class FileUtils {
 			fileInfo.setFileSize(String.valueOf(size));
 			fileInfo.setFilePath(sourceDirectory);
 		} catch(IOException e) {
-			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ io exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ io exception. message = {}", e.getClass().getName());
 			fileInfo.setErrorCode("io.exception");
 		} catch(Exception e) {
-			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ file copy exception. message = {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
+			LogMessageSupport.printMessage(e, "@@@@@@@@@@@@ file copy exception. message = {}", e.getClass().getName());
 			fileInfo.setErrorCode("file.copy.exception");
 		}
 
