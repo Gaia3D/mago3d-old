@@ -56,7 +56,8 @@ public class GeoJsonWriter implements Writer {
         for (int z = 0; z < zValues.length; z++) {
             float isobaric = zValues[z];
             Color band = bands.get(z);
-            image = new Image(image.getWidth(), image.getHeight(), String.format("%s%s_%d.png", servicePath, fileName, (int) isobaric));
+            //image = new Image(image.getWidth(), image.getHeight(), String.format("%s%s_%d.png", servicePath, fileName, (int) isobaric));
+            image = new Image(image.getWidth(), image.getHeight(), String.format("%s_%d.png", fileName, (int) isobaric));
             Feature feature = Feature.valueOf(coordinateSystem, isobaric, image, band);
             //String partFileName = fileName + "_" + isobaric;
             //objectMapper.writeValue(Paths.get(partFileName + ".json").toFile(), feature);

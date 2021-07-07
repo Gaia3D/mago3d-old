@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static gaia3d.domain.simulation.wind.SimulationWind.PATH_SEPARATOR;
+
 @RequiredArgsConstructor
 public class SimulationWindDate implements SimulationJsonImporter {
 
@@ -25,6 +27,9 @@ public class SimulationWindDate implements SimulationJsonImporter {
 
     @Override
     public String getServicePath() {
-        return "/f4d/";
+        String servicePath = propertiesConfig.getAdminWindServicePath();
+        String makeDirectory = FileUtils.makeDirectory(null, UploadDirectoryType.YEAR_MONTH, servicePath, date);
+        return "/f4d/" + makeDirectory + PATH_SEPARATOR;
     }
+
 }

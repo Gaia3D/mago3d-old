@@ -1,13 +1,35 @@
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
+<script type="text/javascript"></script>
 <div id="smlt_contents_natural" class="smlt_contents" style="display:none;">
 	<div class="smlt">
 		<div class="smlt-item" id="smlt-natural-wind-div" data-type="wind">
 			<span class="smlt-blt"></span>
-			<span class="smlt-tit">바람장 비교</span>
+			<span class="smlt-tit">바람 시뮬레이션</span>
 		</div>				
 		<div class="sub">
 			<div class="sublist">
-				<span class="smlt-sub" style="display:inline-block;">바람</span>
+				<label class="smlt-sub" for="smlt-natural-wind-select" th:title="시간선택">시간선택</label>
+				<select id="smlt-natural-wind-select" th:title="시간선택">
+					<option value="">시간선택</option>
+					<option value="2019100700" selected>2019-10-07 00시</option>
+					<option value="2019100701">2019-10-07 01시</option>
+					<option value="2019100702">2019-10-07 02시</option>
+					<option value="2019100703">2019-10-07 03시</option>
+					<option value="2019100704">2019-10-07 04시</option>
+					<option value="2019100705">2019-10-07 05시</option>
+					<option value="2019100706">2019-10-07 06시</option>
+					<option value="2019100707">2019-10-07 07시</option>
+					<option value="2019100708">2019-10-07 08시</option>
+					<option value="2019100709">2019-10-07 09시</option>
+					<option value="2019100710">2019-10-07 10시</option>
+					<option value="2019100711">2019-10-07 11시</option>
+					<option value="2019100712">2019-10-07 12시</option>
+				</select>
+				<button id="smlt-natural-wind-play" th:title="재생">재생</button>
+			</div>
+			<div class="sublist">
+				<label class="smlt-sub" for="smlt-natural-time" th:title="시간">선택된 시간</label>
+				<span id="smlt-natural-time" th:title="선택시간">2019-10-07 00시</span>
 			</div>
 			
 			<div class="btn-right">
