@@ -10,32 +10,33 @@
 	<script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 	<script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 </head>
-<body class="bggray">
+<body>
+<div id="loginwrap">
 <div id="join">
 	<h2 class="join">회원가입</h2>
 	<form class="join-select " id="signupForm" th:object="${signupForm}" method="post" action="/sign/process-signup" onsubmit="return check()">
 		<fieldset>
 			<legend>회원가입</legend>
 
-			<label for="userId">아이디<span class="join-key">*</span></label>
+			<label for="userId"><span class="join-key">*</span> 아이디</label>
 			<input type="text" id="userId" name="userId" class="inputid" />
 
-			<label for="userName">이름<span class="join-key">*</span></label>
+			<label for="userName"><span class="join-key">*</span> 이름</label>
 			<input type="text" id="userName" name="userName" class="inputname" th:field="*{userName}" />
 
-			<div >
-				<label for="password">비밀번호<span class="join-key">*</span></label>
+			<div>
+				<label for="password"><span class="join-key">*</span> 비밀번호</label>
 				<input type="password" id="password" name="password" class="inputpwd" />
 					<span class="txt-guide" th:text="|영문 대문자 ${policy.passwordEngUpperCount}개, 소문자 ${policy.passwordEngLowerCount}개, 숫자 ${policy.passwordNumberCount}개,
 					특수문자 ${policy.passwordCreateChar}중 ${policy.passwordSpecialCharCount}개 이상을 포함하여 ${policy.passwordMinLength} 이상 ${policy.passwordMaxLength} 이하|"></span>
-				<label for="passwordConfirm">비밀번호 확인<span class="join-key">*</span></label>
+				<label for="passwordConfirm"><span class="join-key">*</span> 비밀번호 확인</label>
 				<input type="password" id="passwordConfirm" name="passwordConfirm" class="inputpwd" />
 
-				<label for="mobilePhone">핸드폰 번호<span class="join-key">*</span></label>
+				<label for="mobilePhone"><span class="join-key">*</span> 핸드폰 번호</label>
 				<input type="text" id="mobilePhone" name="mobilePhone" class="inputMobilePhone" maxlength="13"/>
 			</div>
 
-			<label for="email">이메일<span class="join-key">*</span></label>
+			<label for="email"><span class="join-key">*</span> 이메일</label>
 			<input type="text" id="preEmail" name="preEmail" class="inputemail" />
 			<select id="selectEmail" name="selectEmail" class="select-email">
 				<option value="">직접입력</option>
@@ -44,11 +45,13 @@
 				<option value="@gmail.com">@gmail.com</option>
 			</select>
 			<input type="hidden" id="email" name="email" value="" />
-
-			<button type="submit" class="btn-join">가입하기</button>
+			<div class="btnarea">
+				<button type="submit" class="btn-join">가입하기</button>
+			</div>
 		</fieldset>
 	</form>
 	<div class="copyright">ⓒ Gaia3d Corp. All Rights Reserved.</div>
+</div>
 </div>
 <!-- /.join -->
 </body>
