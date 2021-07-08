@@ -65,6 +65,7 @@
 			<div id="searchContent" class="contents fullHeight" style="display:none;">
 				<div th:replace="~{/search/district :: #districtWrap}"></div>
 			</div>
+
 			<div id="dataContent" class="contents-margin-default fullHeight">
 				<div class="tabs">
 					<ul id="dataInfoTab" class="tab tab-divide">
@@ -76,19 +77,7 @@
 				<div th:replace="~{/data/map-data-group :: #dataGroupInfoContent}"></div>
 			</div>
 
-			<div id="dataContentNew" class="contents-margin-default fullHeight">
-				<!-- 데이터 tabmenu -->
-				<div class="tabmenu tabmenu-data">
-					<ul>
-						<li><a href="#">2D</a></li>
-						<li class="actived"><a href="#">3D</a></li>
-						<li><a href="#">주소</a></li>
-					</ul>
-				</div>
-				<div th:replace="~{/data/2d/data_2d :: #layerContent}"></div>
-				<div th:replace="~{/data/3d/data_3d :: #dataContent}"></div>
-			</div>
-
+			<div th:replace="~{/data/data :: #data-wrap-content}"></div>
 			<div th:replace="~{/spatial/spatial :: #spatialContent}"></div>
 			<div th:replace="~{/simulation/simulation :: #simulationContent}"></div>
 			<div th:replace="~{/iot/list :: #iotContent}"></div>
@@ -183,7 +172,7 @@
 <script type="text/javascript" th:src="@{/js/{lang}/district-controll.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/wps-request.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/search.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
-<script type="text/javascript" th:src="@{/js/{lang}/data-info.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/{lang}/data/data.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/user-policy.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/simulation/simulation.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/simulation/time-series.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
@@ -270,6 +259,7 @@
         dataGroupList();
         mapDataGroupList(1, null);
         mapDataInfoList(1, null, null, null);
+		Data(magoInstance);
 
 		// 시뮬레이션
         var simul = Simulation(magoInstance);

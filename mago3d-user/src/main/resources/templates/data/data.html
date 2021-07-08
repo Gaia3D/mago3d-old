@@ -1,0 +1,14 @@
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
+<div id="data-wrap-content" class="contents-margin-default fullHeight">
+    <!-- 데이터 tabmenu -->
+    <div class="tabmenu tabmenu-data">
+        <ul>
+            <li id="layer-tab" class="data-menu"><a href="#">2D</a></li>
+            <li id="data-tab" class="data-menu actived"><a href="#">3D</a></li>
+            <li id="address-tab" class="data-menu"><a href="#">주소</a></li>
+        </ul>
+    </div>
+    <div th:replace="~{/data/2d/data-2d :: #layer-content}"></div>
+    <div th:replace="~{/data/3d/data-3d :: #data-content}"></div>
+</div>
+</html>
