@@ -429,7 +429,7 @@ input[type="button"],
 .ui-dialog .ui-dialog-buttonpane button {
 	display: inline-block;
 	font-size: 1.2rem;
-	height: 30px;
+	/*height: 30px;*/
 	padding: 6px 10px;
 	box-sizing: border-box;
 	margin: 0;
@@ -5193,7 +5193,7 @@ select::-ms-expand {display: none;}
 .dataselect {width:342px; margin:0 auto; height:40px; margin-top:8px;}
 .dataselect-item {float:left; width:180px; padding-left:3px;}
 .data-filter {float:right; width:125px; height:30px; padding-left:26px; line-height:30px; display:inline-block; border-radius:3px; background:url(/images/ko/ic_filter_more.png) 6px 50% no-repeat; font-size:12px; border:1px solid #d8d8d8;}
-.switch {position: relative; display: inline-block; /*width: 36px;*/ height: 16px; margin-left:10px; margin-right:2px; line-height: 16px;}
+.switch {position: relative; display: inline-block; width: 26px; height: 16px; margin-left:10px; margin-right:2px; line-height: 16px;}
 .switch input {opacity: 0; width: 0; height: 0;}
 .slider {position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e8e6e6; border-radius: 34px; transition: .3s;}
 .slider:before {position: absolute; content: ""; height: 14px; width: 14px; left: 1px; bottom: 1px; background-color: #bebdbd; border-radius: 50%; transition: .3s;}
