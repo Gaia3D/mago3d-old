@@ -16,6 +16,8 @@ import gaia3d.utils.DateUtils;
 import gaia3d.utils.FileUtils;
 import gaia3d.utils.FormatUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.ObjectUtils;
@@ -28,9 +30,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.*;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 /**
  * 3D 데이터 파일 업로더
@@ -104,14 +105,14 @@ public class UploadDataRestController {
 				String fileExtension = divideNames[divideNames.length - 1];
 				if(UploadData.ZIP_EXTENSION.equalsIgnoreCase(fileExtension)) {
 					isZipFile = true;
+					String encoding = StandardCharsets.UTF_8.name();
 					// zip 파일
-					uploadMap = unzip(policy, uploadTypeList, converterTypeList, today, userId, multipartFile, makedDirectory, dataType);
+					uploadMap = unzip(policy, encoding, uploadTypeList, converterTypeList, today, userId, multipartFile, makedDirectory, dataType);
 					totalFileSize = (Long)uploadMap.get("totalFileSize");
 					log.info("@@@@@@@ uploadMap = {}", uploadMap);
-
+					errorCode = (String)uploadMap.get("errorCode");
 					// validation 체크
-					if(uploadMap.containsKey("errorCode")) {
-						errorCode = (String)uploadMap.get("errorCode");
+					if(!ObjectUtils.isEmpty(errorCode)) {
 						return getResultMap(result, HttpStatus.BAD_REQUEST.value(), errorCode, message);
 					}
 
@@ -277,8 +278,10 @@ public class UploadDataRestController {
 	}
 
 	/**
+	 * // TODO 리팩토링 해야 함. 한거임, 로직 분리하고, 재귀 호출로
 	 * 업로딩 파일을 압축 해제
 	 * @param policy
+	 * @param encoding
 	 * @param uploadTypeList
 	 * @param converterTypeList
 	 * @param today
@@ -289,6 +292,7 @@ public class UploadDataRestController {
 	 * @throws Exception
 	 */
 	private Map<String, Object> unzip(	Policy policy,
+										String encoding,
 										List<String> uploadTypeList,
 										List<String> converterTypeList,
 										String today,
@@ -321,17 +325,44 @@ public class UploadDataRestController {
 		Map<String, String> fileNameMatchingMap = new HashMap<>();
 		List<UploadDataFile> uploadDataFileList = new ArrayList<>();
 		// zip 파일을 압축할때 한글이나 다국어가 포함된 경우 java.lang.IllegalArgumentException: malformed input off 같은 오류가 발생. 윈도우가 CP949 인코딩으로 파일명을 저장하기 때문.
-		try ( ZipFile zipFile = new ZipFile(uploadedFile)) {
+
+		result = decompress(uploadTypeList, converterTypeList, today, userId, uploadedFile, encoding, targetDirectory, dataType);
+		errorCode = (String)result.get("errorCode");
+		log.info("------------------ errorCode = {}", errorCode);
+		if(errorCode.equals("filenotfound.exception"))  {
+			// 한글 깨짐 때문에 한번 실패하면 encoding을 변경해서 실행
+			encoding = "CP949";
+			log.info("------------------ encoding = {}", encoding);
+			result = decompress(uploadTypeList, converterTypeList, today, userId, uploadedFile, encoding, targetDirectory, dataType);
+			log.info("------------------ after uploadMap = {}", result);
+		}
+
+		return result;
+	}
+
+	private Map<String, Object> decompress(List<String> uploadTypeList, List<String> converterTypeList, String today, String userId,
+										   File uploadedFile, String encoding, String targetDirectory, String dataType ) {
+		Map<String, Object> result = new HashMap<>();
+		String errorCode = null;
+		String message = null;
+		// converter 변환 대상 파일 수
+		int converterTargetCount = 0;
+		// 전체 파일 사이즈
+		long totalFileSize = 0L;
+
+		Map<String, String> fileNameMatchingMap = new HashMap<>();
+		List<UploadDataFile> uploadDataFileList = new ArrayList<>();
+		try ( ZipFile zipFile = new ZipFile(uploadedFile, encoding, true)) {
 			String directoryPath = targetDirectory;
 			String subDirectoryPath = "";
 			String directoryName = null;
 			int depth = 1;
-			Enumeration<? extends ZipEntry> entries = zipFile.entries();
+			Enumeration<ZipArchiveEntry> entries = zipFile.getEntriesInPhysicalOrder();
 
 			while( entries.hasMoreElements() ) {
 				UploadDataFile uploadDataFile = new UploadDataFile();
 
-				ZipEntry entry = entries.nextElement();
+				ZipArchiveEntry entry = entries.nextElement();
 				String unzipfileName = targetDirectory + entry.getName();
 				boolean converterTarget = false;
 
@@ -487,13 +518,18 @@ public class UploadDataRestController {
 						}
 					}
 					uploadDataFile = fileCopyInUnzip(uploadDataFile, zipFile, entry, directoryPath, saveFileName, extension, fileName, subDirectoryPath, depth);
-					totalFileSize += Long.valueOf(uploadDataFile.getFileSize());
+					if(!ObjectUtils.isEmpty(uploadDataFile.getFileSize())) totalFileSize += Long.valueOf(uploadDataFile.getFileSize());
 				}
 
 				uploadDataFile.setConverterTarget(converterTarget);
 				uploadDataFile.setFileSize(String.valueOf(entry.getSize()));
 				uploadDataFileList.add(uploadDataFile);
 			}
+		} catch(FileNotFoundException ex) {
+			errorCode = "filenotfound.exception";
+			message = ex.getClass().getName();
+			LogMessageSupport.printMessage(ex);
+			log.info("@@@@@@@@@@@@ FileNotFoundException. message = {}", ex.getClass().getName());
 		} catch(RuntimeException ex) {
 			errorCode = "runtime.exception";
 			message = ex.getClass().getName();
@@ -504,6 +540,11 @@ public class UploadDataRestController {
 			message = ex.getClass().getName();
 			LogMessageSupport.printMessage(ex);
 			log.info("@@@@@@@@@@@@ IOException. message = {}", ex.getClass().getName());
+		} catch(Exception e) {
+			errorCode = "unknown.exception";
+			message = e.getClass().getName();
+			LogMessageSupport.printMessage(e);
+			log.info("@@@@@@@@@@@@ Exception. message = {}", e.getClass().getName());
 		}
 
 		result.put("errorCode", errorCode);
@@ -511,14 +552,15 @@ public class UploadDataRestController {
 		result.put("converterTargetCount", converterTargetCount);
 		result.put("uploadDataFileList", uploadDataFileList);
 		result.put("totalFileSize", totalFileSize);
+
 		return result;
 	}
 
 	/*
 	 * unzip 로직 안에서 파일 복사
 	 */
-	private UploadDataFile fileCopyInUnzip(UploadDataFile uploadDataFile, ZipFile zipFile, ZipEntry entry, String directoryPath, String saveFileName,
-										   String extension, String fileName, String subDirectoryPath, int depth) {
+	private UploadDataFile fileCopyInUnzip(UploadDataFile uploadDataFile, ZipFile zipFile, ZipArchiveEntry entry, String directoryPath, String saveFileName,
+										   String extension, String fileName, String subDirectoryPath, int depth) throws Exception {
 		long size = 0L;
 		try ( 	InputStream inputStream = zipFile.getInputStream(entry);
 				 FileOutputStream outputStream = new FileOutputStream(directoryPath + saveFileName); ) {
@@ -538,15 +580,18 @@ public class UploadDataRestController {
 			uploadDataFile.setFileSubPath(subDirectoryPath);
 			uploadDataFile.setDepth(depth);
 			uploadDataFile.setFileSize(String.valueOf(size));
-
+		} catch(FileNotFoundException e) {
+			LogMessageSupport.printMessage(e);
+			log.info("@@@@@@@@@@@@ file not found exception. message = {}", e.getClass().getName());
+			throw e;
 		} catch(IOException e) {
 			LogMessageSupport.printMessage(e);
 			log.info("@@@@@@@@@@@@ io exception. message = {}", e.getClass().getName());
-			uploadDataFile.setErrorMessage(e.getMessage());
+			throw e;
 		} catch(Exception e) {
 			LogMessageSupport.printMessage(e);
 			log.info("@@@@@@@@@@@@ exception. message = {}", e.getClass().getName());
-			uploadDataFile.setErrorMessage(e.getMessage());
+			throw e;
 		}
 
 		return uploadDataFile;

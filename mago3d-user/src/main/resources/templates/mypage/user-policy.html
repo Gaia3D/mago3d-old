@@ -22,11 +22,10 @@
         <div th:replace="~{/fragments/menu :: #navWrap}"></div>
     </div>
     <!-- E: NAVWRAP -->
-
 	<div class="container" style="float:left; width: calc(100% - 78px);">
-		<div style="padding: 40px 20px 30px 10px; font-size: 28px; color:black; font-weight:600;">My Page</div>
+		<div style="padding: 40px 20px 30px 10px; font-size: 28px; color:black; font-weight:600;">마이 페이지</div>
         <!-- TAB -->
-        <div class="tabs">
+        <div class="tabs w800">
             <ul class="tab">
 				<li id="tabMyPageUserInfo"><a href="/mypage/user-modify">기본 정보</a></li>
 				<li id="tabMyPageMembership"><a href="/mypage/membership">멤버십</a></li>
@@ -36,10 +35,10 @@
 
 		<form id="userPolicy" th:object="${userPolicy}" method="post" th:action="@{#}" onsubmit="return false;">
 			<input type="hidden" id="userPolicyId" name="userPolicyId"/>
-			<div class="userPolicyContent">
+			<div class="userPolicyContent w800 marT30">
 				<div class="button-group-align marB10">
 					<h3 class="h3-heading">시작 위치</h3>
-					<button type="button" id="findStartPoint" class="btnTextF right-align" th:text="#{common.select}"></button>
+					<button type="button" id="findStartPoint" class="btnTextF right-align marR10" th:text="#{common.select}"></button>
 				</div>
 				<div class="userPolicyContentDetail">
 					<div class="form-group form-group-policy">
@@ -60,7 +59,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="userPolicyContent">
+			<div class="userPolicyContent w800">
 				<h3 class="h3-heading marB10">FOV (Field Of View)</h3>
 				<div class="userPolicyContentDetail">
 					<div class="form-group form-group-policy">
@@ -69,7 +68,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="userPolicyContent">
+			<div class="userPolicyContent w800">
 				<div class="button-group-align marB10">
 					<h3 class="h3-heading">LOD (Level Of Detail)</h3>
 				</div>
@@ -100,18 +99,23 @@
 					</div>
 				</div>
 			</div>
-			<div class="userPolicyContent">
+			<div class="userPolicyContent w800">
 				<div class="button-group-align marB10">
 					<h3 class="h3-heading">SSAO</h3>
 				</div>
 				<div class="userPolicyContentDetail">
-					<div class="form-group form-group-policy">
+					<div class="form-group form-group-policy w800">
 						<label for="ssaoRadius" th:text="#{policy.init.ssao}"></label>
 						<input type="text" id="ssaoRadius" name="ssaoRadius" th:field="*{ssaoRadius}" size="15" /> M
 					</div>
 				</div>
 			</div>
-			<button class="focusA btn-full" th:text="#{common.save}" th:onclick="'update();'"></button>
+			<div class="button-group w800">
+				<div class="center-buttons">
+					<button class="btn" th:text="#{common.save}" th:onclick="'update();'"></button>
+				</div>
+			</div>
+			
 		</form>
 
         <!-- E: 사용자 기본 정보 수정 -->

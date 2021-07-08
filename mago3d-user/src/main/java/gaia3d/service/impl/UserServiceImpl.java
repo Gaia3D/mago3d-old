@@ -128,6 +128,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
+	 * 사용자 이메일 수정
+	 * @param userInfo
+	 * @return
+	 */
+	@Transactional
+	public int updateEmail(UserInfo userInfo) {
+		return userMapper.updateEmail(userInfo);
+	}
+
+	/**
 	 * 사용자 삭제
 	 * @param userId
 	 * @return

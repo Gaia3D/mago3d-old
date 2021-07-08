@@ -81,6 +81,15 @@
 		WHERE user_id = #{userId}
 	</update>
 
+	<!-- 사용자 기본 정보 중 이메일 수정 -->
+	<update id="updateEmail" parameterType="userInfo">
+		/* updateEmail */
+		UPDATE user_info
+		SET email = #{email},
+		update_date = NOW()
+		WHERE user_id = #{userId}
+	</update>
+
 	<!-- 사용자 삭제 -->
 	<delete id="deleteUser" parameterType="string">
 		/* deleteUser */

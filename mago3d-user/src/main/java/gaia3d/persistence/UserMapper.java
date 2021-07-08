@@ -60,6 +60,13 @@ public interface UserMapper {
 	 * @return
 	 */
 	int updatePassword(UserInfo userInfo);
+
+	/**
+	 * 사용자 이메일 수정
+	 * @param userInfo
+	 * @return
+	 */
+	int updateEmail(UserInfo userInfo);
 	
 	/**
 	 * 사용자 삭제
@@ -67,5 +74,5 @@ public interface UserMapper {
 	 * @return
 	 */
     int deleteUser(String userId);
-    
+
 }
