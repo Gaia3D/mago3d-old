@@ -2974,7 +2974,7 @@ ul.nav li.layer {background-position: -2px -396px;}
 ul.nav li.userPolicy {background-position: -2px -476px;}
 ul.nav li:hover.data, ul.nav li.data.on {background-position: -78px -4px; color:white;} 
 ul.nav li:hover.converter, ul.nav li.converter.on {background-position: -78px -85px; color:white;}
-ul.nav li:hover.simulation, ul.nav li.simulation.on {background-position: -78px -159px; color:white;}
+ul.nav li:hover.simulation, ul.nav li.simulation.on {background-position: -78px -158px; color:white;}
 ul.nav li:hover.iot, ul.nav li.iot.on {background-position: -78px -238px; color:white;}
 ul.nav li:hover.spatial, ul.nav li.spatial.on {background-position: -78px -312px; color:white;}
 ul.nav li:hover.layer, ul.nav li.layer.on {background-position: -78px -396px; color:white;}
@@ -5046,32 +5046,36 @@ h1.magologo {display:block; width:250px; height:30px; background:url(/images/ko/
 #membership-item .btn-go:hover, #join .btn-join:focus  {background:#2a5bd3;}
 
 /* 로그인 */
-#login {width:580px; margin:0 auto; height:750px; padding:0; background:white; box-shadow: 0 0 2px rgba(132,132,132,0.6); border-radius:8px; position:absolute; top:50%; left:50%; margin-top:-380px; margin-left:-280px;}
-#signup-complete {width:580px; margin:0 auto; height:400px; padding:0; background:white; box-shadow: 0 0 2px rgba(132,132,132,0.6); border-radius:8px; position:absolute; top:50%; left:50%; margin-top:-380px; margin-left:-280px;}
+#loginwrap {width:100%; height:100%; background:#f1f1f1;}
+/* #loginwrap {width:100%; height:100%; background:#f1f1f1 url(/images/ko/login_bg.png) no-repeat left bottom;}*/
+#loginwrap fieldset {padding:0;} 
+#login {width:530px; margin:0 auto; height:100%; padding:0; background:white; border:0; box-shadow: 0 0 7px 3px #e2e3e4;  position:absolute; top:0; left:50%; margin-left:-280px;}
+#signup-complete {width:580px; margin:0 auto; height:400px; padding:0; background:white; border-radius:8px; position:absolute; top:50%; left:50%; margin-top:-380px; margin-left:-280px;}
 .select-lang {margin-right:30px; padding-top:30px; height:80px;}
 .language {float:right; width:70px; font-size:12px; padding-left:5px;}
 .login-wrapper img {text-align:center;}
-.login-wrapper {width:450px; margin:0 auto;}
+.login-wrapper {width:385px; margin:0 auto; padding:0;}
 p.stitle {font-family: 'NotoKrR'; font-size:14px; margin-top:30px; height:30px; color:#444444; text-align:center;}
 span.mago {color:#6649ca;}
-.login-wrapper img {clear:both; display:block; margin-left:auto; margin-right:auto;}
-.login-wrapper .btn-login {clear:both; display:block; width:450px; height:70px; padding:0; margin:10px 0 0 -10px; font-size:25px; cursor:pointer; background:#396ce8; border-radius:3px; color:white; font-family: 'NotoKrM';}
-.login-wrapper .inputid {clear:both; display:block;  padding:0 0 0 30px; text-indent:25px; margin:0 0 15px -10px; width:415px; text-align:left; height:56px; line-height:60px;font-size:16px; color:#444444; border:2px solid #e2e0e0; border-radius:3px; font-family: 'NotoKrL'; letter-spacing:-1px; background:url(../../images/ko/login_bl_id.png) no-repeat 12px 50%;}
-.login-wrapper .inputpwd {clear:both; display:block; padding:0 0 0 30px; text-indent:25px; margin:0 0 15px -10px;; width:415px; text-align:left; height:56px; line-height:60px;font-size:16px;color:#444444; border:2px solid #e2e0e0; border-radius:3px; font-family: 'NotoKrL'; letter-spacing:-1px; background:url(../../images/ko/login_bl_pw.png) no-repeat 12px 50%;}
-.login-wrapper input:focus {transition:0.3s; border:2px solid #4a9afd;}
+.login-wrapper img {clear:both; display:block; margin-left:auto; margin-right:auto; margin-top:80px;}
+.login-wrapper .btn-login {clear:both; display:block; width:380px; height:55px; padding:0; margin:0; font-size:22px; cursor:pointer; background:#1289f8; border-radius:3px; color:white; font-family: 'NotoKrM';}
+.login-wrapper .inputid {clear:both; display:block;  padding:0; margin:0; margin-top:40px; margin-bottom:14px; text-indent:10px; width:380px; text-align:left; height:48px; line-height:45px;font-size:14px; color:#444444; border:1px solid #e2e0e0; border-radius:3px; font-family: 'NotoKrL'; letter-spacing:-1px; background:white;}
+.login-wrapper .inputpwd {clear:both; display:block; padding:0; margin:0; margin-bottom:14px; text-indent:10px; width:380px; text-align:left; height:48px; line-height:45px;font-size:14px;color:#444444; border:1px solid #e2e0e0; border-radius:3px; font-family: 'NotoKrL'; letter-spacing:-1px; background:white;}
+.login-wrapper input {background:white;}
+.login-wrapper input:focus {transition:0.3s; border:1px solid #4a9afd;}
 .login-wrapper > ul.join {clear:both; margin:20px 0 0 0; padding:0 0 0 0; }
 .login-wrapper > ul.join li {float:left; padding:0 20px 0 0; list-style:none; margin:0; font-size:14px; font-family: 'NotoKrR';}
 .login-wrapper > ul.join li.on a {color:#2a5bd3;}
 .login-wrapper > ul.join li a:hover, .login-wrapper > ul.join li a:focus {text-decoration:underline;}
-.login-wrapper > .autologin {clear:both; width:450px; padding:0; margin:0 auto; height:87px; border-top:1px solid #eae9e9; border-bottom:1px solid #eae9e9;}
-.login-wrapper > .autologin > span {float:left; display:inline-block; line-height:87px; margin-left:35px; font-size:14px;}
-.login-wrapper > .autologin ul {display:inline-block; margin-top:22px;}
-.login-wrapper > .autologin ul li {list-style:none; display:inline-block; float:left; margin-left:12px; }
-.login-wrapper > .autologin ul li .login-google {display:block; width:42px; height:42px; background:url(../../images/ko/autologin_google.png) no-repeat left 50%; cursor:pointer;}
-.login-wrapper > .autologin ul li .login-facebook {display:block; width:42px; height:42px; background:url(../../images/ko/autologin_facebook.png) no-repeat left 50%; cursor:pointer;}
-.login-wrapper > .autologin ul li .login-naver {display:block; width:42px; height:42px; background:url(../../images/ko/autologin_naver.png) no-repeat left 50%; cursor:pointer;}
-.login-wrapper > .autologin ul li .login-kakao {display:block; width:42px; height:42px; background:url(../../images/ko/autologin_kakao.png) no-repeat left 50%; cursor:pointer;}
-.copyright {clear:both; padding-top:60px; font-size:14px; color:#4f4f4f; text-align:center; font-family: 'NotoKrL';}
+.login-wrapper > .autologin {clear:both; width:385px; padding:0; margin:0 auto; margin-top:20px;  height:87px; border-top:1px solid #eae9e9; }
+.login-wrapper > .autologin > span {float:left; display:inline-block; line-height:87px; margin:0 20px 0 30px; font-size:14px;}
+.login-wrapper > .autologin ul {display:block; margin-top:22px; background: url(../../images/ko/ic_sbmenu.png)}
+.login-wrapper > .autologin ul li {list-style:none; display:inline-block; float:left; margin-left:5px; }
+.login-wrapper > .autologin ul li .login-google {display:inline-block; width:42px; height:42px; background:white url(/images/ko/ic_sbmenu.png) -334px 1px no-repeat;}
+.login-wrapper > .autologin ul li .login-facebook {display:inline-block;width:42px; height:42px; background:white url(/images/ko/ic_sbmenu.png) -400px 1px no-repeat;}
+.login-wrapper > .autologin ul li .login-naver {display:inline-block;width:42px; height:42px; background:white url(/images/ko/ic_sbmenu.png) -464px 1px no-repeat;}
+.login-wrapper > .autologin ul li .login-kakao {display:inline-block;width:42px; height:42px; background:white url(/images/ko/ic_sbmenu.png) -526px 1px no-repeat;}
+.copyright {margin-top:150px; font-size:14px; color:#4f4f4f; text-align:center; font-family: 'NotoKrL';}
 .btn-login:hover, .btn-login:focus {background:#2a5bd3; }
 
 /* 회원가입 */

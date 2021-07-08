@@ -12,7 +12,8 @@
 	<script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 	<script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 </head>
-<body class="bggray">
+<body>
+<div id="loginwrap">
 <div id="login">
 	<form class="select-lang">
 		<select id="userLocale" name="userLocale" class="language" onchange="changeLanguage(this.value);">
@@ -22,7 +23,6 @@
 	</form>
 	<div class="login-wrapper">
 		<img th:src="@{/images/{lang}/mago3d_logo.png(lang=${lang})}" alt="디지털트윈 플랫폼, mago3D 로고" />
-		<p class="stitle">실내외 3차원 통합 플랫폼, <span class="mago">mago3D</span>와 함께 디지털 트윈 세상으로!</p>
 		<form id="signinForm" th:object="${signinForm}" method="post" action="/sign/process-signin" autocomplete="off">
 			<fieldset>
 				<legend>mago3D 로그인</legend>
@@ -37,7 +37,7 @@
 			<li class="on"><a href="/sign/signup">회원가입</a></li>
 			<li><a href="/sign/password/find">비밀번호 찾기</a></li>
 		</ul>
-		<hr class="h30">
+		<hr class="h20">
 		<div class="autologin">
 			<span>쇼셜계정으로 로그인</span>
 			<ul>
@@ -49,6 +49,7 @@
 		</div>
 		<div class="copyright">ⓒ Gaia3d Corp. All Rights Reserved.</div>
 	</div>
+</div>
 </div>
 </body>
 
