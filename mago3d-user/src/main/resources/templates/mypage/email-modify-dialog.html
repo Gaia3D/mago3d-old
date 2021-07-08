@@ -1,0 +1,33 @@
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
+<div id="emailModifyDialog" class="basicTable" title="이메일 변경하기" style="display: none;">
+	<form id="emailModifyForm" name="emailModifyForm" method="post" th:action="@{#}" onsubmit="return false;">
+	<table class="inner-table scope-row" th:summary="#{data.object.attribute.dialog.summary}">
+		<caption class="hiddenTag"><th:block th:text="#{data.object.attribute.dialog.caption}"></th:block></caption>
+		<colgroup>
+			<col class="col-label"></col>
+			<col class="col-data"></col>
+		</colgroup>
+		<tr>
+			<th class="col-label" scope="row" style="text-align: center; min-width: 100px;"><th:block th:text="#{user.email}"></th:block></th>
+			<td id="dataNameForObjectAttribute" class="col-data">
+				<input type="text" id="email" name="email" class="inputemail" />
+			</td>
+		</tr>
+		<tr>
+			<th class="col-label" scope="row" style="text-align: center; min-width: 100px;"><th:block th:text="#{user.new.email}"></th:block></th>
+			<td id="dataObjectAttributeViewer" class="col-data" style="font-size: 14px;">
+				<input type="text" id="preEmail" name="preEmail" class="inputemail" />
+				<select id="selectEmail" name="selectEmail" class="select-email">
+					<option value="">직접입력</option>
+					<option value="@naver.com">@naver.com</option>
+					<option value="@daum.net">@daum.net</option>
+					<option value="@gmail.com">@gmail.com</option>
+				</select>
+				<input type="hidden" id="newEmail" name="newEmail" value="" />
+			</td>
+		</tr>
+	</table>
+		<button id="emailModifyButton" th:text="변경하기"/>
+	</form>
+</div>
+</html>

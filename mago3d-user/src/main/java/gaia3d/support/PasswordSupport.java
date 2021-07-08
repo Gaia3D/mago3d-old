@@ -140,6 +140,7 @@ public class PasswordSupport {
 		
 		// 임시 비밀번호 변경 화면
 		String password = userInfo.getNewPassword();
+
 		if(userInfo.getPassword() == null || "".equals(userInfo.getPassword()) 
 			|| userInfo.getNewPassword() == null || "".equals(userInfo.getNewPassword())
 			|| userInfo.getNewPassword().length() < policy.getPasswordMinLength()

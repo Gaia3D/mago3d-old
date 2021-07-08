@@ -59,6 +59,13 @@ public interface UserService {
 	int updatePassword(UserInfo userInfo);
 
 	/**
+	 * 사용자 이메일 수정
+	 * @param userInfo
+	 * @return
+	 */
+	int updateEmail(UserInfo userInfo);
+
+	/**
 	 * 사용자 삭제
 	 * @param userId
 	 * @return

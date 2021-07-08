@@ -76,6 +76,8 @@ public class UserInfo extends Search implements Serializable {
 	private String email1;
 	// 이메일2
 	private String email2;
+	// 변경할 이메리
+	private String newEmail;
 	// 메신저 아이디
 	private String messenger;
 	// 우편번호

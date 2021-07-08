@@ -4,6 +4,7 @@ import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.Key;
 import gaia3d.domain.PageType;
 import gaia3d.domain.cache.CacheManager;
+import gaia3d.domain.policy.Policy;
 import gaia3d.domain.uploaddata.UploadData;
 import gaia3d.domain.user.UserInfo;
 import gaia3d.domain.user.UserSession;
@@ -47,13 +48,17 @@ public class MyPageController {
 	public String userModify(HttpServletRequest request, UploadData uploadData, Model model) {
 		
 		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
+		Policy policy = CacheManager.getPolicy();
 
 		UserInfo userInfo = userService.getUser(userSession.getUserId());
 
+		model.addAttribute("policy", policy);
 		model.addAttribute("userInfo", userInfo);
 
 		return "/mypage/user-modify";
 	}
+
+
 	
 	/**
 	 * 검색 조건
@@ -101,4 +106,5 @@ public class MyPageController {
 		}
 		return new Locale(lang);
 	}
+
 }
