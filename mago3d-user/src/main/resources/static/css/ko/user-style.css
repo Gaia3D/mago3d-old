@@ -2857,8 +2857,7 @@ span.data-username, .data-go, span.txt-guide, .data-layerlist-ttl {font-family: 
 .order, .setup-sttl, .toolbox-menu button {font-family: 'NotoKrL';}
 h3 {color:#343434; font-size:18px;}
 h1.sc-tit {margin-top:36px;}
-h2.join {font-size:30px; padding-top:80px; padding-bottom:40px; font-family: 'NotoKrM' !important;}
-h2.find-password {padding-top:100px; padding-bottom:50px;}
+h2.join, h2.find-password  {font-size:30px; padding-top:80px; padding-bottom:40px; font-family: 'NotoKrM' !important;}
 h3.data {clear:both; height:29px; color:#0764cd; line-height:28px; vertical-align:middle; display:inline-block; margin:0; padding:0; font-weight:600;}
 h3.data a {color:#0764cd;}
 h3.sttl {height:28px; color:#0764cd; font-size:18px !important;  width:200px;vertical-align:middle; display:inline-block; margin:6px 0 0 0; padding:0px; font-weight:600;}
@@ -5050,7 +5049,7 @@ h1.magologo {display:block; width:250px; height:30px; background:url(/images/ko/
 #loginwrap {width:100%; height:100%; background:#ececee;}
 /* #loginwrap {width:100%; height:100%; background:url(/images/ko/login_bg.png) no-repeat left bottom;}*/
 #loginwrap fieldset {padding:0;} 
-#login {width:630px; margin:0 auto; height:100%; padding:0; background:white; border:0; box-shadow: 0 0 7px 3px #e2e3e4;  position:absolute; top:0; left:50%; margin-left:-280px;}
+#login {width:600px; margin:0 auto; height:100%; padding:0; background:white; border:0; box-shadow: 0 0 7px 3px #e2e3e4;  position:absolute; top:0; left:50%; margin-left:-280px;}
 #signup-complete {width:580px; margin:0 auto; height:400px; padding:0; background:white; border-radius:8px; position:absolute; top:50%; left:50%; margin-top:-380px; margin-left:-280px;}
 .select-lang {margin-right:60px; padding-top:130px; height:80px;}
 .language {float:right; width:70px; font-size:12px; padding-left:5px;}
@@ -5079,16 +5078,16 @@ span.mago {color:#6649ca;}
 .btn-login:hover, .btn-login:focus {background:#1080e9; border:1px solid #1080e9;}
 
 /* 회원가입 */
-#join {width:500px; margin:0 auto; padding:0 50px; background:white; height:100%;}
+#join {width:600px; margin:0 auto; padding:0 50px; background:white; height:100%;}
 #join form, #join fieldset  {margin:0; padding:0;}
-#join input, #join select {margin-top:16px !important; font-size:14px !important; }
-#join select {margin-left:5px !important;}
+#join input {margin-top:16px !important; font-size:14px !important; text-indent:10px;}
+#join select {margin-left:5px !important; margin-top:16px !important; font-size:14px !important;}
 #join label {clear:both; float:left; display:inline-block; float:left; width:150px; line-height:42px; margin-top:16px; font-size:16px;}
 #join .inputid, #join .inputMobilePhone {padding:0; margin:0 0 0 0; width:340px; text-align:left; height:42px; line-height:42px;font-size:16px; color:#444444; border:1px solid #e2e0e0;}
 #join .inputpwd {float:left;padding:0; margin:0 0 0 0; width:340px; text-align:left; height:42px; line-height:42px;font-size:14px; color:#444444; border:1px solid #e2e0e0;}
 #join .inputname {padding:0; margin:0 0 0 0; width:340px; text-align:left; height:42px; line-height:42px; color:#444444; border:1px solid #e2e0e0;}
 #join .inputemail {float:left; padding:0; margin:0 0 0 0; width:180px; text-align:left; height:42px; line-height:42px; color:#444444; border:1px solid #e2e0e0;}
-#join span.txt-guide {clear:both; display:inline-block; margin-left:150px; color:#868686; margin-top:5px; font-size:12px; margin-bottom:20px;}
+#join span.txt-guide {clear:both; display:inline-block; margin-left:150px; color:#868686; margin-top:5px; font-size:13px; font-family: 'NotoKrR'; color:#434343; margin-bottom:20px;}
 #join .select-email {float:left; display:inline-block; width:140px; font-size:15px; height:44px; padding-left:10px; margin:0;}
 #join .btn-join {display:block; font-size:20px; color:white; cursor:pointer; width:420px; margin:0 auto;height:60px; background:#1289f8; color:white; text-align:center; }
 #join .btn-join:hover, #join .btn-join:focus  {background:#1080e9; border:1px solid #1080e9;}
@@ -5097,19 +5096,20 @@ span.mago {color:#6649ca;}
 .emailtxt {display:inline-block; float:left; font-size:16px; width:20px; text-align:center; line-height:42px;}
 .join-key {font-size:18px; color:#fb522b; margin-left:3px;}
 .input-key {font-size:18px; color:#fb522b; margin-left:3px;}
-.btnarea {clear:both; padding-top:80px;}
+.btnarea {clear:both; padding-top:50px; width:auto; text-align:center;}
 
 /* 비밀번호 찾기 */
 #find-password {width:500px; margin:0 auto; padding:0 50px; background:white; height:100%;}
+#find-password input {margin-top:16px !important; font-size:14px !important; text-indent:10px;}
 #find-password form, #find-password fieldset  {margin:0; padding:0;}
-#find-password label {clear:both; float:left; display:inline-block; float:left; width:150px; line-height:42px; margin:0; padding:0; font-size:16px;}
+#find-password label {clear:both; float:left; display:inline-block; float:left; margin-top:16px !important; font-size:16px !important; text-indent:10px; width:150px; margin:0; padding:0;}
 #find-password .inputid, #find-password .inputMobilePhone {padding:0; margin:0 0 0 0; width:340px; text-align:left; height:42px; line-height:42px;font-size:16px; color:#444444; border:1px solid #e2e0e0;}
 #find-password .inputpwd {float:left;padding:0; margin:0 0 0 0; width:340px; text-align:left; height:42px; line-height:42px;font-size:16px; color:#444444; border:1px solid #e2e0e0;}
 #find-password .inputname {padding:0; margin:0 0 0 0; width:340px; text-align:left; height:42px; line-height:42px;font-size:16px; color:#444444; border:1px solid #e2e0e0;}
 #find-password .inputemail {float:left; padding:0; margin:0 0 0 0; width:340px; text-align:left; height:42px; line-height:42px;font-size:16px; color:#444444; border:1px solid #e2e0e0;}
-#find-password .btn-find-password:hover, #find-password .btn-find-password:focus  {background:#2a5bd3;}
-.btn-go-login:hover, .btn-go-login:focus  {background:#2a5bd3;}
-.btn-go-login, .btn-find-password {clear:both; display:inline-block; margin-top:20px; font-size:23px;color:white; cursor:pointer; padding:10px 30px 10px 30px; line-height:20px; margin-left:140px; background:#396ce8; border-radius:3px; color:white; text-align:center; }
+#find-password .btn-go-login, .btn-find-password {display:inline-block; font-size:20px; font-size:18px; margin-right:10px; color:white; cursor:pointer; width:160px; height:50px; background:#1289f8; color:white; text-align:center;}
+#find-password .btn-go-login:hover, .btn-go-login:focus, .btn-find-password:hover, .btn-find-password:focus  {background:#1080e9; border:1px solid #1080e9;}
+
 #signup-complete .btn-go-login:hover, #find-password .btn-find-password:focus  {background:#2a5bd3;}
 .emailtxt {display:inline-block; float:left; font-size:16px; width:20px; text-align:center; line-height:42px;}
 .find-password-key {font-size:18px; color:#fb522b; margin-left:3px;}
