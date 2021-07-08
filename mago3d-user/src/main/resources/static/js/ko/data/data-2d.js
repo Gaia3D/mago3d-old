@@ -1,21 +1,23 @@
 const Data2D = function(magoInstance) {
     this.magoInstance = magoInstance;
-    this._active = false;
+    this._load = false;
     this.layers = [];
 }
 
 Object.defineProperties(Data2D.prototype, {
-    active : {
+    load : {
         get : function () {
-            return this._active;
+            return this._load;
         },
-        set : function (active) {
-            if(active) {
-                this.run();
+        set : function (load) {
+            if(load) {
+                alert('2');
+                //this.initCamera();
+                //this.run();
             } else {
-                this.clear();
+                //this.clear();
             }
-            this._active = active;
+            this._load = load;
         }
     }
 });
