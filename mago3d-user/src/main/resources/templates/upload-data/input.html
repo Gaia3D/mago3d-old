@@ -421,6 +421,8 @@
 				alert(JS_MESSAGE["upload.data.type.invalid"]);
 	        } else if(response.errorCode === "db.exception") {
 				alert(JS_MESSAGE["db.exception"]);
+			} else if(response.errorCode === "filenotfound.exception") {
+				alert(JS_MESSAGE["filenotfound.exception"]);
 	        } else if(response.errorCode === "io.exception") {
 				alert(JS_MESSAGE["io.exception"]);
 	        } else if(response.errorCode === "runtime.exception") {
