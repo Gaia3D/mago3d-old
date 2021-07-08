@@ -5038,7 +5038,7 @@ button::-moz-focus-inner { border: 0; padding: 0;}
 button, [type="button"],[type="reset"],[type="submit"] {-webkit-appearance: button;}
 button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none; padding: 0;}
 button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring {  outline: 1px dotted ButtonText;}
-h1.magologo {display:block; width:270px; font-size:18px; margin:0 0 0 20px; padding:0; font-family: 'NotoKrM'; height:45px; font-weight:normal; line-height:42px; text-indent:120px;  background:url(/images/ko/mago3d_logo.png) no-repeat -348px 4px;}
+h1.magologo {display:block; width:270px; font-size:18px; margin:0 0 0 20px; padding:0; font-family: 'NotoKrM'; height:45px; font-weight:normal; line-height:42px; text-indent:120px;  background:url(/images/ko/ic_sbmenu.png) no-repeat -338px -52px;}
 
 /* 멤버십 */
 #membership-item {width:300px; margin:0 auto; height:400px; padding:0; background:white; box-shadow: 0 0 2px rgba(132,132,132,0.6); border-radius:8px; position:absolute; top:60%; margin-top:-300px;}
@@ -5050,14 +5050,14 @@ h1.magologo {display:block; width:270px; font-size:18px; margin:0 0 0 20px; padd
 #loginwrap {width:100%; height:100%; background:#ececee;}
 /* #loginwrap {width:100%; height:100%; background:url(/images/ko/login_bg.png) no-repeat left bottom;}*/
 #loginwrap fieldset {padding:0;} 
-#login {width:600px; margin:0 auto; height:100%; padding:0; background:white; border:0; box-shadow: 0 0 7px 3px #e2e3e4;  position:absolute; top:0; left:50%; margin-left:-280px;}
+#login {width:600px; margin:0 auto; height:100%; padding:0; background:white; border:0; box-shadow: 0 0 7px 3px #e2e3e4;}
 #signup-complete {width:580px; margin:0 auto; height:400px; padding:0; background:white; border-radius:8px; position:absolute; top:50%; left:50%; margin-top:-380px; margin-left:-280px;}
-.select-lang {margin-right:60px; padding-top:130px; height:80px;}
+.select-lang {margin-right:60px; padding-top:40px; height:80px;}
 .language {float:right; width:70px; font-size:12px; padding-left:5px;}
 .login-wrapper {width:420px; margin:0 auto; padding:0;}
 p.stitle {font-family: 'NotoKrR'; font-size:14px; margin-top:30px; height:30px; color:#444444; text-align:center;}
 span.mago {color:#6649ca;}
-.login-wrapper img {clear:both; display:block; text-align:center; margin-left:auto; margin-right:auto; margin-top:20px;}
+.login-wrapper img {clear:both; display:block; text-align:center; margin-left:auto; margin-right:auto; margin-top:30px;}
 .login-wrapper .btn-login {clear:both; display:block; width:420px; height:60px; padding:0; margin:0; font-size:20px; cursor:pointer; background:#1289f8; color:white; font-family: 'NotoKrM';}
 .login-wrapper .inputid {clear:both; display:block;  padding:0; margin:0; margin-top:30px; margin-bottom:14px; text-indent:10px; width:420px; text-align:left; height:48px; line-height:45px;font-size:15px; color:#444444; border:1px solid #e2e0e0; font-family: 'NotoKrL'; letter-spacing:-1px; background:white;}
 .login-wrapper .inputpwd {clear:both; display:block; padding:0; margin:0; margin-bottom:14px; text-indent:10px; width:420px; text-align:left; height:48px; line-height:45px; font-size:15px; color:#444444; border:1px solid #e2e0e0; font-family: 'NotoKrL'; letter-spacing:-1px; background:white;}
@@ -5100,7 +5100,7 @@ span.mago {color:#6649ca;}
 .btnarea {clear:both; padding-top:50px; width:auto; text-align:center;}
 
 /* 비밀번호 찾기 */
-#find-password {width:500px; margin:0 auto; padding:0 50px; background:white; height:100%;}
+#find-password {width:500px; margin:0 auto; padding:0 50px; background:white; height:100%; box-shadow: 0 0 7px 3px #e2e3e4;}
 #find-password input {margin-top:16px !important; font-size:14px !important; text-indent:10px;}
 #find-password form, #find-password fieldset  {margin:0; padding:0;}
 #find-password label {clear:both; float:left; display:inline-block; float:left; margin-top:16px !important; font-size:16px !important; text-indent:10px; width:150px; margin:0; padding:0;}
