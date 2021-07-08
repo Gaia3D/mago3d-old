@@ -429,7 +429,7 @@ input[type="button"],
 .ui-dialog .ui-dialog-buttonpane button {
 	display: inline-block;
 	font-size: 1.2rem;
-	/*height: 30px;*/
+	/*height: 30px; */
 	padding: 6px 10px;
 	box-sizing: border-box;
 	margin: 0;
@@ -3570,7 +3570,6 @@ text-align: right;
 text-align: center;
 }
 .btnText {
-padding: 2px 5px;
 font-size: 0.9em;
 color: #888;
 border: 1px solid #ccc;
@@ -3665,7 +3664,7 @@ background-color: #fff;
 background-image: none;
 }
 .btnTextF {
-padding: 4px 12px;
+padding: 6px 10px;
 font-size: 0.9em;
 color: #fff;
 border-radius: 2px;
@@ -3767,18 +3766,18 @@ background-position: -386px -555px;
 }
 .analysisGroup li {
 position: relative;
-padding: 5px 0;
 }
 .analysisGroup li label {
 display: inline-block;
 width: 120px;
+height:30px;
+line-height:30px;
 /* width: 35%; */
-padding: 3px 0;
 }
 .analysisGroup li input {
 width: 124px;
 /* width: 62%; */
-padding: 3px 0;
+padding: 0;
 border: none;
 border-bottom: 1px solid #e0e0e0;
 }
@@ -3798,7 +3797,7 @@ text-decoration: underline;
 border-bottom: 1px solid #477cdb;
 }
 .analysisGroup li.btns {
-padding-top: 25px;
+padding-top: 20px;
 text-align: right;
 }
 .analysisGroup li select {
@@ -3870,6 +3869,8 @@ border: 1px solid #477cdb;
 .analysisGroup .routeList .r_row.on {
 	background-color: #eee;
 }
+
+.analysisGroup > button.btnText {height:24px !important; border-radius:0;}
 /* SCROLL */
 .yScroll {
 overflow-x: hidden;
@@ -5047,36 +5048,36 @@ h1.magologo {display:block; width:250px; height:30px; background:url(/images/ko/
 
 /* 로그인 */
 #loginwrap {width:100%; height:100%; background:#f1f1f1;}
-/* #loginwrap {width:100%; height:100%; background:#f1f1f1 url(/images/ko/login_bg.png) no-repeat left bottom;}*/
+/* #loginwrap {width:100%; height:100%; background:url(/images/ko/login_bg.png) no-repeat left bottom;}*/
 #loginwrap fieldset {padding:0;} 
-#login {width:530px; margin:0 auto; height:100%; padding:0; background:white; border:0; box-shadow: 0 0 7px 3px #e2e3e4;  position:absolute; top:0; left:50%; margin-left:-280px;}
+#login {width:630px; margin:0 auto; height:100%; padding:0; background:white; border:0; box-shadow: 0 0 7px 3px #e2e3e4;  position:absolute; top:0; left:50%; margin-left:-280px;}
 #signup-complete {width:580px; margin:0 auto; height:400px; padding:0; background:white; border-radius:8px; position:absolute; top:50%; left:50%; margin-top:-380px; margin-left:-280px;}
-.select-lang {margin-right:30px; padding-top:30px; height:80px;}
+.select-lang {margin-right:60px; padding-top:130px; height:80px;}
 .language {float:right; width:70px; font-size:12px; padding-left:5px;}
 .login-wrapper img {text-align:center;}
-.login-wrapper {width:385px; margin:0 auto; padding:0;}
+.login-wrapper {width:420px; margin:0 auto; padding:0;}
 p.stitle {font-family: 'NotoKrR'; font-size:14px; margin-top:30px; height:30px; color:#444444; text-align:center;}
 span.mago {color:#6649ca;}
-.login-wrapper img {clear:both; display:block; margin-left:auto; margin-right:auto; margin-top:80px;}
-.login-wrapper .btn-login {clear:both; display:block; width:380px; height:55px; padding:0; margin:0; font-size:22px; cursor:pointer; background:#1289f8; border-radius:3px; color:white; font-family: 'NotoKrM';}
-.login-wrapper .inputid {clear:both; display:block;  padding:0; margin:0; margin-top:40px; margin-bottom:14px; text-indent:10px; width:380px; text-align:left; height:48px; line-height:45px;font-size:14px; color:#444444; border:1px solid #e2e0e0; border-radius:3px; font-family: 'NotoKrL'; letter-spacing:-1px; background:white;}
-.login-wrapper .inputpwd {clear:both; display:block; padding:0; margin:0; margin-bottom:14px; text-indent:10px; width:380px; text-align:left; height:48px; line-height:45px;font-size:14px;color:#444444; border:1px solid #e2e0e0; border-radius:3px; font-family: 'NotoKrL'; letter-spacing:-1px; background:white;}
+.login-wrapper img {clear:both; display:block; margin-left:auto; margin-right:auto; margin-top:40px;}
+.login-wrapper .btn-login {clear:both; display:block; width:420px; height:60px; padding:0; margin:0; font-size:20px; cursor:pointer; background:#1289f8; color:white; font-family: 'NotoKrM';}
+.login-wrapper .inputid {clear:both; display:block;  padding:0; margin:0; margin-top:40px; margin-bottom:14px; text-indent:10px; width:420px; text-align:left; height:48px; line-height:45px;font-size:14px; color:#444444; border:1px solid #e2e0e0; font-family: 'NotoKrL'; letter-spacing:-1px; background:white;}
+.login-wrapper .inputpwd {clear:both; display:block; padding:0; margin:0; margin-bottom:14px; text-indent:10px; width:420px; text-align:left; height:48px; line-height:45px;font-size:14px;color:#444444; border:1px solid #e2e0e0; font-family: 'NotoKrL'; letter-spacing:-1px; background:white;}
 .login-wrapper input {background:white;}
 .login-wrapper input:focus {transition:0.3s; border:1px solid #4a9afd;}
 .login-wrapper > ul.join {clear:both; margin:20px 0 0 0; padding:0 0 0 0; }
 .login-wrapper > ul.join li {float:left; padding:0 20px 0 0; list-style:none; margin:0; font-size:14px; font-family: 'NotoKrR';}
 .login-wrapper > ul.join li.on a {color:#2a5bd3;}
 .login-wrapper > ul.join li a:hover, .login-wrapper > ul.join li a:focus {text-decoration:underline;}
-.login-wrapper > .autologin {clear:both; width:385px; padding:0; margin:0 auto; margin-top:20px;  height:87px; border-top:1px solid #eae9e9; }
-.login-wrapper > .autologin > span {float:left; display:inline-block; line-height:87px; margin:0 20px 0 30px; font-size:14px;}
+.login-wrapper > .autologin {clear:both; width:420px; padding:0; margin:0 auto;  height:87px; }
+.login-wrapper > .autologin > span {float:left; display:inline-block; line-height:40px; margin-left:40px; margin-right:20px; font-size:14px;}
 .login-wrapper > .autologin ul {display:block; margin-top:22px; background: url(../../images/ko/ic_sbmenu.png)}
 .login-wrapper > .autologin ul li {list-style:none; display:inline-block; float:left; margin-left:5px; }
 .login-wrapper > .autologin ul li .login-google {display:inline-block; width:42px; height:42px; background:white url(/images/ko/ic_sbmenu.png) -334px 1px no-repeat;}
 .login-wrapper > .autologin ul li .login-facebook {display:inline-block;width:42px; height:42px; background:white url(/images/ko/ic_sbmenu.png) -400px 1px no-repeat;}
 .login-wrapper > .autologin ul li .login-naver {display:inline-block;width:42px; height:42px; background:white url(/images/ko/ic_sbmenu.png) -464px 1px no-repeat;}
 .login-wrapper > .autologin ul li .login-kakao {display:inline-block;width:42px; height:42px; background:white url(/images/ko/ic_sbmenu.png) -526px 1px no-repeat;}
-.copyright {margin-top:150px; font-size:14px; color:#4f4f4f; text-align:center; font-family: 'NotoKrL';}
-.btn-login:hover, .btn-login:focus {background:#2a5bd3; }
+.copyright {width:500px; margin:0 auto; margin-top:50px; padding:30px 0 0 0;font-size:14px; color:#4f4f4f; text-align:center; font-family: 'NotoKrL'; border-top:1px solid #ececec;}
+.btn-login:hover, .btn-login:focus {background:#1080e9; border:1px solid #1080e9;}
 
 /* 회원가입 */
 #join {width:500px; margin:0 auto; padding:0 50px; background:white; height:100%;}
@@ -5136,7 +5137,7 @@ span.mago {color:#6649ca;}
 .toolbox-zooming > button:last-child {margin:0 0 0 0; padding:0; height:42px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -478px; border-top-left-radius:0; border-top-right-radius:0; border-bottom-left-radius:6px; border-bottom-right-radius:6px; border-top:1px solid #d9d8d8;}
 .toolbox-zooming > button:first-child:hover {background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -438px; border-top-left-radius:6px; border-bottom-left-radius:0; border-bottom-right-radius:0; border-top-right-radius:6px;}
 .toolbox-zooming > button:last-child:hover {background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -478px; border-bottom-left-radius:6px; border-bottom-right-radius:6px;}
-.toolbox-3dttl {position: absolute; top: 12px; right: 252px; display:inline-block; opacity:0.8; line-height:50px; text-align:center; font-size:12px; width:28px; height:52px; color:white; z-index:9999; border-radius:4px; background:#506793;}
+.toolbox-3dttl {position: absolute; top: 12px; right: 252px; display:inline-block; opacity:0.8; line-height:50px; text-align:center; font-size:12px; width:28px; height:52px; color:white; z-index:9999; border-radius:4px; background:#405379;}
 .toolbox-3d {clear:both; position: absolute; top: 12px; right: 80px; z-index: 1; width:170px; font-family: 'NotoKrR'; Height:52px; margin:0; padding:0; border-radius:6px; box-shadow: 0 0 2px rgba(132,132,132,0.6);}
 .toolbox-3d > button {border:0; cursor:pointer; display:inline-block; font-size:11px; color:black; letter-spacing:-0.5px; vertical-align:bottom;  border-radius:4px;}
 .toolbox-3d > button::before {content:""; display:inline-block; width:0; height:78%; margin-right:0; vertical-align:bottom;} 
@@ -5193,7 +5194,7 @@ select::-ms-expand {display: none;}
 .dataselect {width:342px; margin:0 auto; height:40px; margin-top:8px;}
 .dataselect-item {float:left; width:180px; padding-left:3px;}
 .data-filter {float:right; width:125px; height:30px; padding-left:26px; line-height:30px; display:inline-block; border-radius:3px; background:url(/images/ko/ic_filter_more.png) 6px 50% no-repeat; font-size:12px; border:1px solid #d8d8d8;}
-.switch {position: relative; display: inline-block; width: 26px; height: 16px; margin-left:10px; margin-right:2px; line-height: 16px;}
+.switch {position: relative; display: inline-block; width:26px; height: 16px; margin-left:10px; margin-right:2px; line-height: 16px;}
 .switch input {opacity: 0; width: 0; height: 0;}
 .slider {position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e8e6e6; border-radius: 34px; transition: .3s;}
 .slider:before {position: absolute; content: ""; height: 14px; width: 14px; left: 1px; bottom: 1px; background-color: #bebdbd; border-radius: 50%; transition: .3s;}
@@ -5392,9 +5393,10 @@ span.sumnail {float:right; width:50px; height:50px; border:1px solid #d9dadb;}
 .popuplayer-btn {clear:both; position:relative; bottom:0; left:0; height:30px; margin-top:0; text-align:right; width:auto;}
 
 /* simulation */
-ul.simulation-menu {padding:0; width:330px; margin:5px auto 0 auto; margin-bottom:30px; display:flex; flex-wrap:wrap; border-bottom:1px solid #e6e4e4;}
-ul.simulation-menu li {width:100px; list-style:none; float:left; margin:0; padding:0; display:inline-block; font-size:15px; padding:10px 5px; word-break:normal; border-bottom:1px solid #e6e4e4; border-top:1px solid #e6e4e4; display:table-cell; text-align:center; cursor: pointer;}
-ul.simulation-menu li:nth-child(4),  ul.simulation-menu li:nth-child(5),  ul.simulation-menu li:nth-child(6) {border-top:none; border-bottom:none;}
+ul.simulation-menu {padding:0; width:330px; margin:5px auto 0 auto; margin-bottom:30px; display:flex; border-top:1px solid #e6e4e4; flex-wrap:wrap; border-bottom:1px solid #e6e4e4;}
+ul.simulation-menu li {width:100px; list-style:none; float:left; margin:0; padding:0; display:inline-block; font-size:15px; padding:8px 5px; word-break:normal; border-bottom:1px solid white; border-top:1px solid #e6e4e4; display:table-cell; text-align:center; cursor: pointer;}
+ul.simulation-menu li:first-child,  ul.simulation-menu li:nth-child(2),  ul.simulation-menu li:nth-child(3) {border-top:2px solid white; }
+ul.simulation-menu li:nth-child(4),  ul.simulation-menu li:nth-child(5),  ul.simulation-menu li:nth-child(6) {border-top:2px solid white; border-bottom:none;}
 ul.simulation-menu li.on, ul.simulation-menu li:hover {border-top:2px solid #2f94f3; background:#edf4fb;}
 .smlt_contents {display:none;}
 .smlt-item {float:left; width:330px; cursor:pointer; height:32px; margin: 0 auto 10px; border:1px solid #e6e4e4;}
@@ -5402,11 +5404,14 @@ ul.simulation-menu li.on, ul.simulation-menu li:hover {border-top:2px solid #2f9
 .smlt-item > .smlt-tit {display:inline-block; float:left; text-indent:7px; height:32px; font-size:14px; line-height:32px;}
 .smlt {width:330px; margin:0 auto; display:block;}
 .smlt .sub {display : none;}
-.sub > .sublist {clear:both; height:28px; margin-left:20px; font-size:12px; margin-top:5px; width:310px; line-height:28px; margin-bottom:0px;}
+.sub > .sublist {clear:both; height:28px; margin-left:20px; font-size:12px; margin-top:5px; width:310px; margin-bottom:0px;}
 .sub > .sublist > label.smlt-sub, .sub > .sublist > span.smlt-sub {clear:both; float:left; display:inline-block; width:80px; height:28px; line-height:28px; }
-.sub > .sublist > button.on {border:1px solid #2F94F3; background:#2F94F3;}
+.sub > .sublist > button.on {border:1px solid #2F94F3; background:#2F94F3; height:28px !important;}
+.sub > .sublist > button {height:28px !important; margin-left:3px;}
 .sub > .sublist > .smlt-value {width:220px;}
-.sub > .sublist > .inputtype {display:inline-block; border-radius:0; height:28px; border: 1px solid #d8d8d8; font-size:12px; color:#464646;}
+.sub > .sublist > select {margin:0; padding:0 30px 0 5px; float:left;}
+.sub > .sublist > span {line-height:26px;}
+.sub > .sublist > .inputtype {display:inline-block; border-radius:0; height:28px; margin:0; padding:0; border: 1px solid #d8d8d8; font-size:12px; color:#464646;}
 .sub > .sublist > .checkbox {margin-top:-2px; vertical-align:middle;}
 .sub > .sublist > .radiobox {text-align:left; margin-top:-2px; vertical-align:middle;}
 .sub > .sublist > .checkbox::after {content:"  "}
