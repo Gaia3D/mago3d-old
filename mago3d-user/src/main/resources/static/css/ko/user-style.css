@@ -2983,9 +2983,9 @@ ul.nav li:hover.mypagePolicy, ul.nav li.mypagePolicy.on {background-position: -7
 .contentsBtn {
 /* position: absolute; */
 /* right: -25px; */
-position: relative;
+position: absolute;
 right: -403px;
-top: 48%;
+top: 40%;
 box-shadow: 3px 3px 3px rgba(132,132,132,0.3); z-index:90;
 }
 .contentsBtn > button {
@@ -5063,12 +5063,12 @@ span.mago {color:#6649ca;}
 .login-wrapper .inputpwd {clear:both; display:block; padding:0; margin:0; margin-bottom:14px; text-indent:10px; width:420px; text-align:left; height:48px; line-height:45px; font-size:15px; color:#444444; border:1px solid #e2e0e0; font-family: 'NotoKrL'; letter-spacing:-1px; background:white;}
 .login-wrapper input {background:white;}
 .login-wrapper input:focus {transition:0.3s; border:1px solid #4a9afd;}
-.login-wrapper > ul.join {clear:both; margin:20px 0 0 0; padding:0 0 0 0; }
-.login-wrapper > ul.join li {float:left; padding:0 20px 0 0; list-style:none; margin:0; font-size:14px; font-family: 'NotoKrR';}
+.login-wrapper > ul.join {clear:both; margin:0 0 0 0; padding:0 0 0 0; }
+.login-wrapper > ul.join li {float:left; padding:20px 20px 0 0; list-style:none; margin:0; font-size:16px; font-family: 'NotoKrR';}
 .login-wrapper > ul.join li.on a {color:#2a5bd3;}
 .login-wrapper > ul.join li a:hover, .login-wrapper > ul.join li a:focus {text-decoration:underline;}
 .login-wrapper > .autologin {clear:both; width:420px; padding:0; margin:0 auto;  height:87px; }
-.login-wrapper > .autologin > span {float:left; display:inline-block; line-height:40px; margin-left:40px; margin-right:20px; font-size:14px;}
+.login-wrapper > .autologin > span {float:left; display:inline-block; line-height:40px; margin-left:40px; margin-right:20px; font-size:15px;}
 .login-wrapper > .autologin ul {display:block; margin-top:22px; background: url(../../images/ko/ic_sbmenu.png)}
 .login-wrapper > .autologin ul li {list-style:none; display:inline-block; float:left; margin-left:5px; }
 .login-wrapper > .autologin ul li .login-google {display:inline-block; width:42px; height:42px; background:white url(/images/ko/ic_sbmenu.png) -334px 1px no-repeat;}
@@ -5296,9 +5296,9 @@ hr.datalist-line {width:100%;border:none; margin:0; padding:0; border-bottom:1px
 .lower-tbl span.range-circle {display:inline-block; clear:both; text-align:center; margin-right:7px; width:10px; height:10px; vertical-align:middle; border-radius:30px;}
 
 /* poplayer */
-.detaildata {width:270px; height:700px; position:absolute; right:100px; top:115px; border:1px solid red; z-index:1;}
+.detaildata {width:270px; height:700px; position:absolute; right:85px; top:68px; border:1px solid red; z-index:1;}
 .poplayer {border-radius:4px; background:white; overflow-y:none; overflow-x:none; border:1px solid #d9dadb; padding:10px 25px 25px 25px; margin:0; box-shadow: 0 1px 3px rgba(132,132,132,0.6);}
-.poplayer > h6.pop-title {border-bottom:1px solid #e3e3e3; height:30px; margin-top:15px;}
+.poplayer > h6.pop-title {border-bottom:1px solid #e3e3e3; height:30px; margin-top:10px;}
 .pop-close {float:right; border:0; width:24px; margin-right:-16px; height:24px; display:inline-block; background: white url(/images/ko/ic_sbmenu.png) -216px -525px no-repeat;}
 .pop-close:hover {border:0; background:url(/images/ko/ic_sbmenu.png) -216px -580px no-repeat;}
 .poplayer > .tbl-layer {margin-top:25px;}
@@ -5326,11 +5326,11 @@ span.sumnail {float:right; width:50px; height:50px; border:1px solid #d9dadb;}
 .poplayer > .data-ttl {clear:both; float:left; width:100%; background:#f7f7f6; height:30px; margin-top:15px;line-height:30px; font-size:13px; text-indent:10px;}
 .layer-line {clear:both; float:left; width:100%; height:5px; border-bottom:1px solid #e9e8e8; border-top:none; margin:0; margin-top:10px; padding:0;}
 .poplayer > .setup {height:30px;}
-.poplayer > .setup label {float:left; display:inline-block; width:100px;}
-.poplayer > .setup .data-go {float:left; margin-top:4px;}
+.poplayer > .setup > label {float:left; display:inline-block; width:100px;}
+.poplayer > .setup > .data-go {float:left; margin-top:4px;}
 .poplayer > .object-setup {display:block; float:left; height:auto; margin-top:8px; padding:0;}
-.poplayer > .object-setup label {clear:both; float:left; margin:0; margin-top:3px; height:24px !important; padding:0; line-height:24px;  display:inline-block; font-size:12px; width:50px;}
-.poplayer > .object-setup input {height:26px !important; float:left;  margin:0; margin-top:3px; font-size:12px; padding-left:2px;}
+.poplayer > .object-setup > label {clear:both; float:left; margin:0; margin-top:3px; height:24px !important; padding:0; line-height:24px;  display:inline-block; font-size:12px; width:50px;}
+.poplayer > .object-setup > input {height:24px !important; float:left;  margin:0; margin-top:3px; font-size:12px; padding:0 !important; padding-left:2px;}
 .color-value {display:inline-block; float:left; margin-top:3px; padding:0; width:30px; height:24px; border-top:1px solid #d6d6d6; border-bottom:1px solid #d6d6d6;  border-left:1px solid #d6d6d6;  background:yellow;}
 .wd50 {width:50px; display:block; font-size:12px;}
 .poplayer > .object-setup > button {display:inline-block; height:26px; font-size:12px; padding:0 7px; margin-top:3px;}
