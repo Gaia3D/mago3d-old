@@ -41,7 +41,7 @@ $(function() {
 		$('#dataContent').toggle(true);
 		$('#contentsWrap').toggle(true);
 	} else {
-		$('button#closeLeftBtn').toggle(true);
+		//$('button#closeLeftBtn').toggle(true);
 		// 다른거 활성화
 		if( currentUrl.indexOf("/data/map") >= 0) {
 			if( currentUrl.indexOf("#search") >= 0) {
@@ -57,10 +57,11 @@ $(function() {
 				$("#layerMenu").addClass('on');
 				$('#layerContent').toggle(true);
 			} else {
-				$("#dataMenu").addClass('on');
-				$('#dataContent').toggle(true);
+				// 임시
+				// $("#dataMenu").addClass('on');
+				// $('#dataContent').toggle(true);
 			}
-			$('#contentsWrap').toggle(true);
+			//$('#contentsWrap').toggle(true);
 		} else if( currentUrl.indexOf("/mypage/") >= 0) {
 			// MyPage
 			$("#mypageMenu").addClass('on');

@@ -65,7 +65,7 @@
 			<div id="searchContent" class="contents fullHeight" style="display:none;">
 				<div th:replace="~{/search/district :: #districtWrap}"></div>
 			</div>
-			<div id="dataContent" class="contents-margin-default fullHeight">
+			<div id="dataContent" class="contents-margin-default fullHeight" style="display:none;">
 				<div class="tabs">
 					<ul id="dataInfoTab" class="tab tab-divide">
 						<li id="dataGroupTab" th:text="#{data.group.list.tab.menu}" data-nav="dataGroupInfoContent"></li>
@@ -79,7 +79,7 @@
 			<div th:replace="~{/spatial/spatial :: #spatialContent}"></div>
 			<div th:replace="~{/simulation/simulation :: #simulationContent}"></div>
 			<div th:replace="~{/iot/list :: #iotContent}"></div>
-			<!--<div th:replace="~{/layer/list :: #layerContent}"></div>-->
+			<div th:replace="~{/layer/list :: #layerContent}"></div>
 			<!-- E: CONTENTSBTN -->
 		</div>
 		<div class="contentsBtn">
@@ -184,6 +184,7 @@
 <script type="text/javascript" th:src="@{/js/{lang}/issue-controller.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/map-data.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/map-data-group.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/{lang}/common/flyto.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 
 <script type="text/javascript">
 
@@ -205,6 +206,7 @@
 	});
 
 	function magoInit() {
+
 		var geoPolicyJson = MAGO.policy;
 
 		var cesiumViewerOption = {};
@@ -216,33 +218,34 @@
 		cesiumViewerOption.defaultControl.tools = false;
 		cesiumViewerOption.defaultControl.attribution = false;
 		cesiumViewerOption.defaultControl.overviewMap = false;
-		
+
 		/**
 		 * @param {Stirng} containerId container div id. required.
 		 * @param {object} serverPolicy mage3d geopolicy. required.
 		 * @param {object} callback loadstart callback, loadend callback. option.
 		 * @param {object} options Cesium viewer parameter. option.
 		 * @param {Cesium.Viewer} legacyViewer 타 시스템과의 연동의 경우 view 객체가 생성되어서 넘어 오는 경우가 있음. option.
-		*/
-		MAGO3D_INSTANCE = new Mago3D.Mago3d('magoContainer', geoPolicyJson, {loadend : magoLoadEnd}, cesiumViewerOption);
+		 */
+		MAGO3D_INSTANCE = new Mago3D.Mago3d('magoContainer', geoPolicyJson, {loadend: magoLoadEnd}, cesiumViewerOption);
 
 	}
 
 	function magoLoadEnd(e) {
+
 		var magoInstance = e;
 		var geoPolicyJson = MAGO.policy;
 		var viewer = magoInstance.getViewer();
-		var magoManager = magoInstance.getMagoManager();
-		var f4dController = magoInstance.getF4dController();
+		//var magoManager = magoInstance.getMagoManager();
+		//var f4dController = magoInstance.getF4dController();
 
 		// TODO : 세슘 MAP 선택 UI 제거, 엔진에서 처리로 변경 예정.
-		if(viewer.baseLayerPicker) viewer.baseLayerPicker.destroy();
+		if (viewer.baseLayerPicker) viewer.baseLayerPicker.destroy();
 		viewer.scene.globe.depthTestAgainstTerrain = true;
 
 		// 기본 레이어 랜더링
-		setTimeout(function(){
+		setTimeout(function () {
 			MAGO.map = new mapInit(magoInstance, MAGO.baseLayers, geoPolicyJson);
-			MAGO.map.initLayer();
+			MAGO.map.initLayer(false);
 			cesiumCreditAlt(); 		// 웹 접근성
 		}, geoPolicyJson.initDuration * 1000);
 
@@ -253,22 +256,21 @@
 		MapDataControll(magoInstance);
 
 		// 행정 구역 이동
-        // DistrictControll(magoInstance);
+		// DistrictControll(magoInstance);
 
 		// 데이터
-        dataGroupList();
-        mapDataGroupList(1, null);
-        mapDataInfoList(1, null, null, null);
+		dataGroupList();
+		mapDataGroupList(1, null);
+		mapDataInfoList(1, null, null, null);
 		Data(magoInstance);
 
 		// 시뮬레이션
-        var simul = Simulation(magoInstance);
-		setTimeout(function() {
-			SmltWater.runOnLoaded(simul.water);	
-		},3000);
+		var simul = Simulation(magoInstance);
+		setTimeout(function () {
+			SmltWater.runOnLoaded(simul.water);
+		}, 3000);
 
-
-        // 사물인터넷
+		// 사물인터넷
 		if (MAGO.microService && MAGO.microService['SENSOR_THINGS']) {
 			MAGO.sensorThings = new SensorThings(magoInstance);
 			MAGO.sensorThings = MAGO.sensorThings.create();
@@ -279,95 +281,14 @@
 		// 공간분석
 		SpatialAnalysis(magoInstance);
 
-        // 환경설정
-        UserPolicy(magoInstance);
+		// 환경설정
+		UserPolicy(magoInstance);
 
 		// 이슈 등록
 		MAGO.issueController = new IssueController(magoInstance);
+
 	}
-    // smart tiling data flyTo
-    function gotoFly(longitude, latitude, altitude) {
-        if(longitude === null || longitude === '' || latitude === null || latitude === '' || altitude === null || altitude === '') {
-            alert(JS_MESSAGE["location.invalid"]);
-            return;
-        }
 
-        gotoFlyAPI(MAGO3D_INSTANCE, longitude, latitude, 500, 3);
-        hereIamMarker(longitude, latitude, altitude);
-    }
-
-    function flyTo(dataGroupId, dataKey) {
-        if(dataGroupId === null || dataGroupId === '' || dataKey === null || dataKey === '') {
-            alert(JS_MESSAGE["location.invalid"]);
-            return;
-        }
-
-        //  searchDataAPI
-         searchDataAPI(MAGO3D_INSTANCE, dataGroupId, dataKey);
-
-         var node = MAGO3D_INSTANCE.getMagoManager().hierarchyManager.getNodeByDataKey(dataGroupId, dataKey);
-         var geographic = node.data.bbox.geographicCoord;
-         hereIamMarker(geographic.longitude, geographic.latitude, geographic.altitude);
-    }
-
-    var hereIamTimeOut;
-    function hereIamMarker(longitude, latitude, altitude) {
-        var magoManager = MAGO3D_INSTANCE.getMagoManager();
-        if(!magoManager.speechBubble) {
-            magoManager.speechBubble = new Mago3D.SpeechBubble();
-        }
-        var sb = magoManager.speechBubble;
-        removeHearIam();
-        if(hereIamTimeOut) {
-            clearTimeout(hereIamTimeOut);
-        }
-        var commentTextOption = {
-            pixel:12,
-            color:'black',
-            borderColor:'white',
-            text: JS_MESSAGE["here.it.is"]
-        }
-
-        var img = sb.getPng([80,32],'#94D8F6', commentTextOption);
-
-        var options = {
-            positionWC    : Mago3D.ManagerUtils.geographicCoordToWorldPoint(longitude, latitude, parseFloat(altitude)+5),
-            imageFilePath : img
-        };
-
-        var omId = new Date().getTime();
-        var om = magoManager.objMarkerManager.newObjectMarker(options, magoManager);
-        om.id = omId;
-        om.hereIam = true;
-
-        var effectOption = {
-            effectType : "zMovement",
-            durationSeconds : 9.9,
-            zVelocity : 100,
-            zMax : 30,
-            zMin : 0
-        };
-        var effect = new Mago3D.Effect(effectOption);
-        magoManager.effectsManager.addEffect(omId, effect);
-
-        hereIamTimeOut = setTimeout(function() {
-            removeHearIam();
-        },10000);
-
-        function removeHearIam() {
-            magoManager.objMarkerManager.setMarkerByCondition(function(om){
-                return !om.hereIam;
-            });
-        }
-    }
-
-    function flyToGroup(longitude, latitude, altitude, duration) {
-        if(longitude === null || longitude === '' || latitude === null || latitude === '' || altitude === null || altitude === '') {
-            alert(JS_MESSAGE["location.invalid"]);
-            return;
-        }
-        gotoFlyAPI(MAGO3D_INSTANCE, parseFloat(longitude), parseFloat(latitude), parseFloat(altitude), parseFloat(duration));
-    }
 </script>
 </body>
 </html>
