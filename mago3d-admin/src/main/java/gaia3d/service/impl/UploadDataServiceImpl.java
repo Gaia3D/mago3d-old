@@ -110,10 +110,11 @@ public class UploadDataServiceImpl implements UploadDataService {
 	 * 사용자 파일 정보 업로딩
 	 * @param uploadData
 	 * @param uploadDataFileList
+	 * @param totalFileSize
 	 * @return
 	 */
 	@Transactional
-	public int insertUploadData(UploadData uploadData, List<UploadDataFile> uploadDataFileList) {
+	public int insertUploadData(UploadData uploadData, List<UploadDataFile> uploadDataFileList, Long totalFileSize) {
 		int result = uploadDataMapper.insertUploadData(uploadData);
 		
 		Long uploadDataId = uploadData.getUploadDataId();
