@@ -5140,7 +5140,7 @@ span.mago {color:#6649ca;}
 .toolbox-zooming > button:last-child {margin:0 0 0 0; padding:0; height:42px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 2px -478px; border-top-left-radius:0; border-top-right-radius:0; border-bottom-left-radius:6px; border-bottom-right-radius:6px; border-top:1px solid #d9d8d8;}
 .toolbox-zooming > button:first-child:hover {background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -438px; border-top-left-radius:6px; border-bottom-left-radius:0; border-bottom-right-radius:0; border-top-right-radius:6px;}
 .toolbox-zooming > button:last-child:hover {background:#2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -53px -478px; border-bottom-left-radius:6px; border-bottom-right-radius:6px;}
-.toolbox-3dttl {position: absolute; top: 12px; right: 252px; display:inline-block; opacity:0.8; line-height:50px; text-align:center; font-size:12px; width:28px; height:52px; color:white; z-index:9999; border-radius:4px; background:#405379;}
+.toolbox-3dttl {position: absolute; top: 12px; right: 252px; display:inline-block;  line-height:50px; text-align:center; font-size:12px; width:28px; height:52px; color:white; z-index:9999; border-radius:4px; background:#405379;}
 .toolbox-3d {clear:both; position: absolute; top: 12px; right: 80px; z-index: 1; width:170px; font-family: 'NotoKrR'; Height:52px; margin:0; padding:0; border-radius:6px; box-shadow: 0 0 2px rgba(132,132,132,0.6);}
 .toolbox-3d > button {border:0; cursor:pointer; display:inline-block; font-size:11px; color:black; letter-spacing:-0.5px; vertical-align:bottom;  border-radius:4px;}
 .toolbox-3d > button::before {content:""; display:inline-block; width:0; height:78%; margin-right:0; vertical-align:bottom;} 
