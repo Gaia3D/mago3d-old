@@ -163,11 +163,12 @@
       left: 0;
       opacity: 0; }
     .switch-toggle input + label {
+    	width:50px !important;
       position: relative;
       z-index: 2;
       display: block;
       float: left;
-      padding: 0 0.5em;
+      padding: 0;
       margin: 0;
       text-align: center; }
     .switch-toggle a {
@@ -315,9 +316,11 @@
       border-radius: 1.75em;
       transition: all 0.12s ease-out; }
     .switch-ios.switch-toggle label {
-      height: 2.4em;
+      height: 16px;
       color: #888b92;
-      line-height: 2.4em;
+      border:0;
+      font-size:11px !important;
+      line-height: 16px;
       vertical-align: middle; }
   .switch-ios input:checked + label {
     color: #fff; }

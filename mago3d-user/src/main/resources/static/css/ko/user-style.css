@@ -5038,7 +5038,7 @@ button::-moz-focus-inner { border: 0; padding: 0;}
 button, [type="button"],[type="reset"],[type="submit"] {-webkit-appearance: button;}
 button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none; padding: 0;}
 button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring {  outline: 1px dotted ButtonText;}
-h1.magologo {display:block; width:270px; font-size:18px; margin:0 0 0 20px; padding:0; font-family: 'NotoKrM'; height:45px; font-weight:normal; line-height:42px; text-indent:120px;  background:url(/images/ko/ic_sbmenu.png) no-repeat -338px -52px;}
+h1.magologo {display:block; width:270px; font-size:17px; margin:0 0 0 20px; padding:0; font-family: 'NotoKrM'; height:45px; font-weight:normal; line-height:42px; text-indent:106px;  background:url(/images/ko/ic_sbmenu.png) no-repeat -338px -50px;}
 
 /* 멤버십 */
 #membership-item {width:300px; margin:0 auto; height:400px; padding:0; background:white; box-shadow: 0 0 2px rgba(132,132,132,0.6); border-radius:8px; position:absolute; top:60%; margin-top:-300px;}
@@ -5298,7 +5298,7 @@ hr.datalist-line {width:100%;border:none; margin:0; padding:0; border-bottom:1px
 /* poplayer */
 .detaildata {width:270px; height:700px; position:absolute; right:85px; top:68px; border:1px solid red; z-index:1;}
 .poplayer {border-radius:4px; background:white; overflow-y:none; overflow-x:none; border:1px solid #d9dadb; padding:10px 25px 25px 25px; margin:0; box-shadow: 0 1px 3px rgba(132,132,132,0.6);}
-.poplayer > h6.pop-title {border-bottom:1px solid #e3e3e3; height:30px; margin-top:10px;}
+.poplayer > h6.pop-title {border-bottom:1px solid #e3e3e3; font-size:15px; font-weight:600; height:30px; margin-top:10px;}
 .pop-close {float:right; border:0; width:24px; margin-right:-16px; height:24px; display:inline-block; background: white url(/images/ko/ic_sbmenu.png) -216px -525px no-repeat;}
 .pop-close:hover {border:0; background:url(/images/ko/ic_sbmenu.png) -216px -580px no-repeat;}
 .poplayer > .tbl-layer {margin-top:25px;}
@@ -5309,7 +5309,7 @@ hr.datalist-line {width:100%;border:none; margin:0; padding:0; border-bottom:1px
 
 /*.switch {position: relative; display: inline-block; margin:0; padding:0; width:0; margin-top:3px; height: 14px; margin-right:-5px;}*/
 /*.switch input {opacity: 0; width: 0; height: 0; }*/
-.slider {position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; width:36px; background-color: #e8e6e6; border-radius: 34px; transition: .3s;}
+.slider {position: absolute; cursor: pointer; top: 0; left: 0; right: 0; height:14px; bottom: 0; width:36px; background-color: #e8e6e6; border-radius: 34px; transition: .3s;}
 .slider:before {position: absolute; content: ""; height: 12px; width: 12px; left: 1px; bottom: 1px; background-color: #bebdbd; border-radius: 50%; transition: .3s;}
 input:checked + .slider {background-color: #dcebfe;}
 input:checked + .slider:before {background-color: #46a1f6;  transform: translateX(22px);}
@@ -5327,7 +5327,7 @@ span.sumnail {float:right; width:50px; height:50px; border:1px solid #d9dadb;}
 .layer-line {clear:both; float:left; width:100%; height:5px; border-bottom:1px solid #e9e8e8; border-top:none; margin:0; margin-top:10px; padding:0;}
 .poplayer > .setup {height:30px;}
 .poplayer > .setup > label {float:left; display:inline-block; width:100px;}
-.poplayer > .setup > .data-go {float:left; margin-top:4px;}
+.poplayer > .setup > .data-go {float:left; margin-top:4px; margin-left:20px;}
 .poplayer > .object-setup {display:block; float:left; height:auto; margin-top:8px; padding:0;}
 .poplayer > .object-setup > label {clear:both; float:left; margin:0; margin-top:3px; height:24px !important; padding:0; line-height:24px;  display:inline-block; font-size:12px; width:50px;}
 .poplayer > .object-setup > input {height:24px !important; float:left;  margin:0; margin-top:3px; font-size:12px; padding:0 !important; padding-left:2px;}
