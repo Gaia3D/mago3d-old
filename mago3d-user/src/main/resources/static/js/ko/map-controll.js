@@ -429,50 +429,32 @@ var mapControllEventHandler = function(magoInstance) {
 	// 데이터
 	$('#map-control-setting').click(function() {
 		$('#map-control-popup').slideToggle("slow");
-
-		/*$(this).toggleClass('on');
-		if ($(this).hasClass('on')) {
-			if(MAGO.selectedDataController.isActive()) {
-				$('#dataControlWrap').css('width', '340px');
-			} else {
-				$('#mapSettingWrap').css('width', '340px');
-			}
-			
-			$('#mapCtrlWrap').css('right', '340px');
-			$('#mapCtrlCompassOut').css('right', '340px');
-			$('.mago3d-overlayContainer-defaultControl').css('right', '340px');
-			$('#baseMapToggle').css({
-				right : '392px'
-			});
-			$('#terrainToggle').css({
-				right : '612px'
-			});
-			$('#buildingInfoWrap').css('right', '400px');
-		} else {
-			$('#mapSettingWrap').css('width', '0');
-			$('#dataControlWrap').css('width', '0');
-			$('#mapCtrlWrap').css('right', '0');
-			$('#mapCtrlCompassOut').css('right', '0');
-			$('.mago3d-overlayContainer-defaultControl').css('right', '0');
-			$('#baseMapToggle').css({
-				right : '50px'
-			});
-			$('#terrainToggle').css({
-				right : '270px'
-			});
-			$('#buildingInfoWrap').css('right', '60px');
-		}*/
+	})
+	
+	
+	var archInfoController = new ArchInfoController(ArchInfoController.createMockData(magoManager), magoManager);
+	
+	// 건축통합
+	$('#master-plan-setting').click(function() {
+		$('#master-plan-popup').slideToggle("slow");
+	});
+	
+	$('#master-plan-popup input[type="checkbox"]').change(function() {
+		var checked = $(this).prop('checked');
+		var id = $(this).parents('div.data-go').data('id');
+		var arch = archInfoController.getArchInfoById(id);
+		
+		arch.show = checked;
 	});
 
 	// 라이브러리
 	$('#data-library-setting').click(function() {
 		$('#data-library-popup').slideToggle("slow");
 	});
-
-	// 건축통합
-	$('#master-plan-setting').click(function() {
-		$('#master-plan-popup').slideToggle("slow");
-	});
+	
+	//3d tool close
+	var popLayer3dSelectQuery = 'div.detaildata.poplayer'; 
+	$(`${popLayer3dSelectQuery} button.pop-close`).click(function(){$(this).parents(popLayer3dSelectQuery).hide()});
 
 	// BBOX
 	$('#mapSettingBboxToggle').click(function() {

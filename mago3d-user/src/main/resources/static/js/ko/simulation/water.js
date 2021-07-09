@@ -289,9 +289,26 @@ const SmltWater =(function() {
 	
 			magoManager.waterManager.addObject(entity, DEPTH);
 		} else {
+			/*var arms = 7;
+			var rOuter = 70;
+			var rInner = 50;
+			var angle = Math.PI / arms;
+  			var length = 2 * arms;
+  			var positions = new Array(length);
+  			for (var i = 0; i < length; i++) {
+    			var r = i % 2 === 0 ? rOuter : rInner;
+    			positions[i] = new Mago3D.Point2D(
+					Math.cos(i * angle) * r,
+					Math.sin(i * angle) * r
+			    );
+  			}*/
+			
 			let geoCoordsArray = _polylineCoordinates().map(API.Converter.Cartesian3ToMagoGeographicCoord);
-			entity = Mago3D.GeographicCoordsList.getRenderableObjectOfGeoCoordsArray(geoCoordsArray, magoManager);
+			//entity = Mago3D.GeographicCoordsList.getRenderableObjectOfGeoCoordsArray(geoCoordsArray, magoManager);
+			entity = Mago3D.Modeler.getLoftMesh(new Mago3D.GeographicCoordsList(geoCoordsArray)/*, positions*/);
 			magoManager.modeler.addObject(entity, DEPTH);
+			
+			
 		}
 		
 		objects[entity.guid] = entity;
@@ -619,7 +636,7 @@ SmltWater.runOnLoaded = function(water) {
 	
 	$('#smlt-natural-water-sub button[data-mode="area"]').trigger('click');
 	
-	const areaRectangle = new Cesium.Rectangle(2.211531907441813, 0.6522354413337594, 2.2123220907997396, 0.6525887920226009);
+	const areaRectangle = new Cesium.Rectangle(2.2113028915834905, 0.6518329416646735, 2.212388137974332, 0.6525842753006786);
 	water.action._createRectangle.call(water, areaRectangle);
 	water.action.done.call(water, areaRectangle);
 	water.action.terminate.call(water);

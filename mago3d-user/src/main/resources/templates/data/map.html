@@ -22,13 +22,13 @@
 	<style type="text/css">
 		.mapWrap {
 			float:right;
-			width: calc(100% - 60px);
+			width: calc(100% - 72px);
 			height: 100%;
 			background-color: #eee;
 		}
 		.mapWrap2 {
 			float:right;
-			width: calc(50% - 60px);
+			width: calc(50% - 72px);
 			height: 100%;
 			background-color: #eee;
 			display:none;
@@ -178,6 +178,7 @@
 <script type="text/javascript" th:src="@{/js/{lang}/simulation/time-series.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/simulation/wind.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/simulation/water.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/{lang}/archinfo/archinfo.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/layer.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/map-data-controll.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/map-init.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
@@ -264,11 +265,10 @@
 		mapDataInfoList(1, null, null, null);
 		Data(magoInstance);
 
-		// 시뮬레이션
-		var simul = Simulation(magoInstance);
-		setTimeout(function () {
-			SmltWater.runOnLoaded(simul.water);
-		}, 3000);
+        var simul = Simulation(magoInstance);
+		setTimeout(function() {
+			SmltWater.runOnLoaded(simul.water);	
+		},3000);
 
 		// 사물인터넷
 		if (MAGO.microService && MAGO.microService['SENSOR_THINGS']) {
