@@ -5347,6 +5347,7 @@ span.sumnail {float:right; width:50px; height:50px; border:1px solid #d9dadb;}
 .paging-center {clear:both; width:auto; text-align:center; margin:30px 0 0 0; padding:0;}
 
 /* popuplayer */
+/*
 .detaildata {width:320px; height:750px; position:absolute; display:none; left:500px; top:30px; z-index:1;}
 .popuplayer {border-radius:4px; background:white; overflow-y:scroll; overflow-x:hidden; border-top:5px solid #206ee7; border-left:1px solid #d9dadb; border-right:1px solid #d9dadb; border-bottom:1px solid #d9dadb; padding:0 20px 20px 20px; margin:0; box-shadow: 0 1px 3px rgba(132,132,132,0.6);}
 .popuplayer .close {float:right; margin:14px -6px 0 0; width:15px; cursor:pointer; height:15px; background:url(/images/ko/ic_big_close.png) no-repeat;}
@@ -5394,6 +5395,7 @@ span.sumnail {float:right; width:50px; height:50px; border:1px solid #d9dadb;}
 .layer-bx .layer-list .group:hover, .layer-bx .layer-list .group:focus {display:inline-block; background:url(/images/ko/ic_filter.png) -177px -7px no-repeat;}
 .layer-bx .layer-list .file:hover, .layer-bx .layer-list .file:focus {display:inline-block; background:url(/images/ko/ic_filter.png) -47px -7px no-repeat;}
 .popuplayer-btn {clear:both; position:relative; bottom:0; left:0; height:30px; margin-top:0; text-align:right; width:auto;}
+*/
 
 /* simulation */
 ul.simulation-menu {padding:0; width:330px; margin:5px auto 0 auto; margin-bottom:30px; display:flex; border-top:1px solid #e6e4e4; flex-wrap:wrap; border-bottom:1px solid #e6e4e4;}

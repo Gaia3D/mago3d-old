@@ -426,11 +426,10 @@ var mapControllEventHandler = function(magoInstance) {
 		}
 	});
 
-	
-	
-	// 설정
-	$('#mapCtrlSetting').click(function() {
-		$('#mago3DSettingLabelLayer').toggle();
+	// 데이터
+	$('#map-control-setting').click(function() {
+		$('#map-control-popup').slideToggle("slow");
+
 		/*$(this).toggleClass('on');
 		if ($(this).hasClass('on')) {
 			if(MAGO.selectedDataController.isActive()) {
@@ -463,6 +462,16 @@ var mapControllEventHandler = function(magoInstance) {
 			});
 			$('#buildingInfoWrap').css('right', '60px');
 		}*/
+	});
+
+	// 라이브러리
+	$('#data-library-setting').click(function() {
+		$('#data-library-popup').slideToggle("slow");
+	});
+
+	// 건축통합
+	$('#master-plan-setting').click(function() {
+		$('#master-plan-popup').slideToggle("slow");
 	});
 
 	// BBOX
