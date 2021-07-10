@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gaia3d.persistence.DataLibraryMapper">
+
+	<!-- 데이터 라이브러리 목록 -->
+	<select id="getListDataLibrary" parameterType="dataLibrary" resultType="dataLibrary">
+		/* getListDataLibrary */
+		SELECT A.*, B.data_library_group_name, C.attributes
+		FROM data_library A
+			LEFT JOIN data_library_group B ON A.data_library_group_id = B.data_library_group_id
+			LEFT JOIN rule C ON A.rule_id = C.rule_id
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="dataLibraryGroupId != null and dataLibraryGroupId > 0">
+			AND A.data_library_group_id = #{dataLibraryGroupId}
+			</if>
+		</trim>
+		ORDER BY B.data_library_group_name, A.insert_date DESC, A.data_library_id DESC
+	</select>
+	
+	<!-- 데이터 라이브러리 정보 -->
+	<select id="getDataLibrary" parameterType="dataLibrary" resultType="dataLibrary">
+		/* getDataLibrary */
+		SELECT A.*, B.data_library_group_name, B.data_library_group_target, B.data_library_group_key, C.attributes
+		FROM data_library A
+			LEFT JOIN data_library_group B ON A.data_library_group_id = B.data_library_group_id
+			LEFT JOIN rule C ON A.rule_id = C.rule_id
+		WHERE A.data_library_id = #{dataLibraryId}
+			<if test="userId != null and userId != ''">
+			AND A.user_id = #{userId}
+			</if>
+	</select>
+</mapper>

@@ -38,9 +38,7 @@ public class DataGroupApiController {
     @GetMapping(produces = "application/json; charset=UTF-8")
     public ResponseEntity<CollectionModel<EntityModel<DataGroupDto>>> getDataGroups(HttpServletRequest request) {
         UserSession userSession = (UserSession) request.getSession().getAttribute(Key.USER_SESSION.name());
-        List<EntityModel<DataGroupDto>> dataGroupList = dataGroupService.getAllListDataGroup(DataGroup.builder()
-                .userGroupId(userSession.getUserGroupId())
-                .build())
+        List<EntityModel<DataGroupDto>> dataGroupList = dataGroupService.getAllListDataGroup(DataGroup.builder().userGroupId(userSession.getUserGroupId()).build())
                 .stream()
                 .map(f -> EntityModel.of(modelMapper.map(f, DataGroupDto.class))
                         .add(linkTo(DataGroupApiController.class).slash(f.getDataGroupId()).withSelfRel()))
