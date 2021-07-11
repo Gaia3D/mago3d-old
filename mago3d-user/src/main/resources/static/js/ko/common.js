@@ -385,6 +385,10 @@ function cloneObject (obj) {
 	return JSON.parse(JSON.stringify(obj));
 }
 
+function randomNumber(min, max) { 
+    return Math.random() * (max - min) + min;
+}
+
 const API = function(){};
 API.Converter = function(){};
 

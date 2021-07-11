@@ -1063,10 +1063,10 @@ let mobj = new ModelerObj();
 //TODO 모델러(데이터 라이브러리) 메뉴 선택시에 호출되도록 수정해야 함
 window.addEventListener('load', function(){
     let intvl = setInterval(function(){
-        if(Pp.isNotNull(MAGO3D_INSTANCE)){
-            clearInterval(intvl);
+        //if(Pp.isNotNull(MAGO3D_INSTANCE)){
+            //clearInterval(intvl);
             //
-            mobj.init();	    
-        }
+            //mobj.init();	    
+        //}
     }, 500);
 });

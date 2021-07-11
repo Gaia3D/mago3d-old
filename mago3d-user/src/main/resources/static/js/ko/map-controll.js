@@ -428,6 +428,7 @@ var mapControllEventHandler = function(magoInstance) {
 
 	// 데이터
 	$('#map-control-setting').click(function() {
+		$('#toolbarWrap div.detaildata.poplayer').hide();
 		$('#map-control-popup').slideToggle("slow");
 	})
 	
@@ -436,6 +437,7 @@ var mapControllEventHandler = function(magoInstance) {
 	
 	// 건축통합
 	$('#master-plan-setting').click(function() {
+		$('#toolbarWrap div.detaildata.poplayer').hide();
 		$('#master-plan-popup').slideToggle("slow");
 	});
 	
@@ -449,6 +451,7 @@ var mapControllEventHandler = function(magoInstance) {
 
 	// 라이브러리
 	$('#data-library-setting').click(function() {
+		$('#toolbarWrap div.detaildata.poplayer').hide();
 		$('#data-library-popup').slideToggle("slow");
 	});
 	

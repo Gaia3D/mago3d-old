@@ -6,88 +6,110 @@
 		<label>레이블</label>
 		<div class="data-go">
 			<div id="labelDisplay" class="switch-toggle switch-ios">
-        <input type="radio" id="labelDisplayY" name="labelDisplay" value="true">
-        <label for="labelDisplayY"><th:block th:text="#{common.show}"></th:block></label>
-        <input type="radio" id="labelDisplayN" name="labelDisplay" value="false" checked>
-        <label for="labelDisplayN"><th:block th:text="#{common.hide}"></th:block></label>
-        <a></a>
-      </div>
+        		<input type="radio" id="labelDisplayY" name="labelDisplay" value="true">
+        		<label for="labelDisplayY"><th:block th:text="#{common.show}"></th:block></label>
+        		<input type="radio" id="labelDisplayN" name="labelDisplay" value="false" checked>
+        		<label for="labelDisplayN"><th:block th:text="#{common.hide}"></th:block></label>
+        		<a></a>
+      		</div>
 		</div>
 	</div>
 	<div class="setup">
 		<label>Origin</label>
 		<div class="data-go">
-			
+			<div id="originDisplay" class="switch-toggle switch-ios">
+                <input type="radio" id="originDisplayY" name="originDisplay" value="true">
+                <label for="originDisplayY"><th:block th:text="#{common.show}"></th:block></label>
+                <input type="radio" id="originDisplayN" name="originDisplay" value="false" checked>
+                <label for="originDisplayN"><th:block th:text="#{common.hide}"></th:block></label>
+                <a></a>
+            </div>
 		</div>
 	</div>
 	<div class="setup">
 		<label>Boundig Box</label>
 		<div class="data-go">
-		
-		</div>
-	</div>
-	<div class="setup">
-		<label>현 위치 주변 이슈</label>
-		<div class="data-go">
-		
+			<div id="bboxDisplay" class="switch-toggle switch-ios">
+                <input type="radio" id="bboxDisplayY" name="bboxDisplay" value="true">
+                <label for="bboxDisplayY"><th:block th:text="#{common.show}"></th:block></label>
+                <input type="radio" id="bboxDisplayN" name="bboxDisplay" value="false" checked>
+                <label for="bboxDisplayN"><th:block th:text="#{common.hide}"></th:block></label>
+                <a></a>
+            </div>
 		</div>
 	</div>
 	<div class="setup">
 		<label>그림자</label>
 		<div class="data-go">
-			
+			<div id="shadowDisplay" class="switch-toggle switch-ios">
+                <input type="radio" id="shadowDisplayY" name="shadowDisplay" value="true">
+                <label for="shadowDisplayY"><th:block th:text="#{common.show}"></th:block></label>
+                <input type="radio" id="shadowDisplayN" name="shadowDisplay" value="false" checked>
+                <label for="shadowDisplayN"><th:block th:text="#{common.hide}"></th:block></label>
+                <a></a>
+            </div>
 		</div>
 	</div>
 	<div class="setup">
 		<label>선택 및 이동</label>
 		<div class="data-go">
-			
+			<div class="switch-toggle switch-ios" style="width: 60%;">
+                <input type="radio" id="objectNoneMove" name="objectMoveMode" value="2" checked>
+                <label for="objectNoneMove">None</label>
+                <input type="radio" id="objectAllMove" name="objectMoveMode" value="0">
+                <label for="objectAllMove">All</label>
+                <input type="radio" id="objectMove" name="objectMoveMode" value="1">
+                <label for="objectMove">Object</label>
+                <a></a>
+            </div>
 		</div>
 	</div>
-	<div class="data-ttl">색상 변경</div>
-	<div class="object-setup">
-		<label>색상</label>
-		<span class="color-value"></span>
-		<input type="text" class="wd50" />
-		<button type="button" class="apply marL10">적용</button>
-		<button type="button" class="cancel">취소</button>
-	</div>
-	<div class="data-ttl">위치 변경</div>
-	<div class="object-setup">
-		<label>경도</label>
-		<input type="text" />
-		<label>위도</label>
-		<input type="text" />
-		<label>높이</label>
-		<input type="text" class="wd50" />
-		<button type="button" class="btn-up"><span class="blind">위로</span></button>
-		<button type="button" class="btn-down"><span class="blind">아래로</span></button>
-		<label>offset</label>
-		<input type="text" class="wd50" />
-	</div>
-	<div class="data-ttl">회전 변경</div>
-	<div class="object-setup">
-		<label>x(피치)</label>
-		<input type="text" class="wd50" />
-		<span class="wscroll-bg">
-				<span class="scroll"></span>
-			</span>
-		<label>y(롤)</label>
-		<input type="text" class="wd50" />
-		<span class="wscroll-bg">
-				<span class="scroll"></span>
-			</span>
-		<label>z(헤딩)</label>
-		<input type="text" class="wd50" />
-		<span class="wscroll-bg">
-				<span class="scroll"></span>
-			</span>
-	</div>
-	<hr class="layer-line" />
-	<div class="btn-center">
-		<button type="button">위치/회전변경</button>
-		<button type="button">이슈 등록</button>
-		<button type="button">데이터 조회</button>
+	<div id="data-controll-wrap" style="display:none;">
+		<div class="data-ttl">색상 변경</div>
+		<div class="object-setup">
+			<label>색상</label>
+			<span class="color-value"></span>
+			<input type="text" class="wd50" />
+			<button type="button" class="apply marL10">적용</button>
+			<button type="button" class="cancel">취소</button>
+		</div>
+		<div class="data-ttl">위치 변경</div>
+		<div class="object-setup">
+			<label>경도</label>
+			<input type="text" />
+			<label>위도</label>
+			<input type="text" />
+			<label>높이</label>
+			<input type="text" class="wd50" />
+			<button type="button" class="btn-up"><span class="blind">위로</span></button>
+			<button type="button" class="btn-down"><span class="blind">아래로</span></button>
+			<label>offset</label>
+			<input type="text" class="wd50" />
+		</div>
+		<div class="data-ttl">회전 변경</div>
+		<div class="object-setup">
+			<label>x(피치)</label>
+			<input type="text" class="wd50" />
+			<span class="wscroll-bg">
+					<span class="scroll"></span>
+				</span>
+			<label>y(롤)</label>
+			<input type="text" class="wd50" />
+			<span class="wscroll-bg">
+					<span class="scroll"></span>
+				</span>
+			<label>z(헤딩)</label>
+			<input type="text" class="wd50" />
+			<span class="wscroll-bg">
+					<span class="scroll"></span>
+				</span>
+		</div>
+		<hr class="layer-line" />
+		<div class="btn-center">
+			<button type="button">위치/회전변경</button>
+			<button type="button">이슈 등록</button>
+			<button type="button">데이터 조회</button>
+		</div>
 	</div>
 </div>
 </html>
