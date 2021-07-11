@@ -27,5 +27,13 @@ public interface LayerMapper {
      * @param layerId
      * @return
      */
-    Layer getLayer(Long layerId);
+    Layer getLayer(Integer layerId);
+
+    /**
+     * 레이어 최소 경계 영역을 wkt로 반환
+     *
+     * @param layerKey 레이어명
+     * @return 최소 경계 영역 wkt
+     */
+    String getEnvelope(String layerKey);
 }

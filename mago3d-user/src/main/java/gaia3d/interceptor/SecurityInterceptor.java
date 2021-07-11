@@ -36,6 +36,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
 	@Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
+
     	String uri = request.getRequestURI();
     	String requestIp = WebUtils.getClientIp(request);
     	log.info("## Requst URI = {}, Method = {}, Request Ip = {}, referer={}", uri, request.getMethod(), requestIp, request.getHeader("referer"));
@@ -70,22 +71,26 @@ public class SecurityInterceptor implements HandlerInterceptor {
 		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
 		if(userSession == null || userSession.getUserId() == null || "".equals(userSession.getUserId())) {
 			log.info("Session is Null. userSession = {}", userSession);
-			if(isAjax(request)) {
+			if (isAjax(request)) {
 				log.info("## ajax call session null. uri = {}", uri);
-				
 				Map<String, Object> unauthorizedResult = new HashMap<>();
-				unauthorizedResult.put("statusCode", HttpStatus.UNAUTHORIZED.value());
-				unauthorizedResult.put("errorCode", "session.required");
-				unauthorizedResult.put("message", null);
-				
-				response.setContentType("application/json");       
+				if (!isAuthenticationRequired) {
+					unauthorizedResult.put("statusCode", HttpStatus.UNAUTHORIZED.value());
+					unauthorizedResult.put("errorCode", "session.required");
+					unauthorizedResult.put("message", null);
+				} else {
+					unauthorizedResult.put("statusCode", HttpStatus.UNAUTHORIZED.value());
+					unauthorizedResult.put("errorCode", "session.required");
+					unauthorizedResult.put("message", loginUrl);
+				}
+				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
 //				response.setStatus(HttpStatus.UNAUTHORIZED.value());
 				response.getWriter().write(objectMapper.writeValueAsString(unauthorizedResult));
 				return false;
 			} else {
 				response.sendRedirect(loginUrl);
-	    		return false;
+				return false;
 			}
 		}
 		

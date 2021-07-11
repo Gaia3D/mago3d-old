@@ -1,4 +1,5 @@
 const Data = function(magoInstance) {
+
     const _ui = function() {
         const ON_CLASS_NAME = 'actived';
         const cssName = {
@@ -41,7 +42,6 @@ const Data = function(magoInstance) {
     const _run = function() {
 
         let data;
-
         const datas = {
             'layer-tab' : new Data2D(magoInstance),
             'data-tab' : new Data3D(magoInstance)
@@ -89,5 +89,4 @@ const Data = function(magoInstance) {
 
     //프로그램 실행
     _run();
-
 }

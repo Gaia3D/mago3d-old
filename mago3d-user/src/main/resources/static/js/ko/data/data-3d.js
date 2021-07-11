@@ -11,7 +11,7 @@ Object.defineProperties(Data3D.prototype, {
         },
         set : function (load) {
             if(load) {
-                alert('1');
+                //alert('1');
                 //this.initCamera();
                 //this.run();
             } else {

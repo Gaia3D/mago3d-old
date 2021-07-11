@@ -1,174 +1,181 @@
 ﻿<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
-<div id="layer-content" class="data-contents sb-page" style="display:none;">
-	<div class="btnGroup">
-		<button class="textBtnSub" th:text="#{common.turn.on}" onClick="turnOnAllLayer(); return false;"></button>
-		<button class="textBtnSub" th:text="#{common.turn.off}" onClick="turnOffAllLayer(); return false;"></button>
-		<button class="textBtnSub" th:text="#{common.unfold}" onClick="openAllLayerTree(); return false;"></button>
-		<button class="textBtnSub" th:text="#{common.folding}" onClick="closeAllLayerTree(); return false;"></button>
-		<button class="textBtn" th:text="#{common.save}" onClick="saveUserLayers(); return false;"></button>
+<div id="layer-content" class="data-contents" style="height: 100%; display: none;">
+	<div class="center-area pad0 padB10">
+		<button id="layer-content-turn-on-all" class="textBtnSub" th:text="#{common.turn.on}"></button>
+		<button id="layer-content-turn-off-all" class="textBtnSub" th:text="#{common.turn.off}"></button>
+		<button id="layer-content-unfold-tree" class="textBtnSub" th:text="#{common.unfold}"></button>
+		<button id="layer-content-fold-tree" class="textBtnSub" th:text="#{common.folding}"></button>
+		<!--<button class="textBtn" th:text="#{common.save}" onClick="saveUserLayers(); return false;"></button>-->
 	</div>
-	<!-- datalist  -->
-	<div th:replace="~{/data/2d/data-2d-template :: #layer-list-source}"></div>
-	<div class="data-layer">
-		<span class="data-layer-ttld">대전</span>
-		<span class="view-option">
-			<div class="switch">
-				<input type="checkbox"/>
-				<span class="slider"></span>
-			</div>
-			<label class="switch">켜기</label>
-		</span>
+	<div class="sb-page" style="height: calc(100% - 145px);overflow-y: auto;">
+		<form id="layer-form" th:object="${userPolicy}" th:action="@{#}">
+			<input type="hidden" id="base-layers" name="baseLayers"/>
+			<div th:replace="~{/data/2d/data-2d-template :: #layer-list-source}"></div>
+			<!-- datalist  -->
+			<!--
+            <div class="data-layer">
+                <span class="data-layer-ttld">대전</span>
+                <span class="view-option">
+                    <div class="switch">
+                        <input type="checkbox"/>
+                        <span class="slider"></span>
+                    </div>
+                    <label class="switch">켜기</label>
+                </span>
+            </div>
+            <div class="data-layer">
+                <span class="data-layer-ttl">배경영상</span>
+                <span class="view-option">
+                    <div class="switch">
+                        <input type="checkbox"/>
+                        <span class="slider"></span>
+                    </div>
+                    <label class="switch">켜기</label>
+                </span>
+            </div>
+            <div class="data-layerlist-bx">
+                <div class="data-layerlist">
+                    <span class="data-layerlist-ttl">항공영상 세종</span>
+                    <span class="view-option">
+                        <div class="switch">
+                            <input type="checkbox"/>
+                            <span class="slider"></span>
+                        </div>
+                        <label class="switch">켜기</label>
+                        <a class="move" href="">이동</a>
+                    </span>
+                </div>
+                <div class="data-layerlist">
+                    <span class="data-layerlist-ttl">부산 강서구 세종</span>
+                    <span class="view-option">
+                        <div class="switch">
+                            <input type="checkbox"/>
+                            <span class="slider"></span>
+                        </div>
+                        <label class="switch">켜기</label>
+                        <a class="move" href="">이동</a>
+                    </span>
+                </div>
+                <div class="data-layerlist">
+                    <span class="data-layerlist-ttl">항공영상_부산_scm 세종</span>
+                    <span class="view-option">
+                        <div class="switch">
+                            <input type="checkbox"/>
+                            <span class="slider"></span>
+                        </div>
+                        <label class="switch">켜기</label>
+                        <a class="move" href="">이동</a>
+                    </span>
+                </div>
+            </div>
+            <div class="data-layer">
+                <span class="data-layer-ttl">세종</span>
+                <span class="view-option">
+                    <div class="switch">
+                        <input type="checkbox"/>
+                        <span class="slider"></span>
+                    </div>
+                    <label class="switch">켜기</label>
+                </span>
+            </div>
+            <div class="data-layerlist-bx">
+                <div class="data-layerlist">
+                    <span class="data-layerlist-ttl">가구획지</span>
+                    <span class="view-option">
+                        <div class="switch">
+                            <input type="checkbox"/>
+                            <span class="slider"></span>
+                        </div>
+                        <label class="switch">켜기</label>
+                        <a class="move" href="">이동</a>
+                    </span>
+                </div>
+                <div class="data-layerlist">
+                    <span class="data-layerlist-ttl">토지이용 Blocktype별</span>
+                    <span class="view-option">
+                        <div class="switch">
+                            <input type="checkbox"/>
+                            <span class="slider"></span>
+                        </div>
+                        <label class="switch">켜기</label>
+                        <a class="move" href="">이동</a>
+                    </span>
+                </div>
+                <div class="data-layerlist">
+                    <span class="data-layerlist-ttl">토지이용</span>
+                    <span class="view-option">
+                        <div class="switch">
+                            <input type="checkbox"/>
+                            <span class="slider"></span>
+                        </div>
+                        <label class="switch">켜기</label>
+                        <a class="move" href="">이동</a>
+                    </span>
+                </div>
+            </div>
+            <div class="data-layer">
+                <span class="data-layer-ttld">인천</span>
+                <span class="view-option">
+                    <div class="switch">
+                        <input type="checkbox"/>
+                        <span class="slider"></span>
+                    </div>
+                    <label class="switch">켜기</label>
+                </span>
+            </div>
+            <div class="data-layer">
+                <span class="data-layer-ttl">행정구역</span>
+                <span class="view-option">
+                    <div class="switch">
+                        <input type="checkbox"/>
+                        <span class="slider"></span>
+                    </div>
+                    <label class="switch">켜기</label>
+                </span>
+            </div>
+            <div class="data-layerlist-bx">
+                <div class="data-layerlist">
+                    <span class="data-layerlist-ttl">행정구역시도</span>
+                    <span class="view-option">
+                        <div class="switch">
+                            <input type="checkbox"/>
+                            <span class="slider"></span>
+                        </div>
+                        <label class="switch">켜기</label>
+                        <a class="move" href="">이동</a>
+                    </span>
+                </div>
+                <div class="data-layerlist">
+                    <span class="data-layerlist-ttl">행정구역 시군구</span>
+                    <span class="view-option">
+                        <div class="switch">
+                            <input type="checkbox"/>
+                            <span class="slider"></span>
+                        </div>
+                        <label class="switch">켜기</label>
+                        <a class="move" href="">이동</a>
+                    </span>
+                </div>
+                <div class="data-layerlist">
+                    <span class="data-layerlist-ttl">행정구역 읍면동</span>
+                    <span class="view-option">
+                        <div class="switch">
+                            <input type="checkbox"/>
+                            <span class="slider"></span>
+                        </div>
+                        <label class="switch">켜기</label>
+                        <a class="move" href="">이동</a>
+                    </span>
+                </div>
+            </div>
+            -->
+			<!-- /.datalist -->
+		</form>
 	</div>
-	<div class="data-layer">
-		<span class="data-layer-ttl">배경영상</span>
-		<span class="view-option">
-			<div class="switch">
-				<input type="checkbox"/>
-				<span class="slider"></span>
-			</div>
-			<label class="switch">켜기</label>
-		</span>
-	</div>
-	<div class="data-layerlist-bx">
-		<div class="data-layerlist">
-			<span class="data-layerlist-ttl">항공영상 세종</span>
-			<span class="view-option">
-				<div class="switch">
-					<input type="checkbox"/>
-					<span class="slider"></span>
-				</div>
-				<label class="switch">켜기</label>
-				<a class="move" href="">이동</a>
-			</span>
-		</div>
-		<div class="data-layerlist">
-			<span class="data-layerlist-ttl">부산 강서구 세종</span>
-			<span class="view-option">
-				<div class="switch">
-					<input type="checkbox"/>
-					<span class="slider"></span>
-				</div>
-				<label class="switch">켜기</label>
-				<a class="move" href="">이동</a>
-			</span>
-		</div>
-		<div class="data-layerlist">
-			<span class="data-layerlist-ttl">항공영상_부산_scm 세종</span>
-			<span class="view-option">
-				<div class="switch">
-					<input type="checkbox"/>
-					<span class="slider"></span>
-				</div>
-				<label class="switch">켜기</label>
-				<a class="move" href="">이동</a>
-			</span>
-		</div>
-	</div>
-	<div class="data-layer">
-		<span class="data-layer-ttl">세종</span>
-		<span class="view-option">
-			<div class="switch">
-				<input type="checkbox"/>
-				<span class="slider"></span>
-			</div>
-			<label class="switch">켜기</label>
-		</span>
-	</div>
-	<div class="data-layerlist-bx">
-		<div class="data-layerlist">
-			<span class="data-layerlist-ttl">가구획지</span>
-			<span class="view-option">
-				<div class="switch">
-					<input type="checkbox"/>
-					<span class="slider"></span>
-				</div>
-				<label class="switch">켜기</label>
-				<a class="move" href="">이동</a>
-			</span>
-		</div>
-		<div class="data-layerlist">
-			<span class="data-layerlist-ttl">토지이용 Blocktype별</span>
-			<span class="view-option">
-				<div class="switch">
-					<input type="checkbox"/>
-					<span class="slider"></span>
-				</div>
-				<label class="switch">켜기</label>
-				<a class="move" href="">이동</a>
-			</span>
-		</div>
-		<div class="data-layerlist">
-			<span class="data-layerlist-ttl">토지이용</span>
-			<span class="view-option">
-				<div class="switch">
-					<input type="checkbox"/>
-					<span class="slider"></span>
-				</div>
-				<label class="switch">켜기</label>
-				<a class="move" href="">이동</a>
-			</span>
-		</div>
-	</div>
-	<div class="data-layer">
-		<span class="data-layer-ttld">인천</span>
-		<span class="view-option">
-			<div class="switch">
-				<input type="checkbox"/>
-				<span class="slider"></span>
-			</div>
-			<label class="switch">켜기</label>
-		</span>
-	</div>
-	<div class="data-layer">
-		<span class="data-layer-ttl">행정구역</span>
-		<span class="view-option">
-			<div class="switch">
-				<input type="checkbox"/>
-				<span class="slider"></span>
-			</div>
-			<label class="switch">켜기</label>
-		</span>
-	</div>
-	<div class="data-layerlist-bx">
-		<div class="data-layerlist">
-			<span class="data-layerlist-ttl">행정구역시도</span>
-			<span class="view-option">
-				<div class="switch">
-					<input type="checkbox"/>
-					<span class="slider"></span>
-				</div>
-				<label class="switch">켜기</label>
-				<a class="move" href="">이동</a>
-			</span>
-		</div>
-		<div class="data-layerlist">
-			<span class="data-layerlist-ttl">행정구역 시군구</span>
-			<span class="view-option">
-				<div class="switch">
-					<input type="checkbox"/>
-					<span class="slider"></span>
-				</div>
-				<label class="switch">켜기</label>
-				<a class="move" href="">이동</a>
-			</span>
-		</div>
-		<div class="data-layerlist">
-			<span class="data-layerlist-ttl">행정구역 읍면동</span>
-			<span class="view-option">
-				<div class="switch">
-					<input type="checkbox"/>
-					<span class="slider"></span>
-				</div>
-				<label class="switch">켜기</label>
-				<a class="move" href="">이동</a>
-			</span>
-		</div>
-	</div>
-	<!-- /.datalist -->
-	<hr class="h10" />
+	<hr class="h10 mar0" />
 	<!-- /버튼 -->
 	<div class="right-area margin-r20">
-		<button type="button" class="btn m-btn general"/>설정 저장</button>
+		<button type="button" id="layer-content-save-user-layers" class="btn m-btn general"/>설정 저장</button>
 	</div>
 </div>
 </html>

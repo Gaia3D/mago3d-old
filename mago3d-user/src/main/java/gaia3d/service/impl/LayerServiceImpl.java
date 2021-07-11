@@ -38,6 +38,17 @@ public class LayerServiceImpl implements LayerService {
      */
     @Transactional(readOnly=true)
     public Layer getLayer(Long layerId) {
-        return layerMapper.getLayer(layerId);
+        return layerMapper.getLayer(layerId.intValue());
+    }
+
+    /**
+     * 레이어 최소 경계 영역을 wkt로 반환
+     *
+     * @param layerKey 레이어명
+     * @return 최소 경계 영역 wkt
+     */
+    @Transactional(readOnly=true)
+    public String getEnvelope(String layerKey) {
+        return layerMapper.getEnvelope(layerKey);
     }
 }
