@@ -15,6 +15,7 @@ public class VariableUtil {
         if (zDimension == null) return new float[]{ 10.0f };
         Variable zVariable = netcdfFile.findVariable(zDimension.getShortName());
         return getZVariableValues(zVariable);
+        //return new float[]{ 10.0f };
     }
 
     public static float[] getZVariableValues(Variable zVariable) {

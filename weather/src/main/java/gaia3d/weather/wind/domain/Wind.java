@@ -1,6 +1,6 @@
 package gaia3d.weather.wind.domain;
 
-import gaia3d.weather.json.Color;
+import gaia3d.weather.json.Bands;
 import gaia3d.weather.json.Image;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +15,7 @@ import java.util.List;
 public class Wind {
 
     private String fileName;
-    List<Color> bands;
+    List<Bands> bands;
     private GridCoordSystem coordinateSystem = null;
     private Image image = null;
     private float[] zValues = null;

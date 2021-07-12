@@ -1,7 +1,7 @@
 package gaia3d.weather.wind.service;
 
 import gaia3d.weather.json.Band;
-import gaia3d.weather.json.Color;
+import gaia3d.weather.json.Bands;
 import gaia3d.weather.util.Floats;
 import gaia3d.weather.util.VariableUtil;
 import gaia3d.weather.util.WindImageUtil;
@@ -61,7 +61,7 @@ public class Grib2Reader implements Reader {
                 for (int z = 0; z < Objects.requireNonNull(zValues).length; z++) {
                     // read data (index < 0, get all values)
                     Array array = gridDataType.readDataSlice(0, z, -1, -1);
-                    array = array.flip(0);
+                    //array = array.flip(0);
                     float[][] datas = (float[][]) array.copyToNDJavaArray();
 
                     // create band
@@ -88,7 +88,7 @@ public class Grib2Reader implements Reader {
                 bandMap.put(windVariable, bands);
             }
 
-            List<Color> bands = Color.mapToList(bandMap);
+            List<Bands> bands = Bands.mapToList(bandMap);
             wind.setBands(bands);
             wind.setU(u);
             wind.setV(v);
