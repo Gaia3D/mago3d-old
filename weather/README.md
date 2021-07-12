@@ -18,3 +18,6 @@ https://www.mide.com/air-pressure-at-altitude-calculator
 
 # given-when-then pattern
 https://martinfowler.com/bliki/GivenWhenThen.html
+
+# color-ramps json example
+https://doc.arcgis.com/en/maps-for-microstrategy/install-and-configure/modify-default-symbols-and-color-ramps.htm
