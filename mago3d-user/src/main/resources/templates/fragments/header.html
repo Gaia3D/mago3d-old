@@ -10,7 +10,7 @@
                             <span th:text="${session.USER_SESSION.userName}"><th:block th:text="#{common.sir}"></th:block></span>
                         </a>
                         <a href="/guide/help" th:title="#{common.api.document}" onclick="goMagoAPIGuide(this.href);return false;"><th:block th:text="#{common.api.document}"></th:block></a>
-                        <a href="/sign/signout" title="Sign out" class="signout"><span class="blind">Sign out</span></a>
+                        <a href="/sign/signout" title="Sign out" class="">Sign out</a>
                     </li>
                 </ul>
             </th:block>
