@@ -13,9 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 @Slf4j
 public class GeoJsonWriter implements Writer {
@@ -39,7 +37,7 @@ public class GeoJsonWriter implements Writer {
     public void write(Wind wind, FilePattern filePattern) {
 
         float[] zValues = wind.getZValues();
-        List<Color> bands = wind.getBands();
+        List<Bands> bands = wind.getBands();
         Image image = wind.getImage();
         String fileName = wind.getFileName();
         GridCoordSystem coordinateSystem = wind.getCoordinateSystem();
@@ -55,7 +53,7 @@ public class GeoJsonWriter implements Writer {
         if (zValues == null) return;
         for (int z = 0; z < zValues.length; z++) {
             float isobaric = zValues[z];
-            Color band = bands.get(z);
+            Bands band = bands.get(z);
             //image = new Image(image.getWidth(), image.getHeight(), String.format("%s%s_%d.png", servicePath, fileName, (int) isobaric));
             image = new Image(image.getWidth(), image.getHeight(), String.format("%s_%d.png", fileName, (int) isobaric));
             Feature feature = Feature.valueOf(coordinateSystem, isobaric, image, band);
@@ -66,6 +64,12 @@ public class GeoJsonWriter implements Writer {
 
         log.info("features size : " + features.size());
         FeatureCollection featureCollection = new FeatureCollection();
+        Map<String, Object> styles = new HashMap<>();
+        List<ColorRamp> colorRamps = Arrays.asList(
+                ColorRamp.builder().color("#FFFFFF").value(0.0).build(),
+                ColorRamp.builder().color("#0000FF").value(20.0).build());
+        styles.put("colorRamp", colorRamps);
+        featureCollection.setStyle(styles);
         featureCollection.setCrs(CoordinateReferenceSystem.valueOf(coordinateSystem));
         featureCollection.setFeatures(features);
 

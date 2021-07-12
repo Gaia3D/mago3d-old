@@ -1,10 +1,9 @@
 package gaia3d.weather.util;
 
+import gaia3d.weather.wind.domain.WindVariable;
 import org.junit.jupiter.api.Test;
-import ucar.nc2.Dimension;
 import ucar.nc2.NetcdfFile;
 import ucar.nc2.NetcdfFiles;
-import ucar.nc2.Variable;
 import ucar.nc2.dt.GridDatatype;
 import ucar.nc2.dt.grid.GridDataset;
 
@@ -13,19 +12,18 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class VariableUtilTest {
 
     @Test
     void getZVariableValues() throws IOException {
         // given
-        //File file = Paths.get("src", "test", "resources", "OBS-QWM_2019090809.grib2").toFile();
-        File file = Paths.get("src", "test", "resources", "OBS-QWM_2019100700.grb2").toFile();
+        File file = Paths.get("src", "test", "resources", "OBS-QWM_2019090809.grib2").toFile();
+        //File file = Paths.get("src", "test", "resources", "OBS-QWM_2019100700.grb2").toFile();
         String location = file.getAbsolutePath();
         NetcdfFile netcdfFile = NetcdfFiles.open(location);
         GridDataset gridDataset = GridDataset.open(location);
-        GridDatatype gridDataType = gridDataset.findGridDatatype("v-component_of_wind_surface");
+        GridDatatype gridDataType = gridDataset.findGridDatatype(WindVariable.U.getName());
         // when
         float[] zValues = VariableUtil.getZVariableValues(gridDataType, netcdfFile);
         // then

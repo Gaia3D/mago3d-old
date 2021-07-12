@@ -25,7 +25,7 @@ class FeatureTest {
         Reader reader = new Grib2Reader();
         Wind wind = reader.read(file);
 
-        List<Color> bands = wind.getBands();
+        List<Bands> bands = wind.getBands();
         Image image = wind.getImage();
         GridCoordSystem coordinateSystem = wind.getCoordinateSystem();
         String fileName = "OBS-QWM_2019090809_10.png";

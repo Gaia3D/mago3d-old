@@ -1,5 +1,6 @@
 package gaia3d.weather.wind.service;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -9,21 +10,22 @@ import java.nio.file.Paths;
 
 class WindServiceTest {
 
-    @Test
+    @Disabled
     void generate() {
         String location = "src/test/resources/OBS-QWM_2019090809.grib2";
         WindService windService = new WindService();
         windService.generate(location);
     }
 
-    @Test
+    @Disabled
     void generateByDir() throws IOException {
 
         WindService windService = new WindService();
         //String directory = "C:\\data\\SNU_Siheung_WIND_20190907";
-        String directory = "C:\\data\\AlphaMet_SNU_DSM_Plan_Wind10m";
+        //String directory = "C:\\data\\AlphaMet_SNU_DSM_Plan_Wind10m";
         //String directory = "C:\\data\\Wind_Seoul_DSM_10m_0907";
         //String directory = "C:\\data\\SNU_DSM_WIND_AlphaMet_OF.tar[2735]";
+        String directory = "C:\\data\\SNU_DSM_after_build_10x10";
 
         Files.list(Paths.get(directory))
                 .filter(path -> path.toString().endsWith(".grib2"))
@@ -33,19 +35,6 @@ class WindServiceTest {
                     String location = file.getAbsolutePath();
                     windService.generate(location);
                 });
-
-        /*
-        File directoryPath = new File(directoryPathName);
-        String fileNameList[] = directoryPath.list();
-
-        for (int i = 0; i < fileNameList.length; i++) {
-            String format = fileNameList[i].split("\\.")[1];
-            if (format.equals("grib2")) {
-                String location = directoryPathName + "\\" + fileNameList[i];
-                windService.generate(location);
-            }
-        }
-        */
 
     }
 

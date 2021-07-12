@@ -1,7 +1,7 @@
 package gaia3d.weather.wind.service;
 
 import gaia3d.weather.json.Band;
-import gaia3d.weather.json.Color;
+import gaia3d.weather.json.Bands;
 import gaia3d.weather.json.Image;
 import gaia3d.weather.wind.domain.Wind;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +12,8 @@ import ucar.nc2.dt.GridCoordSystem;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -19,35 +21,35 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class Grib2ReaderTest {
 
-    private Color[] expected;
+    private Bands[] expected;
 
     @BeforeEach
     void setUp() {
         Band defaultChannel = Band.builder().build();
-        expected = new Color[]{
-                Color.builder()
-                        .r(Band.builder().min(0.279804f).max(1.274296f).build())
-                        .g(Band.builder().min(0.905217f).max(1.186429f).build())
+        expected = new Bands[]{
+                Bands.builder()
+                        .r(Band.builder().min(0.285952f).max(1.176989f).build())
+                        .g(Band.builder().min(0.913442f).max(1.183233f).build())
                         .b(defaultChannel)
                         .build(),
-                Color.builder()
-                        .r(Band.builder().min(0.279804f).max(1.434681f).build())
-                        .g(Band.builder().min(0.905217f).max(1.207608f).build())
+                Bands.builder()
+                        .r(Band.builder().min(0.285952f).max(1.336336f).build())
+                        .g(Band.builder().min(0.913442f).max(1.203603f).build())
                         .b(defaultChannel)
                         .build(),
-                Color.builder()
-                        .r(Band.builder().min(0.279804f).max(1.702015f).build())
-                        .g(Band.builder().min(0.905217f).max(1.242909f).build())
+                Bands.builder()
+                        .r(Band.builder().min(0.285952f).max(1.601961f).build())
+                        .g(Band.builder().min(0.913442f).max(1.237539f).build())
                         .b(defaultChannel)
                         .build(),
-                Color.builder()
-                        .r(Band.builder().min(0.279804f).max(2.236805f).build())
-                        .g(Band.builder().min(0.905217f).max(1.313596f).build())
+                Bands.builder()
+                        .r(Band.builder().min(0.285952f).max(2.133272f).build())
+                        .g(Band.builder().min(0.913442f).max(1.305425f).build())
                         .b(defaultChannel)
                         .build(),
-                Color.builder()
-                        .r(Band.builder().min(0.279804f).max(3.003193f).build())
-                        .g(Band.builder().min(0.905217f).max(1.380094f).build())
+                Bands.builder()
+                        .r(Band.builder().min(0.285952f).max(2.905336f).build())
+                        .g(Band.builder().min(0.913442f).max(1.379514f).build())
                         .b(defaultChannel)
                         .build()
         };
@@ -60,7 +62,7 @@ class Grib2ReaderTest {
         Wind wind = reader.read(file);
 
         String fileName = wind.getFileName();
-        List<Color> bands = wind.getBands();
+        List<Bands> bands = wind.getBands();
         float[] zValues = wind.getZValues();
         Image image = wind.getImage();
         GridCoordSystem coordinateSystem = wind.getCoordinateSystem();
@@ -78,7 +80,6 @@ class Grib2ReaderTest {
     void readVariable() {
         File file = Paths.get("src", "test", "resources", "OBS-QWM_2019090809.grib2").toFile();
         String location = file.getAbsolutePath();
-
         try (NetcdfFile netcdfFile = NetcdfFiles.open(location)) {
             // read variables
             Grib2Reader reader = new Grib2Reader();
@@ -87,7 +88,25 @@ class Grib2ReaderTest {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
 
+    @Test
+    void readFilesVariable() throws IOException {
+        Files.list(Paths.get("src", "test", "resources"))
+            .filter(path -> path.toString().endsWith(".grib2"))
+            //.filter(path -> path.toString().endsWith(".grb2"))
+            .map(Path::toFile)
+            .forEach(file -> {
+                String location = file.getAbsolutePath();
+                try (NetcdfFile netcdfFile = NetcdfFiles.open(location)) {
+                    // read variables
+                    Grib2Reader reader = new Grib2Reader();
+                    reader.readVariable(netcdfFile);
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            });
     }
 
 }

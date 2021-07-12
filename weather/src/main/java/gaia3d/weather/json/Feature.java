@@ -24,7 +24,7 @@ public class Feature {
     private Geometry geometry;
     private Map<String, Object> properties;
 
-    public static Feature valueOf(GridCoordSystem coordinateSystem, float isobaric, Image image, Color band) {
+    public static Feature valueOf(GridCoordSystem coordinateSystem, float isobaric, Image image, Bands band) {
 
         // create bbox
         LatLonRect latLonBoundingBox = coordinateSystem.getLatLonBoundingBox();
