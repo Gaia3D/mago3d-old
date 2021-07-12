@@ -39,6 +39,7 @@ function goMagoAPIGuide(url) {
 }
 
 var MapControll = {
+	divided : false,
 	divideMap : function(loadEnd) {
 		$('.mapWrap2').show();
 		
@@ -86,6 +87,8 @@ var MapControll = {
 		if(!MAGO3D_DIVIDE_INSTANCE) {
 			MAGO3D_DIVIDE_INSTANCE = new Mago3D.Mago3d('magoDivideContainer', clonePolicy, {loadend : divideLoadEnd}, option);
 		}
+
+		this.divided = true;
 		
 		function divideLoadEnd(e) {
 			var originViewer = MAGO3D_INSTANCE.getViewer();
@@ -119,6 +122,8 @@ var MapControll = {
 		$('.mapWrap').css({
 			width : width
 		});
+
+		this.divided = false;
 	}
 }
 

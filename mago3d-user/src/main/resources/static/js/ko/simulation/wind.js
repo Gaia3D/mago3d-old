@@ -68,44 +68,53 @@ SmltWind.prototype.initCamera = function() {
 	this.magoInstance.getViewer().camera.flyTo(this.position);
 }
 
-SmltWind.prototype.run = function() {
-	const orgin = this.magoInstance;
+SmltWind.prototype.load = function(instance, date) {
 	$.ajax({
 		url: "/api/wind/date",
 		type: "GET",
-		data: { date : this.date },
+		data: {date: date},
+		dataType: "json",
+		headers: {"X-Requested-With": "XMLHttpRequest"},
+		success: function (geojson) {
+			instance.getMagoManager().weatherStation.addWind(geojson);
+		}
+	});
+}
+
+SmltWind.prototype.run = function() {
+	const orgin = this.magoInstance;
+	const _this = this;
+
+	// 임시
+	const compareDate = parseInt(_this.date) + 10000;
+
+	if (MapControll.divided) {
+		//const magoMap = new mapInit(MAGO3D_DIVIDE_INSTANCE, MAGO.baseLayers, MAGO.policy);
+		//magoMap.initLayer(false);
+		_this.load(MAGO3D_DIVIDE_INSTANCE, _this.date);
+		_this.load(orgin, compareDate);
+	} else {
+		MapControll.divideMap(function (divided) {
+			//const magoMap = new mapInit(divided, MAGO.baseLayers, MAGO.policy);
+			//magoMap.initLayer(false);
+			_this.load(divided, _this.date);
+			_this.load(orgin, compareDate);
+		});
+	}
+
+/*
+	$.ajax({
+		url: "/api/wind/date",
+		type: "GET",
+		data: { date : '2019110700' },
 		dataType: "json",
 		headers: {"X-Requested-With": "XMLHttpRequest"},
 		success: function(geojson){
 			orgin.getMagoManager().weatherStation.addWind(geojson);
 		}
 	});
-
-/*
-	MapControll.divideMap(function(e) {
-		const divided = e;
-		$.ajax({
-			url: "/api/wind/date",
-			type: "GET",
-			data: { date : '2019090802' },
-			dataType: "json",
-			headers: {"X-Requested-With": "XMLHttpRequest"},
-			success: function(geojson){
-				divided.getMagoManager().weatherStation.addWind(geojson);
-			}
-		});
-		$.ajax({
-			url: "/api/wind/date",
-			type: "GET",
-			data: { date : '2019090802' },
-			dataType: "json",
-			headers: {"X-Requested-With": "XMLHttpRequest"},
-			success: function(geojson){
-				orgin.getMagoManager().weatherStation.addWind(geojson);
-			}
-		});
-	});
 */
+
 }
 
 SmltWind.prototype.clear = function() {
@@ -127,7 +136,7 @@ SmltWind.prototype.play = function() {
 			_this.date = date;
 			_this.clear();
 			_this.run();
-		}, 3000 * idx);
+		}, 5000 * idx);
 	});
 }
 
