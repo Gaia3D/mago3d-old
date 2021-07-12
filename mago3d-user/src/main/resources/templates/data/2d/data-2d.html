@@ -7,7 +7,7 @@
 		<button id="layer-content-fold-tree" class="textBtnSub" th:text="#{common.folding}"></button>
 		<!--<button class="textBtn" th:text="#{common.save}" onClick="saveUserLayers(); return false;"></button>-->
 	</div>
-	<div class="sb-page" style="height: calc(100% - 145px);overflow-y: auto;">
+	<div class="sb-page" style="max-height: calc(100% - 145px);overflow-y: auto;">
 		<form id="layer-form" th:object="${userPolicy}" th:action="@{#}">
 			<input type="hidden" id="base-layers" name="baseLayers"/>
 			<div th:replace="~{/data/2d/data-2d-template :: #layer-list-source}"></div>
