@@ -64,7 +64,7 @@ public class LayerRestController {
 	 * 레이어의 BoundingBox를 구함
 	 */
 	@GetMapping(value = "/{id}/envelope", produces = "application/json; charset=UTF-8")
-	public ResponseEntity<?> envelope(@PathVariable("id") Long id) {
+	public ResponseEntity<?> envelope(@PathVariable("id") Integer id) {
 		Layer layer = layerService.getLayer(id);
 		if (layer == null) {
 			log.info("@@ envelope. layer not found with id = {}", id);

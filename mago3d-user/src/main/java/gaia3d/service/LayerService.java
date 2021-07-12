@@ -1,8 +1,8 @@
 package gaia3d.service;
 
-import java.util.List;
-
 import gaia3d.domain.layer.Layer;
+
+import java.util.List;
 
 public interface LayerService {
 
@@ -17,7 +17,7 @@ public interface LayerService {
      * @param layerId 레이어 아이디
      * @return
      */
-    Layer getLayer(Long layerId);
+    Layer getLayer(Integer layerId);
 
     /**
      * 레이어 최소 경계 영역을 wkt로 반환

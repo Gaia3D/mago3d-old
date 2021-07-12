@@ -56,7 +56,7 @@ public class LayerApiController {
      * @return
      */
     @GetMapping(value = "/{id}", produces = "application/json; charset=UTF-8")
-    public ResponseEntity<EntityModel<LayerDto>> getLayerById(@PathVariable("id") Long id) {
+    public ResponseEntity<EntityModel<LayerDto>> getLayerById(@PathVariable("id") Integer id) {
         LayerDto dto = modelMapper.map(layerService.getLayer(id), LayerDto.class);
         EntityModel<LayerDto> layer = EntityModel.of(dto);
         layer.add(linkTo(LayerApiController.class).slash(id).withSelfRel());
