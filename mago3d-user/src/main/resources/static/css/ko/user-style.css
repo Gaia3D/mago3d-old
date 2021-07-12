@@ -5175,9 +5175,9 @@ span.mago {color:#6649ca;}
 .tabmenu-data > ul li:first-child {text-indent:30px; background:white url(/images/ko/ic_sb_tabmenu.png) no-repeat -135px 7px;}
 .tabmenu-data > ul li:nth-child(2) {text-indent:30px; background:white url(/images/ko/ic_sb_tabmenu.png) no-repeat -135px -22px;}
 .tabmenu-data > ul li:last-child {text-indent:30px; background:white url(/images/ko/ic_sb_tabmenu.png) no-repeat -135px -55px;}
-.tabmenu-data > ul li:first-child:hover, .tabmenu-data > ul li:first-child:focus {background:white url(/images/ko/ic_sb_tabmenu.png) no-repeat -273px 7px;}
-.tabmenu-data > ul li:nth-child(2):hover, .tabmenu-data > ul li:nth-child(2):focus {background:white url(/images/ko/ic_sb_tabmenu.png) no-repeat -273px -22px;}
-.tabmenu-data > ul li:last-child:hover, .tabmenu-data > ul li:last-child:focus {background:white url(/images/ko/ic_sb_tabmenu.png) no-repeat -273px -55px;}
+.tabmenu-data > ul li:first-child:hover, .tabmenu-data > ul li:first-child:focus {background:white url(/images/ko/ic_sb_tabmenu.png) no-repeat -307px 7px;}
+.tabmenu-data > ul li:nth-child(2):hover, .tabmenu-data > ul li:nth-child(2):focus {background:white url(/images/ko/ic_sb_tabmenu.png) no-repeat -308px -22px;}
+.tabmenu-data > ul li:last-child:hover, .tabmenu-data > ul li:last-child:focus {background:white url(/images/ko/ic_sb_tabmenu.png) no-repeat -308px -55px;}
 .tabmenu-data > ul li:first-child.actived {background:#2079e7 url(/images/ko/ic_sb_tabmenu.png) no-repeat 5px 7px;}
 .tabmenu-data > ul li:nth-child(2).actived {background:#2079e7 url(/images/ko/ic_sb_tabmenu.png) no-repeat 5px -22px;}
 .tabmenu-data > ul li:last-child.actived {background:#2079e7 url(/images/ko/ic_sb_tabmenu.png) no-repeat 5px -55px;}
@@ -5198,22 +5198,23 @@ select::-ms-expand {display: none;}
 .dataselect {width:342px; margin:0 auto; height:40px; margin-top:8px;}
 .dataselect-item {float:left; width:180px; padding-left:3px;}
 .data-filter {float:right; width:125px; height:30px; padding-left:26px; line-height:30px; display:inline-block; border-radius:3px; background:url(/images/ko/ic_filter_more.png) 6px 50% no-repeat; font-size:12px; border:1px solid #d8d8d8;}
-.switch {position: relative; display: inline-block; width:36px; height: 16px; margin-left:14px; margin-right:2px; line-height: 2px;}
-.switch input {opacity: 0; width: 0; height: 0;}
-.slider {position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e8e6e6; border-radius: 34px; transition: .3s;}
-.slider:before {position: absolute; content: ""; height: 14px; width: 14px; left: 1px; bottom: 1px; background-color: #bebdbd; border-radius: 50%; transition: .3s;}
-input:checked + .slider {background-color: #d4e2fa;}
-input:checked + .slider:before {background-color: #2674ff;  transform: translateX(22px);}
+.switch {position: relative; display: inline-block; width:40px; height: 20px; margin-left:12px; margin-right:4px; line-height: 2px;}
+.switch input {opacity: 0; width: 0; height: 0; }
+.slider {position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #a3a3a3; border-radius: 34px; transition: .3s;}
+.slider:before {position: absolute; content: ""; height: 16px; width: 16px; left: 2px; bottom: 2px; background-color: white; border-radius: 50%; transition: .3s;}
+input:checked + .slider {background-color: #2674ff;}
+input:checked + .slider:before {background-color: white;  transform: translateX(20px);}
 
 /* data */
 .sb-page > .pgcount {width:100%; margin:0 auto; font-size:12px; height:24px; border-bottom:1px solid #e1e1e1;}
 .sb-page > .pgcount .pgcount-total {float:left; margin-left:20px;}
 .sb-page > .pgcount .pgcount-number {float:right; margin-right:20px;}
-.sb-page > .datalist {width:340px; margin:0 auto;  padding:10px 20px 10px 20px; height:75px;}
+.sb-page > .datalist {width:340px; margin:0 auto;  padding:10px 0 10px 0; height:75px;}
 .sb-page .it-select {background:#f6faff;}
-.datalist .data-username {display:inline-block; font-size:12px; vertical-align:middle; margin:2px 0 0 5px; border:1px solid #e1e1e1; border-radius:16px; padding:3px 10px;}
-.datalist .data-go {float:right; width:auto; text-align:right; height:27px; font-size:13px; line-height:16px; margin-top:10px; padding:0;}
-.datalist .data-go a.move {float:left; display:block; height:26px; text-indent:21px; background:url(/images/ko/ic_move.png) no-repeat left 0;}
+.datalist .data-username {display:inline-block; font-size:12px; vertical-align:middle; margin:2px 0 0 5px; border:1px solid #e1e1e1; border-radius:16px; padding:0 10px;}
+.datalist .data-go {float:right; width:140px; text-align:right; height:27px; font-size:13px; line-height:16px; margin-top:10px; padding:0;}
+.datalist .data-go a.move {float:left;  width:50px; margin:0; padding:0; display:block; text-indent:21px; background:url(/images/ko/ic_move.png) no-repeat left 0;}
+.datalist .data-go > label {width:40px;}
 .datalist .data-group {margin-top:4px; padding:0; font-size:14px; color:#58595a;}
 span.gap {display:inline-block; width:3px; height:3px; background:#bcbcbc; margin:2px 2px 2px 2px; }
 span.ttl {color:#426098;}
@@ -5233,9 +5234,9 @@ hr.datalist-line {width:100%;border:none; margin:0; padding:0; border-bottom:1px
 .paging-wrapper {width:auto; margin-top:13px; display:inline-block; padding:0;}
 .paging a {width:20px; height:20px; display:inline-block; float:left; text-align:center; font-size:14px !important; margin:0; padding:0;}
 .paging .pre {cursor:pointer; background:url("/images/ko/ic_toolbox.png") -380px -101px no-repeat;}
-/*.paging .pre01 {cursor:pointer; display:inline-block; background:url("/images/ko/ic_pre01.png") no-repeat 50% 2px;} */
+.paging .pre01 {cursor:pointer; display:inline-block; background:url("/images/ko/ic_toolbox.png") -381px -195px no-repeat } 
 .paging .next {cursor:pointer; display:inline-block;background:url("/images/ko/ic_toolbox.png") no-repeat -374px -57px;}
-/*.paging .next01 {cursor:pointer; display:inline-block;background:url("/images/ko/ic_next01.png") no-repeat 50% 2px;} */
+.paging .next01 {cursor:pointer; display:inline-block;background:url("/images/ko/ic_toolbox.png") -375px -151px no-repeat } 
 .paging .lnk {cursor:pointer; display:inline-block;font-size:12px;color:#656666;}
 .paging .current {cursor:pointer; display:inline-block;font-size:12px; color:#0858d5;}
 .paging .lnk:hover,
@@ -5297,7 +5298,7 @@ hr.datalist-line {width:100%;border:none; margin:0; padding:0; border-bottom:1px
 .lower-tbl span.range-circle {display:inline-block; clear:both; text-align:center; margin-right:7px; width:10px; height:10px; vertical-align:middle; border-radius:30px;}
 
 /* poplayer */
-.detaildata {width:270px; height:700px; position:absolute; right:85px; top:68px; border:1px solid red; z-index:1;}
+.detaildata {width:270px; height:700px; position:absolute; right:85px; top:68px; z-index:1;}
 .poplayer {border-radius:4px; background:white; overflow-y:unset; overflow-x:unset; border:1px solid #d9dadb; padding:10px 25px 25px 25px; margin:0; box-shadow: 0 1px 3px rgba(132,132,132,0.6);}
 .poplayer > h6.pop-title {border-bottom:1px solid #e3e3e3; font-size:15px; font-weight:600; height:30px; margin-top:10px;}
 .pop-close {float:right; border:0; width:24px; margin-right:-16px; height:24px; display:inline-block; background: white url(/images/ko/ic_sbmenu.png) -216px -525px no-repeat;}
@@ -5308,12 +5309,6 @@ hr.datalist-line {width:100%;border:none; margin:0; padding:0; border-bottom:1px
 .poplayer > .tbl-layer td {text-align:center; padding:8px 1px; border-bottom:1px solid #e9e8e8;}
 .alg-left {text-align:left !important; padding-left:2px;}
 
-/*.switch {position: relative; display: inline-block; margin:0; padding:0; width:0; margin-top:3px; height: 14px; margin-right:-5px;}*/
-/*.switch input {opacity: 0; width: 0; height: 0; }*/
-.slider {position: absolute; cursor: pointer; top: 0; left: 0; right: 0; height:14px; bottom: 0; width:36px; background-color: #e8e6e6; border-radius: 34px; transition: .3s;}
-.slider:before {position: absolute; content: ""; height: 12px; width: 12px; left: 1px; bottom: 1px; background-color: #bebdbd; border-radius: 50%; transition: .3s;}
-input:checked + .slider {background-color: #dcebfe;}
-input:checked + .slider:before {background-color: #46a1f6;  transform: translateX(22px);}
 .data-go {width:90px; padding:0;}
 .data-go a.move {display:inline-block; width:20px; height:20px; text-indent:18px; margin-left:5px; background:url(/images/ko/ic_move02.png) no-repeat left 4px;}
 span.sumnail {float:right; width:50px; height:50px; border:1px solid #d9dadb;}
