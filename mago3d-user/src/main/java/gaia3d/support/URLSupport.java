@@ -21,7 +21,8 @@ public class URLSupport {
 			"/converter/list", "/converter/converter-job-file-list", "/converter/modify",
 			"/data-adjust-log/list", "/data-adjust-log/modify",
 			"/data-log/list", "/data-log/modify",
-			"/mypage/user-modify", "/mypage/membership", "/mypage/user-policy"
+			"/mypage/user-modify", "/mypage/membership", "/mypage/user-policy",
+			"/user-policy/update-layers"
 	};
 
     // 파일 업로딩 URL

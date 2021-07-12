@@ -62,9 +62,7 @@
 		<div th:replace="~{/fragments/menu :: #navWrap}"></div>
 		<!-- E: NAVWRAP -->
 		<div id="contentsWrap" class="contentsWrap" style="display: none;">
-			<div id="searchContent" class="contents fullHeight" style="display:none;">
-				<div th:replace="~{/search/district :: #districtWrap}"></div>
-			</div>
+			<!--<div th:replace="~{/search/district :: #searchContent}"></div>-->
 			<div id="dataContent" class="contents-margin-default fullHeight" style="display:none;">
 				<div class="tabs">
 					<ul id="dataInfoTab" class="tab tab-divide">
@@ -170,9 +168,9 @@
 <script type="text/javascript" th:src="@{/js/{lang}/district-controll.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/wps-request.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/search.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
-<script type="text/javascript" th:src="@{/js/{lang}/data/data.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/data/data-2d.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/data/data-3d.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/{lang}/data/data.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/data-library.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/user-policy.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/simulation/simulation.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
