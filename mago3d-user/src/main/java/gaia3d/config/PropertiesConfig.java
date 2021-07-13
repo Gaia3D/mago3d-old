@@ -94,4 +94,6 @@ public class PropertiesConfig {
     private String userStinkServiceDir;
     private String userStinkServicePath;
 
+    private String ogr2ogrSchema;
+
 }

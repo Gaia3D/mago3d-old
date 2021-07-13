@@ -27,6 +27,6 @@
     <select id="getEnvelope" parameterType="string" resultType="string">
         /* getEnvelope */
         SELECT ST_AsText(ST_Envelope(ST_Collect(wkb_geometry)))
-        FROM mago3d_layer.${layerKey};
+        FROM ${schema}.${layerKey};
     </select>
 </mapper>

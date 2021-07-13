@@ -59,6 +59,8 @@ public class GeoPolicy {
 	private String geoserverDataWorkspace;
 	// geoserver 데이터 저장소
 	private String geoserverDataStore;
+	// geoserver ogr2ogr 레이어 데이터 저장소
+	private String geoserverDataStoreLayer;
 	// geoserver 계정
 	private String geoserverUser;
 	// geoserver 비밀번호

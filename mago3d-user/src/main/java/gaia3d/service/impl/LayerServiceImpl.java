@@ -1,5 +1,6 @@
 package gaia3d.service.impl;
 
+import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.layer.Layer;
 import gaia3d.persistence.LayerMapper;
 import gaia3d.service.LayerService;
@@ -17,10 +18,13 @@ import java.util.List;
 public class LayerServiceImpl implements LayerService {
 
     private final LayerMapper layerMapper;
+    private final PropertiesConfig propertiesConfig;
     
-    public LayerServiceImpl(LayerMapper layerMapper) {
+    public LayerServiceImpl(LayerMapper layerMapper, PropertiesConfig propertiesConfig) {
     	this.layerMapper = layerMapper;
+        this.propertiesConfig = propertiesConfig;
     }
+
     /**
     * layer 목록
     * @return
@@ -48,6 +52,7 @@ public class LayerServiceImpl implements LayerService {
      */
     @Transactional(readOnly=true)
     public String getEnvelope(String layerKey) {
-        return layerMapper.getEnvelope(layerKey);
+        String schema = propertiesConfig.getOgr2ogrSchema();
+        return layerMapper.getEnvelope(schema, layerKey);
     }
 }
