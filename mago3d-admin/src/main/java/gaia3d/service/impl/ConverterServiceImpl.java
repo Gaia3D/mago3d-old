@@ -254,7 +254,6 @@ public class ConverterServiceImpl implements ConverterService {
  */
 	}
 
-
 	/**
 	 * 로그파일을 통한 데이터 변환 작업 상태를 갱신
 	 * @param converterResultLog converterResultLog

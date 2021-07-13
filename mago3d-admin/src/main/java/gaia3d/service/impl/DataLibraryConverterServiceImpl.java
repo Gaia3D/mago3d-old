@@ -348,7 +348,7 @@ public class DataLibraryConverterServiceImpl implements DataLibraryConverterServ
         // 데이터 라이브러리 경로
         String adminDataLibraryServicePath = propertiesConfig.getAdminDataLibraryServicePath();
         DataLibraryGroup dataLibraryGroup = dataLibraryGroupService.getDataLibraryGroup(DataLibraryGroup.builder().dataLibraryGroupId(dataLibraryGroupId).build());
-        String dataLibraryPath = adminDataLibraryServicePath + dataLibraryGroup.getDataLibraryGroupKey() + "/" + dataLibraryKey;
+        String dataLibraryPath = adminDataLibraryServicePath + dataLibraryGroup.getDataLibraryGroupKey() + "/" + DataLibrary.F4D_PREFIX + dataLibraryKey;
         String dataLibraryThumbnail = adminDataLibraryServicePath + dataLibraryGroup.getDataLibraryGroupKey() + "/" + DataLibrary.F4D_PREFIX + dataLibraryKey + "/thumbnail.png";
 
         String dataType = dataLibraryUploadFile.getDataType();
