@@ -28,6 +28,9 @@ configurations {
 }
 
 repositories {
+    maven {
+        url "https://repo.osgeo.org/repository/release/"
+    }
 	mavenCentral()
 }
 
@@ -96,6 +99,9 @@ dependencies {
     implementation 'commons-io:commons-io:2.10.0'
     implementation 'org.apache.httpcomponents:httpclient'
 	implementation 'org.modelmapper:modelmapper:2.3.6'
+
+    // https://mvnrepository.com/artifact/org.geotools/gt-wms
+    implementation group: 'org.geotools', name: 'gt-wms', version: '25.1'
 
 	runtimeOnly 'org.postgresql:postgresql'
     implementation 'org.postgresql:postgresql:42.2.14'

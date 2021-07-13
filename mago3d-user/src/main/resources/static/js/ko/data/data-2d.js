@@ -159,7 +159,6 @@ Data2D.move = function (layerId) {
             alert(JS_MESSAGE["ajax.error.message"]);
         }
     });
-    return false;
 }
 // 서버에서 레이어 정보 가져오기
 Data2D.prototype.getLayers = function() {
