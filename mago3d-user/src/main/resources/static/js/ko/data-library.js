@@ -1,12 +1,25 @@
 const DataLibraryController = function(magoInstance) {
 	this.magoInstance = magoInstance;
 	this.ready = false;
+	
 	this._dataLibraries = [];
+	
+	this._selected;
+	this.drawer = new DataLibraryDrawer(magoInstance);
 	
 	this.setEventHandler();
 }
 
 Object.defineProperties(DataLibraryController.prototype, {
+	selected : {
+		get : function() {
+			return this._selected;
+		},
+		set : function(selected) {
+			this.drawer.dataLibrary = selected;
+			this._selected = selected;
+		}
+	},
 	dataLibraries : {
 		get : function() {
 			return this._dataLibraries;
@@ -27,26 +40,48 @@ DataLibraryController.prototype.setEventHandler = function() {
 		self.search(parseInt(groupId));
 	});
 	
+
 	//체크박스 셀렉트
-	$('#data-library-popup div.tbl-library').on('click', 'input[type="checkbox"]', function() {
-		var clicked = this;
-		var $clicked = $(clicked);
-		var checked = $clicked.prop('checked');
+	$('#data-library-popup div.tbl-library').on('change', 'input[type="checkbox"]', function() {
+		var target = this;
+		var $target = $(target);
+		var checked = $target.prop('checked');
 		if(checked) {
-			$('#data-library-popup div.tbl-library input[type="checkbox"]').each(function(idx, input) {
-				var $checkbox = $(input);
-				if(clicked !== input) $checkbox.prop('checked', false);
-			});	
+			DataLibraryController.falseCheckbox(target);
+			if(self.selected) {
+				self.clearSelect();
+			}
 		}
 		
 		self.select(parseInt($(this).parents('tr').data('id')), checked);
+	});
+	
+	$('#data-library-popup').on('change', 'input[name="data-library-radio-draw-type"]', function() {
+		self.drawer.drawType = $(this).data('type'); 
+	});
+	
+	/*
+		
+	var popupObserver = new MutationObserver(function(mutations) {
+		mutations.forEach(function(mutation) {
+			console.info(mutation);
+		});
+	});
+	
+	popupObserver.observe(document.getElementById('data-library-popup'), { attributes: true, attributeFilter:['style'], subtree: false, childList:false, attributeOldValue:true});*/	
+}
+
+DataLibraryController.falseCheckbox= function(excluded) {
+	$('#data-library-popup div.tbl-library input[type="checkbox"]').each(function(_, input) {
+		var $checkbox = $(input);
+		if(excluded !== input) $checkbox.prop('checked', false);
 	});
 }
 
 DataLibraryController.prototype.load = function() {
 	if(!this.ready) {
 		var self = this;
-		$.ajax({
+		return $.ajax({
 			url: "/api/data-libraries",
 			type: "GET",
 			dataType: "json",
@@ -68,7 +103,6 @@ DataLibraryController.prototype.load = function() {
 					if(!groups[dl.groupId]) {
 						groups[dl.groupId] = dl.groupName;
 					}
-					//if(dataGroupbla && dl.groupId !== dataGroupbla) dl.render = false;
 					return dl;
 				});
 				
@@ -81,12 +115,12 @@ DataLibraryController.prototype.load = function() {
 			}
 		});
 	}
+	return;
 }
 
 DataLibraryController.prototype.select = function(dataLibraryId, checked) {
 	if(!checked) {
-		this.selected.select = false;
-		this.selected = undefined;
+		this.clearSelect();
 		return;
 	}
 	
@@ -96,7 +130,21 @@ DataLibraryController.prototype.select = function(dataLibraryId, checked) {
 	if(this.selected) this.selected.select = true;
 }
 
+DataLibraryController.prototype.clearSelect = function() {
+	this.selected.select = false;
+	this.selected = undefined;
+	
+	$('#data-library-draw-point').prop('disabled', true);
+	$('#data-library-draw-line').prop('disabled', true);
+}
+
 DataLibraryController.prototype.search = function(dataGroupId) {
+	DataLibraryController.falseCheckbox();
+	if(this.selected) {
+		this.clearSelect();
+	}
+	this.drawer.drawType = DataLibrary.DRAW_TYPE.NONE;
+	
 	this.dataLibraries = this.dataLibraries.map(function(dataLibrary) {
 		if(!dataGroupId) {
 			dataLibrary.render = true;
@@ -135,6 +183,8 @@ const DataLibrary = function(constructorOption, magoInstance) {
 		this.attributes = JSON.parse(constructorOption.attributes);	
 	}
 	
+	this.instanceArray = [];
+	
 	var buildingFolderName = `F4D_${this.key}`; 
 	var magoManager = this.magoInstance.getMagoManager(); 
 	magoManager.addStaticModel({
@@ -142,6 +192,13 @@ const DataLibrary = function(constructorOption, magoInstance) {
 		projectFolderName : this.path.split(buildingFolderName)[0],
 		buildingFolderName : buildingFolderName
 	});
+}
+
+DataLibrary.DRAW_TYPE = {
+	NONE : 'none',
+	BOTH : 'both',
+	POINT : 'point',
+	LINE : 'line'
 }
 
 Object.defineProperties(DataLibrary.prototype, {
@@ -156,9 +213,51 @@ Object.defineProperties(DataLibrary.prototype, {
 	}
 });
 
+DataLibrary.prototype.draw = function(position) {
+	if(Array.isArray(position)) {
+		var self = this;
+		position.forEach(function(p) {
+			self.draw(p);	
+		});
+		return;
+	}
+	
+	var instanceId = Mago3D.createGuid();
+	
+	this.magoInstance.getMagoManager().instantiateStaticModel({
+		projectId : this.key,
+		instanceId : instanceId,
+		longitude : position.longitude,
+		latitude : position.latitude,
+		height : position.altitude
+	});
+	this.instanceArray.push(instanceId);
+}
 
 DataLibrary.prototype.doSelect = function() {
-	console.info(`select ${this.name}`);
+	var self = this;
+	var _off = function() {
+		$('#data-library-draw-point').prop('disabled', true);
+		$('#data-library-draw-line').prop('disabled', true);
+	}
+	
+	var _on = function() {
+		$('#data-library-draw-point').prop('disabled', false);
+		$('#data-library-draw-line').prop('disabled', false);
+		
+		var drawType = self.attributes.drawType;
+		if(drawType === DataLibrary.DRAW_TYPE.POINT) {
+			$('#data-library-draw-line').prop('disabled', true);
+		} else if(drawType === DataLibrary.DRAW_TYPE.LINE) {
+			$('#data-library-draw-point').prop('disabled', true);
+		}
+	}
+	$('#data-library-draw-none').prop('checked', true).change();
+	if(!this.select) {
+		_off();
+		return;
+	}
+	_on();
 }
 
 DataLibrary.prototype.getRowHtml = function() {
@@ -170,3 +269,203 @@ DataLibrary.prototype.getRowHtml = function() {
 	
 	return html;
 }
+const DataLibraryDrawer = (function() {
+	const DataLibraryDrawer = function(magoInstance) {
+		this.magoInstance = magoInstance;
+		this.dataLibrary;
+		this._drawType = DataLibrary.DRAW_TYPE.NONE;
+		this.drawer;
+	}
+	
+	DataLibraryDrawer.STATUS = {
+		NOTSTART : 'notstart',
+		READY : 'ready',
+		NEEDSTARTPOINT : 'needstartpoint',
+		NEEDLINE : 'needline',
+		NEEDLASTPOINT : 'needlastpoint'
+	}
+	
+	DataLibraryDrawer.prototype.setDrawer = function() {
+		this.destroyDrawer();
+		
+		this.drawer = new Cesium.ScreenSpaceEventHandler(this.magoInstance.getViewer().canvas);
+		this.drawer.result = {};
+		this.drawer.status = DataLibraryDrawer.STATUS.NOTSTART;
+		
+		switch(this.drawType) {
+			case DataLibrary.DRAW_TYPE.POINT : {
+				this.decoratePoint();
+				break;
+			}
+			case DataLibrary.DRAW_TYPE.LINE : {
+				this.decorateLine();
+				break;
+			}
+		}
+	}
+	
+	DataLibraryDrawer.prototype.destroyDrawer = function() {
+		if(!this.drawer) return;
+		
+		var viewer = this.magoInstance.getViewer();
+		if(this.drawer.result) {
+			for(var key in this.drawer.result) {
+				var some = this.drawer.result[key];
+				if(some instanceof Cesium.Entity) {
+					viewer.entities.remove(some);
+				}
+				this.drawer.result[key] = undefined;
+			}
+		}
+		
+		this.drawer = this.drawer.destroy();
+	}
+	
+	DataLibraryDrawer.prototype.decoratePoint = function() {
+		var viewer = this.magoInstance.getViewer();
+		var magoManager = this.magoInstance.getMagoManager();
+		var self = this;
+		
+		var _complete = function(positions) {
+			var cartographic = positions[0];
+			
+			self.dataLibrary.draw(API.Converter.CesiumToMagoForGeographic(cartographic));
+			
+			self.setDrawer();
+		}
+		
+		var _click = function(e){
+			var point3d = API.Converter.screenCoordToMagoPoint3D(e.position.x, e.position.y, self.magoInstance.getMagoManager());
+			var crts3 = API.Converter.magoToCesiumForPoint3D(point3d);
+			var geographicCoord = API.Converter.Cartesian3ToMagoGeographicCoord(crts3);
+			var cartographic = API.Converter.magoToCesiumForGeographic(geographicCoord);
+			
+			Cesium.sampleTerrain(viewer.terrainProvider, Mago3D.MagoManager.getMaximumLevelOfTerrainProvider(viewer.terrainProvider), [cartographic]).then(_complete)
+		}
+		var _move = function(e) {
+			var point3d = API.Converter.screenCoordToMagoPoint3D(e.endPosition.x, e.endPosition.y, magoManager);
+			var crts3 = API.Converter.magoToCesiumForPoint3D(point3d);
+			
+			var drawer = self.drawer;
+			
+			if(drawer.status === DataLibraryDrawer.STATUS.NOTSTART) {
+				drawer.result.point = viewer.entities.add({
+					point : {
+						color : Cesium.Color.BLANCHEDALMOND,
+						pixelSize : 10
+					}
+				});
+				drawer.status = DataLibraryDrawer.STATUS.READY;
+			}
+			
+			drawer.result.point.position = crts3;
+		}
+		this.drawer.setInputAction(_click ,Cesium.ScreenSpaceEventType.LEFT_CLICK);
+		this.drawer.setInputAction(_move ,Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+	}
+	
+	DataLibraryDrawer.prototype.decorateLine = function() {
+		var viewer = this.magoInstance.getViewer();
+		var magoManager = this.magoInstance.getMagoManager();
+		
+		var self = this;
+		
+		var _complete = function(crts3s) {
+			var [g1,g2] = crts3s.map(function(crts3) {
+				return API.Converter.Cartesian3ToMagoGeographicCoord(crts3);
+			});
+			
+			var geocoordArray = Mago3D.GeographicCoordSegment.getArcInterpolatedGeoCoords(g1, g2, 10);
+			var cartoArray = geocoordArray.map(function(geocoord){
+				return API.Converter.magoToCesiumForGeographic(geocoord);
+			});
+			
+			Cesium.sampleTerrain(viewer.terrainProvider, Mago3D.MagoManager.getMaximumLevelOfTerrainProvider(viewer.terrainProvider), cartoArray).then(function(positions) {
+				self.dataLibrary.draw(positions.map(function(cartographic) {
+					return API.Converter.CesiumToMagoForGeographic(cartographic);		
+				}));
+			
+				self.setDrawer();
+			});
+		}
+		
+		var _lineCoordinate = function() {
+			return [self.drawer.result.startPoint.position.getValue(), self.drawer.result.lastPosition];
+		}
+		
+		var _click = function(e){
+			var drawer = self.drawer;
+			
+			var point3d = API.Converter.screenCoordToMagoPoint3D(e.position.x, e.position.y, self.magoInstance.getMagoManager());
+			var crts3 = API.Converter.magoToCesiumForPoint3D(point3d);
+			var geographicCoord = API.Converter.Cartesian3ToMagoGeographicCoord(crts3);
+			var cartographic = API.Converter.magoToCesiumForGeographic(geographicCoord);
+			
+			if(drawer.status === DataLibraryDrawer.STATUS.NEEDSTARTPOINT) {
+				drawer.result.startPoint = viewer.entities.add({
+					position : crts3,
+					point : {
+						color : Cesium.Color.BLANCHEDALMOND,
+						pixelSize : 10
+					}
+				});
+				drawer.status = DataLibraryDrawer.STATUS.NEEDLINE;
+			}
+			
+			if(drawer.status === DataLibraryDrawer.STATUS.NEEDLASTPOINT) {
+				_complete(_lineCoordinate());
+			}
+		}
+		var _move = function(e) {
+			var point3d = API.Converter.screenCoordToMagoPoint3D(e.endPosition.x, e.endPosition.y, magoManager);
+			var crts3 = API.Converter.magoToCesiumForPoint3D(point3d);
+			
+			var drawer = self.drawer;
+			if(drawer.status === DataLibraryDrawer.STATUS.NOTSTART) {
+				drawer.result.guidePoint = viewer.entities.add({
+					point : {
+						color : Cesium.Color.BLANCHEDALMOND,
+						pixelSize : 10
+					}
+				});
+				
+				drawer.status = DataLibraryDrawer.STATUS.NEEDSTARTPOINT;
+			}
+			
+			if(drawer.status === DataLibraryDrawer.STATUS.NEEDSTARTPOINT) {
+				drawer.result.guidePoint.position = crts3;	
+			}
+			
+			if(drawer.status === DataLibraryDrawer.STATUS.NEEDLINE) {
+				drawer.result.line = viewer.entities.add({
+					polyline : {
+						positions : new Cesium.CallbackProperty(_lineCoordinate),
+						width : 10,
+						clampToGround : true
+					}
+				});
+				drawer.status = DataLibraryDrawer.STATUS.NEEDLASTPOINT;
+			}
+			
+			if(drawer.status === DataLibraryDrawer.STATUS.NEEDLASTPOINT) {
+				drawer.result.lastPosition = crts3;
+			}
+		}
+		this.drawer.setInputAction(_click ,Cesium.ScreenSpaceEventType.LEFT_CLICK);
+		this.drawer.setInputAction(_move ,Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+	}
+	
+	Object.defineProperties(DataLibraryDrawer.prototype, {
+		drawType : {
+			get : function() {
+				return this._drawType;
+			},
+			set : function(drawType) {
+				this._drawType = drawType;
+				this.setDrawer();
+			}
+		}
+	});
+	
+	return DataLibraryDrawer;
+})();

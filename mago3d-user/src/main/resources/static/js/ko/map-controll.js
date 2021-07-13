@@ -475,7 +475,13 @@ var mapControllEventHandler = function(magoInstance) {
 	$('#data-library-setting').click(function() {
 		$('#toolbarWrap div.detaildata.poplayer:not(#data-library-popup)').hide();
 		if(MAGO.dataLibraryController || !MAGO.dataLibraryController.ready) {
-			MAGO.dataLibraryController.load();
+			var load = MAGO.dataLibraryController.load();
+			if(load) {
+				load.pipe(function() {
+					$('#data-library-popup').slideToggle("slow");					
+				})
+				return;
+			}
 		}
 		$('#data-library-popup').slideToggle("slow");
 	});

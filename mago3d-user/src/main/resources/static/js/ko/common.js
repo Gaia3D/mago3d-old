@@ -395,12 +395,19 @@ API.Converter = function(){};
 API.Converter.screenCoordToMagoPoint3D = function(x, y, magoManager) {
 	return Mago3D.ManagerUtils.screenCoordToWorldCoord(undefined, x,y,undefined,undefined,undefined,undefined, magoManager);
 }
-
+API.Converter.magoToCesiumForGeographic = function(geographic) {
+	return Cesium.Cartographic.fromDegrees(geographic.longitude, geographic.latitude, geographic.altitude);
+}
 API.Converter.magoToCesiumForPoint3D = function(point3d) {
 	return new Cesium.Cartesian3(point3d.x, point3d.y, point3d.z);
 }
 API.Converter.CesiumToMagoForPoint3D = function(cartesian3) {
 	return new Mago3D.Point3D(cartesian3.x, cartesian3.y, cartesian3.z);
+}
+API.Converter.CesiumToMagoForGeographic = function(cartographic) {
+	return new Mago3D.GeographicCoord(API.Converter.radToDeg(cartographic.longitude),
+		API.Converter.radToDeg(cartographic.latitude),
+		cartographic.height);
 }
 API.Converter.Cartesian3ToMagoGeographicCoord = function(cartesian3) {
 	return Mago3D.ManagerUtils.pointToGeographicCoord(API.Converter.CesiumToMagoForPoint3D(cartesian3));
