@@ -4820,6 +4820,8 @@ align-items: center;
 */
 .legendWrap {
 clear:both;
+width:340px;
+margin:0 auto;
 margin-top:10px;
 margin-bottom: 20px;
 padding:0;
