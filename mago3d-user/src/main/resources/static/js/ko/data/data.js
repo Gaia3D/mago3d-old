@@ -34,6 +34,7 @@ const Data = function(magoInstance) {
         }
         const clickTab = (event) => {
             toggleContents($(event.delegateTarget));
+            return false;
         }
         //탭메뉴 클릭
         $('.data-menu').click(clickTab);
