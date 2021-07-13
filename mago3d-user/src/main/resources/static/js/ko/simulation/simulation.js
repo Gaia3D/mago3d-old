@@ -215,6 +215,7 @@ const Simulation = function(magoInstance) {
 					
 					simulator = simulatorProvider[key];
 				}
+				SmltWater.offAutoRun();
 				menuObserver.disconnect();
 				menuObserver.observe(document.getElementById(simulator.observerTarget), menuConfig);
 			}

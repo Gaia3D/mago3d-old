@@ -197,7 +197,6 @@
 		baseLayers: {},
 		microService: {}
 	};
-
 	initPolicy(function (policy, baseLayers, microService) {
 		MAGO.policy = policy;
 		MAGO.baseLayers = baseLayers;
@@ -219,6 +218,8 @@
 		cesiumViewerOption.defaultControl.tools = false;
 		cesiumViewerOption.defaultControl.attribution = false;
 		cesiumViewerOption.defaultControl.overviewMap = false;
+		
+		geoPolicyJson.initAltitude = 1200;
 
 		/**
 		 * @param {Stirng} containerId container div id. required.
@@ -236,8 +237,16 @@
 		var magoInstance = e;
 		var geoPolicyJson = MAGO.policy;
 		var viewer = magoInstance.getViewer();
-		//var magoManager = magoInstance.getMagoManager();
-		//var f4dController = magoInstance.getF4dController();
+		
+		/* var cesiumEventHandler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
+		cesiumEventHandler.setInputAction(function(e) {
+			
+			var crts = API.Converter.magoToCesiumForPoint3D(API.Converter.screenCoordToMagoPoint3D(e.position.x, e.position.y, magoInstance.getMagoManager()));
+			var geographic = API.Converter.Cartesian3ToMagoGeographicCoord(crts);
+			
+			console.info(crts);
+			console.info(geographic);
+		}, Cesium.ScreenSpaceEventType.LEFT_UP); */
 
 		// TODO : 세슘 MAP 선택 UI 제거, 엔진에서 처리로 변경 예정.
 		if (viewer.baseLayerPicker) viewer.baseLayerPicker.destroy();
@@ -267,8 +276,8 @@
 
         var simul = Simulation(magoInstance);
 		setTimeout(function() {
-			//SmltWater.runOnLoaded(simul.water);	
-		},3000);
+			SmltWater.onAutoRun(simul.water);
+		},6000);
 
 		// 사물인터넷
 		if (MAGO.microService && MAGO.microService['SENSOR_THINGS']) {
@@ -292,7 +301,7 @@
 		
 		setTimeout(function() {
 			MAGO.backgroundRunningCar = new BackgroundRunningCar(magoInstance);	
-		},5000);
+		},6000);
 	}
 
 </script>

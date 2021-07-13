@@ -7,12 +7,14 @@ const ArchInfoController = function(archInfoList, magoManager) {
 		let archInfo = archInfoList[i];
 		let guid = archInfo.buildingMaster.guid;
 		this.hash[guid] = archInfo;
-		 
-		html += '<tr>'; 
+		html += `<tr data-id="${guid}">`; 
 		html += `<td>${archInfo.name}</td>`;
-		html += '<td>molayo</td>'; 
 		html += '<td>';
-		html += `<div class="data-go" data-id="${guid}">`;								
+		html += '<button class="master-plan-color" style=" height:20px; width:19px;background: white url(/images/ko/ic_toolbox.png) no-repeat -376px -12px;"></button>';
+		html += `<input type="color" value="${archInfo.color.getHexCode()}" style="width: 1px;height: 1px;right: 70px;top: 65px;visibility: hidden;"/>`;
+		html += '</td>'; 
+		html += '<td>';
+		html += '<div class="data-go">';								
 		html += '<label class="switch">';
 		html += `<input type="checkbox" ${archInfo.buildingMaster.show?"checked":""}/>`;
 		html += '<span class="slider"></span>';
@@ -36,35 +38,29 @@ ArchInfoController.createMockData = function(magoManager) {
 	}
 	let archInfoList = [];
 	const info = [
-		{name : '강원', format : 'pbf'},
-		{name : '세종', format : 'pbf'},
-		{name : '경기', format : 'geojson'},
-		{name : '경남', format : 'geojson'},
-		{name : '경북', format : 'geojson'},
-		{name : '광주', format : 'geojson'},
-		{name : '대구', format : 'geojson'},
-		{name : '대전', format : 'geojson'},
-		{name : '부산', format : 'geojson'},
-		{name : '서울', format : 'geojson'},
-		{name : '울산', format : 'geojson'},
-		{name : '인천', format : 'geojson'},
-		{name : '전남', format : 'geojson'},
-		{name : '전북', format : 'geojson'},
-		{name : '제주', format : 'geojson'},
-		{name : '충남', format : 'geojson'},
-		{name : '충북', format : 'geojson'}
+		{name : '강원', format : 'pbf', option:{show:false}},
+		{name : '세종', format : 'pbf', option:{show:false}},
+		{name : '경기', format : 'geojson', option:{show:true}},
+		{name : '경남', format : 'geojson', option:{show:false}},
+		{name : '경북', format : 'geojson', option:{show:false}},
+		{name : '광주', format : 'geojson', option:{show:false}},
+		{name : '대구', format : 'geojson', option:{show:false}},
+		{name : '대전', format : 'geojson', option:{show:false}},
+		{name : '부산', format : 'geojson', option:{show:false}},
+		{name : '서울', format : 'geojson', option:{show:false}},
+		{name : '울산', format : 'geojson', option:{show:false}},
+		{name : '인천', format : 'geojson', option:{show:false}},
+		{name : '전남', format : 'geojson', option:{show:false}},
+		{name : '전북', format : 'geojson', option:{show:false}},
+		{name : '제주', format : 'geojson', option:{show:false}},
+		{name : '충남', format : 'geojson', option:{show:false}},
+		{name : '충북', format : 'geojson', option:{show:false}}
 	]
 	
 	for(let i in info) {
 		let archInfo = info[i];
 		archInfo.url = getUrl(archInfo.name);
-		archInfo.option = {};
-		archInfo.option.show = false;
-		//archInfo.option.color = new Mago3D.Color(151/255, 172/255, 180/255 ,1);
-		//archInfo.option.color = new Mago3D.Color(115/255, 146/255, 160/255 ,1);
-		//archInfo.option.color = new Mago3D.Color(168/255, 185/255, 192/255 ,1);
-		//archInfo.option.color = new Mago3D.Color(93/255, 96/255, 136/255 ,1);
-		archInfo.option.color = new Mago3D.Color(125/255, 125/255, 125/255 ,1);
+		archInfo.option.color = new Mago3D.Color(200/255, 200/255, 200/255 ,1);
 		archInfoList.push(new ArchInfo(archInfo, magoManager));
 	}
 	
@@ -74,7 +70,6 @@ ArchInfoController.createMockData = function(magoManager) {
 const ArchInfo = function(contructionOption, magoManager) {
 	this.name = contructionOption.name;
 	this.buildingMaster = magoManager.addKoreaBuildingMaster(contructionOption.url, contructionOption.format, contructionOption.option);
-	// new Mago3D.KoreaBuildingMaster(contructionOption.url,contructionOption.format) 
 }
 
 Object.defineProperties(ArchInfo.prototype, {
@@ -84,6 +79,14 @@ Object.defineProperties(ArchInfo.prototype, {
 		},
 		set : function(show) {
 			this.buildingMaster.show = show;
+		}
+	},
+	color : {
+		get : function() {
+			return this.buildingMaster.color;
+		},
+		set : function(color) {
+			this.buildingMaster.color = color;
 		}
 	}
 });

@@ -405,16 +405,19 @@ var mapControllEventHandler = function(magoInstance) {
     		$('#positionBoxHeight').text(p.height.toFixed(4) + ' m');
     	});
 	}
+	
+	var getCameraPosition = function(magoManager) {
+		var scene = magoManager.scene;
+		var camera = scene.camera;
+		return Cesium.Cartographic.fromCartesian(camera.position);
+	}
 
 	// 확대
 	$('#mapCtrlZoomIn').click(function() {
 		var magoManager = magoInstance.getMagoManager();
 		if (magoManager.isCesiumGlobe()) {
-			var scene = magoManager.scene;
-			var camera = scene.camera;
-			var cartographicPosition = Cesium.Cartographic.fromCartesian(camera.position);
-			var alt = cartographicPosition.height;
-			scene.camera.zoomIn(alt * 0.1);
+			var cartographicPosition = getCameraPosition(magoManager);
+			scene.camera.zoomIn(cartographicPosition.height * 0.1);
 
 		}
 	});
@@ -423,17 +426,14 @@ var mapControllEventHandler = function(magoInstance) {
 	$('#mapCtrlZoomOut').click(function() {
 		var magoManager = magoInstance.getMagoManager();
 		if (magoManager.isCesiumGlobe()) {
-			var scene = magoManager.scene;
-			var camera = scene.camera;
-			var cartographicPosition = Cesium.Cartographic.fromCartesian(camera.position);
-			var alt = cartographicPosition.height;
-			scene.camera.zoomOut(alt * 0.1);
+			var cartographicPosition = getCameraPosition(magoManager);
+			scene.camera.zoomOut(cartographicPosition.height * 0.1);
 		}
 	});
 
 	// 데이터
 	$('#map-control-setting').click(function() {
-		$('#toolbarWrap div.detaildata.poplayer').hide();
+		$('#toolbarWrap div.detaildata.poplayer:not(#map-control-popup)').hide();
 		$('#map-control-popup').slideToggle("slow");
 	})
 	
@@ -442,21 +442,34 @@ var mapControllEventHandler = function(magoInstance) {
 	
 	// 건축통합
 	$('#master-plan-setting').click(function() {
-		$('#toolbarWrap div.detaildata.poplayer').hide();
+		$('#toolbarWrap div.detaildata.poplayer:not(#master-plan-popup)').hide();
 		$('#master-plan-popup').slideToggle("slow");
 	});
 	
 	$('#master-plan-popup input[type="checkbox"]').change(function() {
 		var checked = $(this).prop('checked');
-		var id = $(this).parents('div.data-go').data('id');
+		var id = $(this).parents('tr').data('id');
 		var arch = archInfoController.getArchInfoById(id);
 		
 		arch.show = checked;
 	});
+	
+	$('#master-plan-popup button.master-plan-color').click(function() {
+		var $color = $(this).siblings('input[type="color"]'); 
+		$color.trigger('click');
+	});
+	
+	$('#master-plan-popup input[type="color"]').change(function() {
+		var id = $(this).parents('tr').data('id');
+		var arch = archInfoController.getArchInfoById(id);
+		
+		arch.color = Mago3D.Color.fromHexCode($(this).val())
+	});
+	
 
 	// 라이브러리
 	$('#data-library-setting').click(function() {
-		$('#toolbarWrap div.detaildata.poplayer').hide();
+		$('#toolbarWrap div.detaildata.poplayer:not(#data-library-popup)').hide();
 		$('#data-library-popup').slideToggle("slow");
 	});
 	

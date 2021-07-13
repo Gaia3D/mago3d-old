@@ -8,7 +8,7 @@ var BackgroundRunningCar = function(magoInstance) {
 	magoManager.addStaticModel({
 		projectId : this.projectId,
 		projectFolderName : '/infra/data/car',
-		buildingFolderName : 'F4D_Autobus'
+		buildingFolderName : 'F4D_Irisbus'
 	});
 	
 	var that = this;
@@ -88,7 +88,7 @@ BackgroundRunningCar.prototype.animation = function(nodeId) {
 	var animationOption = {
 		animationType                : Mago3D.CODE.animationType.PATH,
 		path                         : new Mago3D.Path3D(geographicCoordsArray),
-		linearVelocityInMetersSecond : randomNumber(10,40),
+		linearVelocityInMetersSecond : randomNumber(10,40)*2,
 		autoChangeRotation           : true
 	};
 	

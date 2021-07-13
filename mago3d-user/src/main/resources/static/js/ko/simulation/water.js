@@ -30,7 +30,7 @@ const SmltWater =(function() {
 					self.createType = undefined;
 					if(mode === SmltWater.MODE.CREATE) self.createType = $clicked.data('type');
 					
-					const action = _getModeAction(mode);
+					const action = self.getModeAction(mode);
 					self.action = action;
 					self.action.run.call(self);
 				} else {
@@ -47,7 +47,7 @@ const SmltWater =(function() {
 			
 			self.magoInstance.getMagoManager().on(Mago3D.MagoManager.EVENT_TYPE.SELECTEDGENERALOBJECT, function(e) {
 				if(self.mode === SmltWater.MODE.DELETE) {
-					self.action.delete.call(self, e.selected);
+					self.action.delete.call(self, e.selected, false);
 				}
 			});
 		}
@@ -123,7 +123,7 @@ const SmltWater =(function() {
 			},
 			set : function(action) {
 				this._action = action;
-
+	
 			}
 		},
 		createType : {
@@ -167,6 +167,20 @@ const SmltWater =(function() {
 		_clear(this.magoInstance);
 	}
 	
+	SmltWater.prototype.getModeAction = function(mode) {
+		switch(mode) {
+			case SmltWater.MODE.AREA : return _Area;
+			case SmltWater.MODE.CREATE : return _Create;
+			case SmltWater.MODE.CLEAR : return _Clear;
+			case SmltWater.MODE.MOVING : return _Moving;
+			case SmltWater.MODE.DELETE : return _Delete;
+		}
+	}
+	
+	SmltWater.prototype.getWaterObject = function() {
+		return objects;
+	}
+	
 	let leftDown = false;
 	let guidePoint;
 	let leftDownCoord;
@@ -201,7 +215,6 @@ const SmltWater =(function() {
 	}
 	_Area.done = function(rectCoordinates) {
 		this.step = SmltWater.STATUS.READY;
-		
 		let minLon = API.Converter.radToDeg(rectCoordinates.west);
 		let minLat = API.Converter.radToDeg(rectCoordinates.south);
 		let maxLon = API.Converter.radToDeg(rectCoordinates.east);
@@ -218,7 +231,7 @@ const SmltWater =(function() {
 		
 		magoManager.waterManager.bSsimulateWater = true;
 	}
- 	_Area[Cesium.ScreenSpaceEventType.LEFT_DOWN] = function(event) {
+	_Area[Cesium.ScreenSpaceEventType.LEFT_DOWN] = function(event) {
 		if(!this.active || !guidePoint) return;
 		const magoManager = this.magoInstance.getMagoManager();
 		
@@ -289,26 +302,9 @@ const SmltWater =(function() {
 	
 			magoManager.waterManager.addObject(entity, DEPTH);
 		} else {
-			/*var arms = 7;
-			var rOuter = 70;
-			var rInner = 50;
-			var angle = Math.PI / arms;
-  			var length = 2 * arms;
-  			var positions = new Array(length);
-  			for (var i = 0; i < length; i++) {
-    			var r = i % 2 === 0 ? rOuter : rInner;
-    			positions[i] = new Mago3D.Point2D(
-					Math.cos(i * angle) * r,
-					Math.sin(i * angle) * r
-			    );
-  			}*/
-			
-			let geoCoordsArray = _polylineCoordinates().map(API.Converter.Cartesian3ToMagoGeographicCoord);
-			//entity = Mago3D.GeographicCoordsList.getRenderableObjectOfGeoCoordsArray(geoCoordsArray, magoManager);
+			let geoCoordsArray = crts.map(API.Converter.Cartesian3ToMagoGeographicCoord);
 			entity = Mago3D.Modeler.getLoftMesh(new Mago3D.GeographicCoordsList(geoCoordsArray)/*, positions*/);
 			magoManager.modeler.addObject(entity, DEPTH);
-			
-			
 		}
 		
 		objects[entity.guid] = entity;
@@ -350,7 +346,7 @@ const SmltWater =(function() {
 			return false;
 		}
 		
-		this.action.done.call(this, cartesian);
+		this.action.done.call(this, this.createType !== SmltWater.CREATE_TYPE.WEIR ? cartesian : _polylineCoordinates());
 		
 		this.action.terminate.call(this);
 	}
@@ -439,23 +435,25 @@ const SmltWater =(function() {
 		_toggleMovingResource(this.magoInstance.getMagoManager(), false);
 		_toggleDeleteResource(this.magoInstance.getMagoManager(), true);
 	}
-	_Delete.delete = function(selected) {
-		if(confirm('삭제하시겠습니까?')) {
-			delete objects[selected.guid];
-			const magoManager = this.magoInstance.getMagoManager(); 
-			if(selected.name) {
-				magoManager.waterManager.removeObject(selected);	
-			} else {
-				magoManager.modeler.removeObject(selected);
-			}
-			
+	_Delete.delete = function(selected, silence) {
+		if(!silence) {
+			if(!confirm('삭제하시겠습니까?')) return;
+		}
+		
+		
+		delete objects[selected.guid];
+		const magoManager = this.magoInstance.getMagoManager(); 
+		if(selected.name) {
+			magoManager.waterManager.removeObject(selected);	
+		} else {
+			magoManager.modeler.removeObject(selected);
 		}
 	}
 	_Delete.terminate = function() {
 		this.unbindMouseEvent();
 		_toggleDeleteResource(this.magoInstance.getMagoManager(), false);
 	}
-
+	
 	const _clear = function(magoInstance) {
 		const viewer = magoInstance.getViewer();
 		const magoManager = magoInstance.getMagoManager();
@@ -514,15 +512,15 @@ const SmltWater =(function() {
 	const _createGuidePoint = function(viewer, labelOption) {
 		let _labelOption = {
 			text: '시작할 지점을 먼저 좌클릭해라ㅎ 네모그릴거임ㅋ',
-            scale :0.5,
-            font: "normal normal bolder 35px Helvetica",
-            fillColor: Cesium.Color.BLACK,
-            outlineColor: Cesium.Color.WHITE,
-            outlineWidth: 1,
+	        scale :0.5,
+	        font: "normal normal bolder 35px Helvetica",
+	        fillColor: Cesium.Color.BLACK,
+	        outlineColor: Cesium.Color.WHITE,
+	        outlineWidth: 1,
 			pixelOffset : new Cesium.Cartesian2(200,0), 
-            heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
-            style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-            distanceDisplayCondition : new Cesium.DistanceDisplayCondition(0.0, 100000)
+	        heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
+	        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+	        distanceDisplayCondition : new Cesium.DistanceDisplayCondition(0.0, 100000)
 		}
 		
 		guidePoint = viewer.entities.add({
@@ -604,17 +602,8 @@ const SmltWater =(function() {
 		return Cesium.Rectangle.contains(rectangle.rectangle.coordinates.getValue(), Cesium.Cartographic.fromCartesian(cartesian));
 	}
 	
-	const _getModeAction = function(mode) {
-		switch(mode) {
-			case SmltWater.MODE.AREA : return _Area;
-			case SmltWater.MODE.CREATE : return _Create;
-			case SmltWater.MODE.CLEAR : return _Clear;
-			case SmltWater.MODE.MOVING : return _Moving;
-			case SmltWater.MODE.DELETE : return _Delete;
-		}
-	}
 	
-	return SmltWater;
+    return SmltWater;
 })(); 
 
 SmltWater.offButton = function() {
@@ -627,26 +616,85 @@ SmltWater.hideActionButton = function() {
 SmltWater.showActionButton = function() {
 	$('.water-action-btn').show();
 }
+
+SmltWater.reservedWork = {
+	interval : undefined,
+	timeout : []
+}
+
+SmltWater.onAutoRun = function(water) {
+	SmltWater.reservedWork.interval = setInterval(function() {
+		SmltWater.runOnLoaded(water);
+	}, 45000);
+	SmltWater.runOnLoaded(water);
+}
+
+SmltWater.offAutoRun = function() {
+	if(SmltWater.reservedWork.interval !== undefined) {
+		clearInterval(SmltWater.reservedWork.interval);
+	}
+	for(var i in SmltWater.reservedWork.timeout) {
+		clearTimeout(SmltWater.reservedWork.timeout[i]);
+	}
+}
+
 SmltWater.runOnLoaded = function(water) {
-	$('#simulationMenu').trigger('click');
-	$('#smlt_menu_natural').trigger('click');
-	$('#smlt-natural-water-div').trigger('click');
+	for(var i in SmltWater.reservedWork.timeout) {
+		clearTimeout(SmltWater.reservedWork.timeout[i]);
+	}
+	SmltWater.reservedWork.timeout = [];
 	
+	water.active = false;
 	water.active = true;
 	
-	$('#smlt-natural-water-sub button[data-mode="area"]').trigger('click');
+	water.mode = "area";
+	water.action = water.getModeAction("area");
 	
-	const areaRectangle = new Cesium.Rectangle(2.2113028915834905, 0.6518329416646735, 2.212388137974332, 0.6525842753006786);
+	const areaRectangle = new Cesium.Rectangle(2.210865731694948, 0.6518091533419034, 2.2117441433463463, 0.6524349961328941);
+	
 	water.action._createRectangle.call(water, areaRectangle);
 	water.action.done.call(water, areaRectangle);
 	water.action.terminate.call(water);
 	
 	$('#smlt-natural-water-sub button[data-type="water"]').trigger('click');
 	
-	water.action.done.call(water, new Cesium.Cartesian3(-3036417.5716179544, 4066337.2004766855, 3850501.0127405995));
-	water.action.done.call(water, new Cesium.Cartesian3(-3034676.251204022, 4066273.9352724017, 3851874.314876525));
+	water.mode = "create";
+	water.action = water.getModeAction("create");
+	water.createType = "water";
 	
-	water.createType = 'polution';
-	water.action.done.call(water, new Cesium.Cartesian3(-3034917.6619269657, 4066136.2482842696, 3851845.5637445394));
+	water.action.done.call(water, new Cesium.Cartesian3(-3034075.8725879397, 4067642.109698935, 3850841.4283819026));
 	water.action.terminate.call(water);
+	
+	SmltWater.reservedWork.timeout.push(setTimeout(function() {
+		water.action = water.getModeAction("create");
+		water.createType = 'polution';
+		water.action.done.call(water, new Cesium.Cartesian3(-3034165.279975353, 4067895.8444491215, 3850509.3870103415));
+		water.action.terminate.call(water);
+	},15000));
+	
+	
+	SmltWater.reservedWork.timeout.push(setTimeout(function() {
+		water.action = water.getModeAction("create");
+		water.createType = 'weir';
+		water.action.done.call(water, [new Cesium.Cartesian3(-3033145.9015633147, 4067928.9218430365, 3851331.8254415216),
+		new Cesium.Cartesian3(-3034202.0011983807, 4068237.234362638, 3850186.5591085064)]);
+		water.action.terminate.call(water);
+	},17000));
+	
+	SmltWater.reservedWork.timeout.push(setTimeout(function() {
+		var waterObject = water.getWaterObject();
+		var weirs = [];
+		for(var key in waterObject) {
+			var entity = waterObject[key];
+			if(entity instanceof Mago3D.RenderableObject) {
+				weirs.push(entity);
+			}
+		}
+		
+		water.action = water.getModeAction("delete");
+		for(var i in weirs) {
+			water.action.delete.call(water, weirs[i], true);
+		}
+		water.action.terminate.call(water);
+	},27000));
 }
