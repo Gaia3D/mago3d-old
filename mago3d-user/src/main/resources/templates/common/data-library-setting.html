@@ -2,7 +2,15 @@
 <div id="data-library-popup" class="detaildata poplayer" style="display: none;">
 	<button type="button" class="pop-close"></button>
 	<h6 class="pop-title">3D 라이브러리 목록</h6>
-	<div class="library_srch">
+		<div class="library-place">
+		<form>
+			<label>배치방법</label>
+			<input type="radio" /> 없음
+			<input type="radio" /> 점으로 배치
+			<input type="radio" /> 선으로 배치
+		</form>
+	</div>
+	<div class="library-srch">
 		<form>
 			<label>그룹</label>
 			<select>
@@ -13,6 +21,7 @@
 			<button type="button">검색</button>
 		</form>
 	</div>
+
 	<div class="tbl-library">
 		<table>
 			<colgroup>
@@ -24,6 +33,14 @@
 				<th>선택</th>
 				<th>그룹명</th>
 				<th>3D 라이브러리</th>
+			</tr>
+			<tr>
+				<td><input type="checkbox" /></td>
+				<td>가로수</td>
+				<td>
+					은행나무 12년산
+					<span class="sumnail"></span>
+				</td>
 			</tr>
 			<tr>
 				<td><input type="checkbox" /></td>
