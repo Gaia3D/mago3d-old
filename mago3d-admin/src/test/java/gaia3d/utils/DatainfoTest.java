@@ -24,15 +24,15 @@ public class DatainfoTest {
     void writeSqlFile() throws Exception {
 
         // 데이터 정보 (꼭 변경해야 되는 정보)
-        String dataGroup = "sea_port";
-        int dataGroupId = 10001;
-        final int[] userId = {100};
-        String dataType = "3DS";
+        String dataGroup = "factory";
+        int dataGroupId = 10003;
+        final int[] userId = {10000};
+        String dataType = "collada";
 
         // 파일 경로 설정
-        File jsonFile = new File("C:\\data\\mago3d\\f4d\\infra\\sea_port\\sea_port.json");
-        File dataGroupPath = new File("C:\\data\\mago3d\\f4d\\infra\\sea_port");
-        OutputStream outputStream= new FileOutputStream("C:\\data\\mago3d\\f4d\\infra\\sea_port\\insert_datainfo.sql");
+        File jsonFile = new File("C:\\data\\mago3d\\f4d\\infra\\factory\\factory.json");
+        File dataGroupPath = new File("C:\\data\\mago3d\\f4d\\infra\\factory");
+        OutputStream outputStream= new FileOutputStream("C:\\data\\mago3d\\f4d\\infra\\factory\\insert_datainfo.sql");
 
         // json 파일 파싱
         List<Map<String, Object>> datasInfo = new ArrayList<Map<String, Object>>();
@@ -52,7 +52,6 @@ public class DatainfoTest {
         if (files != null) {
             stream = Arrays.stream(files);
         }
-        int i  = 0;
         List<Map<String, Object>> DataInfos = datasInfo;
 
         if (stream != null) {
@@ -67,13 +66,23 @@ public class DatainfoTest {
                             .append(dataGroupId)
                             .append(", '")
                             .append(dataName)
-                            .append("', 'common', 'admin', 'origin', 'false', \n")
-                            .append("ST_GeomFromText(POINT(")
+                            .append("', '")
+                            .append(dataName)
+                            .append("', '")
+                            .append(dataType)
+                            .append("', 'public', 'admin', 'origin', 'false', \n")
+                            .append("ST_GeomFromText('POINT(")
                             .append(dataInfo.get(0).get("longitude"))
                             .append(" ")
                             .append(dataInfo.get(0).get("latitude"))
-                            .append("), 4326), ")
+                            .append(")', 4326), ")
                             .append(dataInfo.get(0).get("altitude"))
+                            .append(", ")
+                            .append(dataInfo.get(0).get("heading"))
+                            .append(", ")
+                            .append(dataInfo.get(0).get("pitch"))
+                            .append(", ")
+                            .append(dataInfo.get(0).get("roll"))
                             .append(", '")
                             .append(dataInfo.get(0).get("metainfo"))
                             .append("'::jsonb, 'use', '")
