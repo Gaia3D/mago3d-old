@@ -1,21 +1,21 @@
 package gaia3d.controller.rest;
 
 import gaia3d.domain.Key;
+import gaia3d.domain.MembershipStatus;
+import gaia3d.domain.membership.MembershipLog;
 import gaia3d.domain.policy.Policy;
 import gaia3d.domain.user.UserInfo;
 import gaia3d.domain.user.UserSession;
 import gaia3d.domain.user.UserStatus;
 import gaia3d.security.crypto.Crypt;
+import gaia3d.service.MembershipService;
 import gaia3d.service.PolicyService;
 import gaia3d.service.UserService;
 import gaia3d.support.PasswordSupport;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -33,6 +33,8 @@ import java.util.regex.Pattern;
 @RequestMapping("/mypages")
 public class MyPageRestController {
 
+	@Autowired
+	private MembershipService membershipService;
 	@Autowired
 	private UserService userService;
 
@@ -162,4 +164,41 @@ public class MyPageRestController {
 		return result;
 	}
 
+	/**
+	 * 멤버십 로그 등록
+	 * @param membershipName
+	 * @return
+	 */
+	@PostMapping(value = "/memberships/{membershipName}")
+	public Map<String, Object>  membershipLog(HttpServletRequest request, @PathVariable String membershipName) {
+		log.info("@@@@@ membershipName = {}", membershipName);
+
+		Map<String, Object> result = new HashMap<>();
+		String message = null;
+		String errorcode = null;
+
+		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
+
+		MembershipLog membershipLog = membershipService.getMembershipLastLog(userSession.getUserId());
+
+		if( MembershipStatus.REQUEST == MembershipStatus.valueOf(membershipLog.getStatus())) {
+			// TODO 에러 처리 필요
+			log.info("@@@@@@@@@@@@@ errcode = {}", errorcode);
+			result.put("statusCode", HttpStatus.BAD_REQUEST.value());
+			result.put("errorCode", "membership.request.approval.waiting");
+			result.put("message", message);
+			return result;
+		}
+
+		membershipLog.setRequestMembershipName(membershipName);
+		membershipService.insertMembershipLog(membershipLog);
+
+		int statusCode = HttpStatus.OK.value();
+
+		result.put("statusCode", statusCode);
+		result.put("errorCode", errorcode);
+		result.put("message", message);
+
+		return result;
+	}
 }

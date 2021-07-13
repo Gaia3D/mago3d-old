@@ -125,7 +125,7 @@ public class UploadDataServiceImpl implements UploadDataService {
 
 		MembershipUsage membershipUsage = membershipService.getMembershipUsageByUserId(userId);
 		membershipUsage.setUseUploadFileSize(Double.valueOf(totalFileSize));
-		membershipService.updateUsage(membershipUsage);
+		membershipService.updateMembershipUsage(membershipUsage);
 
 		return result;
 	}

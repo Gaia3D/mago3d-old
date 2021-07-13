@@ -1,5 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
-<div id="emailModifyDialog" class="basicTable" title="이메일 변경하기" style="display: none;">
+<div id="emailDialog" class="basicTable" title="이메일 변경하기" style="display: none;">
 	<form id="emailForm" th:object="${userInfo}" method="post" th:action="@{#}" onsubmit="return false;">
 	<table class="inner-table scope-row">
 		<caption class="hiddenTag">이메일 변경</caption>

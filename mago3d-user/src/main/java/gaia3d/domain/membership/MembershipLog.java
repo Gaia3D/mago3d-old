@@ -23,8 +23,10 @@ public class MembershipLog extends Search implements Serializable {
 	private Long membershipLogId;
 	// 현재 멤버십 고유번호
 	private Integer currentMembershipId;
+	private String currentMembershipName;
 	// 요청 멤버십 고유번호
 	private Integer requestMembershipId;
+	private String requestMembershipName;
 	// 사용자 고유번호
 	private String userId;
 	// 상태

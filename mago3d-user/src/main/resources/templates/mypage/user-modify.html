@@ -103,9 +103,9 @@
 	</div>
 
 	<!-- 이메일 변경 -->
-	<div th:replace="~{/mypage/email-modify-dialog :: #emailModifyDialog}"></div>
+	<div th:replace="~{/mypage/email-dialog :: #emailDialog}"></div>
 	<!-- 비밀번호 변경 -->
-	<div th:replace="~{/mypage/password-modify-dialog :: #passwordModifyDialog}"></div>
+	<div th:replace="~{/mypage/password-dialog :: #passwordDialog}"></div>
 </div>
 <!-- E: WRAP -->
 <script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
@@ -153,11 +153,11 @@
 	// }
 
 	$( "#emailButton" ).on( "click", function() {
-		emailModifyDialog.dialog( "open" );
-		emailModifyDialog.dialog( "option", "title", "이메일 변경");
+		emailDialog.dialog( "open" );
+		emailDialog.dialog( "option", "title", "이메일 변경");
 	});
 
-	var emailModifyDialog = $( "#emailModifyDialog" ).dialog({
+	var emailDialog = $( "#emailDialog" ).dialog({
 		autoOpen: false,
 		width: 800,
 		height: 210,
@@ -194,22 +194,22 @@
 				} else {
 					alert(JS_MESSAGE[msg.errorCode]);
 				}
-				emailModifyDialog.dialog( "close" );
+				emailDialog.dialog( "close" );
 			},
 			error:function(request,status,error){
 				alert(JS_MESSAGE["ajax.error.message"]);
-				emailModifyDialog.dialog( "close" );
+				emailDialog.dialog( "close" );
 			}
 		});
 	});
 
 	$( "#passwordButton" ).on( "click", function() {
-		passwordModifyDialog.dialog( "open" );
-		passwordModifyDialog.dialog( "option", "title", "비밀번호 변경");
+		passwordDialog.dialog( "open" );
+		passwordDialog.dialog( "option", "title", "비밀번호 변경");
 	});
 
 	// 데이터 Object 속성 다이얼 로그
-	var passwordModifyDialog = $( "#passwordModifyDialog" ).dialog({
+	var passwordDialog = $( "#passwordDialog" ).dialog({
 		autoOpen: false,
 		width: 800,
 		height: 310,
@@ -236,11 +236,11 @@
 				} else {
 					alert(JS_MESSAGE[msg.errorCode]);
 				}
-				passwordModifyDialog.dialog( "close" );
+				passwordDialog.dialog( "close" );
 			},
 			error:function(request,status,error){
 				alert(JS_MESSAGE["ajax.error.message"]);
-				passwordModifyDialog.dialog( "close" );
+				passwordDialog.dialog( "close" );
 			}
 		});
 	})

@@ -30,7 +30,7 @@ public class MembershipRestController implements AuthorizationController {
 	/**
 	 * 멤버십 변경 승인
 	 * @param request
-	 * @param userId
+	 * @param membershipLogId
 	 * @return
 	 */
 	@PostMapping(value = "/approvals/{membershipLogId}")

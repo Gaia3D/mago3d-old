@@ -58,5 +58,5 @@ comment on column membership_log.membership_log_id is '고유번호';
 comment on column membership_log.current_membership_id is '현재 멤버십 고유번호';
 comment on column membership_log.request_membership_id is '요청 멤버십 고유번호';
 comment on column membership_log.user_id is '사용자 아이디';
-comment on column membership_log.status is '멤버십 상태 (REQUEST : 요청, CANCEL : 취소, APPROVAL : 승인, DENY : 거절)';
+comment on column membership_log.status is '멤버십 상태 (REQUEST : 요청, CANCEL : 취소, APPROVAL : 승인, REJECT : 거절)';
 comment on column membership_log.insert_date is '등록일';

@@ -32,7 +32,7 @@ public interface MembershipService {
      * @param userId
      * @return
      */
-    MembershipLog getLastLog(String userId);
+    MembershipLog getMembershipLastLog(String userId);
 
     /**
      * 멤버십 사용량 등록
@@ -67,5 +67,5 @@ public interface MembershipService {
      * @param membershipUsage
      * @return
      */
-    int updateUsage(MembershipUsage membershipUsage);
+    int updateMembershipUsage(MembershipUsage membershipUsage);
 }

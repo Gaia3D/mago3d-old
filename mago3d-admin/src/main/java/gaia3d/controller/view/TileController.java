@@ -65,7 +65,7 @@ public class TileController {
 		tileInfo.setLimit(pagination.getPageRows());
 
 		List<TileInfo> tileInfoList = new ArrayList<>();
-		if(totalCount > 0l) {
+		if(totalCount > 0L) {
 			tileInfoList = tileService.getListTile(tileInfo);
 		}
 

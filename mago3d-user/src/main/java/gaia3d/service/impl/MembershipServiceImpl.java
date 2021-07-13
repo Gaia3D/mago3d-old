@@ -1,5 +1,6 @@
 package gaia3d.service.impl;
 
+import gaia3d.domain.MembershipStatus;
 import gaia3d.domain.membership.Membership;
 import gaia3d.domain.membership.MembershipLog;
 import gaia3d.domain.membership.MembershipUsage;
@@ -56,8 +57,8 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @return
 	 */
 	@Transactional(readOnly=true)
-	public MembershipLog getLastLog(String userId) {
-		return membershipMapper.getLastLog(userId);
+	public MembershipLog getMembershipLastLog(String userId) {
+		return membershipMapper.getMembershipLastLog(userId);
 	}
 
 	/**
@@ -77,7 +78,14 @@ public class MembershipServiceImpl implements MembershipService {
 	 */
 	@Transactional
 	public int insertMembershipLog(MembershipLog membershipLog) {
-		return membershipMapper.insertMembershipLog(membershipLog);
+		Membership membership = membershipMapper.getMembershipByName(membershipLog.getRequestMembershipName());
+
+		MembershipLog newMembershipLog = new MembershipLog();
+		newMembershipLog.setCurrentMembershipId(membershipLog.getRequestMembershipId());
+		newMembershipLog.setRequestMembershipId(membership.getMembershipId());
+		newMembershipLog.setUserId(membershipLog.getUserId());
+		newMembershipLog.setStatus(MembershipStatus.REQUEST.name());
+		return membershipMapper.insertMembershipLog(newMembershipLog);
 	}
 
 	/**
@@ -106,8 +114,8 @@ public class MembershipServiceImpl implements MembershipService {
 	 * @return
 	 */
 	@Transactional
-	public int updateUsage(MembershipUsage membershipUsage) {
-		return membershipMapper.updateUsage(membershipUsage);
+	public int updateMembershipUsage(MembershipUsage membershipUsage) {
+		return membershipMapper.updateMembershipUsage(membershipUsage);
 	}
 
 }

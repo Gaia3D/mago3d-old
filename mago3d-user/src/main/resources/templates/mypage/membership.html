@@ -5,7 +5,7 @@
     <meta name="referrer" content="origin">
     <meta name="viewport" content="width=device-width">
     <meta name="robots" content="index,nofollow"/>
-    <title><th:block th:text="#{data.group.input.page.title}"></th:block></title>
+	<title><th:block th:text="#{my.page.title}"></th:block></title>
     <link rel="shortcut icon" th:href="@{/images/favicon.ico(cacheVersion=${contentCacheVersion})}">
 	<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}">
     <link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
@@ -47,7 +47,12 @@
 					멤버십 등급
 				</th>
 				<td class="col-input">
-					<th:block th:text="${membershipUsage.membershipName}"></th:block>
+					<span>
+						<th:block th:text="${membershipUsage.membershipName}"></th:block>
+					</span>
+					<span style="margin-left: 50px;">
+						<button type="button" id="membershipButton">변경</button>
+					</span>
 				</td>
 			</tr>
 			<tr>
@@ -75,6 +80,8 @@
         </form>
         <!-- E: 사용자 기본 정보 수정 -->
 	</div>
+
+	<div th:replace="~{/mypage/membership-dialog :: #membershipDialog}"></div>
 </div>
 <!-- E: WRAP -->
 <script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
@@ -86,21 +93,27 @@
 		//
 	});
 
-	function validate() {
-		//
-	}
+	$( "#membershipButton" ).on( "click", function() {
+		membershipDialog.dialog( "open" );
+		membershipDialog.dialog( "option", "title", "멤버십 변경");
+	});
+
+	var membershipDialog = $( "#membershipDialog" ).dialog({
+		autoOpen: false,
+		width: 800,
+		height: 520,
+		modal: true,
+		resizable: false
+	});
 
 	// 수정
 	var updateFlag = true;
-	function update() {
-		if (validate() == false) {
-			return false;
-		}
+	function update(membershipName) {
 		if(updateFlag) {
 			updateFlag = false;
-			var formData = $("#userInfo").serialize();
+			var formData = $("#membershipForm").serialize();
 			$.ajax({
-				url: "/mypage/users/[[${membershipUsage.membershipUsageId}]]",
+				url: "/mypages/memberships/" + membershipName,
 				type: "POST",
 				headers: {"X-Requested-With": "XMLHttpRequest"},
 				data: formData,
@@ -110,13 +123,14 @@
 						window.location.reload();
 					} else {
 						alert(JS_MESSAGE[msg.errorCode]);
-						console.log("---- " + msg.message);
 					}
 					updateFlag = true;
+					membershipDialog.dialog( "close" );
 				},
 				error:function(request, status, error){
 					alert(JS_MESSAGE["ajax.error.message"]);
 					updateFlag = true;
+					membershipDialog.dialog( "close" );
 				}
 			});
 		} else {

@@ -79,7 +79,7 @@ public class MembershipController implements AuthorizationController {
 		membershipUsage.setLimit(pagination.getPageRows());
 
 		List<MembershipUsage> membershipUsageList = new ArrayList<>();
-		if(totalCount > 0l) {
+		if(totalCount > 0L) {
 			membershipUsageList = membershipService.getListMembershipUsage(membershipUsage);
 		}
 
@@ -124,7 +124,7 @@ public class MembershipController implements AuthorizationController {
 		membershipLog.setLimit(pagination.getPageRows());
 
 		List<MembershipLog> membershipLogList = new ArrayList<>();
-		if(totalCount > 0l) {
+		if(totalCount > 0L) {
 			membershipLogList = membershipService.getListMembershipLog(membershipLog);
 		}
 

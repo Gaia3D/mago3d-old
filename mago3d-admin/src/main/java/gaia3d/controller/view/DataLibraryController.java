@@ -84,7 +84,7 @@ public class DataLibraryController {
 		dataLibrary.setLimit(pagination.getPageRows());
 
 		List<DataLibrary> dataLibraryList = new ArrayList<>();
-		if(totalCount > 0l) {
+		if(totalCount > 0L) {
 			dataLibraryList = dataLibraryService.getListDataLibrary(dataLibrary);
 		}
 

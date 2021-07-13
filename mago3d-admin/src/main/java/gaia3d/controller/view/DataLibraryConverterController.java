@@ -74,7 +74,7 @@ public class DataLibraryConverterController {
 		dataLibraryConverterJob.setLimit(pagination.getPageRows());
 
 		List<DataLibraryConverterJob> dataLibraryConverterJobList = new ArrayList<>();
-		if(totalCount > 0l) {
+		if(totalCount > 0L) {
 			dataLibraryConverterJobList = dataLibraryConverterService.getListDataLibraryConverterJob(dataLibraryConverterJob);
 		}
 

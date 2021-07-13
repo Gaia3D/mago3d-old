@@ -37,8 +37,7 @@ public class DataAPIController {
     public ResponseEntity<CollectionModel<EntityModel<DataInfoDto>>> getDatas(
             DataInfo dataInfo,
             @RequestParam(defaultValue = "1") Long pageNo,
-            @RequestParam(defaultValue = "10") Long pageRows
-            ) {
+            @RequestParam(defaultValue = "10") Long pageRows) {
 
         long totalCount = dataService.getDataTotalCount(dataInfo);
         Pagination pagination = new Pagination(totalCount, pageNo, pageRows, PAGE_LIST_COUNT);

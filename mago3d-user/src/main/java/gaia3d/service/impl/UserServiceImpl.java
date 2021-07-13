@@ -1,7 +1,7 @@
 package gaia3d.service.impl;
 
 import gaia3d.domain.SignupType;
-import gaia3d.domain.Status;
+import gaia3d.domain.MembershipStatus;
 import gaia3d.domain.membership.Membership;
 import gaia3d.domain.membership.MembershipLog;
 import gaia3d.domain.membership.MembershipType;
@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
 		membershipLog.setUserId(userInfo.getUserId());
 		membershipLog.setCurrentMembershipId(membership.getMembershipId());
 		membershipLog.setRequestMembershipId(membership.getMembershipId());
-		membershipLog.setStatus(Status.APPROVAL.getValue());
+		membershipLog.setStatus(MembershipStatus.APPROVAL.name());
 		membershipService.insertMembershipLog(membershipLog);
 
 		return userMapper.insertUser(userInfo);

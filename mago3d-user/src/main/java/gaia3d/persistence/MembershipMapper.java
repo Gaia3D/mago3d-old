@@ -22,6 +22,13 @@ public interface MembershipMapper {
 
 	/**
 	 * 멤버십 조회
+	 * @param membershipName
+	 * @return
+	 */
+	Membership getMembershipByName(String membershipName);
+
+	/**
+	 * 멤버십 조회
 	 * @param userId
 	 * @return
 	 */
@@ -39,7 +46,7 @@ public interface MembershipMapper {
 	 * @param userId
 	 * @return
 	 */
-	MembershipLog getLastLog(String userId);
+	MembershipLog getMembershipLastLog(String userId);
 
 	/**
 	 * 멤버십 등록
@@ -74,5 +81,5 @@ public interface MembershipMapper {
 	 * @param membershipUsage
 	 * @return
 	 */
-	int updateUsage(MembershipUsage membershipUsage);
+	int updateMembershipUsage(MembershipUsage membershipUsage);
 }

@@ -78,7 +78,7 @@ public class DataLogController {
 		dataInfoLog.setOffset(pagination.getOffset());
 		dataInfoLog.setLimit(pagination.getPageRows());
 		List<DataInfoLog> dataInfoLogList = new ArrayList<>();
-		if(totalCount > 0l) {
+		if(totalCount > 0L) {
 			dataInfoLogList = dataLogService.getListDataInfoLog(dataInfoLog);
 		}
 		

@@ -78,7 +78,7 @@ public class RuleController {
 		rule.setLimit(pagination.getPageRows());
 
 		List<Rule> ruleList = new ArrayList<>();
-		if(totalCount > 0l) {
+		if(totalCount > 0L) {
 			ruleList = ruleService.getListRule(rule);
 		}
 

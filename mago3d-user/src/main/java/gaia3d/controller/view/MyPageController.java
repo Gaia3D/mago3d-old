@@ -4,6 +4,7 @@ import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.Key;
 import gaia3d.domain.PageType;
 import gaia3d.domain.cache.CacheManager;
+import gaia3d.domain.membership.MembershipUsage;
 import gaia3d.domain.policy.Policy;
 import gaia3d.domain.uploaddata.UploadData;
 import gaia3d.domain.user.UserInfo;
@@ -40,12 +41,12 @@ public class MyPageController {
 	private UserService userService;
 	
 	/**
-	 * 데이터 upload 수정
+	 * 사용자 정보 수정
 	 * @param model
 	 * @return
 	 */
 	@GetMapping(value = "/user-modify")
-	public String userModify(HttpServletRequest request, UploadData uploadData, Model model) {
+	public String userModify(HttpServletRequest request, Model model) {
 		
 		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
 		Policy policy = CacheManager.getPolicy();
@@ -56,6 +57,22 @@ public class MyPageController {
 		model.addAttribute("userInfo", userInfo);
 
 		return "/mypage/user-modify";
+	}
+
+	/**
+	 * 멤버십 수정
+	 * @param model
+	 * @return
+	 */
+	@GetMapping(value = "/membership")
+	public String membership(HttpServletRequest request, Model model) {
+
+		UserSession userSession = (UserSession) request.getSession().getAttribute(Key.USER_SESSION.name());
+
+		MembershipUsage membershipUsage = membershipService.getMembershipUsageByUserId(userSession.getUserId());
+		model.addAttribute("membershipUsage", membershipUsage);
+
+		return "/mypage/membership";
 	}
 
 	/**

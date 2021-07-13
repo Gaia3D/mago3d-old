@@ -1,5 +1,8 @@
 package gaia3d.domain;
 
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -9,10 +12,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-import org.junit.jupiter.api.Disabled;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 class AttributeInsertSqlTest {
@@ -55,7 +54,7 @@ class AttributeInsertSqlTest {
 	}
 	
 	private Long getDataId(String dataKey) throws Exception {
-		Long dataId = 0l;
+		Long dataId = 0L;
 		
 		Class.forName("org.postgresql.Driver");
 		Connection conn = null;
@@ -77,7 +76,7 @@ class AttributeInsertSqlTest {
 			if(conn != null) conn.close();
 		}
 		
-		if(dataId == 0l) {
+		if(dataId == 0L) {
 			log.info(" ******************** error ********************* ");
 			log.info(" --- dataKey = {}, dataId = {}", dataKey, dataId);
 			log.info(" ******************** error ********************* ");

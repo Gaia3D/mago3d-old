@@ -12,6 +12,14 @@
 	</select>
 
 	<!-- 멤버십 정보 조회 -->
+	<select id="getMembershipByName" parameterType="string" resultType="membership">
+		/* getMembershipByName */
+		SELECT *
+		FROM membership
+		WHERE membership_name = #{membershipName}
+	</select>
+
+	<!-- 멤버십 정보 조회 -->
 	<select id="getMembershipUsageByUserId" parameterType="string" resultType="membershipUsage">
 		/* getMembershipUsageByUserId */
 		SELECT A.*,
@@ -24,14 +32,13 @@
 	</select>
 
 	<!-- 멤버십 마지막 로그 상태 조회 -->
-	<select id="getLastLog" parameterType="string" resultType="membershipLog">
-		/* getLastLog */
+	<select id="getMembershipLastLog" parameterType="string" resultType="membershipLog">
+		/* getMembershipLastLog */
 		SELECT *
 		FROM membership_log
 		WHERE user_id = #{userId}
 		ORDER BY membership_log_id DESC LIMIT 1
 	</select>
-
 
 	<!-- 멤버십 등록 -->
 	<insert id="insertMembershipUsage" parameterType="membershipUsage">
@@ -68,8 +75,8 @@
 	</update>
 
 	<!-- 사용량 수정 -->
-	<update id="updateUsage" parameterType="membershipUsage">
-		/* updateUsage */
+	<update id="updateMembershipUsage" parameterType="membershipUsage">
+		/* updateMembershipUsage */
 		UPDATE membership_usage
 		SET
 		<if test="membershipId != null and membershipId != ''">

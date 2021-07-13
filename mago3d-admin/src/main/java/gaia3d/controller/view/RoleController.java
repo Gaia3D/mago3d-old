@@ -54,7 +54,7 @@ public class RoleController {
 		role.setLimit(pagination.getPageRows());
 
 		List<Role> roleList = new ArrayList<>();
-		if(totalCount > 0l) {
+		if(totalCount > 0L) {
 			roleList = roleService.getListRole(role);
 		}
 

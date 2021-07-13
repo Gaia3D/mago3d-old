@@ -1,0 +1,136 @@
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
+	<div id="membershipDialog" class="basicTable" title="멤버십 변경" style="display: none;">
+		<form id="membershipForm" method="post" th:action="@{#}" onsubmit="return false;">
+		<table class="inner-table scope-row">
+			<caption class="hiddenTag">멤버십 변경</caption>
+			<colgroup>
+				<col class="col-label"></col>
+				<col class="col-data"></col>
+			</colgroup>
+			<tr>
+				<th style="width: 50%">BASIC</th>
+				<th style="width: 50%">SILVER</th>
+			</tr>
+			<tr>
+				<td>
+					<table style="font-size: 20px; margin: 5px;">
+						<tr>
+							<td style="width: 40%;">업로드 가능 용량</td>
+							<td style="width: 60%;">500MB</td>
+						</tr>
+						<tr>
+							<td>변환 가능 건수</td>
+							<td>30건</td>
+						</tr>
+						<tr>
+							<td>가격</td>
+							<td>무료</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="text-align: center;">
+	<th:block th:if="${membershipUsage.membershipId} == 1">
+								사용중
+	</th:block>
+	<th:block th:unless="${membershipUsage.membershipId} == 1">
+								<button th:text="선택" onclick="update('BASIC')" style="margin: 5px;" />
+	</th:block>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td>
+					<table style="font-size: 20px; margin: 5px;">
+						<tr>
+							<td style="width: 40%;">업로드 가능 용량</td>
+							<td style="width: 60%;">1GB</td>
+						</tr>
+						<tr>
+							<td>변환 가능 건수</td>
+							<td>50건</td>
+						</tr>
+						<tr>
+							<td>가격</td>
+							<td>유료</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="text-align: center;">
+	<th:block th:if="${membershipUsage.membershipId} == 2">
+								사용중
+	</th:block>
+	<th:block th:unless="${membershipUsage.membershipId} == 2">
+								<button th:text="선택" onclick="update('SILVER')" style="margin: 5px;" />
+	</th:block>
+							</td>
+						</tr>
+					</table>
+				</td>
+		</table>
+
+		<table class="inner-table scope-row" style="margin-top: 30px;">
+			<caption class="hiddenTag">멤버십 변경</caption>
+			<colgroup>
+				<col class="col-label"></col>
+				<col class="col-data"></col>
+			</colgroup>
+			<tr>
+				<th style="width: 50%">GOLD</th>
+				<th style="width: 50%">PLATINUM</th>
+			</tr>
+			<tr>
+				<td>
+					<table style="font-size: 20px; margin: 5px;">
+						<tr>
+							<td style="width: 40%;">업로드 가능 용량</td>
+							<td style="width: 60%;">5GB</td>
+						</tr>
+						<tr>
+							<td>변환 가능 건수</td>
+							<td>100건</td>
+						</tr>
+						<tr>
+							<td>가격</td>
+							<td>유료</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="text-align: center;">
+	<th:block th:if="${membershipUsage.membershipId} == 3">
+								사용중
+	</th:block>
+	<th:block th:unless="${membershipUsage.membershipId} == 3">
+								<button th:text="선택" onclick="update('GOLD')" style="margin: 5px;" />
+	</th:block>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td>
+					<table style="font-size: 20px; margin: 5px;">
+						<tr>
+							<td style="width: 40%;">업로드 가능 용량</td>
+							<td style="width: 60%;">10GB</td>
+						</tr>
+						<tr>
+							<td>변환 가능 건수</td>
+							<td>1000건</td>
+						</tr>
+						<tr>
+							<td>가격</td>
+							<td>유료</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="text-align: center;">
+	<th:block th:if="${membershipUsage.membershipId} == 4">
+								사용중
+	</th:block>
+	<th:block th:unless="${membershipUsage.membershipId} == 4">
+								<button th:text="선택" onclick="update('PLATINUM')" style="margin: 5px;" />
+	</th:block>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+</html>

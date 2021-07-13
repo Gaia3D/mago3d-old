@@ -121,7 +121,7 @@ public class DataLibraryUploadController {
 		dataLibraryUpload.setLimit(pagination.getPageRows());
 
 		List<DataLibraryUpload> dataLibraryUploadList = new ArrayList<>();
-		if(totalCount > 0l) {
+		if(totalCount > 0L) {
 			dataLibraryUploadList = dataLibraryUploadService.getListDataLibraryUpload(dataLibraryUpload);
 		}
 
