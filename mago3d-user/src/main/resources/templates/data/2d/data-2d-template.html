@@ -57,7 +57,7 @@
 			<span class="data-layerlist-ttl">{{layerName}}</span>
 			<span class="view-option">
 				<label class="switch">
-					<input type="checkbox"
+					<input type="checkbox" name="layer" data-layer-key="{{layerKey}}"
 						   onchange="Data2D.layerOnOff('{{layerKey}}', this, event)"
 						   {{#replace defaultDisplay true 'checked'}}{{/replace}} />
 					<span class="slider"></span>
