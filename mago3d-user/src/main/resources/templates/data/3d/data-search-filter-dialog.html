@@ -1,0 +1,62 @@
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
+<!-- 팝업레이어/필터 -->
+<div id="data-search-filter" class="filter popuplayer-s">
+	<button type="button" class="close-s" href="#" onclick="close_layer('layer2');"><span class="blind">팝업레이어 닫기</span></button>
+	<span class="layer-ttl">공유유형</span>
+	<div class="layer-bx">
+		<div class="layer-list">
+			<a class="icon common"></a>
+			<a class="txt">공통</a>
+		</div>
+		<div class="layer-list">
+			<a class="icon open"></a>
+			<a class="txt">공개</a>
+		</div>
+		<div class="layer-list">
+			<a class="icon notopen"></a>
+			<a class="txt">비공개</a>
+		</div>
+		<div class="layer-list">
+			<a class="icon group"></a>
+			<a class="txt">그룹</a>
+		</div>
+	</div>
+	<hr class="h5" />
+	<span class="layer-ttl">데이터 타입</span>
+	<div class="layer-bx">
+		<div class="layer-list">
+			<a class="icon file"></a>
+			<a class="txt">CityGML</a>
+		</div>
+		<div class="layer-list">
+			<a class="icon file"></a>
+			<a class="txt">IndoorGML</a>
+		</div>
+		<div class="layer-list">
+			<a class="icon file"></a>
+			<a class="txt">LAS</a>
+		</div>
+		<div class="layer-list">
+			<a class="icon file"></a>
+			<a class="txt">IFC</a>
+		</div>
+		<div class="layer-list">
+			<a class="icon file"></a>
+			<a class="txt">DAE</a>
+		</div>
+		<div class="layer-list">
+			<a class="icon file"></a>
+			<a class="txt">OBJ</a>
+		</div>
+		<div class="layer-list">
+			<a class="icon file"></a>
+			<a class="txt">3DS</a>
+		</div>
+	</div>
+	<hr class="h5" />
+	<div class="popuplayer-btn">
+		<button type="button" class="p-btn general">적용</button>
+		<button type="button" class="p-btn cancel">필터초기화</button>
+	</div>
+</div>
+</html>

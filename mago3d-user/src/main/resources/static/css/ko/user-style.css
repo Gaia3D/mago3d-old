@@ -5204,6 +5204,7 @@ select {width:auto; height: 28px; color:#464646; padding-left:5px; padding-right
 select::-ms-expand {display: none;}
 .dataselect {width:342px; margin:0 auto; height:40px; margin-top:8px;}
 .dataselect-item {float:left; width:180px; padding-left:3px; height:32px !important; border-radius:3px;}
+.data-group-search {float:left; width:125px; height:30px; padding-left:26px; line-height:30px; display:inline-block; border-radius:3px; background:url(/images/ko/ic_filter_more.png) 6px 50% no-repeat; font-size:12px; border:1px solid #d8d8d8;}
 .data-filter {float:right; width:125px; height:30px; padding-left:26px; line-height:30px; display:inline-block; border-radius:3px; background:url(/images/ko/ic_filter_more.png) 6px 50% no-repeat; font-size:12px; border:1px solid #d8d8d8;}
 .switch {position: relative; display: inline-block; width:40px; height: 18px; margin-left:12px; margin-right:4px; line-height: 2px;}
 .switch input {opacity: 0; width: 0; height: 0; }
@@ -5419,6 +5420,9 @@ span.sumnail {float:right; width:50px; height:50px; border:1px solid #e9e8e8;}
 .layer-bx .layer-list .group:hover, .layer-bx .layer-list .group:focus {display:inline-block; background:url(/images/ko/ic_filter.png) -177px -7px no-repeat;}
 .layer-bx .layer-list .file:hover, .layer-bx .layer-list .file:focus {display:inline-block; background:url(/images/ko/ic_filter.png) -47px -7px no-repeat;}
 .popuplayer-btn {clear:both; position:relative; bottom:0; left:0; height:30px; margin-top:0; text-align:right; width:auto;}
+.groupdata {display:none; z-index:100; width:65%; height:77%;}
+.popuplayer-xl {position: fixed; top: 50%; left: 50%; -webkit-transform: translateX(-50%) translateY(-50%); -moz-transform: translateX(-50%) translateY(-50%); -ms-transform: translateX(-50%) translateY(-50%); transform: translateX(-50%) translateY(-50%); border-radius: 4px; background: white; overflow-y: scroll; overflow-x: hidden; border: 1px solid #d9dadb; padding: 0 14px 14px 14px; margin: 0; box-shadow: 0 1px 2px rgba(132, 132, 132, 0.6);}
+.popuplayer-xl .close-s {float:right; margin:14px -6px 0 0; width:15px; cursor:pointer; height:15px; background:url(/images/ko/ic_close.png) no-repeat;}
 
 /* simulation */
 ul.simulation-menu {padding:0; width:330px; margin:5px auto 0 auto; margin-bottom:30px; display:flex; border-top:1px solid #e6e4e4; flex-wrap:wrap; border-bottom:1px solid #e6e4e4;}
