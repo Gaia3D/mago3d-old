@@ -446,6 +446,8 @@ var mapControllEventHandler = function(magoInstance) {
 		$('#master-plan-popup').slideToggle("slow");
 	});
 	
+	/*archinfo.js로 이전계획 */
+	//건축통합 온오프
 	$('#master-plan-popup input[type="checkbox"]').change(function() {
 		var checked = $(this).prop('checked');
 		var id = $(this).parents('tr').data('id');
@@ -454,22 +456,27 @@ var mapControllEventHandler = function(magoInstance) {
 		arch.show = checked;
 	});
 	
+	//건축통합 칼라피커 이벤트 바인드
 	$('#master-plan-popup button.master-plan-color').click(function() {
 		var $color = $(this).siblings('input[type="color"]'); 
 		$color.trigger('click');
 	});
 	
+	//건축통합 색상변경
 	$('#master-plan-popup input[type="color"]').change(function() {
 		var id = $(this).parents('tr').data('id');
 		var arch = archInfoController.getArchInfoById(id);
 		
-		arch.color = Mago3D.Color.fromHexCode($(this).val())
+		arch.color = Mago3D.Color.fromHexCode($(this).val());
 	});
 	
 
 	// 라이브러리
 	$('#data-library-setting').click(function() {
 		$('#toolbarWrap div.detaildata.poplayer:not(#data-library-popup)').hide();
+		if(MAGO.dataLibraryController || !MAGO.dataLibraryController.ready) {
+			MAGO.dataLibraryController.search();
+		}
 		$('#data-library-popup').slideToggle("slow");
 	});
 	

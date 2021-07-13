@@ -349,7 +349,7 @@ public class DataLibraryConverterServiceImpl implements DataLibraryConverterServ
         String adminDataLibraryServicePath = propertiesConfig.getAdminDataLibraryServicePath();
         DataLibraryGroup dataLibraryGroup = dataLibraryGroupService.getDataLibraryGroup(DataLibraryGroup.builder().dataLibraryGroupId(dataLibraryGroupId).build());
         String dataLibraryPath = adminDataLibraryServicePath + dataLibraryGroup.getDataLibraryGroupKey() + "/" + DataLibrary.F4D_PREFIX + dataLibraryKey;
-        String dataLibraryThumbnail = adminDataLibraryServicePath + dataLibraryGroup.getDataLibraryGroupKey() + "/" + DataLibrary.F4D_PREFIX + dataLibraryKey + "/thumbnail.png";
+        String dataLibraryThumbnail = adminDataLibraryServicePath + dataLibraryGroup.getDataLibraryGroupKey() + "/" + DataLibrary.F4D_PREFIX + dataLibraryKey + "/thumbnail.jpg";
 
         String dataType = dataLibraryUploadFile.getDataType();
         Integer ruleId = dataLibraryUploadFile.getRuleId();
