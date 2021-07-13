@@ -5,6 +5,7 @@
 	<a class="btn-datasearch" href="#"><span class="blind">데이터명 검색</span></a>
 	<!-- 전체-필터더보기 -->
 	<div class="dataselect">
+		<!--
 		<form>
 			<select class="dataselect-item">
 				<option>전체</option>
@@ -12,7 +13,9 @@
 				<option>2</option>
 			</select>
 		</form>
-		<a href="#" class="data-filter" onclick="view_layer('layer2');">필터 더보기</a>
+		-->
+		<a href="#" class="data-group-search" onclick="Data3D.dataGroupSearchOnOff(); return false;">그룹으로 검색</a>
+		<a href="#" class="data-filter" onclick="Data3D.dataSearchFilterOnOff(); return false;">필터 더보기</a>
 	</div>
 	<dl class="legendWrap">
 		<dt th:text="#{data.group.sharing}"></dt>
