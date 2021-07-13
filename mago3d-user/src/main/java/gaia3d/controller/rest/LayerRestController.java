@@ -1,15 +1,15 @@
 package gaia3d.controller.rest;
 
 import gaia3d.domain.Key;
-import gaia3d.domain.layer.Layer;
-import gaia3d.domain.layer.LayerGroup;
-import gaia3d.domain.layer.LayerInsertType;
+import gaia3d.domain.layer.*;
 import gaia3d.domain.user.UserSession;
 import gaia3d.service.LayerGroupService;
 import gaia3d.service.LayerService;
 import gaia3d.service.UserPolicyService;
 import gaia3d.support.LayerDisplaySupport;
 import lombok.extern.slf4j.Slf4j;
+import org.geotools.ows.wms.CRSEnvelope;
+import org.opengis.geometry.DirectPosition;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -31,7 +31,7 @@ public class LayerRestController {
 	private final LayerService layerService;
 	private final LayerGroupService layerGroupService;
 	private final UserPolicyService userPolicyService;
-	
+
 	public LayerRestController(LayerService layerService, LayerGroupService layerGroupService, UserPolicyService userPolicyService) {
 		this.layerService = layerService;
 		this.layerGroupService = layerGroupService;
@@ -80,37 +80,22 @@ public class LayerRestController {
 		String errorCode = null;
 		String message = null;
 
-		LayerInsertType layerInsertType = LayerInsertType.valueOf(layer.getLayerInsertType().toUpperCase());
-		log.info("insert type : {}", layerInsertType);
-
-		String bboxWkt = "";
-		if (LayerInsertType.UPLOAD == layerInsertType) {
-			bboxWkt = layerService.getEnvelope(layer.getLayerKey());
-		} else {
-			bboxWkt = "POLYGON((126.70695082879526 37.3552906189018," +
-					"124.609708885853 38.6151323380178," +
-					"126.73972933011044 37.381863217601364," +
-					"131.872766214216 33.1137120723124," +
-					"124.609708885853 33.1137120723124))";
+		double[] minPoint = new double[2], maxPoint = new double[2];
+		try {
+			BoundingBox envelope = layerService.getEnvelope(layer);
+			minPoint[0] = envelope.getMinx();
+			minPoint[1] = envelope.getMiny();
+			maxPoint[0] = envelope.getMaxx();
+			maxPoint[1] = envelope.getMaxy();
+			result.put("minPoint", minPoint);
+			result.put("maxPoint", maxPoint);
+		} catch (Exception e) {
+			errorCode = "runtime.exception";
+			message = e.getClass().getName();
+			log.error("layer get envelope error. layerName = {}, error = {}", layer.getLayerKey(), e);
 		}
 
-		bboxWkt = bboxWkt.replace("POLYGON((", "");
-		bboxWkt = bboxWkt.replace("))", "");
-
-		String[] points = bboxWkt.split(",");
-		String[] minPoint = new String[2], maxPoint = new String[2];
-
-		minPoint[0] = points[0].split(" ")[0];
-		minPoint[1] = points[0].split(" ")[1];
-
-		maxPoint[0] = points[2].split(" ")[0];
-		maxPoint[1] = points[2].split(" ")[1];
-
-		result.put("minPoint", minPoint);
-		result.put("maxPoint", maxPoint);
-
 		int statusCode = HttpStatus.OK.value();
-
 		result.put("statusCode", statusCode);
 		result.put("errorCode", errorCode);
 		result.put("message", message);

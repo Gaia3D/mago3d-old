@@ -1,7 +1,9 @@
 package gaia3d.service;
 
+import gaia3d.domain.layer.BoundingBox;
 import gaia3d.domain.layer.Layer;
 import gaia3d.domain.layer.LayerDto;
+import org.opengis.geometry.DirectPosition;
 
 import java.util.List;
 
@@ -23,9 +25,9 @@ public interface LayerService {
     /**
      * 레이어 최소 경계 영역을 wkt로 반환
      *
-     * @param layerKey 레이어명
+     * @param layer 레이어
      * @return 최소 경계 영역 wkt
      */
-    String getEnvelope(String layerKey);
+    BoundingBox getEnvelope(Layer layer);
 
 }

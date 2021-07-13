@@ -1,9 +1,15 @@
 package gaia3d.service.impl;
 
 import gaia3d.config.PropertiesConfig;
+import gaia3d.domain.layer.BoundingBox;
+import gaia3d.domain.layer.GeoserverLayer;
 import gaia3d.domain.layer.Layer;
+import gaia3d.domain.layer.LayerInsertType;
 import gaia3d.persistence.LayerMapper;
 import gaia3d.service.LayerService;
+import lombok.extern.slf4j.Slf4j;
+import org.geotools.ows.wms.CRSEnvelope;
+import org.opengis.geometry.DirectPosition;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +20,7 @@ import java.util.List;
  * @author Cheon JeongDae
  *
  */
+@Slf4j
 @Service
 public class LayerServiceImpl implements LayerService {
 
@@ -47,12 +54,37 @@ public class LayerServiceImpl implements LayerService {
     /**
      * 레이어 최소 경계 영역을 wkt로 반환
      *
-     * @param layerKey 레이어명
+     * @param layer 레이어
      * @return 최소 경계 영역 wkt
      */
     @Transactional(readOnly=true)
-    public String getEnvelope(String layerKey) {
-        String schema = propertiesConfig.getOgr2ogrSchema();
-        return layerMapper.getEnvelope(schema, layerKey);
+    public BoundingBox getEnvelope(Layer layer) {
+
+        LayerInsertType layerInsertType = LayerInsertType.valueOf(layer.getLayerInsertType().toUpperCase());
+        log.info("@@@@@ insert type : {}", layerInsertType);
+
+        String layerKey = layer.getLayerKey();
+        log.info("@@@@@ layerKey : {}", layerKey);
+
+        BoundingBox boundingBox;
+        if (LayerInsertType.UPLOAD == layerInsertType) {
+            String bboxWkt = "";
+            String schema = propertiesConfig.getOgr2ogrSchema();
+            bboxWkt = layerMapper.getEnvelope(schema, layerKey);
+            if (bboxWkt == null) {
+                bboxWkt = "POLYGON((126.70695082879526 37.3552906189018," +
+                        "124.609708885853 38.6151323380178," +
+                        "126.73972933011044 37.381863217601364," +
+                        "131.872766214216 33.1137120723124," +
+                        "124.609708885853 33.1137120723124))";
+            }
+            boundingBox = BoundingBox.from(bboxWkt);
+        } else {
+            GeoserverLayer geoserverLayer = new GeoserverLayer();
+            CRSEnvelope env = geoserverLayer.getLayerBoundingBox("mago3d:" + layerKey);
+            boundingBox = BoundingBox.from(env);
+        }
+        return boundingBox;
+
     }
 }
