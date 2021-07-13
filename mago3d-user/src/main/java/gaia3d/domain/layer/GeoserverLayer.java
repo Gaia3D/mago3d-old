@@ -3,13 +3,10 @@ package gaia3d.domain.layer;
 import org.geotools.ows.ServiceException;
 import org.geotools.ows.wms.Layer;
 import org.geotools.ows.wms.*;
-import org.opengis.geometry.DirectPosition;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Iterator;
-import java.util.List;
 
 public class GeoserverLayer {
 

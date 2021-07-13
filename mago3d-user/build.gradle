@@ -28,9 +28,9 @@ configurations {
 }
 
 repositories {
-    maven {
-        url "https://repo.osgeo.org/repository/release/"
-    }
+//    maven {
+//        url "https://repo.osgeo.org/repository/release/"
+//    }
 	mavenCentral()
 }
 
@@ -101,7 +101,11 @@ dependencies {
 	implementation 'org.modelmapper:modelmapper:2.3.6'
 
     // https://mvnrepository.com/artifact/org.geotools/gt-wms
-    implementation group: 'org.geotools', name: 'gt-wms', version: '25.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // 다운이 안되서 수동으로
+    //implementation group: 'org.geotools', name: 'gt-wms', version: '25.1'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+    implementation 'commons-collections:commons-collections:3.2.2'
 
 	runtimeOnly 'org.postgresql:postgresql'
     implementation 'org.postgresql:postgresql:42.2.14'

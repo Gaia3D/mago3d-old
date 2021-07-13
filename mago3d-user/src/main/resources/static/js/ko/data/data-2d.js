@@ -18,31 +18,7 @@ const Data2D = function(magoInstance) {
             Data2D.foldTree();
         });
         $('#layer-content-save-user-layers').click(function() {
-            $.ajax({
-                url: "/user-policy/update-layers",
-                type: "POST",
-                headers: {"X-Requested-With": "XMLHttpRequest"},
-                dataType: "json",
-                data : $("#layerForm").serialize(),
-                success: function(res){
-                    if(res.statusCode <= 200) {
-                        alert(JS_MESSAGE["update"]);
-                    } else {
-                        if (res.errorCode === "session.required") {
-                            const isGoToSignInPage = confirm("로그인이 필요한 기능입니다. 로그인 페이지로 이동할까요?");
-                            if (isGoToSignInPage) {
-                                window.location = res.message;
-                            }
-                        }
-                        //alert(JS_MESSAGE[res.errorCode]);
-                        //console.log("---- " + res.message);
-                    }
-                },
-                error: function(request, status, error) {
-                    console.log([request, status, error]);
-                    alert(JS_MESSAGE["ajax.error.message"]);
-                }
-            });
+            Data2D.updateLayers();
         });
     }
     setElementEvent();
@@ -156,6 +132,43 @@ Data2D.move = function (layerId) {
             }
         },
         error: function (request, status, error) {
+            alert(JS_MESSAGE["ajax.error.message"]);
+        }
+    });
+}
+// 레이어 설정 저장
+Data2D.updateLayers = function() {
+
+    var layerList = [];
+    $("input:checkbox[name='layer']").each(function(){
+        if(this.checked) {
+            layerList.push($(this).attr("data-layer-key"));
+        }
+    });
+    $("#base-layers").val(layerList.join(","));
+
+    $.ajax({
+        url: "/user-policy/update-layers",
+        type: "POST",
+        headers: {"X-Requested-With": "XMLHttpRequest"},
+        dataType: "json",
+        data : $("#layer-form").serialize(),
+        success: function(res){
+            if(res.statusCode <= 200) {
+                alert(JS_MESSAGE["update"]);
+            } else {
+                if (res.errorCode === "session.required") {
+                    const isGoToSignInPage = confirm("로그인이 필요한 기능입니다. 로그인 페이지로 이동할까요?");
+                    if (isGoToSignInPage) {
+                        window.location = res.message;
+                    }
+                }
+                //alert(JS_MESSAGE[res.errorCode]);
+                //console.log("---- " + res.message);
+            }
+        },
+        error: function(request, status, error) {
+            console.log([request, status, error]);
             alert(JS_MESSAGE["ajax.error.message"]);
         }
     });
