@@ -1,7 +1,7 @@
 'use strict';
 (function(_mago3d) 
 {
-	var Emitter=_mago3d["Emitter"];var Interaction=_mago3d["Interaction"];var MagoRenderable=_mago3d["MagoRenderable"];var ViewerInit=_mago3d["ViewerInit"];var APIGateway=_mago3d["APIGateway"];var ColorAPI=_mago3d["ColorAPI"];var DrawAPI=_mago3d["DrawAPI"];var LocationAndRotationAPI=_mago3d["LocationAndRotationAPI"];var LodAPI=_mago3d["LodAPI"];var AbsControl=_mago3d["AbsControl"];var Attribution=_mago3d["Attribution"];var Compass=_mago3d["Compass"];var FullScreen=_mago3d["FullScreen"];var InitCamera=_mago3d["InitCamera"];var Measure=_mago3d["Measure"];var OverviewMap=_mago3d["OverviewMap"];var Tools=_mago3d["Tools"];var Zoom=_mago3d["Zoom"];var AnimationData=_mago3d["AnimationData"];var AnimationManager=_mago3d["AnimationManager"];var BoundingBox=_mago3d["BoundingBox"];var BoundingSphere=_mago3d["BoundingSphere"];var BrowserEvent=_mago3d["BrowserEvent"];var BuildingSeed=_mago3d["BuildingSeed"];var BuildingSeedList=_mago3d["BuildingSeedList"];var BuildingSeedMap=_mago3d["BuildingSeedMap"];var Camera=_mago3d["Camera"];var CCTV=_mago3d["CCTV"];var CCTVList=_mago3d["CCTVList"];var CesiumViewerInit=_mago3d["CesiumViewerInit"];var CollisionCheckScene=_mago3d["CollisionCheckScene"];var Color=_mago3d["Color"];var ControlCollection=_mago3d["ControlCollection"];var CubeMapFBO=_mago3d["CubeMapFBO"];var DataType=_mago3d["DataType"];var DynamicColor=_mago3d["DynamicColor"];var F4dController=_mago3d["F4dController"];var FBO=_mago3d["FBO"];var FileRequestControler=_mago3d["FileRequestControler"];var FirstPersonView=_mago3d["FirstPersonView"];var Frustum=_mago3d["Frustum"];var FrustumVolumeControl=_mago3d["FrustumVolumeControl"];var GeographicCoord=_mago3d["GeographicCoord"];var GeographicCoordSegment=_mago3d["GeographicCoordSegment"];var GeographicCoordsList=_mago3d["GeographicCoordsList"];var GeographicExtent=_mago3d["GeographicExtent"];var GeoLocationData=_mago3d["GeoLocationData"];var GeoLocationDataManager=_mago3d["GeoLocationDataManager"];var Globe=_mago3d["Globe"];var HeightReference=_mago3d["HeightReference"];var IdentifierManager=_mago3d["IdentifierManager"];var InteractionCollection=_mago3d["InteractionCollection"];var LightSource=_mago3d["LightSource"];var Mago3d=_mago3d["Mago3d"];var MagoEarthViewerInit=_mago3d["MagoEarthViewerInit"];var MagoEvent=_mago3d["MagoEvent"];var MagoLayer=_mago3d["MagoLayer"];var MagoLayerCollection=_mago3d["MagoLayerCollection"];var MagoManager=_mago3d["MagoManager"];var MagoModel=_mago3d["MagoModel"];var ManagerFactory=_mago3d["ManagerFactory"];var Matrix4=_mago3d["Matrix4"];var Message=_mago3d["Message"];var MouseAction=_mago3d["MouseAction"];var Movement=_mago3d["Movement"];var ObjectMarker=_mago3d["ObjectMarker"];var ObjectMarkerManager=_mago3d["ObjectMarkerManager"];var OcclusionCullingOctree=_mago3d["OcclusionCullingOctree"];var OcclusionCullingOctreeCell=_mago3d["OcclusionCullingOctreeCell"];var Pin=_mago3d["Pin"];var Plane=_mago3d["Plane"];var Quaternion=_mago3d["Quaternion"];var SelectionColor=_mago3d["SelectionColor"];var Settings=_mago3d["Settings"];var SmartTile=_mago3d["SmartTile"];var SmartTileManager=_mago3d["SmartTileManager"];var Sphere=_mago3d["Sphere"];var SplitValue=_mago3d["SplitValue"];var SpotLight=_mago3d["SpotLight"];var SunSystem=_mago3d["SunSystem"];var TerranTile=_mago3d["TerranTile"];var Texture=_mago3d["Texture"];var TextureLayer=_mago3d["TextureLayer"];var TextureLayerFilter=_mago3d["TextureLayerFilter"];var TexturesManager=_mago3d["TexturesManager"];var TexturesStore=_mago3d["TexturesStore"];var TriPolyhedron=_mago3d["TriPolyhedron"];var TriSurface=_mago3d["TriSurface"];var VboBuffer=_mago3d["VboBuffer"];var VBOKeysNation=_mago3d["VBOKeysNation"];var VBOKeysStore=_mago3d["VBOKeysStore"];var VBOKeysWorld=_mago3d["VBOKeysWorld"];var VBOMemoryManager=_mago3d["VBOMemoryManager"];var VBOVertexIdxCacheKey=_mago3d["VBOVertexIdxCacheKey"];var VBOVertexIdxCacheKeysContainer=_mago3d["VBOVertexIdxCacheKeysContainer"];var VisibleObjectsController=_mago3d["VisibleObjectsController"];var WMSLayer=_mago3d["WMSLayer"];var XYZLayer=_mago3d["XYZLayer"];var API=_mago3d["API"];var Callback=_mago3d["Callback"];var ChangeHistory=_mago3d["ChangeHistory"];var CODE=_mago3d["CODE"];var Constant=_mago3d["Constant"];var MagoConfig=_mago3d["MagoConfig"];var Policy=_mago3d["Policy"];var Effect=_mago3d["Effect"];var EffectsManager=_mago3d["EffectsManager"];var DataStream=_mago3d["DataStream"];var i18next=_mago3d["i18next"];var i18nextBrowserLanguageDetector=_mago3d["i18nextBrowserLanguageDetector"];var i18nextXHRBackend=_mago3d["i18nextXHRBackend"];var rbush=_mago3d["rbush"];var tga=_mago3d["tga"];var Accessor=_mago3d["Accessor"];var Block=_mago3d["Block"];var BlocksArrayPartition=_mago3d["BlocksArrayPartition"];var BlocksList=_mago3d["BlocksList"];var CollisionCheckOctree=_mago3d["CollisionCheckOctree"];var HierarchyManager=_mago3d["HierarchyManager"];var InspectorBox=_mago3d["InspectorBox"];var Lego=_mago3d["Lego"];var LoadQueue=_mago3d["LoadQueue"];var LodBuilding=_mago3d["LodBuilding"];var LodBuildingData=_mago3d["LodBuildingData"];var MetaData=_mago3d["MetaData"];var ModelReferencedGroup=_mago3d["ModelReferencedGroup"];var MultiBuildings=_mago3d["MultiBuildings"];var MultiBuildingsElement=_mago3d["MultiBuildingsElement"];var NeoBuilding=_mago3d["NeoBuilding"];var NeoBuildingsList=_mago3d["NeoBuildingsList"];var NeoReference=_mago3d["NeoReference"];var NeoReferencesMotherAndIndices=_mago3d["NeoReferencesMotherAndIndices"];var NeoSimpleBuilding=_mago3d["NeoSimpleBuilding"];var NeoTexture=_mago3d["NeoTexture"];var Node=_mago3d["Node"];var Octree=_mago3d["Octree"];var ParseQueue=_mago3d["ParseQueue"];var ProcessQueue=_mago3d["ProcessQueue"];var ProjectTree=_mago3d["ProjectTree"];var ReaderWriter=_mago3d["ReaderWriter"];var SkinBuilding=_mago3d["SkinBuilding"];var TinTerrain=_mago3d["TinTerrain"];var TinTerrainManager=_mago3d["TinTerrainManager"];var Arc2D=_mago3d["Arc2D"];var AxisXYZ=_mago3d["AxisXYZ"];var BoundingRectangle=_mago3d["BoundingRectangle"];var BoxAux=_mago3d["BoxAux"];var BSplineCubic3D=_mago3d["BSplineCubic3D"];var Circle2D=_mago3d["Circle2D"];var Cluster=_mago3d["Cluster"];var CuttingPlane=_mago3d["CuttingPlane"];var Excavation=_mago3d["Excavation"];var Face=_mago3d["Face"];var HalfEdge=_mago3d["HalfEdge"];var HalfEdgesList=_mago3d["HalfEdgesList"];var IndexData=_mago3d["IndexData"];var IndexRange=_mago3d["IndexRange"];var Intersect=_mago3d["Intersect"];var Line=_mago3d["Line"];var Line2D=_mago3d["Line2D"];var MagoGeometry=_mago3d["MagoGeometry"];var MagoNativeProject=_mago3d["MagoNativeProject"];var MagoPoint=_mago3d["MagoPoint"];var MagoPolyline=_mago3d["MagoPolyline"];var MagoPolylineGround=_mago3d["MagoPolylineGround"];var MagoRectangle=_mago3d["MagoRectangle"];var MagoRectangleGround=_mago3d["MagoRectangleGround"];var MagoWorld=_mago3d["MagoWorld"];var Material=_mago3d["Material"];var MaterialsManager=_mago3d["MaterialsManager"];var Mesh=_mago3d["Mesh"];var Modeler=_mago3d["Modeler"];var ParametricMesh=_mago3d["ParametricMesh"];var Path3D=_mago3d["Path3D"];var PipeKnot=_mago3d["PipeKnot"];var PipePath=_mago3d["PipePath"];var PlaneGrid=_mago3d["PlaneGrid"];var Point2D=_mago3d["Point2D"];var Point2DList=_mago3d["Point2DList"];var Point3D=_mago3d["Point3D"];var Point3DList=_mago3d["Point3DList"];var Point4D=_mago3d["Point4D"];var Polygon2D=_mago3d["Polygon2D"];var PolyLine2D=_mago3d["PolyLine2D"];var PolyLine3D=_mago3d["PolyLine3D"];var ProcessCounterManager=_mago3d["ProcessCounterManager"];var Profile2D=_mago3d["Profile2D"];var Profiles2DList=_mago3d["Profiles2DList"];var QuatTree=_mago3d["QuatTree"];var Rectangle2D=_mago3d["Rectangle2D"];var Ring2D=_mago3d["Ring2D"];var Ring2DList=_mago3d["Ring2DList"];var RingType=_mago3d["RingType"];var ScreenQuad=_mago3d["ScreenQuad"];var Segment2D=_mago3d["Segment2D"];var Segment3D=_mago3d["Segment3D"];var ShadowMesh=_mago3d["ShadowMesh"];var Sky=_mago3d["Sky"];var Star2D=_mago3d["Star2D"];var StaticModel=_mago3d["StaticModel"];var Surface=_mago3d["Surface"];var Triangle=_mago3d["Triangle"];var Triangle2D=_mago3d["Triangle2D"];var TrianglesList=_mago3d["TrianglesList"];var TrianglesMatrix=_mago3d["TrianglesMatrix"];var Tunnel=_mago3d["Tunnel"];var Vertex=_mago3d["Vertex"];var VertexList=_mago3d["VertexList"];var VertexMatrix=_mago3d["VertexMatrix"];var VertexOctree=_mago3d["VertexOctree"];var VtxProfile=_mago3d["VtxProfile"];var VtxProfilesList=_mago3d["VtxProfilesList"];var VtxRing=_mago3d["VtxRing"];var VtxRingsList=_mago3d["VtxRingsList"];var VtxSegment=_mago3d["VtxSegment"];var AbsClickInteraction=_mago3d["AbsClickInteraction"];var AbsPointerInteraction=_mago3d["AbsPointerInteraction"];var ClickInteraction=_mago3d["ClickInteraction"];var DrawGeometryInteraction=_mago3d["DrawGeometryInteraction"];var InteractionActiveType=_mago3d["InteractionActiveType"];var InteractionEventType=_mago3d["InteractionEventType"];var LineDrawer=_mago3d["LineDrawer"];var NativeUpDownInteraction=_mago3d["NativeUpDownInteraction"];var PointDrawer=_mago3d["PointDrawer"];var PointSelectInteraction=_mago3d["PointSelectInteraction"];var RectangleDrawer=_mago3d["RectangleDrawer"];var RotateInteraction=_mago3d["RotateInteraction"];var TranslateInteraction=_mago3d["TranslateInteraction"];var Message=_mago3d["Message"];var MessageSource=_mago3d["MessageSource"];var GeoServer=_mago3d["GeoServer"];var AnimatedPerson=_mago3d["AnimatedPerson"];var Arrow=_mago3d["Arrow"];var BasicFactory=_mago3d["BasicFactory"];var BasicVehicle=_mago3d["BasicVehicle"];var Box=_mago3d["Box"];var ClippingBox=_mago3d["ClippingBox"];var ClippingPlane=_mago3d["ClippingPlane"];var ConcentricTubes=_mago3d["ConcentricTubes"];var Cone=_mago3d["Cone"];var Cylinder=_mago3d["Cylinder"];var Ellipsoid=_mago3d["Ellipsoid"];var ExtrusionBuilding=_mago3d["ExtrusionBuilding"];var ExtrusionWall=_mago3d["ExtrusionWall"];var GolfHoleFlag=_mago3d["GolfHoleFlag"];var ImageViewerRectangle=_mago3d["ImageViewerRectangle"];var LegendColorRamp=_mago3d["LegendColorRamp"];var Pipe=_mago3d["Pipe"];var PointMesh=_mago3d["PointMesh"];var RenderableObject=_mago3d["RenderableObject"];var SkeletalAnimationObject=_mago3d["SkeletalAnimationObject"];var SpeechBubble=_mago3d["SpeechBubble"];var TerrainScannerLinear=_mago3d["TerrainScannerLinear"];var TestFreeContourWallBuilding=_mago3d["TestFreeContourWallBuilding"];var Tube=_mago3d["Tube"];var VectorExtrudedMesh=_mago3d["VectorExtrudedMesh"];var VectorMesh=_mago3d["VectorMesh"];var VectorMeshWind=_mago3d["VectorMeshWind"];var Vehicle=_mago3d["Vehicle"];var Wheel=_mago3d["Wheel"];var Renderer=_mago3d["Renderer"];var RenderingSettings=_mago3d["RenderingSettings"];var SceneState=_mago3d["SceneState"];var Selection=_mago3d["Selection"];var SelectionCandidateFamily=_mago3d["SelectionCandidateFamily"];var SelectionManager=_mago3d["SelectionManager"];var AttribLocationState=_mago3d["AttribLocationState"];var PostFxShader=_mago3d["PostFxShader"];var PostFxShadersManager=_mago3d["PostFxShadersManager"];var ShaderSource=_mago3d["ShaderSource"];var Uniform1fDataPair=_mago3d["Uniform1fDataPair"];var Uniform1iDataPair=_mago3d["Uniform1iDataPair"];var UniformMatrix4fvDataPair=_mago3d["UniformMatrix4fvDataPair"];var UniformVec2fvDataPair=_mago3d["UniformVec2fvDataPair"];var UniformVec3fvDataPair=_mago3d["UniformVec3fvDataPair"];var UniformVec4fvDataPair=_mago3d["UniformVec4fvDataPair"];var Network=_mago3d["Network"];var NetworkEdge=_mago3d["NetworkEdge"];var NetworkNode=_mago3d["NetworkNode"];var NetworkSpace=_mago3d["NetworkSpace"];var ByteColor=_mago3d["ByteColor"];var CameraController=_mago3d["CameraController"];var createGuid=_mago3d["createGuid"];var defaultValue=_mago3d["defaultValue"];var defaultValueCheckLength=_mago3d["defaultValueCheckLength"];var defined=_mago3d["defined"];var GeometryUtils=_mago3d["GeometryUtils"];var isEmpty=_mago3d["isEmpty"];var loadWithXhr=_mago3d["loadWithXhr"];var ManagerUtils=_mago3d["ManagerUtils"];var Polyfill=_mago3d["Polyfill"];var throwAbstractError=_mago3d["throwAbstractError"];var workerDecodeTerrain=_mago3d["workerDecodeTerrain"];var workerParseTerrain=_mago3d["workerParseTerrain"];var OlMago3d=_mago3d["OlMago3d"];var Promise=_mago3d["Promise"];var GMLDataContainer=_mago3d["GMLDataContainer"];var JsonParsor_1_0_1=_mago3d["JsonParsor_1_0_1"];var JsonParsor_1_0_3=_mago3d["JsonParsor_1_0_3"];var CellSpaceMember=_mago3d["CellSpaceMember"];var StateMember=_mago3d["StateMember"];var SurfaceMember=_mago3d["SurfaceMember"];var TransitionMember=_mago3d["TransitionMember"];
+	var Emitter=_mago3d["Emitter"];var Interaction=_mago3d["Interaction"];var MagoRenderable=_mago3d["MagoRenderable"];var ViewerInit=_mago3d["ViewerInit"];var APIGateway=_mago3d["APIGateway"];var ColorAPI=_mago3d["ColorAPI"];var DrawAPI=_mago3d["DrawAPI"];var LocationAndRotationAPI=_mago3d["LocationAndRotationAPI"];var LodAPI=_mago3d["LodAPI"];var AbsControl=_mago3d["AbsControl"];var Attribution=_mago3d["Attribution"];var Compass=_mago3d["Compass"];var FullScreen=_mago3d["FullScreen"];var InitCamera=_mago3d["InitCamera"];var Measure=_mago3d["Measure"];var OverviewMap=_mago3d["OverviewMap"];var Tools=_mago3d["Tools"];var Zoom=_mago3d["Zoom"];var AnimationData=_mago3d["AnimationData"];var AnimationManager=_mago3d["AnimationManager"];var BoundingBox=_mago3d["BoundingBox"];var BoundingSphere=_mago3d["BoundingSphere"];var BrowserEvent=_mago3d["BrowserEvent"];var BuildingSeed=_mago3d["BuildingSeed"];var BuildingSeedList=_mago3d["BuildingSeedList"];var BuildingSeedMap=_mago3d["BuildingSeedMap"];var Camera=_mago3d["Camera"];var CCTV=_mago3d["CCTV"];var CCTVList=_mago3d["CCTVList"];var CesiumViewerInit=_mago3d["CesiumViewerInit"];var CollisionCheckScene=_mago3d["CollisionCheckScene"];var Color=_mago3d["Color"];var ControlCollection=_mago3d["ControlCollection"];var CubeMapFBO=_mago3d["CubeMapFBO"];var DataType=_mago3d["DataType"];var DynamicColor=_mago3d["DynamicColor"];var F4dController=_mago3d["F4dController"];var FBO=_mago3d["FBO"];var FileRequestControler=_mago3d["FileRequestControler"];var FirstPersonView=_mago3d["FirstPersonView"];var Frustum=_mago3d["Frustum"];var FrustumVolumeControl=_mago3d["FrustumVolumeControl"];var GeographicCoord=_mago3d["GeographicCoord"];var GeographicCoordSegment=_mago3d["GeographicCoordSegment"];var GeographicCoordsList=_mago3d["GeographicCoordsList"];var GeographicExtent=_mago3d["GeographicExtent"];var GeoLocationData=_mago3d["GeoLocationData"];var GeoLocationDataManager=_mago3d["GeoLocationDataManager"];var Globe=_mago3d["Globe"];var HeightReference=_mago3d["HeightReference"];var IdentifierManager=_mago3d["IdentifierManager"];var InteractionCollection=_mago3d["InteractionCollection"];var LightSource=_mago3d["LightSource"];var Mago3d=_mago3d["Mago3d"];var MagoEarthViewerInit=_mago3d["MagoEarthViewerInit"];var MagoEvent=_mago3d["MagoEvent"];var MagoLayer=_mago3d["MagoLayer"];var MagoLayerCollection=_mago3d["MagoLayerCollection"];var MagoManager=_mago3d["MagoManager"];var MagoModel=_mago3d["MagoModel"];var ManagerFactory=_mago3d["ManagerFactory"];var Matrix4=_mago3d["Matrix4"];var Message=_mago3d["Message"];var MouseAction=_mago3d["MouseAction"];var Movement=_mago3d["Movement"];var ObjectMarker=_mago3d["ObjectMarker"];var ObjectMarkerManager=_mago3d["ObjectMarkerManager"];var OcclusionCullingOctree=_mago3d["OcclusionCullingOctree"];var OcclusionCullingOctreeCell=_mago3d["OcclusionCullingOctreeCell"];var Pin=_mago3d["Pin"];var Plane=_mago3d["Plane"];var Quaternion=_mago3d["Quaternion"];var SelectionColor=_mago3d["SelectionColor"];var Settings=_mago3d["Settings"];var SmartTile=_mago3d["SmartTile"];var SmartTileManager=_mago3d["SmartTileManager"];var Sphere=_mago3d["Sphere"];var SplitValue=_mago3d["SplitValue"];var SpotLight=_mago3d["SpotLight"];var SunSystem=_mago3d["SunSystem"];var TerranTile=_mago3d["TerranTile"];var Texture=_mago3d["Texture"];var TextureLayer=_mago3d["TextureLayer"];var TextureLayerFilter=_mago3d["TextureLayerFilter"];var TexturesManager=_mago3d["TexturesManager"];var TexturesStore=_mago3d["TexturesStore"];var TriPolyhedron=_mago3d["TriPolyhedron"];var TriSurface=_mago3d["TriSurface"];var VboBuffer=_mago3d["VboBuffer"];var VBOKeysNation=_mago3d["VBOKeysNation"];var VBOKeysStore=_mago3d["VBOKeysStore"];var VBOKeysWorld=_mago3d["VBOKeysWorld"];var VBOMemoryManager=_mago3d["VBOMemoryManager"];var VBOVertexIdxCacheKey=_mago3d["VBOVertexIdxCacheKey"];var VBOVertexIdxCacheKeysContainer=_mago3d["VBOVertexIdxCacheKeysContainer"];var VisibleObjectsController=_mago3d["VisibleObjectsController"];var WMSLayer=_mago3d["WMSLayer"];var XYZLayer=_mago3d["XYZLayer"];var API=_mago3d["API"];var Callback=_mago3d["Callback"];var ChangeHistory=_mago3d["ChangeHistory"];var CODE=_mago3d["CODE"];var Constant=_mago3d["Constant"];var MagoConfig=_mago3d["MagoConfig"];var Policy=_mago3d["Policy"];var Effect=_mago3d["Effect"];var EffectsManager=_mago3d["EffectsManager"];var DataStream=_mago3d["DataStream"];var i18next=_mago3d["i18next"];var i18nextBrowserLanguageDetector=_mago3d["i18nextBrowserLanguageDetector"];var i18nextXHRBackend=_mago3d["i18nextXHRBackend"];var rbush=_mago3d["rbush"];var tga=_mago3d["tga"];var Accessor=_mago3d["Accessor"];var Block=_mago3d["Block"];var BlocksArrayPartition=_mago3d["BlocksArrayPartition"];var BlocksList=_mago3d["BlocksList"];var CollisionCheckOctree=_mago3d["CollisionCheckOctree"];var HierarchyManager=_mago3d["HierarchyManager"];var InspectorBox=_mago3d["InspectorBox"];var Lego=_mago3d["Lego"];var LoadQueue=_mago3d["LoadQueue"];var LodBuilding=_mago3d["LodBuilding"];var LodBuildingData=_mago3d["LodBuildingData"];var MetaData=_mago3d["MetaData"];var ModelReferencedGroup=_mago3d["ModelReferencedGroup"];var MultiBuildings=_mago3d["MultiBuildings"];var MultiBuildingsElement=_mago3d["MultiBuildingsElement"];var NeoBuilding=_mago3d["NeoBuilding"];var NeoBuildingsList=_mago3d["NeoBuildingsList"];var NeoReference=_mago3d["NeoReference"];var NeoReferencesMotherAndIndices=_mago3d["NeoReferencesMotherAndIndices"];var NeoSimpleBuilding=_mago3d["NeoSimpleBuilding"];var NeoTexture=_mago3d["NeoTexture"];var Node=_mago3d["Node"];var Octree=_mago3d["Octree"];var ParseQueue=_mago3d["ParseQueue"];var ProcessQueue=_mago3d["ProcessQueue"];var ProjectTree=_mago3d["ProjectTree"];var ReaderWriter=_mago3d["ReaderWriter"];var SkinBuilding=_mago3d["SkinBuilding"];var TinTerrain=_mago3d["TinTerrain"];var TinTerrainManager=_mago3d["TinTerrainManager"];var Arc2D=_mago3d["Arc2D"];var AxisXYZ=_mago3d["AxisXYZ"];var BoundingRectangle=_mago3d["BoundingRectangle"];var BoxAux=_mago3d["BoxAux"];var BSplineCubic3D=_mago3d["BSplineCubic3D"];var Circle2D=_mago3d["Circle2D"];var Cluster=_mago3d["Cluster"];var CuttingPlane=_mago3d["CuttingPlane"];var Excavation=_mago3d["Excavation"];var Face=_mago3d["Face"];var HalfEdge=_mago3d["HalfEdge"];var HalfEdgesList=_mago3d["HalfEdgesList"];var IndexData=_mago3d["IndexData"];var IndexRange=_mago3d["IndexRange"];var Intersect=_mago3d["Intersect"];var Line=_mago3d["Line"];var Line2D=_mago3d["Line2D"];var MagoGeometry=_mago3d["MagoGeometry"];var MagoNativeProject=_mago3d["MagoNativeProject"];var MagoPoint=_mago3d["MagoPoint"];var MagoPolyline=_mago3d["MagoPolyline"];var MagoPolylineGround=_mago3d["MagoPolylineGround"];var MagoRectangle=_mago3d["MagoRectangle"];var MagoRectangleGround=_mago3d["MagoRectangleGround"];var MagoWorld=_mago3d["MagoWorld"];var Material=_mago3d["Material"];var MaterialsManager=_mago3d["MaterialsManager"];var Mesh=_mago3d["Mesh"];var Modeler=_mago3d["Modeler"];var ParametricMesh=_mago3d["ParametricMesh"];var Path3D=_mago3d["Path3D"];var PipeKnot=_mago3d["PipeKnot"];var PipePath=_mago3d["PipePath"];var PlaneGrid=_mago3d["PlaneGrid"];var Point2D=_mago3d["Point2D"];var Point2DList=_mago3d["Point2DList"];var Point3D=_mago3d["Point3D"];var Point3DList=_mago3d["Point3DList"];var Point4D=_mago3d["Point4D"];var Polygon2D=_mago3d["Polygon2D"];var PolyLine2D=_mago3d["PolyLine2D"];var PolyLine3D=_mago3d["PolyLine3D"];var ProcessCounterManager=_mago3d["ProcessCounterManager"];var Profile2D=_mago3d["Profile2D"];var Profiles2DList=_mago3d["Profiles2DList"];var QuatTree=_mago3d["QuatTree"];var Rectangle2D=_mago3d["Rectangle2D"];var Ring2D=_mago3d["Ring2D"];var Ring2DList=_mago3d["Ring2DList"];var RingType=_mago3d["RingType"];var ScreenQuad=_mago3d["ScreenQuad"];var Segment2D=_mago3d["Segment2D"];var Segment3D=_mago3d["Segment3D"];var ShadowMesh=_mago3d["ShadowMesh"];var Sky=_mago3d["Sky"];var Star2D=_mago3d["Star2D"];var StaticModel=_mago3d["StaticModel"];var Surface=_mago3d["Surface"];var Triangle=_mago3d["Triangle"];var Triangle2D=_mago3d["Triangle2D"];var TrianglesList=_mago3d["TrianglesList"];var TrianglesMatrix=_mago3d["TrianglesMatrix"];var Tunnel=_mago3d["Tunnel"];var Vertex=_mago3d["Vertex"];var VertexList=_mago3d["VertexList"];var VertexMatrix=_mago3d["VertexMatrix"];var VertexOctree=_mago3d["VertexOctree"];var VtxProfile=_mago3d["VtxProfile"];var VtxProfilesList=_mago3d["VtxProfilesList"];var VtxRing=_mago3d["VtxRing"];var VtxRingsList=_mago3d["VtxRingsList"];var VtxSegment=_mago3d["VtxSegment"];var AbsClickInteraction=_mago3d["AbsClickInteraction"];var AbsPointerInteraction=_mago3d["AbsPointerInteraction"];var ClickInteraction=_mago3d["ClickInteraction"];var DrawGeometryInteraction=_mago3d["DrawGeometryInteraction"];var InteractionActiveType=_mago3d["InteractionActiveType"];var InteractionEventType=_mago3d["InteractionEventType"];var LineDrawer=_mago3d["LineDrawer"];var NativeUpDownInteraction=_mago3d["NativeUpDownInteraction"];var PointDrawer=_mago3d["PointDrawer"];var PointSelectInteraction=_mago3d["PointSelectInteraction"];var RectangleDrawer=_mago3d["RectangleDrawer"];var RotateInteraction=_mago3d["RotateInteraction"];var TranslateInteraction=_mago3d["TranslateInteraction"];var Message=_mago3d["Message"];var MessageSource=_mago3d["MessageSource"];var GeoServer=_mago3d["GeoServer"];var AnimatedPerson=_mago3d["AnimatedPerson"];var Arrow=_mago3d["Arrow"];var BasicFactory=_mago3d["BasicFactory"];var BasicVehicle=_mago3d["BasicVehicle"];var Box=_mago3d["Box"];var ClippingBox=_mago3d["ClippingBox"];var ClippingPlane=_mago3d["ClippingPlane"];var ConcentricTubes=_mago3d["ConcentricTubes"];var Cone=_mago3d["Cone"];var Cylinder=_mago3d["Cylinder"];var Ellipsoid=_mago3d["Ellipsoid"];var ExtrusionBuilding=_mago3d["ExtrusionBuilding"];var ExtrusionWall=_mago3d["ExtrusionWall"];var GolfHoleFlag=_mago3d["GolfHoleFlag"];var ImageViewerRectangle=_mago3d["ImageViewerRectangle"];var LegendColorRamp=_mago3d["LegendColorRamp"];var Pipe=_mago3d["Pipe"];var PointMesh=_mago3d["PointMesh"];var RenderableObject=_mago3d["RenderableObject"];var SkeletalAnimationObject=_mago3d["SkeletalAnimationObject"];var SpeechBubble=_mago3d["SpeechBubble"];var TerrainScannerLinear=_mago3d["TerrainScannerLinear"];var TestFreeContourWallBuilding=_mago3d["TestFreeContourWallBuilding"];var Tube=_mago3d["Tube"];var VectorExtrudedMesh=_mago3d["VectorExtrudedMesh"];var VectorMesh=_mago3d["VectorMesh"];var VectorMeshWind=_mago3d["VectorMeshWind"];var Vehicle=_mago3d["Vehicle"];var Wheel=_mago3d["Wheel"];var Renderer=_mago3d["Renderer"];var RenderingSettings=_mago3d["RenderingSettings"];var SceneState=_mago3d["SceneState"];var Selection=_mago3d["Selection"];var SelectionCandidateFamily=_mago3d["SelectionCandidateFamily"];var SelectionManager=_mago3d["SelectionManager"];var AttribLocationState=_mago3d["AttribLocationState"];var PostFxShader=_mago3d["PostFxShader"];var PostFxShadersManager=_mago3d["PostFxShadersManager"];var ShaderSource=_mago3d["ShaderSource"];var Uniform1fDataPair=_mago3d["Uniform1fDataPair"];var Uniform1iDataPair=_mago3d["Uniform1iDataPair"];var UniformMatrix4fvDataPair=_mago3d["UniformMatrix4fvDataPair"];var UniformVec2fvDataPair=_mago3d["UniformVec2fvDataPair"];var UniformVec3fvDataPair=_mago3d["UniformVec3fvDataPair"];var UniformVec4fvDataPair=_mago3d["UniformVec4fvDataPair"];var Network=_mago3d["Network"];var NetworkEdge=_mago3d["NetworkEdge"];var NetworkNode=_mago3d["NetworkNode"];var NetworkSpace=_mago3d["NetworkSpace"];var ByteColor=_mago3d["ByteColor"];var CameraController=_mago3d["CameraController"];var createGuid=_mago3d["createGuid"];var defaultValue=_mago3d["defaultValue"];var defaultValueCheckLength=_mago3d["defaultValueCheckLength"];var defined=_mago3d["defined"];var GeometryUtils=_mago3d["GeometryUtils"];var isEmpty=_mago3d["isEmpty"];var loadWithXhr=_mago3d["loadWithXhr"];var ManagerUtils=_mago3d["ManagerUtils"];var Polyfill=_mago3d["Polyfill"];var throwAbstractError=_mago3d["throwAbstractError"];var true=_mago3d["true"];var workerDecodeTerrain=_mago3d["workerDecodeTerrain"];var workerParseTerrain=_mago3d["workerParseTerrain"];var OlMago3d=_mago3d["OlMago3d"];var Promise=_mago3d["Promise"];var GMLDataContainer=_mago3d["GMLDataContainer"];var JsonParsor_1_0_1=_mago3d["JsonParsor_1_0_1"];var JsonParsor_1_0_3=_mago3d["JsonParsor_1_0_3"];var CellSpaceMember=_mago3d["CellSpaceMember"];var StateMember=_mago3d["StateMember"];var SurfaceMember=_mago3d["SurfaceMember"];var TransitionMember=_mago3d["TransitionMember"];
     'use strict';
 
 
@@ -652,7 +652,39 @@ DustVolume.prototype.createDustDisplayPlane = function(magoManager)
 			var mesh = this.dustDisplayPlaneForTexture.getObject(0); // there are only 1 object.
 			mesh.calculateTexCoordsBox(undefined);
 		}
-		
+		/*
+		// Test to create a speechBubble of the plane.************************************************************
+		var bubbleWidth = 128;
+		var bubbleHeight = 128;
+		var textSize = 24;
+
+		var target = {
+			nativeId  : dustDisplayPlane._guid,
+			nativeObject : dustDisplayPlane
+		};
+	
+		var commentTextOption = {
+			pixel       : textSize,
+			color       : 'blue',
+			borderColor : 'blue',
+			text        : '권재현바보'
+		};
+	
+		var speechBubbleOptions = {
+			width             : bubbleWidth,
+			height            : bubbleHeight,
+			commentTextOption : commentTextOption,
+			bubbleColor       : {r: 1, g: 1, b: 1}
+		};
+	
+		var options = {
+			speechBubbleOptions : speechBubbleOptions,
+			target              : target
+		};
+	
+		magoManager.objMarkerManager.newObjectMarkerSpeechBubble(options, magoManager.objMarkerManager);
+		// End the speechBubble test.-------------------------------------------------------------------------------
+		*/
 	}
 	return true;
 };
@@ -1002,6 +1034,8 @@ DustVolume.prototype._getDustConcentration = function(geoCoord, magoManager)
 
 	var dustLayerDown = this.dustLayersArray[info.idxDown];
 	var dustLayerUp = this.dustLayersArray[info.idxUp];
+
+	//var dustLayerUp = this.dustLayersArray[info.idxDown]; // delete this.
 	
 
 	// Test. get concentration with no interpolation.
@@ -3677,62 +3711,7 @@ WeatherStation.prototype.renderWindLayerDisplayPlanes = function(magoManager)
 	return;
 };
 
-WeatherStation.prototype.TEST_SIHEUNG = function(magoManager)
-{
-	// 20210126.***
-	if (this.windTest === undefined)
-	{
-	
-		var geometryDataPath = magoManager.readerWriter.geometryDataPath;
-		// JejuAirport, jejuHanRaSan.
-		//var windDataFilesNamesArray = ["OBS-QWM_2016062000.grib2_wind_000", "OBS-QWM_2016062001.grib2_wind_000", "OBS-QWM_2016062002.grib2_wind_000", "OBS-QWM_2016062003.grib2_wind_000",
-		//	"OBS-QWM_2016062004.grib2_wind_000", "OBS-QWM_2016062005.grib2_wind_000", "OBS-QWM_2016062006.grib2_wind_000", "OBS-QWM_2016062007.grib2_wind_000",
-		//	"OBS-QWM_2016062008.grib2_wind_000", "OBS-QWM_2016062009.grib2_wind_000", "OBS-QWM_2016062010.grib2_wind_000", "OBS-QWM_2016062011.grib2_wind_000",
-		//	"OBS-QWM_2016062012.grib2_wind_000", "OBS-QWM_2016062013.grib2_wind_000", "OBS-QWM_2016062014.grib2_wind_000", "OBS-QWM_2016062015.grib2_wind_000",
-		//	"OBS-QWM_2016062016.grib2_wind_000", "OBS-QWM_2016062017.grib2_wind_000", "OBS-QWM_2016062018.grib2_wind_000", "OBS-QWM_2016062019.grib2_wind_000",
-		//	"OBS-QWM_2016062020.grib2_wind_000", "OBS-QWM_2016062021.grib2_wind_000", "OBS-QWM_2016062022.grib2_wind_000", "OBS-QWM_2016062023.grib2_wind_000"]; // jeju, hanRaSan
-		
-			
-		// Seoul data.
-		
-			var windDataFilesNamesArray = ["OBS-QWM_2019090700.grib2_wind_000", "OBS-QWM_2019090701.grib2_wind_000", "OBS-QWM_2019090702.grib2_wind_000", "OBS-QWM_2019090703.grib2_wind_000",
-			"OBS-QWM_2019090704.grib2_wind_000", "OBS-QWM_2019090705.grib2_wind_000", "OBS-QWM_2019090706.grib2_wind_000", "OBS-QWM_2019090707.grib2_wind_000",
-			"OBS-QWM_2019090708.grib2_wind_000", "OBS-QWM_2019090709.grib2_wind_000", "OBS-QWM_2019090710.grib2_wind_000", "OBS-QWM_2019090711.grib2_wind_000",
-			"OBS-QWM_2019090712.grib2_wind_000", "OBS-QWM_2019090713.grib2_wind_000", "OBS-QWM_2019090714.grib2_wind_000", "OBS-QWM_2019090715.grib2_wind_000",
-			"OBS-QWM_2019090716.grib2_wind_000", "OBS-QWM_2019090717.grib2_wind_000", "OBS-QWM_2019090718.grib2_wind_000", "OBS-QWM_2019090719.grib2_wind_000",
-			"OBS-QWM_2019090720.grib2_wind_000", "OBS-QWM_2019090721.grib2_wind_000", "OBS-QWM_2019090722.grib2_wind_000", "OBS-QWM_2019090723.grib2_wind_000"]; // seoulData.
-			
-		
-		//Siheung_wind
-		//var windDataFilesNamesArray = ["OBS-QWM_2019090700.grib2_wind_000", "OBS-QWM_2019090701.grib2_wind_000", "OBS-QWM_2019090702.grib2_wind_000", "OBS-QWM_2019090703.grib2_wind_000",
-		//	"OBS-QWM_2019090704.grib2_wind_000", "OBS-QWM_2019090705.grib2_wind_000", "OBS-QWM_2019090706.grib2_wind_000", "OBS-QWM_2019090707.grib2_wind_000",
-		//	"OBS-QWM_2019090708.grib2_wind_000", "OBS-QWM_2019090709.grib2_wind_000", "OBS-QWM_2019090710.grib2_wind_000", "OBS-QWM_2019090711.grib2_wind_000",
-		//	"OBS-QWM_2019090712.grib2_wind_000", "OBS-QWM_2019090713.grib2_wind_000", "OBS-QWM_2019090714.grib2_wind_000", "OBS-QWM_2019090715.grib2_wind_000",
-		//	"OBS-QWM_2019090716.grib2_wind_000", "OBS-QWM_2019090717.grib2_wind_000", "OBS-QWM_2019090718.grib2_wind_000", "OBS-QWM_2019090719.grib2_wind_000",
-		//	"OBS-QWM_2019090720.grib2_wind_000", "OBS-QWM_2019090721.grib2_wind_000", "OBS-QWM_2019090722.grib2_wind_000", "OBS-QWM_2019090723.grib2_wind_000"];
-		
-		
-			
-		//var windMapFilesFolderPath = geometryDataPath +"/JeJu_wind_Airport";
-		//var windMapFilesFolderPath = geometryDataPath +"/JeJu_wind_GolfPark_NineBridge1";
-		var windMapFilesFolderPath = geometryDataPath +"/SeoulWind/200907";
-		//var windMapFilesFolderPath = geometryDataPath +"/JeJu_wind_HanRaSan";
-		//var windMapFilesFolderPath = geometryDataPath +"/Siheung_wind";
-
-		// yeonHwa test data.*********************************************
-		var windDataFilesNamesArray = ["wind_7"];
-		var windMapFilesFolderPath = geometryDataPath +"/wind_yeonHwa";
-
-		// world test data.*********************************************
-		//var windDataFilesNamesArray = ["2016112012"];
-		//var windMapFilesFolderPath = geometryDataPath +"/wind_world";
-		
-		this.test_loadWindData3d(magoManager, windDataFilesNamesArray, windMapFilesFolderPath);
-		this.windTest = true;
-	}
-};
-
-WeatherStation.prototype.loadWindGeoJson = function(geoJsonFilePath)
+WeatherStation.prototype.loadWindGeoJson = function (geoJsonFilePath)
 {
 	// This is the geoJson version. 2021.
 	// Create a windVolume & load the wind-geoJson.
@@ -3788,17 +3767,17 @@ WeatherStation.prototype.loadDustGeoJson = function(geoJsonFilePath)
 {
 	// This is the geoJson version. 2021.
 	// Create a windVolume & load the wind-geoJson.
-	if(!geoJsonFilePath)
+	if (!geoJsonFilePath)
 	return false;
 
 	// calculate the geoJsonFileFolderPath.***
 	var geoJsonFileFolderPath = "";
 	var splitted = geoJsonFilePath.split('\\');
 	var spilttedsCount = splitted.length;
-	for(var i=0; i<spilttedsCount-1; i++)
+	for (var i=0; i<spilttedsCount-1; i++)
 	{
 		var word = splitted[i];
-		if(word.length > 0)
+		if (word.length > 0)
 		{
 			geoJsonFileFolderPath += "\\";
 			geoJsonFileFolderPath += word;
@@ -3834,25 +3813,6 @@ WeatherStation.prototype.addDust = function(geoJson)
 		geoJsonFile : geoJson
 	};
 	var windVolume = this.newDustVolume(options);
-};
-
-WeatherStation.prototype.test_loadWindData3d = function(magoManager, windMapFileNamesArray, windMapFilesFolderPath)
-{
-	// Provisionally hardCoding.***
-	var gl = magoManager.getGl();
-	var geometryDataPath = magoManager.readerWriter.geometryDataPath;
-	this.altitudeAux = 0.0;
-	
-	// test windVolume.
-	var windVolume = this.newWindVolume();
-	windVolume.loadWindData3d(magoManager, windMapFileNamesArray, windMapFilesFolderPath);
-	/*
-	var windVolume = this.newWindVolume();
-	windVolume.loadWindData3d(magoManager, windMapFileNamesArray, windMapFilesFolderPath);
-	
-	var windVolume = this.newWindVolume();
-	windVolume.loadWindData3d(magoManager, windMapFileNamesArray, windMapFilesFolderPath);
-	*/
 };
 
 WeatherStation.prototype.test_loadDustData3d = function(magoManager, dustMapFileNamesArray, dustMapFilesFolderPath)
@@ -4388,7 +4348,7 @@ WindLayer.prototype.parseWindDataGeoJson = function(jsonData)
 	return false;
 };
 
-WindLayer.prototype.prepareWindLayer = function()
+WindLayer.prototype.prepareWindLayer = function ()
 {
 	// Check if the winsMapTexture is loaded.
 	if(this.gl === undefined)
@@ -4645,7 +4605,7 @@ WindLayer.prototype.deleteObjects = function(magoManager)
 	this.windVelocityMap = undefined;
 };
 
-WindLayer.prototype.getVelocityVector3d = function(pixelX, pixelY, resultPoint3d, magoManager)
+WindLayer.prototype.getVelocityVector3d = function (pixelX, pixelY, resultPoint3d, magoManager)
 {
 	// Note: to call this function MUST BE BINDED the windTexture.
 	if(this.windMapTexture.fileLoadState !== CODE.fileLoadState.BINDING_FINISHED)
@@ -4668,11 +4628,11 @@ WindLayer.prototype.getVelocityVector3d = function(pixelX, pixelY, resultPoint3d
 	{
 		var gl = magoManager.getGl();
 
-		if (this.framebuffer === undefined)
-		{ this.framebuffer = gl.createFramebuffer(); }
+		if (this.windVolume.framebuffer === undefined)
+		{ this.windVolume.framebuffer = gl.createFramebuffer(); }
 
 		// bind framebuffer.
-		gl.bindFramebuffer(gl.FRAMEBUFFER, this.framebuffer);
+		gl.bindFramebuffer(gl.FRAMEBUFFER, this.windVolume.framebuffer);
 		// attach the WINDMAP texture to the framebuffer.
 		gl.framebufferTexture2D( gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.windMapTexture.texId, 0);
 		var canRead = (gl.checkFramebufferStatus(gl.FRAMEBUFFER) === gl.FRAMEBUFFER_COMPLETE);
@@ -4777,7 +4737,7 @@ WindLayer.prototype.getVelocityVector2d_biLinearInterpolation = function(s, t, r
 	return resultPoint2d;
 };
 
-WindLayer.prototype.getVelocityVector3d_biLinearInterpolation = function(s, t, resultPoint3d, magoManager)
+WindLayer.prototype.getVelocityVector3d_biLinearInterpolation = function (s, t, resultPoint3d, magoManager)
 {
 	/*
 	vec2 px = 1.0 / u_wind_res;
@@ -4789,6 +4749,8 @@ WindLayer.prototype.getVelocityVector3d_biLinearInterpolation = function(s, t, r
     vec2 br = texture2D(u_wind, vc + px).rg;
 	return mix(mix(tl, tr, f.x), mix(bl, br, f.x), f.y);
 	*/
+
+	////magoManager.windPngTex = this.windMapTexture.texId; // delete this test code line!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	var texWidth = this.windMapTexture.imageWidth;
 	var texHeight = this.windMapTexture.imageHeight;
@@ -4890,9 +4852,7 @@ WindLayer.prototype.getTrajectoryInLocalCoordinates = function(startGeoCoord, ma
 		var s = (currLon - minLonRad)/lonRadRange;
 		var t = (currLat - minLatRad)/latRadRange;
 		var r = (currAlt - minAlt)/(maxAlt - minAlt);
-		//var pixelX = Math.floor(s*texWidth);
-		//var pixelY = Math.floor(t*texHeight);
-		//var velocity2d = this.getVelocityVector2d_biLinearInterpolation(s, t, undefined, magoManager); 
+
 		var velocity2d = this.getVelocityVector3d_biLinearInterpolation(s, t, undefined, magoManager); 
 		
 		// calculate currLon & currLat.
@@ -4938,7 +4898,7 @@ WindLayer.prototype.getWindPlaneFBO = function(magoManager)
 	return this.windPlaneFBO;
 };
 
-WindLayer.prototype.renderWindPlaneDepth = function(magoManager)
+WindLayer.prototype.renderWindPlaneDepth = function (magoManager)
 {
 	// This function renders the wind-layer depth texture.
 	// Provisionally wind-layer is a rectangle3d.
@@ -5038,6 +4998,8 @@ WindLayer.prototype.renderMode3D = function(magoManager)
 
 	if(magoManager.currentFrustumIdx > 2)
 	return;
+
+	
 	
 	// test to render in 3d directly.***
 	// No need weatherEarth.***
@@ -5196,7 +5158,7 @@ WindLayer.prototype.render = function(magoManager)
 	}
 };
 
-WindLayer.prototype.renderWindScreen = function()
+WindLayer.prototype.renderWindScreen = function ()
 {
 	var gl = this.gl;
 	// draw the screen into a temporary framebuffer to retain it as the background on the next frame
@@ -5225,7 +5187,6 @@ WindLayer.prototype.drawFadeScreen = function(texture, opacity)
 	FBO.bindTexture(gl, texture, 2);
 	gl.uniform1i(program.u_screen, 2);
 	gl.uniform1f(program.u_opacity, opacity);
-	
 
 	gl.drawArrays(gl.TRIANGLES, 0, 6);
 };
@@ -5857,7 +5818,7 @@ WindVolume.prototype._createdElemsForDisplayBox = function(magoManager)
 	}
 };
 
-WindVolume.prototype.loadWindGeoJson = function()
+WindVolume.prototype.loadWindGeoJson = function ()
 {
 	// This is the geoJson version. 2021.
 	if(this._geoJsonFileLoadState === CODE.fileLoadState.READY)
@@ -5868,69 +5829,16 @@ WindVolume.prototype.loadWindGeoJson = function()
 		{
 			that._geoJsonFileLoadState = CODE.fileLoadState.LOADING_FINISHED;
 			that._geoJsonFile = res;
+
+			if(that._geoJsonFile)
+			{
+				if(that._geoJsonFile.style && that._geoJsonFile.style.colorRamp)
+				{
+					// make a colorRamp.
+					that.colorRamp = new ColorRamp(that._geoJsonFile.style.colorRamp);
+				}
+			}
 		});
-	}
-};
-
-WindVolume.prototype.loadWindData3d = function(magoManager, windMapFileNamesArray, windMapFilesFolderPath)
-{
-	// Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.***
-	// Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.***
-	// Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.***
-	// Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.***
-	// Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.***
-	// Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.*** Old.***
-	// Provisionally hardCoding.***
-	var gl = magoManager.getGl();
-	var geometryDataPath = magoManager.readerWriter.geometryDataPath;
-	this.altitudeAux = 0.0;
-	
-	var filesCount = windMapFileNamesArray.length;
-	for (var i=0; i<filesCount; i++)
-	{
-		this.altitudeAux += 50.0;
-		
-		var options = {
-			name              : "Seoul",
-			speedFactor       : 1.0, // default = 1.
-			dropRate          : 0.003,
-			dropRateBump      : 0.001,
-			numParticles      : 65536/8,
-			layerAltitude     : this.altitudeAux,
-			windMapFileName   : windMapFileNamesArray[i],
-			windMapFolderPath : windMapFilesFolderPath,
-			particlesPositionTexturesCount : 20,
-			pendentPointSize : 25000
-		};
-		/*
-		var options = {
-			name              : "Sihung",
-			speedFactor       : 2.0,
-			dropRate          : 0.003,
-			dropRateBump      : 0.001,
-			numParticles      : 65536/4,
-			layerAltitude     : this.altitudeAux,
-			windMapFileName   : windMapFileNamesArray[i],
-			windMapFolderPath : windMapFilesFolderPath,
-			particlesPositionTexturesCount : 20,
-			pendentPointSize : 5000
-		};
-		*/
-		
-		var firstWindLayer;
-		if (this.getWindLayersCount() > 0)
-		{
-			// maintain the 1rst windLayer.
-			firstWindLayer = this.getWindLayer(0);
-		}
-
-		var windLayer = this.newWindLayer(options);
-		windLayer.init(gl, magoManager);
-		
-		if (firstWindLayer !== undefined)
-		{
-			windLayer.particlesPositionTexturesArray = firstWindLayer.particlesPositionTexturesArray;
-		}
 	}
 };
 
@@ -6062,7 +5970,7 @@ WindVolume.prototype._getRayIntersectionWithVolume = function(screenX, screenY, 
 	return new Segment3D(posCC_front, posCC_rear);
 };
 
-WindVolume.prototype.newWindStreamLine = function(magoManager)
+WindVolume.prototype.newWindStreamLine = function (magoManager)
 {
 	var optionsThickLine = {};
 	optionsThickLine.startColor = new Color(0.8, 1.0, 1.0, 1.0);
@@ -6481,7 +6389,7 @@ WindVolume.prototype.renderDepthWindVolume = function(magoManager)
 		]);
 };
 
-WindVolume.prototype.renderMode3DThickLines = function(magoManager)
+WindVolume.prototype.renderMode3DThickLines = function (magoManager)
 {
 	if (!this.prepareVolume(magoManager))
 	{ return; }
@@ -6505,7 +6413,6 @@ WindVolume.prototype.renderMode3DThickLines = function(magoManager)
 			}
 		}
 	}
-
 	
 	var extbuffers = magoManager.extbuffers;
 	var gl = magoManager.getGl();
@@ -6861,7 +6768,7 @@ WindVolume.prototype._getTrajectoryInLocalCoordinates = function(startGeoCoord, 
 	var resultPointsLCArray = []; 
 
 	var pointLC = new Point3D();
-	resultPointsLCArray.push(pointLC); // push the 1rst pointLC.
+	//resultPointsLCArray.push(pointLC); // push the 1rst pointLC.***
 
 	var curXinMeters = 0.0;
 	var curYinMeters = 0.0;
@@ -6937,6 +6844,11 @@ WindVolume.prototype._getTrajectoryInLocalCoordinates = function(startGeoCoord, 
 		var pointLC = new Point3D(curXinMeters, curYinMeters, curZinMeters);
 		resultPointsLCArray.push(pointLC); // push the 1rst pointLC.
 
+		if(options.velocitiesArray)
+		{
+			options.velocitiesArray.push(velocity3d);
+		}
+
 		// Now, calculate geoCoord for next point.
 		currLon += offsetXinMeters * meterToLon;
 		currLat += offsetYinMeters * meterToLat;
@@ -6953,7 +6865,7 @@ WindVolume.prototype._getTrajectoryInLocalCoordinates = function(startGeoCoord, 
 	return resultPointsLCArray;
 };
 
-WindVolume.prototype._getWindStreamLine = function(startGeoCoord, magoManager, options)
+WindVolume.prototype._getWindStreamLine = function (startGeoCoord, magoManager, options)
 {	
 	// 1rst, make points3dList relative to the 1rst_geoCoord.
 	if (options === undefined)
@@ -6966,6 +6878,15 @@ WindVolume.prototype._getWindStreamLine = function(startGeoCoord, magoManager, o
 
 	if (options.color === undefined)
 	{ options.color = new Color(1.0, 0.3, 0.3, 1.0); }
+
+	// check the colorRamp.***
+	if(this.colorRamp)
+	{
+		// need velocities array.
+		if(options.velocitiesArray === undefined)
+		{ options.velocitiesArray = []; }
+	}
+	
 
 	// Make pointsLC rel to startGeoCoord.
 	var points3dLCArray = this._getTrajectoryInLocalCoordinates(startGeoCoord, magoManager, options);
@@ -6984,6 +6905,40 @@ WindVolume.prototype._getWindStreamLine = function(startGeoCoord, magoManager, o
 	var optionsThickLine = {
 		colorType: "alphaGradient"
 	};
+
+	// If exist this.colorRamp, then create colorsArray.*****************************************************************************
+	if(this.colorRamp)
+	{
+		options.colorsArray = []; // create colors array.***
+
+		var valuesCount = options.velocitiesArray.length;
+		var color; 
+		var vel, speed;
+		var minSpeed = 1000000.0;
+		var maxSpeed = -100.0;
+		for(var i=0; i<valuesCount; i++)
+		{
+			vel = options.velocitiesArray[i];
+			speed = vel.getModul();
+			color = this.colorRamp.getInterpolatedColor(speed);
+			options.colorsArray.push(color);
+
+			if(speed > maxSpeed)
+			{
+				maxSpeed = speed;
+			}
+			else if(speed < minSpeed)
+			{
+				minSpeed = speed;
+			}
+		}
+
+		console.info("minSpeed" + minSpeed);
+		console.info("maxSpeed" + maxSpeed);
+	}
+
+
+
 	vectorMesh.vboKeysContainer = Point3DList.getVboThickLines(magoManager, points3dLCArray, vectorMesh.vboKeysContainer, options);
 	vectorMesh.geoLocDataManager = new GeoLocationDataManager();
 	vectorMesh.geoLocDataManager.addGeoLocationData(geoLoc);
