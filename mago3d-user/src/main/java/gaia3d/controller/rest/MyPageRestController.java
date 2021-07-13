@@ -4,6 +4,7 @@ import gaia3d.domain.Key;
 import gaia3d.domain.policy.Policy;
 import gaia3d.domain.user.UserInfo;
 import gaia3d.domain.user.UserSession;
+import gaia3d.domain.user.UserStatus;
 import gaia3d.security.crypto.Crypt;
 import gaia3d.service.PolicyService;
 import gaia3d.service.UserService;
@@ -39,111 +40,49 @@ public class MyPageRestController {
 	private PolicyService policyService;
 
 	/**
-	 * 비밀번호 수정
-	 * @param request
-	 * @param userInfo
-	 * @return
-	 */
-	@PostMapping(value = "/password/modify")
-	public Map<String, Object> passwordModify(HttpServletRequest request, @ModelAttribute UserInfo userInfo) {
-		log.info("@@@@@ update modifyPasswordForm = {}", userInfo);
-		Policy policy = policyService.getPolicy();
-
-		Map<String, Object> result = new HashMap<>();
-		String message = null;
-
-		String errorcode = "";
-
-		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
-		UserInfo dbUserInfo = userService.getUser(userSession.getUserId());
-
-		if(!PasswordSupport.isEquals(dbUserInfo.getPassword(), userInfo.getPassword())){
-			errorcode = "user.password.compare.invalid";
-			log.info("@@@@@@@@@@@@@ errcode = {}", errorcode);
-			result.put("errorCode", errorcode);
-			result.put("policy", policy);
-			return result;
-		}
-
-		if(!userInfo.getNewPassword().equals(userInfo.getNewPasswordConfirm())){
-			errorcode = "user.password.confirm.invalid";
-			log.info("@@@@@@@@@@@@@ errcode = {}", errorcode);
-			result.put("errorCode", errorcode);
-			result.put("policy", policy);
-			return result;
-		}
-
-		errorcode = PasswordSupport.validateUserPassword(policy, userInfo);
-
-		if(errorcode != null) {
-			log.info("@@@@@@@@@@@@@ errcode = {}", errorcode);
-			result.put("errorCode", errorcode);
-			result.put("policy", policy);
-			return result;
-		}
-
-		userInfo.setUserId(userSession.getUserId());
-		String encryptPassword = PasswordSupport.encodePassword(userInfo.getNewPassword());
-		userInfo.setPassword(encryptPassword);
-		userInfo.setStatus("0");
-		userService.updatePassword(userInfo);
-
-		int statusCode = HttpStatus.OK.value();
-
-		result.put("statusCode", statusCode);
-		result.put("errorCode", errorcode);
-		result.put("message", message);
-
-		return result;
-	}
-
-	/**
 	 * 이메일 수정
 	 * @param request
 	 * @param userInfo
 	 * @return
 	 */
-	@PostMapping(value = "/email/modify")
-	public Map<String, Object> emailModify(HttpServletRequest request, @ModelAttribute UserInfo userInfo) {
-		log.info("@@@@@ update modifyPasswordForm = {}", userInfo);
-		Policy policy = policyService.getPolicy();
+	@PostMapping(value = "/emails")
+	public Map<String, Object> emailUpdate(HttpServletRequest request, @ModelAttribute UserInfo userInfo) {
+		log.info("@@@@@ emailUpdate userInfo = {}", userInfo);
 
 		Map<String, Object> result = new HashMap<>();
 		String message = null;
-
-		String errorcode = "";
+		String errorcode = null;
 
 		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
 		UserInfo dbUserInfo = userService.getUser(userSession.getUserId());
-		String decryptEamil = Crypt.decrypt(dbUserInfo.getEmail());
-		String newEncryptEamil = Crypt.encrypt(userInfo.getNewEmail());
+		String newEncryptEmail = Crypt.encrypt(userInfo.getNewEmail());
 
-		if(!userInfo.getEmail().equals(decryptEamil)){
-			errorcode = "user.email.compare.invalid";
-			log.info("@@@@@@@@@@@@@ errcode = {}", errorcode);
-			result.put("errorCode", errorcode);
-			result.put("policy", policy);
+		if(userInfo.getEmail() != null && !userInfo.getEmail().equals(dbUserInfo.getViewEmail())) {
+			log.info("@@@@@@@@@@@@@ email different. db = {}, input = {}", dbUserInfo.getViewEmail(), userInfo.getEmail());
+			result.put("statusCode", HttpStatus.BAD_REQUEST.value());
+			result.put("errorCode", "user.email.compare.invalid");
+			result.put("message", message);
 			return result;
 		}
 
 		if(!isValidEmail(userInfo.getNewEmail())){
-			errorcode = "user.email.invalid";
-			log.info("@@@@@@@@@@@@@ errcode = {}", errorcode);
-			result.put("errorCode", errorcode);
-			result.put("policy", policy);
+			log.info("@@@@@@@@@@@@@ user.email.invalid");
+			result.put("statusCode", HttpStatus.BAD_REQUEST.value());
+			result.put("errorCode", "user.email.invalid");
+			result.put("message", message);
 			return result;
 		}
 
-		if(userService.isEmailDuplication(newEncryptEamil)){
-			errorcode = "user.email.duplication";
-			log.info("@@@@@@@@@@@@@ errcode = {}", errorcode);
-			result.put("errorCode", errorcode);
-			result.put("policy", policy);
+		if(userService.isEmailDuplication(newEncryptEmail)){
+			log.info("@@@@@@@@@@@@@ user.email.duplication");
+			result.put("statusCode", HttpStatus.BAD_REQUEST.value());
+			result.put("errorCode", "user.email.duplication");
+			result.put("message", message);
 			return result;
 		}
 
 		userInfo.setUserId(userSession.getUserId());
-		userInfo.setEmail(newEncryptEamil);
+		userInfo.setEmail(newEncryptEmail);
 		userService.updateEmail(userInfo);
 
 		int statusCode = HttpStatus.OK.value();
@@ -155,15 +94,72 @@ public class MyPageRestController {
 		return result;
 	}
 
+	/**
+	 * 비밀번호 수정
+	 * @param request
+	 * @param userInfo
+	 * @return
+	 */
+	@PostMapping(value = "/passwords")
+	public Map<String, Object> passwordUpdate(HttpServletRequest request, @ModelAttribute UserInfo userInfo) {
+		log.info("@@@@@ passwordUpdate userInfo = {}", userInfo);
+
+		Map<String, Object> result = new HashMap<>();
+		String message = null;
+		String errorcode = null;
+
+		Policy policy = policyService.getPolicy();
+
+		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
+		UserInfo dbUserInfo = userService.getUser(userSession.getUserId());
+		if(!PasswordSupport.isEquals(dbUserInfo.getPassword(), userInfo.getPassword())) {
+			log.info("@@@@@@@@@@@@@ user.password.compare.invalid");
+			result.put("statusCode", HttpStatus.BAD_REQUEST.value());
+			result.put("errorCode", "user.password.compare.invalid");
+			result.put("message", message);
+			return result;
+		}
+
+		if(!userInfo.getNewPassword().equals(userInfo.getNewPasswordConfirm())) {
+			log.info("@@@@@@@@@@@@@ user.password.confirm.invalid");
+			result.put("statusCode", HttpStatus.BAD_REQUEST.value());
+			result.put("errorCode", "user.password.confirm.invalid");
+			result.put("message", message);
+			return result;
+		}
+
+		errorcode = PasswordSupport.validateUserPassword(policy, userInfo);
+		if(errorcode != null) {
+			log.info("@@@@@@@@@@@@@ errcode = {}", errorcode);
+			result.put("statusCode", HttpStatus.BAD_REQUEST.value());
+			result.put("errorCode", errorcode);
+			result.put("message", message);
+			return result;
+		}
+
+		userInfo.setUserId(userSession.getUserId());
+		userInfo.setPassword(PasswordSupport.encodePassword(userInfo.getNewPassword()));
+		userInfo.setStatus(UserStatus.USE.getValue());
+		userService.updatePassword(userInfo);
+
+		int statusCode = HttpStatus.OK.value();
+
+		result.put("statusCode", statusCode);
+		result.put("errorCode", errorcode);
+		result.put("message", message);
+
+		return result;
+	}
+
 	private boolean isValidEmail(String email) {
-		boolean err = false;
+		boolean result = false;
 		String regex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
 		Pattern p = Pattern.compile(regex);
 		Matcher m = p.matcher(email);
 		if(m.matches()) {
-			err = true;
+			result = true;
 		}
-		return err;
+		return result;
 	}
 
 }

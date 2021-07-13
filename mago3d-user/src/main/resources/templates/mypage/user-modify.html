@@ -71,12 +71,17 @@
 					이메일
 				</th>
 				<td class="col-input">
+					<span>
 	<th:block th:if="${#strings.isEmpty(userInfo.email)}">
+					인증, 서비스 변경에 사용할 이메일 주소 입니다.
 	</th:block>
 	<th:block th:unless="${#strings.isEmpty(userInfo.email)}">
-					<!--<th:block th:text="${userInfo.email}"></th:block>&nbsp;&nbsp;&nbsp;-->
+					<th:block th:text="${userInfo.viewMaskingEmail}"></th:block>
 	</th:block>
-					<a href="#" th:onclick="emailModifyDialog.dialog( 'open' )">변경</a>
+					</span>
+					<span style="margin-left: 50px;">
+						<button type="button" id="emailButton">변경</button>
+					</span>
 				</td>
 			</tr>
 			<tr>
@@ -84,22 +89,23 @@
 					비밀번호
 				</th>
 				<td class="col-input">
-					<a href="#" th:onclick="passwordModifyDialog.dialog( 'open' )">변경</a>
+					<button type="button" id="passwordButton">변경</button>
 				</td>
 			</tr>
 		</table>
-		<div class="button-group">
-			<div class="center-buttons">
-				<input type="submit" th:value="#{common.save}" onclick="update();" />
-			</div>
-		</div>
+<!--		<div class="button-group">-->
+<!--			<div class="center-buttons">-->
+<!--				<input type="submit" th:value="#{common.save}" onclick="update();" />-->
+<!--			</div>-->
+<!--		</div>-->
         </form>
         <!-- E: 사용자 기본 정보 수정 -->
 	</div>
-	<!-- 비밀번호 변경 -->
-	<div th:replace="~{/mypage/password-modify-dialog :: #passwordModifyDialog}"></div>
+
 	<!-- 이메일 변경 -->
 	<div th:replace="~{/mypage/email-modify-dialog :: #emailModifyDialog}"></div>
+	<!-- 비밀번호 변경 -->
+	<div th:replace="~{/mypage/password-modify-dialog :: #passwordModifyDialog}"></div>
 </div>
 <!-- E: WRAP -->
 <script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
@@ -111,134 +117,145 @@
 		//
 	});
 
-	function validate() {
-		//
-	}
+	// // 수정
+	// var updateFlag = true;
+	// function update() {
+	// 	if (validate() == false) {
+	// 		return false;
+	// 	}
+	// 	if(updateFlag) {
+	// 		updateFlag = false;
+	// 		var formData = $("#userInfo").serialize();
+	// 		$.ajax({
+	// 			url: "/mypage/users/[[${userInfo.userId}]]",
+	// 			type: "POST",
+	// 			headers: {"X-Requested-With": "XMLHttpRequest"},
+	// 			data: formData,
+	// 			success: function(msg){
+	// 				if(msg.statusCode <= 200) {
+	// 					alert(JS_MESSAGE["update"]);
+	// 					window.location.reload();
+	// 				} else {
+	// 					alert(JS_MESSAGE[msg.errorCode]);
+	// 					console.log("---- " + msg.message);
+	// 				}
+	// 				updateFlag = true;
+	// 			},
+	// 			error:function(request, status, error){
+	// 				alert(JS_MESSAGE["ajax.error.message"]);
+	// 				updateFlag = true;
+	// 			}
+	// 		});
+	// 	} else {
+	// 		alert(JS_MESSAGE["button.double.click"]);
+	// 		return;
+	// 	}
+	// }
 
-	// 수정
-	var updateFlag = true;
-	function update() {
-		if (validate() == false) {
-			return false;
-		}
-		if(updateFlag) {
-			updateFlag = false;
-			var formData = $("#userInfo").serialize();
-			$.ajax({
-				url: "/mypage/users/[[${userInfo.userId}]]",
-				type: "POST",
-				headers: {"X-Requested-With": "XMLHttpRequest"},
-				data: formData,
-				success: function(msg){
-					if(msg.statusCode <= 200) {
-						alert(JS_MESSAGE["update"]);
-						window.location.reload();
-					} else {
-						alert(JS_MESSAGE[msg.errorCode]);
-						console.log("---- " + msg.message);
-					}
-					updateFlag = true;
-				},
-				error:function(request, status, error){
-					alert(JS_MESSAGE["ajax.error.message"]);
-					updateFlag = true;
-				}
-			});
-		} else {
-			alert(JS_MESSAGE["button.double.click"]);
-			return;
-		}
-	}
-
-	// 데이터 Object 속성 다이얼 로그
-	var passwordModifyDialog = $( "#passwordModifyDialog" ).dialog({
-		autoOpen: false,
-		width: 800,
-		height: 550,
-		modal: true,
-		resizable: false
+	$( "#emailButton" ).on( "click", function() {
+		emailModifyDialog.dialog( "open" );
+		emailModifyDialog.dialog( "option", "title", "이메일 변경");
 	});
 
 	var emailModifyDialog = $( "#emailModifyDialog" ).dialog({
 		autoOpen: false,
 		width: 800,
-		height: 550,
+		height: 210,
+		modal: true,
+		resizable: false
+	});
+
+	// 이메일 변경
+	$("#emailUpdateButton").click(function() {
+		var preEmail = $("#preEmail").val().trim();
+		var selectEmail = $("#selectEmail").val().trim();
+		var newEmail = null;
+		if(selectEmail == null || selectEmail == "") {
+			newEmail = preEmail;
+		} else {
+			newEmail = preEmail + selectEmail;
+		}
+		$("#newEmail").val(newEmail);
+
+		if(!checkEmailModify(newEmail)){
+			return false;
+		};
+
+		var formData = $('#emailForm').serialize();
+		$.ajax({
+			url: "/mypages/emails",
+			type: "POST",
+			headers: {"X-Requested-With": "XMLHttpRequest"},
+			data: formData,
+			dataType: "json",
+			success: function(msg){
+				if(msg.statusCode <= 200) {
+					alert(JS_MESSAGE["change"]);
+				} else {
+					alert(JS_MESSAGE[msg.errorCode]);
+				}
+				emailModifyDialog.dialog( "close" );
+			},
+			error:function(request,status,error){
+				alert(JS_MESSAGE["ajax.error.message"]);
+				emailModifyDialog.dialog( "close" );
+			}
+		});
+	});
+
+	$( "#passwordButton" ).on( "click", function() {
+		passwordModifyDialog.dialog( "open" );
+		passwordModifyDialog.dialog( "option", "title", "비밀번호 변경");
+	});
+
+	// 데이터 Object 속성 다이얼 로그
+	var passwordModifyDialog = $( "#passwordModifyDialog" ).dialog({
+		autoOpen: false,
+		width: 800,
+		height: 310,
 		modal: true,
 		resizable: false
 	});
 
 	// 비밀번호 변경
-	$('#passwordModifyButton').click(function() {
+	$("#passwordUpdateButton").click(function() {
 		if(!checkPasswordModify()){
 			return false;
 		};
-		var formData = $('#passwordModifyForm').serialize();
-		$.ajax({
-			url: "/mypages/password/modify/",
-			type: "POST",
-			headers: {"X-Requested-With": "XMLHttpRequest"},
-			data: formData,
-			dataType: "json",
-			success: function(msg){
-				if(msg.statusCode <= 200) {
-					console.log("---msg "+ msg);
-					alert(JS_MESSAGE["change"]);
-				} else {
-					console.log("---msg "+ msg.errorCode);
-					alert(JS_MESSAGE[msg.errorCode]);
-				}
-				passwordModifyDialog.dialog( "close" );
-			},
-			error:function(request,status,error){
-				alert(JS_MESSAGE["ajax.error.message"]);
-				passwordModifyDialog.dialog( "close" );
-			}
-		});
-	})
 
-	// 이메일 변경
-	$('#emailModifyButton').click(function() {
-		if(!checkEmailModify()){
-			return false;
-		};
-		var formData = $('#emailModifyForm').serialize();
+		var formData = $('#passwordForm').serialize();
 		$.ajax({
-			url: "/mypages/email/modify/",
+			url: "/mypages/passwords",
 			type: "POST",
 			headers: {"X-Requested-With": "XMLHttpRequest"},
 			data: formData,
 			dataType: "json",
 			success: function(msg){
 				if(msg.statusCode <= 200) {
-					console.log("---msg "+ msg);
 					alert(JS_MESSAGE["change"]);
 				} else {
-					console.log("---msg "+ msg.errorCode);
 					alert(JS_MESSAGE[msg.errorCode]);
 				}
-				emailModifyDialog.dialog( "close" );
+				passwordModifyDialog.dialog( "close" );
 			},
 			error:function(request,status,error){
 				alert(JS_MESSAGE["ajax.error.message"]);
-				emailModifyDialog.dialog( "close" );
+				passwordModifyDialog.dialog( "close" );
 			}
 		});
 	})
 
 	function checkPasswordModify() {
-
 		if ($("#password").val() == "") {
 			alert("비빌번호를 입력하여 주십시오.");
 			$("#password").focus();
 			return false;
 		}
-
 		if ($("#newPassword").val() == "") {
 			alert("변경할 비밀번호를 입력하여 주십시오.");
 			$("#newPassword").focus();
 			return false;
 		}
-
 		if ($("#newPasswordConfirm").val() == "") {
 			alert("비밀번호 확인을 입력하여 주십시오.");
 			$("#newPasswordConfirm").focus();
@@ -247,39 +264,14 @@
 		return true;
 	}
 
-	function checkEmailModify() {
-
-		if ($("#email").val() == "") {
-			alert("기존 이메일을 입력하여 주십시오.");
-			$("#email").focus();
-			return false;
-		}
-
-		if ($("#newEmail").val() == "") {
+	function checkEmailModify(newEmail) {
+		if (newEmail == "") {
 			alert("변경할 이메일을 입력하여 주십시오.");
-			$("#newEmail").focus();
+			$("#preEmail").focus();
 			return false;
 		}
-
 		return true;
 	}
-
-	var preEmail = document.getElementById('preEmail');
-	var selectEmail = document.getElementById('selectEmail');
-	var newEmail = document.getElementById('newEmail');
-
-	preEmail.onchange = function(event){
-		event = event || window.event;
-		var _val = this.value.trim() ;
-		newEmail.value = _val + selectEmail.value;
-	}
-
-	selectEmail.onchange = function(event){
-		event = event || window.event;
-		var _val = preEmail.value.trim() ;
-		newEmail.value = _val + this.value;
-	}
-
 </script>
 </body>
 </html>

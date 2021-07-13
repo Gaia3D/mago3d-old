@@ -58,8 +58,6 @@ public class MyPageController {
 		return "/mypage/user-modify";
 	}
 
-
-	
 	/**
 	 * 검색 조건
 	 * @param pageType

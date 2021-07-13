@@ -1,12 +1,17 @@
 package gaia3d.domain.user;
 
 import gaia3d.domain.common.Search;
+import gaia3d.security.crypto.Crypt;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import static gaia3d.domain.MaskingType.DEFAULT;
+import static gaia3d.domain.MaskingType.EMAIL;
+import static gaia3d.support.MaskingSupport.getMasking;
 
 @ToString(callSuper = true)
 @Builder
@@ -121,6 +126,54 @@ public class UserInfo extends Search implements Serializable {
 	private String tempPassword;
 	// 일정 기간 동안 미 접속시 잠금 처리 결과 값
 	private Boolean userLastSigninLockOver;
+
+	public String getViewTelePhone() {
+		return Crypt.decrypt(telephone);
+	}
+
+	public String getMaskingTelePhone() {
+		return getMasking(telephone, DEFAULT);
+	}
+
+	public String getViewMaskingTelePhone() {
+		return getMasking(Crypt.decrypt(telephone), DEFAULT);
+	}
+
+	public String getViewMobilePhone() {
+		return Crypt.decrypt(mobilePhone);
+	}
+
+	public String getMaskingMobilePhone() {
+		return getMasking(mobilePhone, DEFAULT);
+	}
+
+	public String getViewMaskingMobilePhone() {
+		return getMasking(Crypt.decrypt(mobilePhone), DEFAULT);
+	}
+
+	public String getViewEmail() {
+		return Crypt.decrypt(email);
+	}
+
+	public String getMaskingEmail() {
+		return getMasking(email, EMAIL);
+	}
+
+	public String getViewMaskingEmail() {
+		return getMasking(Crypt.decrypt(email), EMAIL);
+	}
+
+	public String getViewAddressEtc() {
+		return Crypt.decrypt(addressEtc);
+	}
+
+	public String getMaskingAddressEtc() {
+		return getMasking(addressEtc, DEFAULT);
+	}
+
+	public String getViewMaskingAddressEtc() {
+		return getMasking(Crypt.decrypt(addressEtc), DEFAULT);
+	}
 	
 	// 개인정보 수정 날짜
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
