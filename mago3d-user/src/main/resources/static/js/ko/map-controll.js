@@ -475,7 +475,7 @@ var mapControllEventHandler = function(magoInstance) {
 	$('#data-library-setting').click(function() {
 		$('#toolbarWrap div.detaildata.poplayer:not(#data-library-popup)').hide();
 		if(MAGO.dataLibraryController || !MAGO.dataLibraryController.ready) {
-			MAGO.dataLibraryController.search();
+			MAGO.dataLibraryController.load();
 		}
 		$('#data-library-popup').slideToggle("slow");
 	});

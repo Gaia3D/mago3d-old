@@ -1,24 +1,24 @@
 ﻿<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
-<div id="data-library-popup" class="detaildata poplayer" style="display: none;">
+<div id="data-library-popup" class="detaildata poplayer" style="display: none;max-height: 800px;height: auto;">
 	<button type="button" class="pop-close"></button>
 	<h6 class="pop-title">3D 라이브러리 목록</h6>
 		<div class="library-place">
 		<form>
 			<label>배치방법</label>
-			<input type="radio" /> 없음
+			<input type="radio" checked/> 없음
 			<input type="radio" /> 점으로 배치
 			<input type="radio" /> 선으로 배치
 		</form>
 	</div>
 	<div class="library-srch">
 		<form>
-			<label>그룹</label>
-			<select>
+			<label for="data-library-select-group">그룹</label>
+			<select id="data-library-select-group">
 				<option>전체</option>
 				<option>가로수</option>
 				<option>가로등</option>
 			</select>
-			<button type="button">검색</button>
+			<button id="data-library-select-group-search" type="button">검색</button>
 		</form>
 	</div>
 
