@@ -4,6 +4,8 @@ const Measure = function(magoInstance) {
 	this.drawer;
 	this._type = Measure.TYPE.NONE;
 	
+	this.result = [];
+	
 	this.setEventHandler();
 }
 
@@ -24,7 +26,10 @@ Measure.STATUS = {
 	READY : 'ready',
 	NEEDSTARTPOINT : 'needstartpoint',
 	NEEDLINE : 'needline',
-	NEEDLASTPOINT : 'needlastpoint'
+	NEEDLASTPOINT : 'needlastpoint',
+	NEEDVERTEXPOINT : 'needlastpoint',
+	NEEDGUIDEPOINT : 'needguidepoint',
+	COMPLETE : 'complete'
 }
 
 Measure.TYPE = {
@@ -72,7 +77,7 @@ Measure.prototype.setDrawer = function() {
 	
 	this.drawer = new Cesium.ScreenSpaceEventHandler(this.magoInstance.getViewer().canvas);
 	this.drawer.result = {};
-	this.drawer.status = DataLibraryDrawer.STATUS.NOTSTART;
+	this.drawer.status = Measure.STATUS.NOTSTART;
 	
 	switch(this.type) {
 		case Measure.TYPE.DISTANCE : {
@@ -92,16 +97,23 @@ Measure.prototype.setDrawer = function() {
 
 Measure.prototype.destroyDrawer = function() {
 	if(!this.drawer) return;
-	
 	var viewer = this.magoInstance.getViewer();
-	if(this.drawer.result) {
-		for(var key in this.drawer.result) {
-			var some = this.drawer.result[key];
-			if(some instanceof Cesium.Entity) {
-				viewer.entities.remove(some);
+	var _destroy = function(any) {
+		if(Array.isArray(any)) {
+			for(var i in any) {
+				_destory(any);	
 			}
-			this.drawer.result[key] = undefined;
+		} else {
+			if(any instanceof Cesium.Entity) {
+				viewer.entities.remove(any);
+			}
+			any = undefined;
 		}
+	}
+	
+	if(this.drawer.result) {
+		_destroy(this.drawer.result);
+		delete this.drawer.result;
 	}
 	
 	this.drawer = this.drawer.destroy();
@@ -115,83 +127,79 @@ Measure.prototype.decorateHeight = function() {
 console.info('decorateHeight');
 }
 
-Measure.prototype.decoratePoint = function() {
-	var viewer = this.magoInstance.getViewer();
-	var magoManager = this.magoInstance.getMagoManager();
-	var self = this;
-	
-	var _complete = function(positions) {
-		var cartographic = positions[0];
-		
-		self.dataLibrary.draw(API.Converter.CesiumToMagoForGeographic(cartographic));
-		
-		self.setDrawer();
-	}
-	
-	var _click = function(e){
-		var point3d = API.Converter.screenCoordToMagoPoint3D(e.position.x, e.position.y, self.magoInstance.getMagoManager());
-		var crts3 = API.Converter.magoToCesiumForPoint3D(point3d);
-		var geographicCoord = API.Converter.Cartesian3ToMagoGeographicCoord(crts3);
-		var cartographic = API.Converter.magoToCesiumForGeographic(geographicCoord);
-		
-		Cesium.sampleTerrain(viewer.terrainProvider, Mago3D.MagoManager.getMaximumLevelOfTerrainProvider(viewer.terrainProvider), [cartographic]).then(_complete)
-	}
-	var _move = function(e) {
-		var point3d = API.Converter.screenCoordToMagoPoint3D(e.endPosition.x, e.endPosition.y, magoManager);
-		var crts3 = API.Converter.magoToCesiumForPoint3D(point3d);
-		
-		var drawer = self.drawer;
-		
-		if(drawer.status === DataLibraryDrawer.STATUS.NOTSTART) {
-			drawer.result.point = viewer.entities.add({
-				point : {
-					color : Cesium.Color.BLANCHEDALMOND,
-					pixelSize : 10
-				}
-			});
-			drawer.status = DataLibraryDrawer.STATUS.READY;
-		}
-		
-		drawer.result.point.position = crts3;
-	}
-	this.drawer.setInputAction(_click ,Cesium.ScreenSpaceEventType.LEFT_CLICK);
-	this.drawer.setInputAction(_move ,Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-}
-Measure.STATUS = {
-	NOTSTART : 'notstart',
-	READY : 'ready',
-	NEEDSTARTPOINT : 'needstartpoint',
-	NEEDLINE : 'needline',
-	NEEDLASTPOINT : 'needlastpoint',
-	NEEDLASTPOINT : 'needlastpoint'
-}
 Measure.prototype.decorateDistance = function() {
 	var viewer = this.magoInstance.getViewer();
 	var magoManager = this.magoInstance.getMagoManager();
 	
 	var self = this;
-	
-	var _complete = function(crts3s) {
-		var [g1,g2] = crts3s.map(function(crts3) {
-			return API.Converter.Cartesian3ToMagoGeographicCoord(crts3);
-		});
-		
-		var geocoordArray = Mago3D.GeographicCoordSegment.getArcInterpolatedGeoCoords(g1, g2, 10);
-		var cartoArray = geocoordArray.map(function(geocoord){
-			return API.Converter.magoToCesiumForGeographic(geocoord);
-		});
-		
-		Cesium.sampleTerrain(viewer.terrainProvider, Mago3D.MagoManager.getMaximumLevelOfTerrainProvider(viewer.terrainProvider), cartoArray).then(function(positions) {
-			self.dataLibrary.draw(positions.map(function(cartographic) {
-				return API.Converter.CesiumToMagoForGeographic(cartographic);		
-			}));
-		
-			self.setDrawer();
-		});
+	const pointGraphic = {
+		color : Cesium.Color.WHITE,
+		outlineColor : Cesium.Color.RED,
+		outlineWidth : 3,
+		pixelSize : 6,
+		heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
 	}
 	
+	let labelOption = {
+        scale :0.5,
+        font: "normal normal bolder 24px Helvetica",
+        fillColor: Cesium.Color.RED,
+        outlineColor: Cesium.Color.RED,
+        outlineWidth: 1,
+		pixelOffset : new Cesium.Cartesian2(-25,-10), 
+        heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
+        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+        distanceDisplayCondition : new Cesium.DistanceDisplayCondition(0.0, 100000),
+		backgroundColor : Cesium.Color.WHITE,
+		showBackground : true
+	}
 	var _lineCoordinate = function() {
-		return [self.drawer.result.startPoint.position.getValue(), self.drawer.result.lastPosition];
+		var pointsCoordinates = self.drawer.result.points.map(function(point) {
+			return point.position.getValue();
+		});
+		pointsCoordinates.push(self.drawer.result.guide.position.getValue());
+		return pointsCoordinates;
+	}
+	
+	var _accumDistance = function() {
+		var existingPoint = _lineCoordinate();
+		var accumDistance = existingPoint.reduce(function(acc, crts, idx, array) {
+		    if(idx === 0) return acc;
+		    var d = Cesium.Cartesian3.distance(crts,array[idx-1]);
+		    return acc + d;
+		} , 0);
+		
+		return `${accumDistance.toFixed(0)}m`;
+	}
+	
+	var _complete = function(e) {
+		var drawer = self.drawer;
+		
+		var point3d = API.Converter.screenCoordToMagoPoint3D(e.position.x, e.position.y, self.magoInstance.getMagoManager());
+		var crts3 = API.Converter.magoToCesiumForPoint3D(point3d);
+		
+		drawer.result.guide.position = crts3;
+		drawer.result.guide.label.text = _accumDistance();
+		
+		//reinitialize
+		drawer.result.line.polyline.positions = _lineCoordinate();
+		var cloneLine = Cesium.clone(drawer.result.line, false);
+		
+		drawer.result.points.push(drawer.result.guide);
+		var clonePoints = drawer.result.points.map(function(point) {
+			return Cesium.clone(point, false);
+		});
+		
+		self.result.push({
+			type : Measure.TYPE.DISTANCE, 
+			line : cloneLine, 
+			points : clonePoints
+		});
+		
+		console.info(self);
+		
+		drawer.status = Measure.STATUS.COMPLETE;
+		$('#toolbox-measure-btn-distance').trigger('click');
 	}
 	
 	var _click = function(e){
@@ -199,55 +207,56 @@ Measure.prototype.decorateDistance = function() {
 		
 		var point3d = API.Converter.screenCoordToMagoPoint3D(e.position.x, e.position.y, self.magoInstance.getMagoManager());
 		var crts3 = API.Converter.magoToCesiumForPoint3D(point3d);
-		var geographicCoord = API.Converter.Cartesian3ToMagoGeographicCoord(crts3);
-		var cartographic = API.Converter.magoToCesiumForGeographic(geographicCoord);
 		
-		if(drawer.status === DataLibraryDrawer.STATUS.NEEDSTARTPOINT) {
-			drawer.result.points[0].position = crts3;
-			drawer.status = DataLibraryDrawer.STATUS.NEEDLINE;
-		}
-		
-		if(drawer.status === DataLibraryDrawer.STATUS.NEEDLASTPOINT) {
-			_complete(_lineCoordinate());
+		if(drawer.status === Measure.STATUS.NEEDVERTEXPOINT) {
+			labelOption.text = _accumDistance();
+			drawer.result.points.push(viewer.entities.add({
+				position : crts3,
+				point : pointGraphic,
+				label : labelOption
+			}));
+			
+			if(drawer.result.points.length === 1) {
+				labelOption.text = new Cesium.CallbackProperty(_accumDistance)
+				drawer.result.guide.label = labelOption;
+				
+				drawer.status = Measure.STATUS.NEEDLINE
+			}
 		}
 	}
 	var _move = function(e) {
+		var drawer = self.drawer;
+		
+		if(drawer.status === Measure.STATUS.COMPLETE) return;
+		
 		var point3d = API.Converter.screenCoordToMagoPoint3D(e.endPosition.x, e.endPosition.y, magoManager);
 		var crts3 = API.Converter.magoToCesiumForPoint3D(point3d);
 		
-		var drawer = self.drawer;
-		if(drawer.status === DataLibraryDrawer.STATUS.NOTSTART) {
+		if(drawer.status === Measure.STATUS.NOTSTART) {
 			drawer.result.points = [];
-			drawer.result.points.push(viewer.entities.add({
-				point : {
-					color : Cesium.Color.PALEVIOLETRED,
-					pixelSize : 10,
-					heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
-				}
-			}));
+			drawer.result.guide = viewer.entities.add({
+				point : pointGraphic
+			});
 			
-			drawer.status = DataLibraryDrawer.STATUS.NEEDSTARTPOINT;
+			drawer.status = Measure.STATUS.NEEDVERTEXPOINT;
 		}
 		
-		if(drawer.status === DataLibraryDrawer.STATUS.NEEDSTARTPOINT) {
-			drawer.result.points[0].position = crts3;	
-		}
-		
-		if(drawer.status === DataLibraryDrawer.STATUS.NEEDLINE) {
+		if(drawer.status === Measure.STATUS.NEEDLINE) {
 			drawer.result.line = viewer.entities.add({
 				polyline : {
 					positions : new Cesium.CallbackProperty(_lineCoordinate),
-					width : 10,
-					clampToGround : true
+					width : 3,
+					clampToGround : true,
+					material : Cesium.Color.RED
 				}
 			});
-			drawer.status = DataLibraryDrawer.STATUS.NEEDLASTPOINT;
+			drawer.status = Measure.STATUS.NEEDVERTEXPOINT;
 		}
 		
-		if(drawer.status === DataLibraryDrawer.STATUS.NEEDLASTPOINT) {
-			drawer.result.lastPosition = crts3;
-		}
+		drawer.result.guide.position = crts3;
 	}
+	
+	this.drawer.setInputAction(_complete ,Cesium.ScreenSpaceEventType.RIGHT_CLICK);
 	this.drawer.setInputAction(_click ,Cesium.ScreenSpaceEventType.LEFT_CLICK);
 	this.drawer.setInputAction(_move ,Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 }
