@@ -5,7 +5,7 @@
 		<button type="button" id="mapCtrlReset">처음</button>
 		<button type="button" id="mapCtrlAll">전체화면</button>
 		<button type="button" id="mapLayer">레이어</button>
-		<button type="button" id="mapCtrlDistance" data-type="LineString">측정</button>
+		<button type="button" id="map-ctrl-measure">측정</button>
 		<button type="button" id="mapCtrlDivide">화면분할</button>
 		<button type="button" id="mapCameraFix">시점고정</button>
 		<button type="button" id="mapRenderPosition">위치조회</button>
@@ -19,6 +19,11 @@
 		<button type="button" id="map-control-setting">데이터</button>
 		<button type="button" id="data-library-setting">라이브러리</button>
 		<button type="button" id="master-plan-setting">건축통합</button>
+	</div>
+	<div class="toolbox-measure">
+        <button type="button" id="toolbox-measure-btn-distance" class="toolbox-measure-btn" data-type="distance">거리</button>
+		<button type="button" id="toolbox-measure-btn-area" class="toolbox-measure-btn" data-type="area">면적</button>
+		<button type="button" id="toolbox-measure-btn-height" class="toolbox-measure-btn" data-type="height">높이</button>
 	</div>
 	<div th:replace="~{/common/map-control-setting :: #map-control-popup}"></div>
 	<div th:replace="~{/common/data-library-setting :: #data-library-popup}"></div>

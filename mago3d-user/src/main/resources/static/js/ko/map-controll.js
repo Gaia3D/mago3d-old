@@ -246,27 +246,26 @@ var mapControllEventHandler = function(magoInstance) {
 		$('#controlMeasureWrap').hide();
 	});
 
-	/*// 측정
-	$('#mapCtrlMeasure').click(function() {
+	// 측정
+	var measure = new Measure(magoInstance);
+	$('#map-ctrl-measure').click(function() {
 		$(this).toggleClass('on');
-		$('#controlMeasureWrap').toggle();
-		$('#mapCtrlLayers').removeClass('on');
-		$('#controlLayerWrap').hide();
-		$('#mapCtrlMeasureArea').removeClass('on');
-		$('#mapCtrlMeasureDistance').removeClass('on');
-		$('#mapCtrlMeasureHeight').removeClass('on');
-		shapeInfo.style.display = "none";
+		$('.toolbox-measure').toggle();
 		
-		if(MAGO.measureTools.polygonShape.entityId.length !=0){
+		$('.toolbox-measure-btn').removeClass('on');
+		
+		//shapeInfo.style.display = "none";
+		
+		/*if(MAGO.measureTools.polygonShape.entityId.length !=0){
 			MAGO.measureTools.polygonShape.init();
 		}
 		if(MAGO.measureTools.lineShape.entityId.length !=0){
 			MAGO.measureTools.lineShape.init();
-		}
+		}*/
 		
 	});
 	
-	// 거리 측정
+	/*// 거리 측정
 	$('#mapCtrlMeasureDistance').click(function() {
 		$(this).siblings().removeClass('on');
 		$(this).toggleClass('on');
@@ -355,8 +354,6 @@ var mapControllEventHandler = function(magoInstance) {
 			viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
 		}
 	});
-	
-	
 	
 	// 화면분할
 	$('#mapCtrlDivide').click(function() {

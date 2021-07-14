@@ -5159,6 +5159,17 @@ span.mago {color:#6649ca;}
 .toolbox-3d > button:nth-child(2):hover {color:#1289f8; background: white url(/images/ko/ic_toolbox.png) no-repeat -272px -54px;}
 .toolbox-3d > button:last-child:hover {color:#1289f8; background: white url(/images/ko/ic_toolbox.png) no-repeat -274px -115px;}
 
+.toolbox-measure {display:none;clear: both;position: absolute;top: 169px;right: 69px;z-index: 10;width: 135px;font-family: 'NotoKrR';height: 52px;margin: 0;padding: 0;background: white;border-radius: 6px;}
+.toolbox-measure button.toolbox-measure-btn {margin: 0;margin-top: 6px;margin-left: 2px;padding: 0;height: 42px;width: 40px;border-radius: 50px;border-top: 1px solid #d9d8d8;font-size:10px;}
+.toolbox-measure button.toolbox-measure-btn:focus, .toolbox-measure button.toolbox-measure-btn:hover, .toolbox-measure button.toolbox-measure-btn.on {border: none;}
+.toolbox-measure > button::before {content:""; display:inline-block; width:0; height:80%; margin-right:0; vertical-align:bottom;}
+#toolbox-measure-btn-distance {background: #ddd url(/images/ko/ic_toolbox.png) no-repeat -3px -151px;}
+#toolbox-measure-btn-distance:hover, #toolbox-measure-btn-distance.on {background: #1289f8 url(/images/ko/ic_toolbox.png) no-repeat -58px -151px;}
+#toolbox-measure-btn-area {background: #ddd url(/images/ko/ic_toolbox.png) no-repeat -120px -198px;}
+#toolbox-measure-btn-area:hover, #toolbox-measure-btn-area.on {background: #1289f8 url(/images/ko/ic_toolbox.png) no-repeat -171px -198px;}
+#toolbox-measure-btn-height {background: #ddd url(/images/ko/ic_toolbox.png) no-repeat -116px -251px;}
+#toolbox-measure-btn-height:hover, #toolbox-measure-btn-height.on {background: #1289f8 url(/images/ko/ic_toolbox.png) no-repeat -167px -251px;}
+
 /* scrollbar */
 ::-webkit-scrollbar-track { background: #f4f2f2; }
 ::-webkit-scrollbar-thumb { background: #e0e0e0; }
@@ -5328,7 +5339,7 @@ hr.datalist-line {width:390px;border:none; margin:0; padding:0; margin-left:-18p
 .alg-left {text-align:left !important; padding-left:2px;}
 .data-go {width:120px; padding:0;}
 .data-go a.move {display:inline-block; width:20px; height:20px; text-indent:18px; margin-top:-2px; margin-left:20px; background:url(/images/ko/ic_move.png) no-repeat left 4px;}
-#map-control-popup div.data-go {width:100px; padding:0;}
+/* #map-control-popup div.data-go {width:100px; padding:0;} */
 span.sumnail {float:right; width:50px; height:50px; border:1px solid #e9e8e8;}
 .poplayer > .tbl-library {margin-top:10px;}
 .poplayer > .tbl-library table {width:100%; margin:0 auto; font-size:13px;}
