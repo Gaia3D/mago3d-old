@@ -1,8 +1,10 @@
 ﻿<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <div id="data-content" class="data-contents sb-page" >
-	<!-- 데이터명 검색 -->
-	<input type="text" class="datasearch" placeholder="데이터명을 입력하세요" />
-	<a class="btn-datasearch" href="#"><span class="blind">데이터명 검색</span></a>
+	<form id="search-data-form" th:object="${searchDataForm}" method="post" onsubmit="return false;">
+		<!-- 데이터명 검색 -->
+		<input type="text" class="datasearch" placeholder="데이터명을 입력하세요" />
+		<a class="btn-datasearch" href="#"><span class="blind">데이터명 검색</span></a>
+	</form>
 	<!-- 전체-필터더보기 -->
 	<div class="dataselect">
 		<!--
@@ -14,8 +16,8 @@
 			</select>
 		</form>
 		-->
-		<a href="#" class="data-group-search" onclick="Data3D.dataGroupSearchOnOff(); return false;">그룹으로 검색</a>
-		<a href="#" class="data-filter" onclick="Data3D.dataSearchFilterOnOff(); return false;">필터 더보기</a>
+		<a id="search-data-group" href="#" class="data-group-search">그룹으로 검색</a>
+		<a id="search-data-filter" href="#" class="data-filter">필터 더보기</a>
 	</div>
 	<dl class="legendWrap">
 		<dt th:text="#{data.group.sharing}"></dt>
@@ -25,12 +27,17 @@
 		<dd><span class="legend gr">G</span><th:block th:text="#{common.group}"></th:block></dd>
 	</dl>
 	<hr class="h5" />
+
 	<!-- 전체건수-페이지 -->
-	<div class="pgcount">
-		<div class="pgcount-total">전체 <span class="txt-blue">87건</span></div>
-		<div class="pgcount-number"><span class="txt-red">3</span>/15 페이지</div>
-	</div>
+	<div id="data-search-summary-dhtml"></div>
 	<!-- datalist  -->
+	<div id="data-list-dhtml" class="sb-page"></div>
+	<!-- paging -->
+	<div id="data-paging-dhtml"></div>
+
+	<div th:replace="~{/data/3d/data-template :: #data-list-source}"></div>
+
+<!--
 	<div class="datalist">
 		<h3 class="data"><a href="#" onclick="view_layer('layer1');">계양구청</a></h3>
 		<span class="legend co marL5">C</span>
@@ -107,20 +114,8 @@
 		</div>
 	</div>
 	<hr class="datalist-line" />
+-->
 	<!-- /.datalist -->
-	<!-- paging -->
-	<div class="paging">
-		<div class="paging-wrapper">
-			<a class="pre01"></a>
-			<a class="pre"></a>
-			<a class="current">1</a>
-			<a class="lnk">2</a>
-			<a class="lnk">3</a>
-			<a class="lnk">4</a>
-			<a class="lnk">5</a>
-			<a class="next"></a>
-			<a class="next01"></a>
-		</div>
-	</div>
+
 </div>
 </html>

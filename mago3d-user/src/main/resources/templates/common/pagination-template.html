@@ -1,0 +1,25 @@
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
+<script id="pagination-source" type="text/x-handlebars-template">
+    {{#greaterThan pagination.totalCount 0}}
+    <div class="paging">
+        <div class="paging-wrapper">
+            <a class="first-pager pre01"></a>
+            {{#if pagination.existPrePage}}
+            <a class="forward-pager pre"></a>
+            {{/if}}
+            {{#forEachStep pagination.startPage pagination.endPage 1}}
+            {{#numberEqual this ../pagination.pageNo}}
+            <a class="number-pager current" data-page="{{this}}">{{this}}</a>
+            {{else}}
+            <a class="number-pager lnk" data-page="{{this}}">{{this}}</a>
+            {{/numberEqual}}
+            {{/forEachStep}}
+            {{#if pagination.existNextPage}}
+            <a class="back-pager next"></a>
+            {{/if}}
+            <a class="last-pager next01"></a>
+        </div>
+    </div>
+    {{/greaterThan}}
+</script>
+</html>

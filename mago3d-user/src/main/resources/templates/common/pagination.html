@@ -1,6 +1,4 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<body>
 <div id="paginationArea" th:if="${pagination.totalCount > 0}" class="pagination">
     <!--        <a th:href="@{${pagination.uri}(pageNo=${pagination.firstPage}, ${pagination.searchParameters})}"><span class="icon-glyph glyph-first"></span></a>-->
     <th:block th:with="escapeUri = |${pagination.uri }?pageNo=${pagination.firstPage}${pagination.searchParameters}|">
@@ -36,5 +34,4 @@
         <a th:href="@{${escapeUri}}"><span class="icon-glyph glyph-last"></span></a>
     </th:block>
 </div>
-</body>
 </html>
