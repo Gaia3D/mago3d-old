@@ -60,6 +60,7 @@ public class MyPageController {
 	}
 
 	/**
+	 * TODO 멤버십 이름이나 key를 uk로 사용해야 함
 	 * 멤버십 수정
 	 * @param model
 	 * @return

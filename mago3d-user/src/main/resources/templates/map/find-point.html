@@ -150,6 +150,11 @@
 			$(opener.document).find("#longitude").val(longitude);
 			$(opener.document).find("#latitude").val(latitude);
 			$(opener.document).find("#altitude").val(altitude);
+
+			// TODO mypage 최초 시작 지점 세팅에 사용. 분리해야 하는데...
+            $(opener.document).find("#initLongitude").val(longitude);
+            $(opener.document).find("#initLatitude").val(latitude);
+            $(opener.document).find("#initAltitude").val(altitude);
 			
 			beforePointId = addedEntity.id;
 		});

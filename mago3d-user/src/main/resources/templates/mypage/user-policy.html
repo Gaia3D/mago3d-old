@@ -34,6 +34,9 @@
         </div>
 
 		<form id="userPolicy" th:object="${userPolicy}" method="post" th:action="@{#}" onsubmit="return false;">
+			<input type="hidden" id="longitude" name="logitude" value="" />
+			<input type="hidden" id="latitude" name="latitude" value="" />
+			<input type="hidden" id="altitude" name="altitude" value="" />
 			<div class="userPolicyContent w800 marT30">
 				<div class="button-group-align marB10">
 					<h3 class="h3-heading">시작 위치</h3>
@@ -130,25 +133,12 @@
 		//
 	});
 
-	$( "#mapButton" ).on( "click", function() {
-		var url = "/map/find-point";
-		var width = 800;
-		var height = 700;
-
-		var popupX = (window.screen.width / 2) - (width / 2);
-		// 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
-		var popupY= (window.screen.height / 2) - (height / 2);
-
-		var popWin = window.open(url, "","toolbar=no ,width=" + width + " ,height=" + height + ", top=" + popupY + ", left="+popupX
-				+ ", directories=no,status=yes,scrollbars=no,menubar=no,location=no");
-		//popWin.document.title = layerName;
-	});
-
 	var updateUserPolicyFlag = true;
 	function update() {
 		if(updateUserPolicyFlag) {
 			updateUserPolicyFlag = false;
-			var url = "/user-policy/update";
+
+			var url = "/mypages/user-policies";
 			var formData = $("#userPolicy").serialize();
 			$.ajax({
 				url: url,
@@ -161,7 +151,6 @@
 						alert(JS_MESSAGE["save"]);
 					} else {
 						alert(msg.message);
-						console.log("---- " + msg.message);
 					}
 					updateUserPolicyFlag = true;
 				},
@@ -175,6 +164,20 @@
 			return;
 		}
 	}
+
+	$( "#mapButton" ).on( "click", function() {
+		var url = "/map/find-point";
+		var width = 800;
+		var height = 700;
+
+		var popupX = (window.screen.width / 2) - (width / 2);
+		// 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
+		var popupY= (window.screen.height / 2) - (height / 2);
+
+		var popWin = window.open(url, "","toolbar=no ,width=" + width + " ,height=" + height + ", top=" + popupY + ", left="+popupX
+				+ ", directories=no,status=yes,scrollbars=no,menubar=no,location=no");
+		//popWin.document.title = layerName;
+	});
 </script>
 </body>
 </html>

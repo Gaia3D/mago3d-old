@@ -1,6 +1,12 @@
 package gaia3d.service.impl;
 
+import gaia3d.domain.MembershipStatus;
+import gaia3d.domain.MembershipType;
+import gaia3d.domain.SignupType;
 import gaia3d.domain.cache.CacheManager;
+import gaia3d.domain.membership.Membership;
+import gaia3d.domain.membership.MembershipLog;
+import gaia3d.domain.membership.MembershipUsage;
 import gaia3d.domain.role.RoleKey;
 import gaia3d.domain.user.UserInfo;
 import gaia3d.domain.user.UserStatus;
@@ -8,6 +14,7 @@ import gaia3d.persistence.UserMapper;
 import gaia3d.security.crypto.Crypt;
 import gaia3d.service.DataGroupService;
 import gaia3d.service.DataService;
+import gaia3d.service.MembershipService;
 import gaia3d.service.UserService;
 import gaia3d.support.PasswordSupport;
 import gaia3d.support.RoleSupport;
@@ -28,11 +35,13 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	private UserMapper userMapper;
+	private MembershipService membershipService;
 	@Autowired
 	private DataService dataService;
 	@Autowired
 	private DataGroupService dataGroupService;
+	@Autowired
+	private UserMapper userMapper;
 
 	/**
 	 * 사용자 수
@@ -97,6 +106,24 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Transactional
 	public int insertUser(UserInfo userInfo) {
+		// 멤버십 사용량
+		Membership membership = membershipService.getMembership(MembershipType.BASIC.getValue());
+		MembershipUsage membershipUsage = new MembershipUsage();
+		membershipUsage.setMembershipId(membership.getMembershipId());
+		membershipUsage.setMembershipName(membership.getMembershipName());
+		membershipUsage.setUserId(userInfo.getUserId());
+		membershipService.insertMembershipUsage(membershipUsage);
+
+		// 멤버십 로그
+		MembershipLog membershipLog = new MembershipLog();
+		membershipLog.setUserId(userInfo.getUserId());
+		membershipLog.setCurrentMembershipId(membership.getMembershipId());
+		membershipLog.setRequestMembershipId(membership.getMembershipId());
+		membershipLog.setStatus(MembershipStatus.APPROVAL.name());
+		membershipService.insertMembershipLog(membershipLog);
+
+		userInfo.setSignupType(SignupType.BASIC.toString());
+		userInfo.setStatus(UserStatus.USE.getValue());
 		userInfo.setPassword(PasswordSupport.encodePassword(userInfo.getPassword()));
 		userInfo.setEmail(Crypt.encrypt(userInfo.getEmail()));
 		return userMapper.insertUser(userInfo);
@@ -188,6 +215,7 @@ public class UserServiceImpl implements UserService {
 		} 
 		// TODO user_id 참조하는 모든 테이블 삭제는 추후에..
 		/*
+		멤버십도 지워야 하나?
 		access_log 
 		converter_job
 		converter_job_file

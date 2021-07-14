@@ -104,6 +104,10 @@ public class UserInfo extends Search implements Serializable {
 	private String userRoleCheckYn;
 	// 사용자 상태. 0:사용중, 1:사용중지(관리자), 2:잠금(비밀번호 실패횟수 초과), 3:휴면(사인인 기간), 4:만료(사용기간 종료), 5:삭제(화면 비표시, policy.user_delete_method=0), 6:임시비밀번호, 7:승인대기
 	private String status;
+	// 로그인 타입. BASIC :일반(플랫폼), SOCIAL : 소셜 로그인(구글, 페이스북, 네이버, 카카오)
+	private String signinType;
+	// 회원가입 타입. BASIC :일반(플랫폼), SOCIAL : 소셜 로그인(구글, 페이스북, 네이버, 카카오)
+	private String signupType;
 	// 멤버십 상태. REQUEST:요청 대기중, APPROVAL:승인, CANCEL:취소, REJECT:거절
 	private String membershipStatus;
 	// 사용자 상태 집계
