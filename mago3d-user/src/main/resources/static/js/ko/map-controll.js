@@ -437,6 +437,22 @@ var mapControllEventHandler = function(magoInstance) {
 		$('#map-control-popup').slideToggle("slow");
 	})
 	
+	$('#map-control-advance-toggle-btn').click(function() {
+		var collapse = JSON.parse($(this).data('collapse'));
+		if(collapse) {
+			$('#map-control-popup div.setup.advance').show({
+				easing : 'swing'
+			});
+			$(this).removeClass('map-control-advance-collapse-on').addClass('map-control-advance-collapse-off');
+		} else {
+			$('#map-control-popup div.setup.advance').hide({
+				easing : 'swing'
+			});
+			$(this).addClass('map-control-advance-collapse-on').removeClass('map-control-advance-collapse-off');
+		}
+		$(this).data('collapse', !collapse);
+	});
+	
 	
 	var archInfoController = new ArchInfoController(ArchInfoController.createMockData(magoManager), magoManager);
 	// 건축통합
