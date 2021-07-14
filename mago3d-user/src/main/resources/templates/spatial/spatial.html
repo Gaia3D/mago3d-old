@@ -1,13 +1,14 @@
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <div id="spatialContent" class="contents yScroll fullHeight" style="display:none;">
+<div style="margin-bottom: 20px;">
+	아래 기능은 (주)망고 시스템의 공간(통계)분석 엔진 OpenGXT를 사용하여 구현 하였습니다.&nbsp;&nbsp;
+	<a href="http://opengxt.mangosystem.com/ko/" target="_blank">OpenGXT 홈페이지 바로가기</a>
+</div>
 <ul class="listDrop">
 	<li class="on">
 		<p th:text="#{spatial.radial.line.of.sight}"><span class="collapse-icon">icon</span></p>
 		<div class="listContents" id="analysisRadialLineOfSight">
 			<ul class="analysisGroup">
-				<li>
-					분석 기능은 (주)망고 시스템의 공간(통계)분석 엔진 OpenGXT를 사용하여 구현 하였습니다.
-				</li>
 				<li>
 					<label for="radialLineDataType" th:text="#{spatial.analysis.data}"></label>
 					<select id="radialLineDataType" class="dataType">
