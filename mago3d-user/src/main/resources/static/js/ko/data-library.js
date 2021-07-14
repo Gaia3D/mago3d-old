@@ -40,7 +40,6 @@ DataLibraryController.prototype.setEventHandler = function() {
 		self.search(parseInt(groupId));
 	});
 	
-
 	//체크박스 셀렉트
 	$('#data-library-popup div.tbl-library').on('change', 'input[type="checkbox"]', function() {
 		var target = this;
@@ -56,19 +55,25 @@ DataLibraryController.prototype.setEventHandler = function() {
 		self.select(parseInt($(this).parents('tr').data('id')), checked);
 	});
 	
+	//배치방법
 	$('#data-library-popup').on('change', 'input[name="data-library-radio-draw-type"]', function() {
 		self.drawer.drawType = $(this).data('type'); 
 	});
 	
-	/*
-		
 	var popupObserver = new MutationObserver(function(mutations) {
 		mutations.forEach(function(mutation) {
-			console.info(mutation);
+			if(Array.prototype.indexOf.call(mutation.target.classList, 'on') < 0) {
+				DataLibraryController.falseCheckbox();
+				if(self.selected) {
+					self.clearSelect();
+				}
+				self.drawer.drawType = DataLibrary.DRAW_TYPE.NONE;				
+			}
+			return false;			
 		});
 	});
 	
-	popupObserver.observe(document.getElementById('data-library-popup'), { attributes: true, attributeFilter:['style'], subtree: false, childList:false, attributeOldValue:true});*/	
+	popupObserver.observe(document.getElementById('data-library-popup'), { attributes: true, attributeFilter:['class'], subtree: false, childList:false, attributeOldValue:true});	
 }
 
 DataLibraryController.falseCheckbox= function(excluded) {

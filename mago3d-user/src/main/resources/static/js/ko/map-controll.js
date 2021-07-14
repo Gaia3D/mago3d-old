@@ -433,16 +433,15 @@ var mapControllEventHandler = function(magoInstance) {
 
 	// 데이터
 	$('#map-control-setting').click(function() {
-		$('#toolbarWrap div.detaildata.poplayer:not(#map-control-popup)').hide();
+		$('#toolbarWrap div.detaildata.poplayer:not(#map-control-popup)').hide().removeClass('on');
 		$('#map-control-popup').slideToggle("slow");
 	})
 	
 	
 	var archInfoController = new ArchInfoController(ArchInfoController.createMockData(magoManager), magoManager);
-	
 	// 건축통합
 	$('#master-plan-setting').click(function() {
-		$('#toolbarWrap div.detaildata.poplayer:not(#master-plan-popup)').hide();
+		$('#toolbarWrap div.detaildata.poplayer:not(#master-plan-popup)').hide().removeClass('on');
 		$('#master-plan-popup').slideToggle("slow");
 	});
 	
@@ -478,17 +477,17 @@ var mapControllEventHandler = function(magoInstance) {
 			var load = MAGO.dataLibraryController.load();
 			if(load) {
 				load.pipe(function() {
-					$('#data-library-popup').slideToggle("slow");					
+					$('#data-library-popup').slideToggle("slow").toggleClass('on');					
 				})
 				return;
 			}
 		}
-		$('#data-library-popup').slideToggle("slow");
+		$('#data-library-popup').slideToggle("slow").toggleClass('on');
 	});
 	
 	//3d tool close
 	var popLayer3dSelectQuery = 'div.detaildata.poplayer'; 
-	$(`${popLayer3dSelectQuery} button.pop-close`).click(function(){$(this).parents(popLayer3dSelectQuery).hide()});
+	$(`${popLayer3dSelectQuery} button.pop-close`).click(function(){$(this).parents(popLayer3dSelectQuery).hide().removeClass('on')});
 
 	// BBOX
 	$('#mapSettingBboxToggle').click(function() {
