@@ -5048,6 +5048,11 @@ button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-
 button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring {  outline: 1px dotted ButtonText;}
 h1.magologo {display:block; width:270px; font-size:17px; margin:0 0 0 20px; padding:0; font-family: 'NotoKrM'; height:45px; font-weight:normal; line-height:42px; text-indent:106px;  background:url(/images/ko/ic_sbmenu.png) no-repeat -338px -50px;}
 
+/* common */
+.pgcount {width:100%; margin:0 auto; font-size:12px; height:24px; border-bottom:1px solid #e1e1e1;}
+.pgcount .pgcount-total {float:left; margin-left:20px;}
+.pgcount .pgcount-number {float:right; margin-right:20px;}
+
 /* 멤버십 */
 #membership-item {width:300px; margin:0 auto; height:400px; padding:0; background:white; box-shadow: 0 0 2px rgba(132,132,132,0.6); border-radius:8px; position:absolute; top:60%; margin-top:-300px;}
 #membership-item .btn-go {clear:both; display:inline-block; color:white; cursor:pointer; padding:10px 30px 10px 30px; line-height:20px; background:#396ce8; border-radius:3px; color:white; text-align:center; }
@@ -5225,9 +5230,11 @@ input:checked + .slider {background-color: #2674ff;}
 input:checked + .slider:before {background-color: white;  transform: translateX(21px);}
 
 /* data */
+/*
 .sb-page > .pgcount {width:100%; margin:0 auto; font-size:12px; height:24px; border-bottom:1px solid #e1e1e1;}
 .sb-page > .pgcount .pgcount-total {float:left; margin-left:20px;}
 .sb-page > .pgcount .pgcount-number {float:right; margin-right:20px;}
+*/
 .sb-page > .datalist {width:340px; margin:0 auto;  padding:10px 0 10px 0; height:75px;}
 .sb-page .it-select {background:#f6faff;}
 .datalist .data-username {display:inline-block; font-size:12px; vertical-align:middle; margin:0 0 0 5px; border:1px solid #e1e1e1; border-radius:16px; padding:1px 10px;}
@@ -5438,7 +5445,7 @@ span.sumnail {float:right; width:50px; height:50px; border:1px solid #e9e8e8;}
 .layer-bx .layer-list .group:hover, .layer-bx .layer-list .group:focus {display:inline-block; background:url(/images/ko/ic_filter.png) -177px -7px no-repeat;}
 .layer-bx .layer-list .file:hover, .layer-bx .layer-list .file:focus {display:inline-block; background:url(/images/ko/ic_filter.png) -47px -7px no-repeat;}
 .popuplayer-btn {clear:both; position:relative; bottom:0; left:0; height:30px; margin-top:0; text-align:right; width:auto;}
-.groupdata {display:none; z-index:100; width:65%; height:77%;}
+.groupdata {display:none; z-index:10000; width:65%; height:77%;}
 .popuplayer-xl {position: fixed; top: 50%; left: 50%; -webkit-transform: translateX(-50%) translateY(-50%); -moz-transform: translateX(-50%) translateY(-50%); -ms-transform: translateX(-50%) translateY(-50%); transform: translateX(-50%) translateY(-50%); border-radius: 4px; background: white; overflow-y: scroll; overflow-x: hidden; border: 1px solid #d9dadb; padding: 0 14px 14px 14px; margin: 0; box-shadow: 0 1px 2px rgba(132, 132, 132, 0.6);}
 .popuplayer-xl .close-s {float:right; margin:14px -6px 0 0; width:15px; cursor:pointer; height:15px; background:url(/images/ko/ic_close.png) no-repeat;}
 

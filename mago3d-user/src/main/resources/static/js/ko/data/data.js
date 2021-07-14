@@ -83,11 +83,13 @@ const Data = function(magoInstance) {
             dataTabObserver.observe(dataObserverTarget, dataObserverConfig);
         }
 
+        return datas["data-tab"];
+
     }
 
     //버튼 클릭같은거
     _ui();
 
     //프로그램 실행
-    _run();
+    return _run();
 }

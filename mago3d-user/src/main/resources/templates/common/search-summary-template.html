@@ -1,15 +1,16 @@
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
-<script id="searchSummarySource" type="text/x-handlebars-template">
-    <div class="dataSummaryWrap">
-		<span>
+<script id="search-summary-source" type="text/x-handlebars-template">
+	<!-- 전체건수-페이지 -->
+	<div class="pgcount">
+		<div class="pgcount-total">
 			<th:block th:text="#{common.all}"></th:block>
-			<span class="totalCount">{{formatNumber pagination.totalCount}}</span>
+			<span class="txt-blue">{{formatNumber pagination.totalCount}}</span>
 			<th:block th:text="#{common.count.unit}"></th:block>
-		</span>
-        <span class="float-right">{{formatNumber pagination.pageNo}} / {{formatNumber pagination.lastPage}}
+		</div>
+		<div class="pgcount-number">
+			<span class="txt-red">{{formatNumber pagination.pageNo}}</span> / {{formatNumber pagination.lastPage}}
 			<th:block th:text="#{common.page}"></th:block>
-		</span>
-        <input type="hidden" name="pageNo" value="{{pagination.pageNo}}">
-    </div>
+		</div>
+	</div>
 </script>
 </html>

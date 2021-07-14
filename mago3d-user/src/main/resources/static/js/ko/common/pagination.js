@@ -1,4 +1,4 @@
-const Pagination = function(pageNo, count, top, nextLink) {
+const Pagination = function(pageNo, count, top, nextLink, pagination, target) {
 
     // 페이지 번호
     this.pageNo = pageNo;
@@ -33,7 +33,63 @@ const Pagination = function(pageNo, count, top, nextLink) {
     this.offset;
 
     this.init();
+
+    this.pagination = pagination;
+    this.target = target;
+
+
+    if (pagination && target) {
+
+        console.info("paging event");
+        const that = this;
+        const root = this.target.pagingRootElement;
+
+        // 처음으로
+        root.on('click', '.first-pager', function() {
+            that.paging(that.pagination.firstPage);
+        });
+        // 이전
+        root.on('click', '.forward-pager', function() {
+            that.paging(that.pagination.prePageNo);
+        });
+        // 페이지 이동
+        root.on('click', '.number-pager', function() {
+            const pageNo = $(this).data("page");
+            that.paging(pageNo);
+        });
+        // 다음
+        root.on('click', '.back-pager', function() {
+            that.paging(that.pagination.nextPageNo);
+        });
+        // 끝으로
+        root.on('click', '.last-pager', function() {
+            that.paging(that.pagination.lastPage);
+        });
+
+    }
 };
+
+Pagination.create = function(pagination, target) {
+    return new Pagination(pagination.pageNo, pagination.count, pagination.top, pagination.nextLink, pagination, target);
+}
+
+Pagination.prototype.paging = function(pageNo) {
+    const _this = this;
+    $.ajax({
+        url: _this.pagination.uri,
+        type: "GET",
+        headers: {"X-Requested-With": "XMLHttpRequest"},
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: _this.pagination.searchParameters + "&pageNo="+ pageNo,
+        success: function(res) {
+            _this.target.success(res);
+        },
+        error: function(request, status, error) {
+            alert(JS_MESSAGE["ajax.error.message"]);
+        }
+    });
+}
 
 Pagination.prototype.init = function() {
     this.rowNumber = this.totalCount - (this.pageNo - 1) * this.pageRows;
