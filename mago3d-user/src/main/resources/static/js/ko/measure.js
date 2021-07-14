@@ -4,7 +4,7 @@ const Measure = function(magoInstance) {
 	this.drawer;
 	this._type = Measure.TYPE.NONE;
 	
-	this.result = [];
+	this._result;
 	
 	this.setEventHandler();
 }
@@ -18,6 +18,25 @@ Object.defineProperties(Measure.prototype, {
 			this._type = type;
 			this.setDrawer();
 		}
+	},
+	result : {
+		get : function() {
+			return this._result;
+		},
+		set : function(result) {
+			var old = this._result;
+			
+			this._result = result;
+			
+			if(this._result) {
+				this.restore();
+			}
+			
+			if(old) {
+				this.removeEntity(old);
+				old = undefined;
+			}
+		} 
 	}
 });
 
@@ -58,8 +77,9 @@ Measure.prototype.setEventHandler = function() {
 			var mutationStyle = window.getComputedStyle(mutation.target);
 			if(mutationStyle.display === 'none') {
 				self.destroyDrawer();
+				self.result = undefined;
 			} else {
-				
+				$('#toolbarWrap div.detaildata.poplayer').hide().removeClass('on');
 			}
 			return false;			
 		});
@@ -68,13 +88,49 @@ Measure.prototype.setEventHandler = function() {
 	popupObserver.observe(document.querySelector('.toolbox-measure'), { attributes: true, attributeFilter:['style'], subtree: false, childList:false, attributeOldValue:true});	
 }
 
+Measure.prototype.restore = function() {
+	var viewer = this.magoInstance.getViewer();
+	//restore
+	var _add = function(entt) {
+		if(Array.isArray(entt)) {
+			for(var i in entt) {
+				_add(entt[i]);					
+			}
+		} else {
+			viewer.entities.add(entt);
+		}
+	}
+	for(var i in this.result) {
+		var obj = this.result[i];
+		_add(obj);
+	}
+}
+
+Measure.prototype.removeEntity = function(obj) {
+	var viewer = this.magoInstance.getViewer();
+	var _remove = function(entt) {
+		if(Array.isArray(entt)) {
+			for(var i in entt) {
+				_remove(entt[i]);					
+			}
+		} else {
+			viewer.entities.remove(entt);
+		}
+	}
+
+	for(var i in obj) {
+		_remove(obj[i]);
+	}
+}
+
 
 
 Measure.prototype.setDrawer = function() {
 	this.destroyDrawer();
 	
-	if(!this.type) return;
+	if(!this.type || this.type === Measure.TYPE.NONE) return;
 	
+	this.result = undefined;
 	this.drawer = new Cesium.ScreenSpaceEventHandler(this.magoInstance.getViewer().canvas);
 	this.drawer.result = {};
 	this.drawer.status = Measure.STATUS.NOTSTART;
@@ -98,10 +154,10 @@ Measure.prototype.setDrawer = function() {
 Measure.prototype.destroyDrawer = function() {
 	if(!this.drawer) return;
 	var viewer = this.magoInstance.getViewer();
-	var _destroy = function(any) {
+	var _destroy = function (any) {
 		if(Array.isArray(any)) {
 			for(var i in any) {
-				_destory(any);	
+				_destroy(any[i]);	
 			}
 		} else {
 			if(any instanceof Cesium.Entity) {
@@ -112,7 +168,10 @@ Measure.prototype.destroyDrawer = function() {
 	}
 	
 	if(this.drawer.result) {
-		_destroy(this.drawer.result);
+		for(var i in this.drawer.result) {
+			_destroy(this.drawer.result[i]);
+		}
+		
 		delete this.drawer.result;
 	}
 	
@@ -175,6 +234,8 @@ Measure.prototype.decorateDistance = function() {
 	var _complete = function(e) {
 		var drawer = self.drawer;
 		
+		if(drawer.status !== Measure.STATUS.NEEDVERTEXPOINT) return;
+		
 		var point3d = API.Converter.screenCoordToMagoPoint3D(e.position.x, e.position.y, self.magoInstance.getMagoManager());
 		var crts3 = API.Converter.magoToCesiumForPoint3D(point3d);
 		
@@ -187,19 +248,17 @@ Measure.prototype.decorateDistance = function() {
 		
 		drawer.result.points.push(drawer.result.guide);
 		var clonePoints = drawer.result.points.map(function(point) {
-			return Cesium.clone(point, false);
+			var clonePoint = Cesium.clone(point, false);
+			return clonePoint;
 		});
-		
-		self.result.push({
-			type : Measure.TYPE.DISTANCE, 
-			line : cloneLine, 
-			points : clonePoints
-		});
-		
-		console.info(self);
 		
 		drawer.status = Measure.STATUS.COMPLETE;
 		$('#toolbox-measure-btn-distance').trigger('click');
+		
+		self.result = {
+			line : cloneLine, 
+			points : clonePoints
+		};
 	}
 	
 	var _click = function(e){

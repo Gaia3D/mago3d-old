@@ -235,7 +235,7 @@ const SmltWater =(function() {
 		if(!this.active || !guidePoint) return;
 		const magoManager = this.magoInstance.getMagoManager();
 		
-		_leftDown(event.position, '사각형이 끝날 지점에서 왼쪽 버튼에서 손떼시요ㅋ',magoManager);
+		_leftDown(event.position, 'Rectangle의 끝점에서 손을 떼어 주세요.',magoManager);
 	}
 	_Area[Cesium.ScreenSpaceEventType.LEFT_UP] = function(event) {
 		if(!this.active) return;
@@ -249,7 +249,7 @@ const SmltWater =(function() {
 	_Area[Cesium.ScreenSpaceEventType.MOUSE_MOVE] = function(event) {
 		const _beforeLeftDown = function(position, magoInstance) {
 			if(!guidePoint) _createGuidePoint(magoInstance.getViewer(), {
-				text: '시작할 지점을 먼저 좌클릭해라ㅎ 네모그릴거임ㅋ',
+				text: 'Rectangle의 시작점부터 드래그하여 주세요.',
 				pixelOffset : new Cesium.Cartesian2(200,0)
 			});
 			
@@ -329,7 +329,7 @@ const SmltWater =(function() {
 			if(!_checkAreaContainPoint(cartesian)) {
 				return false;
 			}
-			_leftDown(position, '보를 완성할 지점에서 왼쪽 버튼에서 손떼시요ㅋ', magoManager);
+			_leftDown(position, '보를 완성할 지점에서 손을 떼어 주세요.', magoManager);
 		}
 	}
 	_Create[Cesium.ScreenSpaceEventType.LEFT_UP] = function(event) {
@@ -369,7 +369,7 @@ const SmltWater =(function() {
 					break;
 				}
 				case SmltWater.CREATE_TYPE.WEIR : {
-					text = leftDown ? '보를 완성할 지점에서 왼쪽 버튼에서 손떼시요ㅋ':'드래그를 하여 선을 그리십시요. 물길을 막는 보가 생성됩니다.';
+					text = leftDown ? '보를 완성할 지점에서 손을 떼어 주세요.':'드래그를 하여 선을 그리십시오. 물길을 막는 보가 생성됩니다.';
 					pixelOffset = new Cesium.Cartesian2(200,0);
 					break;
 				}
@@ -511,7 +511,7 @@ const SmltWater =(function() {
 	
 	const _createGuidePoint = function(viewer, labelOption) {
 		let _labelOption = {
-			text: '시작할 지점을 먼저 좌클릭해라ㅎ 네모그릴거임ㅋ',
+			text: 'Rectangle의 시작점을 클릭하여 주세요.',
 	        scale :0.5,
 	        font: "normal normal bolder 35px Helvetica",
 	        fillColor: Cesium.Color.BLACK,
@@ -526,7 +526,8 @@ const SmltWater =(function() {
 		guidePoint = viewer.entities.add({
 			point : {
 				color : Cesium.Color.DODGERBLUE,
-				pixelSize : 10
+				pixelSize : 10,
+				heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
 			},
 			label : Object.assign(_labelOption, labelOption)
 		});
@@ -557,7 +558,8 @@ const SmltWater =(function() {
 		rectangle = viewer.entities.add({
 			rectangle : {
 				coordinates : coordinates,
-				material : Cesium.Color.DODGERBLUE.withAlpha(0.1)
+				material : Cesium.Color.DODGERBLUE.withAlpha(0.1),
+				heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
 			}
 		});
 		return rectangle;
@@ -579,7 +581,8 @@ const SmltWater =(function() {
 			polyline : {
 				positions : new Cesium.CallbackProperty(_polylineCoordinates),
 				material : Cesium.Color.DARKORANGE.withAlpha(1),
-				width : 5
+				width : 5,
+				clampToGround : true
 			}
 		});
 		return polyline;

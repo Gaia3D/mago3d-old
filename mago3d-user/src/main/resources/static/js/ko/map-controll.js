@@ -239,11 +239,12 @@ var mapControllEventHandler = function(magoInstance) {
 	});
 	
 	// 레이어
-	$('#mapCtrlLayers').click(function() {
-		$(this).toggleClass('on');
+	$('#map-ctrl-layer').click(function() {
+		/*$(this).toggleClass('on');
 		$('#mapCtrlMeasure').removeClass('on');
 		$('#controlLayerWrap').toggle();
-		$('#controlMeasureWrap').hide();
+		$('#controlMeasureWrap').hide();*/
+		alert('준비중입니다.');
 	});
 
 	// 측정
@@ -431,6 +432,8 @@ var mapControllEventHandler = function(magoInstance) {
 	// 데이터
 	$('#map-control-setting').click(function() {
 		$('#toolbarWrap div.detaildata.poplayer:not(#map-control-popup)').hide().removeClass('on');
+		if($('#map-ctrl-measure').hasClass('on')) $('#map-ctrl-measure').trigger('click');
+		
 		$('#map-control-popup').slideToggle("slow");
 	})
 	
@@ -455,6 +458,7 @@ var mapControllEventHandler = function(magoInstance) {
 	// 건축통합
 	$('#master-plan-setting').click(function() {
 		$('#toolbarWrap div.detaildata.poplayer:not(#master-plan-popup)').hide().removeClass('on');
+		if($('#map-ctrl-measure').hasClass('on')) $('#map-ctrl-measure').trigger('click');
 		$('#master-plan-popup').slideToggle("slow");
 	});
 	
@@ -486,6 +490,7 @@ var mapControllEventHandler = function(magoInstance) {
 	// 라이브러리
 	$('#data-library-setting').click(function() {
 		$('#toolbarWrap div.detaildata.poplayer:not(#data-library-popup)').hide();
+		if($('#map-ctrl-measure').hasClass('on')) $('#map-ctrl-measure').trigger('click');
 		if(MAGO.dataLibraryController || !MAGO.dataLibraryController.ready) {
 			var load = MAGO.dataLibraryController.load();
 			if(load) {
