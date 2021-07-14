@@ -135,7 +135,7 @@
 										<input type="text" id="longitude" name="longitude" th:field="*{longitude}" class="m" placeholder="longitude" />
 										<input type="text" id="latitude" name="latitude" th:field="*{latitude}" class="m" placeholder="latitude" />
 										<input type="text" id="altitude" name="altitude" th:field="*{altitude}" class="m" placeholder="altitude" />
-										<input type="button" id="mapButtion" value="지도에서 찾기" />
+										<input type="button" id="mapButton" value="지도에서 찾기" />
 									</td>
 								</tr>
 								<tr>
@@ -306,7 +306,7 @@
 	});
 	
 	//지도에서 찾기
-	$( "#mapButtion" ).on( "click", function() {
+	$( "#mapButton" ).on( "click", function() {
 		var url = "/map/find-point";
 		var width = 800;
 		var height = 700;

@@ -153,7 +153,7 @@
 					<input type="text" id="latitude" name="latitude" th:field="*{latitude}" class="m" placeholder="latitude" />
 					<label for="altitude" class="hiddenTag">대표 위치 (높이)</label>
 					<input type="text" id="altitude" name="altitude" th:field="*{altitude}" class="m" placeholder="altitude" />
-					<input type="button" id="mapButtion" th:value="#{common.map}" />
+					<input type="button" id="mapButton" th:value="#{common.map}" />
 				</td>
 			</tr>
 			<tr>
@@ -319,7 +319,7 @@
 	});
 	
 	//지도에서 찾기
-	$( "#mapButtion" ).on( "click", function() {
+	$( "#mapButton" ).on( "click", function() {
 		var url = "/map/find-point";
 		var width = 800;
 		var height = 700;

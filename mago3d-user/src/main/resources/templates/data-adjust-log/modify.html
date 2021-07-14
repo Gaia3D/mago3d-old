@@ -117,7 +117,7 @@
 					<input type="text" id="longitude" name="longitude" th:field="*{longitude}" class="m" />
 					<input type="text" id="latitude" name="latitude" th:field="*{latitude}" class="m" />
 					<input type="text" id="altitude" name="altitude" th:field="*{altitude}" class="m" />
-					<input type="button" id="mapButtion" th:value="#{common.map}" />
+					<input type="button" id="mapButton" th:value="#{common.map}" />
 				</td>
 			</tr>
 			<tr>
@@ -269,7 +269,7 @@
 	}
 	
 	// 지도에서 찾기 -- common.js, openFindDataPoint
-	$( "#mapButtion" ).on( "click", function() {
+	$( "#mapButton" ).on( "click", function() {
 		//openFindDataPoint("${dataInfo.dataId}", "MODIFY");
 		var url = "/map/find-point";
 		var width = 800;

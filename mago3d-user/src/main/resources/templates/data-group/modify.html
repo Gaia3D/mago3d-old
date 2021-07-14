@@ -114,7 +114,7 @@
                     </th>
                     <td class="col-input">
                         <input type="text" id="longitude" name="longitude" th:field="*{longitude}" class="m" />
-                        <input type="button" id="mapButtion" th:value="#{data.group.find.map}" />
+                        <input type="button" id="mapButton" th:value="#{data.group.find.map}" />
                     </td>
                 </tr>
                 <tr>
@@ -240,7 +240,7 @@
 	}
 	
 	// 지도에서 찾기
-	$( "#mapButtion" ).on( "click", function() {
+	$( "#mapButton" ).on( "click", function() {
 		var url = "/map/find-point";
 		var width = 800;
 		var height = 700;

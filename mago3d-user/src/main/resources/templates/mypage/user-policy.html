@@ -34,11 +34,10 @@
         </div>
 
 		<form id="userPolicy" th:object="${userPolicy}" method="post" th:action="@{#}" onsubmit="return false;">
-			<input type="hidden" id="userPolicyId" name="userPolicyId"/>
 			<div class="userPolicyContent w800 marT30">
 				<div class="button-group-align marB10">
 					<h3 class="h3-heading">시작 위치</h3>
-					<button type="button" id="findStartPoint" class="btnTextF right-align marR10" th:text="#{common.select}"></button>
+					<button type="button" id="mapButton" class="btnTextF right-align marR10" th:text="#{common.select}"></button>
 				</div>
 				<div class="userPolicyContentDetail">
 					<div class="form-group form-group-policy">
@@ -131,9 +130,19 @@
 		//
 	});
 
-	function validate() {
-		//
-	}
+	$( "#mapButton" ).on( "click", function() {
+		var url = "/map/find-point";
+		var width = 800;
+		var height = 700;
+
+		var popupX = (window.screen.width / 2) - (width / 2);
+		// 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
+		var popupY= (window.screen.height / 2) - (height / 2);
+
+		var popWin = window.open(url, "","toolbar=no ,width=" + width + " ,height=" + height + ", top=" + popupY + ", left="+popupX
+				+ ", directories=no,status=yes,scrollbars=no,menubar=no,location=no");
+		//popWin.document.title = layerName;
+	});
 
 	var updateUserPolicyFlag = true;
 	function update() {
