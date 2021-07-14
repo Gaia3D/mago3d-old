@@ -196,7 +196,7 @@ public class SignupController {
 
 		try {
 			createUserDataGroupDirectory(LocaleUtils.getUserLocale(request), signupForm.getUserId(), signupForm.getUserId() + "/basic/");
-		}catch (Exception e){
+		} catch (Exception e) {
 			FileUtils.deleteFileRecursive(propertiesConfig.getUserDataServicePath() + signupForm.getUserId() + "/basic/");
 			userService.deleteUser(signupForm.getUserId());
 			signupForm.setErrorCode("user.data.group.directory.make.fail");
@@ -251,6 +251,7 @@ public class SignupController {
 	private void createUserDataGroupDirectory(Locale locale, String userId, String dataGroupPath) throws Exception {
 		// 데이터 업로딩 경로 생성
 		DataGroup dataGroup = new DataGroup();
+		dataGroup.setUserId(userId);
 		dataGroup.setDataGroupKey("basic");
 		dataGroup.setDataGroupName(messageSource.getMessage("common.basic", null, locale));
 		dataGroup.setDataGroupPath(propertiesConfig.getUserDataServicePath() + dataGroupPath);

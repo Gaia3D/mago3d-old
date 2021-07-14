@@ -5,19 +5,23 @@ import gaia3d.domain.MembershipStatus;
 import gaia3d.domain.membership.MembershipLog;
 import gaia3d.domain.policy.Policy;
 import gaia3d.domain.user.UserInfo;
+import gaia3d.domain.user.UserPolicy;
 import gaia3d.domain.user.UserSession;
 import gaia3d.domain.user.UserStatus;
 import gaia3d.security.crypto.Crypt;
 import gaia3d.service.MembershipService;
 import gaia3d.service.PolicyService;
+import gaia3d.service.UserPolicyService;
 import gaia3d.service.UserService;
 import gaia3d.support.PasswordSupport;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -34,12 +38,13 @@ import java.util.regex.Pattern;
 public class MyPageRestController {
 
 	@Autowired
+	private PolicyService policyService;
+	@Autowired
 	private MembershipService membershipService;
 	@Autowired
-	private UserService userService;
-
+	UserPolicyService userPolicyService;
 	@Autowired
-	private PolicyService policyService;
+	private UserService userService;
 
 	/**
 	 * 이메일 수정
@@ -199,6 +204,32 @@ public class MyPageRestController {
 		result.put("errorCode", errorcode);
 		result.put("message", message);
 
+		return result;
+	}
+
+	@PostMapping("/user-policies")
+	public Map<String, Object> userPolicy(HttpServletRequest request, @Valid UserPolicy userPolicy, BindingResult bindingResult) {
+		Map<String, Object> result = new HashMap<>();
+		String errorCode = null;
+		String message = null;
+
+		if(bindingResult.hasErrors()) {
+			message = bindingResult.getAllErrors().get(0).getDefaultMessage();
+			result.put("statusCode", HttpStatus.BAD_REQUEST.value());
+			result.put("errorCode", errorCode);
+			result.put("message", message);
+			return result;
+		}
+
+		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
+		userPolicy.setUserId(userSession.getUserId());
+		userPolicyService.updateUserPolicy(userPolicy);
+
+		int statusCode = HttpStatus.OK.value();
+
+		result.put("statusCode", statusCode);
+		result.put("errorCode", errorCode);
+		result.put("message", message);
 		return result;
 	}
 }

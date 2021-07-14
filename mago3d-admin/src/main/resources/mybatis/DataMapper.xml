@@ -453,7 +453,7 @@
 
 	<!-- Data 에 속하는 모든 Object ID를 삭제 -->
 	<delete id="deleteDataByDataGroupId" parameterType="dataGroup">
-		/* deleteDataByProjectId */
+		/* deleteDataByDataGroupId */
 		DELETE
 		FROM data_info
 		WHERE data_group_id = #{dataGroupId}

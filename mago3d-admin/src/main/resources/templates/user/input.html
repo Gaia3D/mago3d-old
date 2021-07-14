@@ -243,7 +243,7 @@
 	}
 
 	function checkData() {
-		var passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!#^%*?&])[A-Za-z\d$@$!#^%*?&]{[[${policy.passwordMinLength}]],[[${policy.passwordMaxLength}]]}$/;
+		// var passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!#^%*?&])[A-Za-z\d$@$!#^%*?&]{[[${policy.passwordMinLength}]],[[${policy.passwordMaxLength}]]}$/;
 
 		if($("#duplicationValue").val() == null || $("#duplicationValue").val() == "") {
 			alert(JS_MESSAGE["check.id.duplication"]);
@@ -266,10 +266,10 @@
 			alert(JS_MESSAGE["password.empty"]);
 			$("#password").focus();
 			return false;
-		} else if(!passwordValidation.test($("#password").val())) {
-			alert(JS_MESSAGE["user.password.invalid"]);
-			$("#password").focus();
-			return false;
+		// } else if(!passwordValidation.test($("#password").val())) {
+		// 	alert(JS_MESSAGE["user.password.invalid"]);
+		// 	$("#password").focus();
+		// 	return false;
 		} else if($("#passwordConfirm").val() == "") {
 			alert(JS_MESSAGE["password.correct.empty"]);
 			$("#passwordConfirm").focus();

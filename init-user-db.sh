@@ -21,3 +21,5 @@ for file in /database/index/*.sql
 do
   psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -a -f ${file}
 done
+
+psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -a -f /database/schema/schema.sql

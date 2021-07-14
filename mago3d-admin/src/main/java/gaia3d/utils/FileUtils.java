@@ -303,7 +303,7 @@ public class FileUtils {
 		}
 		
 		// 사용자 디렉토리
-		if(UploadDirectoryType.USERID_YEAR == uploadDirectoryType 
+		if(UploadDirectoryType.USERID_YEAR == uploadDirectoryType
 				|| UploadDirectoryType.USERID_YEAR_MONTH == uploadDirectoryType
 				|| UploadDirectoryType.USERID_YEAR_MONTH_DAY == uploadDirectoryType) {
 			sourceDirectory = sourceDirectory + userId + File.separator;
@@ -312,7 +312,7 @@ public class FileUtils {
 				userDirectory.mkdir();
 			}
 		}
-		
+
 		// 년
 		if(UploadDirectoryType.USERID_YEAR == uploadDirectoryType 
 				|| UploadDirectoryType.USERID_YEAR_MONTH == uploadDirectoryType
@@ -329,7 +329,7 @@ public class FileUtils {
 				yearDirectory.mkdir();
 			}
 		}
-		
+
 		// 월
 		if(UploadDirectoryType.USERID_YEAR_MONTH == uploadDirectoryType
 				|| UploadDirectoryType.USERID_YEAR_MONTH_DAY == uploadDirectoryType
@@ -343,7 +343,7 @@ public class FileUtils {
 				monthDirectory.mkdir();
 			}
 		}
-		
+
 		// 일
 		if(UploadDirectoryType.USERID_YEAR_MONTH_DAY == uploadDirectoryType
 				|| UploadDirectoryType.YEAR_MONTH_DAY == uploadDirectoryType
@@ -354,10 +354,10 @@ public class FileUtils {
 				dayDirectory.mkdir();
 			}
 		}
-		
+
 		// 사용자 디렉토리
 		if(UploadDirectoryType.YEAR_USERID == uploadDirectoryType
-				|| UploadDirectoryType.YEAR_MONTH_USERID == uploadDirectoryType 
+				|| UploadDirectoryType.YEAR_MONTH_USERID == uploadDirectoryType
 				|| UploadDirectoryType.YEAR_MONTH_DAY_USERID == uploadDirectoryType) {
 			sourceDirectory = sourceDirectory + userId + File.separator;
 			File userDirectory = new File(sourceDirectory);
@@ -365,7 +365,7 @@ public class FileUtils {
 				userDirectory.mkdir();
 			}
 		}
-		
+
 		return sourceDirectory;
 	}
 	
@@ -379,8 +379,8 @@ public class FileUtils {
 		}
 		return filePath;
 	}
-	
-	public static void deleteFileReculsive(String path) {
+
+	public static void deleteFileRecursive(String path) {
 		File folder = new File(path);
 		try {
 		    while(folder.exists()) {
