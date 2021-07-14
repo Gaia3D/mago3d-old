@@ -170,12 +170,12 @@ public class MyPageRestController {
 	}
 
 	/**
-	 * 멤버십 로그 등록
+	 * 멤버십 변경
 	 * @param membershipName
 	 * @return
 	 */
 	@PostMapping(value = "/memberships/{membershipName}")
-	public Map<String, Object>  membershipLog(HttpServletRequest request, @PathVariable String membershipName) {
+	public Map<String, Object>  updateMembership(HttpServletRequest request, @PathVariable String membershipName) {
 		log.info("@@@@@ membershipName = {}", membershipName);
 
 		Map<String, Object> result = new HashMap<>();
@@ -185,7 +185,6 @@ public class MyPageRestController {
 		UserSession userSession = (UserSession)request.getSession().getAttribute(Key.USER_SESSION.name());
 
 		MembershipLog membershipLog = membershipService.getMembershipLastLog(userSession.getUserId());
-
 		if( MembershipStatus.REQUEST == MembershipStatus.valueOf(membershipLog.getStatus())) {
 			// TODO 에러 처리 필요
 			log.info("@@@@@@@@@@@@@ errcode = {}", errorcode);
@@ -195,8 +194,9 @@ public class MyPageRestController {
 			return result;
 		}
 
+		membershipLog.setRequestMembershipId(null);
 		membershipLog.setRequestMembershipName(membershipName);
-		membershipService.insertMembershipLog(membershipLog);
+		membershipService.updateMembership(membershipLog);
 
 		int statusCode = HttpStatus.OK.value();
 

@@ -49,6 +49,13 @@ public interface MembershipService {
     int insertMembershipLog(MembershipLog membershipLog);
 
     /**
+     * 멤버십 변경
+     * @param membershipLog
+     * @return
+     */
+    int updateMembership(MembershipLog membershipLog);
+
+    /**
      * 멤버십 변환 횟수 갱신
      * @param membershipUsage
      * @return

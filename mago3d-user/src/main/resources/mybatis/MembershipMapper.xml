@@ -5,7 +5,7 @@
 
 	<!-- 멤버십 정보 조회 -->
 	<select id="getMembershipById" parameterType="int" resultType="membership">
-		/* getMembershipByUserId */
+		/* getMembershipById */
 		SELECT *
 		FROM membership
 		WHERE membership_id = #{membershipId}

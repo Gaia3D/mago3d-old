@@ -1,6 +1,7 @@
 package gaia3d.controller.view;
 
 import gaia3d.config.PropertiesConfig;
+import gaia3d.domain.ApprovalType;
 import gaia3d.domain.SharingType;
 import gaia3d.domain.SigninType;
 import gaia3d.domain.SignupType;
@@ -133,7 +134,11 @@ public class SignupController {
 		signupForm.setSigninType(SigninType.BASIC.toString());
 		signupForm.setSignupType(SignupType.BASIC.toString());
 		signupForm.setUserGroupId(UserGroupType.USER.getValue());
-		signupForm.setStatus(UserStatus.WAITING_APPROVAL.getValue());
+		if(ApprovalType.AUTO == ApprovalType.valueOf(policy.getSignupType().toUpperCase())) {
+			signupForm.setStatus(UserStatus.USE.getValue());
+		} else {
+			signupForm.setStatus(UserStatus.WAITING_APPROVAL.getValue());
+		}
 		userService.insertUser(signupForm);
 
 		try {
@@ -191,7 +196,11 @@ public class SignupController {
 		signupForm.setSigninType(SigninType.SOCIAL.toString());
 		signupForm.setSignupType(SignupType.SOCIAL.toString());
 		signupForm.setUserGroupId(UserGroupType.USER.getValue());
-		signupForm.setStatus(UserStatus.WAITING_APPROVAL.getValue());
+		if(ApprovalType.AUTO == ApprovalType.valueOf(policy.getSignupType().toUpperCase())) {
+			signupForm.setStatus(UserStatus.USE.getValue());
+		} else {
+			signupForm.setStatus(UserStatus.WAITING_APPROVAL.getValue());
+		}
 		userService.insertUser(signupForm);
 
 		try {
@@ -217,6 +226,10 @@ public class SignupController {
 	 */
 	@GetMapping("/signup-complete")
 	public String signupComplete(HttpServletRequest request, Model model) {
+		Policy policy = CacheManager.getPolicy();
+
+		model.addAttribute("signupType", policy.getSignupType().toUpperCase());
+
 		return "/sign/signup-complete";
 	}
 

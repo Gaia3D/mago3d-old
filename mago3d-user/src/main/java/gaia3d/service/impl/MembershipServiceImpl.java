@@ -78,10 +78,21 @@ public class MembershipServiceImpl implements MembershipService {
 	 */
 	@Transactional
 	public int insertMembershipLog(MembershipLog membershipLog) {
+		return membershipMapper.insertMembershipLog(membershipLog);
+	}
+
+	/**
+	 * 멤버십 변경
+	 * @param membershipLog
+	 * @return
+	 */
+	@Transactional
+	public int updateMembership(MembershipLog membershipLog) {
+		// TODO 화면에서 요청 멤버십 이름만 넘어옴
 		Membership membership = membershipMapper.getMembershipByName(membershipLog.getRequestMembershipName());
 
 		MembershipLog newMembershipLog = new MembershipLog();
-		newMembershipLog.setCurrentMembershipId(membershipLog.getRequestMembershipId());
+		newMembershipLog.setCurrentMembershipId(membershipLog.getCurrentMembershipId());
 		newMembershipLog.setRequestMembershipId(membership.getMembershipId());
 		newMembershipLog.setUserId(membershipLog.getUserId());
 		newMembershipLog.setStatus(MembershipStatus.REQUEST.name());
