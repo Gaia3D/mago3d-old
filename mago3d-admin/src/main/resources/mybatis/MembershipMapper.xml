@@ -112,7 +112,7 @@
 	</select>
 
 	<!-- 멤버십 로그 정보 조회 -->
-	<select id="getMembershipLog" parameterType="int" resultType="membershipLog">
+	<select id="getMembershipLog" parameterType="long" resultType="membershipLog">
 		/* getMembershipLog */
 		SELECT *
 		FROM membership_log

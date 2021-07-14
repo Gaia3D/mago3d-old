@@ -1,5 +1,6 @@
 package gaia3d.service.impl;
 
+import gaia3d.domain.MembershipStatus;
 import gaia3d.domain.membership.Membership;
 import gaia3d.domain.membership.MembershipLog;
 import gaia3d.domain.membership.MembershipUsage;
@@ -136,13 +137,22 @@ public class MembershipServiceImpl implements MembershipService {
 	public int updateUserMembership(Long membershipLogId) {
 		MembershipLog dbMembershipLog = membershipMapper.getMembershipLog(membershipLogId);
 
-		UserInfo userInfo = UserInfo.builder().userId(dbMembershipLog.getUserId()).membershipId(dbMembershipLog.getRequestMembershipId()).build();
+		UserInfo userInfo = UserInfo.builder()
+				.userId(dbMembershipLog.getUserId())
+				.membershipId(dbMembershipLog.getRequestMembershipId())
+				.build();
 		userMapper.updateUser(userInfo);
 
-		MembershipUsage membershipUsage = MembershipUsage.builder().userId(dbMembershipLog.getUserId()).membershipId(dbMembershipLog.getRequestMembershipId()).build();
+		MembershipUsage membershipUsage = MembershipUsage.builder()
+				.userId(dbMembershipLog.getUserId())
+				.membershipId(dbMembershipLog.getRequestMembershipId())
+				.build();
 		membershipMapper.updateMembershipUsage(membershipUsage);
 
-		MembershipLog membershipLog = MembershipLog.builder().membershipLogId(dbMembershipLog.getMembershipLogId()).build();
+		MembershipLog membershipLog = MembershipLog.builder().
+				membershipLogId(dbMembershipLog.getMembershipLogId())
+				.status(MembershipStatus.APPROVAL.name())
+				.build();
 		return membershipMapper.updateMembershipLog(membershipLog);
 	}
 }

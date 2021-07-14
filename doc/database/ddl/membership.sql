@@ -44,7 +44,7 @@ comment on column membership_usage.insert_date is '등록일';
 -- before, after가 더 좋을거 같음. 요청 userId, 승인 userId, 요청일, 승인일 필요
 -- status는 만료가 있어야 함. schedule이 돌면서 일정 기간 이상은 말료 상태로 변경해야 함
 create table membership_log(
-    membership_log_id               integer,
+    membership_log_id               bigint,
     current_membership_id           integer,
     request_membership_id           integer,
     user_id 					    varchar(32),
