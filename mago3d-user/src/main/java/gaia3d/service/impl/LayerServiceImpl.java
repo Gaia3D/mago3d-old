@@ -9,7 +9,6 @@ import gaia3d.persistence.LayerMapper;
 import gaia3d.service.LayerService;
 import lombok.extern.slf4j.Slf4j;
 import org.geotools.ows.wms.CRSEnvelope;
-import org.opengis.geometry.DirectPosition;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

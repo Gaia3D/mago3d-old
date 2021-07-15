@@ -1,5 +1,7 @@
 package gaia3d.domain.layer;
 
+import gaia3d.domain.cache.CacheManager;
+import gaia3d.domain.policy.GeoPolicy;
 import org.geotools.ows.ServiceException;
 import org.geotools.ows.wms.Layer;
 import org.geotools.ows.wms.*;
@@ -12,9 +14,12 @@ public class GeoserverLayer {
 
     public CRSEnvelope getLayerBoundingBox(String layerName) {
 
+        GeoPolicy geoPolicy = CacheManager.getGeoPolicy();
+        String geoserverDataUrl = geoPolicy.getGeoserverDataUrl();
+
         URL url = null;
         try {
-            url = new URL("http://localhost:18080/geoserver/wms?version=1.1.1&request=getcapabilities&service=wms");
+            url = new URL(String.format("%s/wms?version=1.1.1&request=getcapabilities&service=wms", geoserverDataUrl));
         } catch (MalformedURLException e) {
             //will not happen
         }
