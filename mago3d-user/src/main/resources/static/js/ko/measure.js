@@ -48,6 +48,7 @@ Measure.STATUS = {
 	NEEDLASTPOINT : 'needlastpoint',
 	NEEDVERTEXPOINT : 'needlastpoint',
 	NEEDGUIDEPOINT : 'needguidepoint',
+	NEEDPOLYGON : 'needpolygon',
 	COMPLETE : 'complete'
 }
 
@@ -178,12 +179,184 @@ Measure.prototype.destroyDrawer = function() {
 	this.drawer = this.drawer.destroy();
 }
 
-Measure.prototype.decorateArea = function() {
-console.info('decorateArea');
-}
-
 Measure.prototype.decorateHeight = function() {
 console.info('decorateHeight');
+}
+
+
+Measure.prototype.decorateArea = function() {
+	var viewer = this.magoInstance.getViewer();
+	var magoManager = this.magoInstance.getMagoManager();
+	
+	var self = this;
+	const pointGraphic = {
+		color : Cesium.Color.WHITE,
+		outlineColor : new Cesium.Color(0.094118, 0.2, 0.89804, 1),
+		outlineWidth : 3,
+		pixelSize : 6,
+		heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
+	}
+	let labelOption = {
+        scale :0.5,
+        font: "normal normal bolder 24px Helvetica",
+        fillColor: Cesium.Color.RED,
+        outlineColor: Cesium.Color.RED,
+        outlineWidth: 1,
+		pixelOffset : new Cesium.Cartesian2(-25,-10), 
+        heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
+        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+        distanceDisplayCondition : new Cesium.DistanceDisplayCondition(0.0, 100000),
+		backgroundColor : Cesium.Color.WHITE,
+		showBackground : true
+	}
+	
+	var _lineCoordinate = function() {
+		var pointsCoordinates = self.drawer.result.points.map(function(point) {
+			return point.position.getValue();
+		});
+		pointsCoordinates.push(self.drawer.result.guide.position.getValue());
+		return pointsCoordinates;
+	}
+	
+	var _polygonHierarchy = function() {
+		return new Cesium.PolygonHierarchy(_lineCoordinate());
+	}
+	
+	var _calcArea = function() {
+		var _calTriangleArea = function(p1, p2, p3) {
+			var r = Math.abs(p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y)) / 2;
+			var cartographic = new Cesium.Cartographic((p1.x + p2.x + p3.x) / 3, (p1.y + p2.y + p3.y) / 3);
+			var cartesian = viewer.scene.globe.ellipsoid.cartographicToCartesian(cartographic);
+			var magnitude = Cesium.Cartesian3.magnitude(cartesian);
+			return r * magnitude * magnitude * Math.cos(cartographic.latitude);
+		}
+		var existingPoint = _lineCoordinate().map(function(crts) {
+			var cartographic = Cesium.Cartographic.fromCartesian(crts);
+			return new Cesium.Cartesian2(cartographic.longitude, cartographic.latitude);
+		});
+		
+		if (Cesium.PolygonPipeline.computeWindingOrder2D(existingPoint) === Cesium.WindingOrder.CLOCKWISE) {
+			existingPoint.reverse();
+		}
+		var triangles = Cesium.PolygonPipeline.triangulate(existingPoint);
+		
+		var area = 0;
+		for(var i=0,len=triangles.length;i<len;i += 3) {
+			area += _calTriangleArea(existingPoint[triangles[i]], existingPoint[triangles[i + 1]], existingPoint[triangles[i + 2]]);
+		}
+		
+		return `${area.toFixed(3)}㎡`;
+	}
+	
+	var _complete = function(e) {
+		var drawer = self.drawer;
+		
+		if(drawer.status !== Measure.STATUS.NEEDVERTEXPOINT) return;
+		
+		var point3d = API.Converter.screenCoordToMagoPoint3D(e.position.x, e.position.y, self.magoInstance.getMagoManager());
+		var crts3 = API.Converter.magoToCesiumForPoint3D(point3d);
+		
+		drawer.result.guide.position = crts3;
+		drawer.result.guide.label.text = _calcArea();
+		
+		//reinitialize
+		drawer.result.line.polyline.positions = _lineCoordinate();
+		var cloneLine = Cesium.clone(drawer.result.line, false);
+		
+		drawer.result.points.push(drawer.result.guide);
+		var clonePoints = drawer.result.points.map(function(point) {
+			var clonePoint = Cesium.clone(point, false);
+			return clonePoint;
+		});
+		
+		drawer.result.polygon.polygon.hierarchy = _polygonHierarchy();
+		var clonePolygon = Cesium.clone(drawer.result.polygon, false);
+		
+		drawer.status = Measure.STATUS.COMPLETE;
+		$('#toolbox-measure-btn-area').trigger('click');
+		
+		self.result = {
+			line : cloneLine, 
+			points : clonePoints,
+			polygon : clonePolygon
+		};
+	}
+	
+	var _click = function(e){
+		var drawer = self.drawer;
+		
+		var point3d = API.Converter.screenCoordToMagoPoint3D(e.position.x, e.position.y, self.magoInstance.getMagoManager());
+		var crts3 = API.Converter.magoToCesiumForPoint3D(point3d);
+		
+		if(drawer.status === Measure.STATUS.NEEDVERTEXPOINT) {
+			drawer.result.points.push(viewer.entities.add({
+				position : crts3,
+				point : pointGraphic
+			}));
+			
+			if(drawer.result.points.length === 1) {
+				drawer.status = Measure.STATUS.NEEDLINE;
+			}
+			if(drawer.result.points.length === 2) {
+				labelOption.text = new Cesium.CallbackProperty(_calcArea);
+				drawer.result.guide.label = labelOption;
+				drawer.status = Measure.STATUS.NEEDPOLYGON;
+			}
+		}
+	}
+	var _move = function(e) {
+		var drawer = self.drawer;
+		
+		if(drawer.status === Measure.STATUS.COMPLETE) return;
+		
+		var point3d = API.Converter.screenCoordToMagoPoint3D(e.endPosition.x, e.endPosition.y, magoManager);
+		var crts3 = API.Converter.magoToCesiumForPoint3D(point3d);
+		
+		if(drawer.status === Measure.STATUS.NOTSTART) {
+			drawer.result.points = [];
+			drawer.result.guide = viewer.entities.add({
+				point : pointGraphic
+			});
+			
+			drawer.status = Measure.STATUS.NEEDVERTEXPOINT;
+		}
+		
+		if(drawer.status === Measure.STATUS.NEEDLINE) {
+			drawer.result.line = viewer.entities.add({
+				polyline : {
+					positions : new Cesium.CallbackProperty(_lineCoordinate),
+					width : 3,
+					clampToGround : true,
+					material : new Cesium.Color(0.4, 0.47059, 0.92157, 1)
+				}
+			});
+			drawer.status = Measure.STATUS.NEEDVERTEXPOINT;
+		}
+		
+		if(drawer.status === Measure.STATUS.NEEDPOLYGON) {
+			/*viewer.entities.remove(drawer.result.line);
+			delete drawer.result.line;*/
+			
+			drawer.result.polygon = viewer.entities.add({
+				polygon : {
+					hierarchy : new Cesium.CallbackProperty(_polygonHierarchy),
+					heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
+					outline : true,
+					outlineWidth : 1,
+					outlineColor : new Cesium.Color(0.4, 0.47059, 0.92157, 1),
+					material :  new Cesium.Color(0.81961, 0.83921, 0.98039, 0.35),
+					zIndex : 1
+				}
+			});
+			drawer.status = Measure.STATUS.NEEDVERTEXPOINT;
+		}
+		
+		drawer.result.guide.position = crts3;
+	}
+	
+	this.drawer.setInputAction(_complete ,Cesium.ScreenSpaceEventType.RIGHT_CLICK);
+	this.drawer.setInputAction(_click ,Cesium.ScreenSpaceEventType.LEFT_CLICK);
+	this.drawer.setInputAction(_move ,Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 }
 
 Measure.prototype.decorateDistance = function() {

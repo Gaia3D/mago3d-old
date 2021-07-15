@@ -254,57 +254,7 @@ var mapControllEventHandler = function(magoInstance) {
 		$('.toolbox-measure').toggle();
 		
 		$('.toolbox-measure-btn').removeClass('on');
-		
-		//shapeInfo.style.display = "none";
-		
-		/*if(MAGO.measureTools.polygonShape.entityId.length !=0){
-			MAGO.measureTools.polygonShape.init();
-		}
-		if(MAGO.measureTools.lineShape.entityId.length !=0){
-			MAGO.measureTools.lineShape.init();
-		}*/
-		
 	});
-	
-	/*// 거리 측정
-	$('#mapCtrlMeasureDistance').click(function() {
-		$(this).siblings().removeClass('on');
-		$(this).toggleClass('on');
-		if(MAGO.measureTools.polygonShape.entityId.length !=0){
-			MAGO.measureTools.polygonShape.init();
-		}
-		if(MAGO.measureTools.lineShape.entityId.length !=0){
-			MAGO.measureTools.lineShape.init();
-		}
-		shapeInfo.innerHTML = '';
-		shapeInfo.style.display = 'none';
-
-		MAGO.measureTools.lineShape.condition = function(){
-		    return $('#mapCtrlMeasureDistance')[0].classList.contains('on');
-		};
-		deleteHeigtEntities();
-		MAGO.measureTools.lineShape.setEventHandler();
-	});
-
-	// 면적 측정
-	$('#mapCtrlMeasureArea').click(function() {
-		$(this).siblings().removeClass('on');
-		$(this).toggleClass('on');
-		if(MAGO.measureTools.lineShape.entityId.length !=0){
-			MAGO.measureTools.lineShape.init();
-		}
-		if(MAGO.measureTools.polygonShape.entityId.length !=0){
-			MAGO.measureTools.polygonShape.init();
-		}
-		shapeInfo.innerHTML = '';
-		shapeInfo.style.display = 'none';
-
-		MAGO.measureTools.polygonShape.condition = function(){
-		    return $('#mapCtrlMeasureArea')[0].classList.contains('on');
-		};
-		deleteHeigtEntities();
-		MAGO.measureTools.polygonShape.setEventHandler();
-	});*/
 
 	// 높이 측정
 	var heigtEntities = [];
