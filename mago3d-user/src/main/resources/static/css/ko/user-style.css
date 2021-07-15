@@ -5165,7 +5165,7 @@ span.mago {color:#6649ca;}
 .toolbox-3d > button:last-child:hover {color:#1289f8; background: white url(/images/ko/ic_toolbox.png) no-repeat -274px -115px;}
 
 .toolbox-measure {display:none;clear: both;position: absolute;top: 170px; width: 150px; right: 68px;z-index: 11;font-family: 'NotoKrR';height: 50px;margin: 0;padding: 0;background: white;border-radius: 0; box-shadow: 0 0 2px rgba(132,132,132,0.6);}
-.toolbox-measure button.toolbox-measure-btn {margin:0; padding 0;height: 50px; display:inline-block; float:left; font-size:11px;}
+.toolbox-measure button.toolbox-measure-btn {margin:0; padding : 0;height: 50px; float:left; font-size:11px;}
 .toolbox-measure button.toolbox-measure-btn:focus, .toolbox-measure button.toolbox-measure-btn:hover, .toolbox-measure button.toolbox-measure-btn.on {border: none;}
 .toolbox-measure > button::before {content:""; display:inline-block; width:0; height:70%; margin-right:0; vertical-align:bottom;}
 #toolbox-measure-btn-distance {display:inline-block;  margin:0; padding:0; border-right:1px solid #d9d8d8; height:50px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 3px -153px;}
