@@ -107,7 +107,7 @@ public class UploadDataServiceImpl implements UploadDataService {
 	 * 사용자 파일 정보 업로딩
 	 * @param uploadData
 	 * @param uploadDataFileList
-	 * @param totalFileSize
+	 * @param totalFileSize KB
 	 * @return
 	 */
 	@Transactional
@@ -124,7 +124,7 @@ public class UploadDataServiceImpl implements UploadDataService {
 		}
 
 		MembershipUsage membershipUsage = membershipService.getMembershipUsageByUserId(userId);
-		membershipUsage.setUseUploadFileSize(Double.valueOf(totalFileSize));
+		membershipUsage.setUseUploadFileSize(totalFileSize);
 		membershipService.updateMembershipUsage(membershipUsage);
 
 		return result;

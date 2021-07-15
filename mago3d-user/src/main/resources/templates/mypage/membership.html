@@ -68,7 +68,15 @@
 					파일 업로딩 용량
 				</th>
 				<td class="col-input">
-					<th:block th:text="${membershipUsage.useUploadFileSize}"></th:block>
+	<th:block th:if="${membershipUsage.useUploadFileSize} < 1024">
+					<th:block th:text="${membershipUsage.useUploadFileSize}"></th:block> KB
+	</th:block>
+	<th:block th:if="${membershipUsage.useUploadFileSize} > 1024">
+					<th:block th:text="${membershipUsage.useUploadFileSize / 1024}"></th:block> MB
+	</th:block>
+	<th:block th:if="${membershipUsage.useUploadFileSize} > (1024 * 1024)">
+						<th:block th:text="${membershipUsage.useUploadFileSize / (1024 * 1024)}"></th:block> GB
+	</th:block>
 				</td>
 			</tr>
 		</table>

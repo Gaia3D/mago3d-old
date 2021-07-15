@@ -170,7 +170,7 @@
 		<if test="membershipId != null and membershipId != ''">
 			membership_id = #{membershipId},
 		</if>
-		<if test="useUploadFileSize != null and useUploadFileSize != ''">
+		<if test="useUploadFileSize != null and useUploadFileSize > 0">
 			use_upload_file_size = #{useUploadFileSize},
 		</if>
 		update_date = NOW()

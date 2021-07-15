@@ -27,13 +27,13 @@ public class MembershipUsage extends Search implements Serializable {
 	private String membershipName;
 	// 사용자 고유번호
 	private String userId;
-	// 사용 용량
-	private Double useUploadFileSize;
+	// 사용 용량(KB)
+	private Long useUploadFileSize;
 	// 사용 횟수
 	private Integer useConvertFileCount;
 
-	// 허용 용량
-	private Integer uploadFileSize;
+	// 허용 용량(KB)
+	private Long uploadFileSize;
 	// 허용 횟수
 	private Integer convertFileCount;
 	

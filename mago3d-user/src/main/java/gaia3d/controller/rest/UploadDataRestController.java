@@ -269,7 +269,8 @@ public class UploadDataRestController {
 		uploadData.setDescription(request.getParameter("description"));
 
 		log.info("@@@@@@@@@@@@ uploadData = {}", uploadData);
-		uploadDataService.insertUploadData(uploadData, uploadDataFileList, totalFileSize);
+		// KB 단위
+		uploadDataService.insertUploadData(uploadData, uploadDataFileList, totalFileSize / 1024);
 		int statusCode = HttpStatus.OK.value();
 
 		result.put("statusCode", statusCode);
