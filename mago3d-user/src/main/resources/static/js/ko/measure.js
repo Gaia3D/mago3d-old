@@ -46,7 +46,7 @@ Measure.STATUS = {
 	NEEDSTARTPOINT : 'needstartpoint',
 	NEEDLINE : 'needline',
 	NEEDLASTPOINT : 'needlastpoint',
-	NEEDVERTEXPOINT : 'needlastpoint',
+	NEEDVERTEXPOINT : 'needvertexpoint',
 	NEEDGUIDEPOINT : 'needguidepoint',
 	NEEDPOLYGON : 'needpolygon',
 	COMPLETE : 'complete'
@@ -125,7 +125,6 @@ Measure.prototype.removeEntity = function(obj) {
 }
 
 
-
 Measure.prototype.setDrawer = function() {
 	this.destroyDrawer();
 	
@@ -180,7 +179,174 @@ Measure.prototype.destroyDrawer = function() {
 }
 
 Measure.prototype.decorateHeight = function() {
-console.info('decorateHeight');
+	var viewer = this.magoInstance.getViewer();
+	var magoManager = this.magoInstance.getMagoManager();
+	var depthDetected = false;
+	
+	var self = this;
+	const pointGraphic = {
+		color : Cesium.Color.WHITE,
+		outlineColor : new Cesium.Color(1, 0.30196, 0.92549, 1),
+		outlineWidth : 3,
+		pixelSize : 6,
+		disableDepthTestDistance: Number.POSITIVE_INFINITY
+	}
+	let labelOption = {
+        scale :0.5,
+        font: "normal normal bolder 24px Helvetica",
+        fillColor: Cesium.Color.RED,
+        outlineColor: Cesium.Color.RED,
+        outlineWidth: 1,
+		pixelOffset : new Cesium.Cartesian2(-25,-10), 
+        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+        distanceDisplayCondition : new Cesium.DistanceDisplayCondition(0.0, 100000),
+		backgroundColor : Cesium.Color.WHITE,
+		showBackground : true,
+		disableDepthTestDistance: Number.POSITIVE_INFINITY
+	}
+	
+	var _lineCoordinate = function() {
+		var pointsCoordinates = self.drawer.result.points.map(function(point) {
+			return point.position.getValue();
+		});
+		pointsCoordinates.push(self.drawer.result.guide.position.getValue());
+		return pointsCoordinates;
+	}
+	
+	var _calcHeight = function() {
+		var crtsArray = _lineCoordinate();
+		
+		return `${Cesium.Cartesian3.distance(crtsArray[1], crtsArray[0]).toFixed(1)}m`;
+	}
+	
+	var _complete = function(e) {
+		var drawer = self.drawer;
+		
+		if(drawer.status !== Measure.STATUS.NEEDLASTPOINT) return;
+		
+		drawer.result.guide.label.text = _calcHeight();
+		
+		//reinitialize
+		drawer.result.line.polyline.positions = _lineCoordinate();
+		var cloneLine = Cesium.clone(drawer.result.line, false);
+		
+		drawer.result.points.push(drawer.result.guide);
+		var clonePoints = drawer.result.points.map(function(point) {
+			var clonePoint = Cesium.clone(point, false);
+			return clonePoint;
+		});
+		
+		drawer.status = Measure.STATUS.COMPLETE;
+		$('#toolbox-measure-btn-height').trigger('click');
+		
+		self.result = {
+			line : cloneLine, 
+			points : clonePoints
+		};
+	}
+	
+	var _click = function(e){
+		var drawer = self.drawer;
+		
+		if(drawer.status === Measure.STATUS.NEEDVERTEXPOINT) {
+			if(drawer.result.points.length === 0) {
+				depthDetected = Mago3D.ManagerUtils.detectedDepth(e.position.x, e.position.y, magoManager);
+			}
+			
+			var point3d = Mago3D.ManagerUtils.screenCoordToWorldCoordUseDepthCheck(e.position.x, e.position.y, magoManager, {highPrecision:true}); 
+			var geographic = Mago3D.ManagerUtils.pointToGeographicCoord(point3d);
+			var crts3 = Cesium.Cartesian3.fromDegrees(geographic.longitude, geographic.latitude, geographic.altitude);
+			
+			drawer.result.points.push(viewer.entities.add({
+				position : crts3,
+				point : pointGraphic
+			}));
+			
+			labelOption.text = new Cesium.CallbackProperty(_calcHeight);
+			drawer.result.guide.label = labelOption;
+			
+			drawer.status = Measure.STATUS.NEEDLINE;
+		}
+		
+		if(drawer.status === Measure.STATUS.NEEDLASTPOINT) {
+			drawer.result.points.push(viewer.entities.add({
+				position : drawer.result.guide.position.getValue(),
+				point : pointGraphic
+			}));
+			
+			_complete(e.position);
+		}
+	}
+	var _move = function(e) {
+		var drawer = self.drawer;
+		
+		if(drawer.status === Measure.STATUS.COMPLETE) return;
+		
+		if(drawer.status === Measure.STATUS.NEEDLASTPOINT) {
+			var startPointCrts = drawer.result.points[0].position.getValue();
+			var height;
+			
+			if(depthDetected) {
+				var point3d = Mago3D.ManagerUtils.screenCoordToWorldCoordUseDepthCheck(e.endPosition.x, e.endPosition.y, magoManager, {highPrecision:true});
+				var geographic = Mago3D.ManagerUtils.pointToGeographicCoord(point3d);
+				
+				height = geographic.altitude;
+			}
+			
+			if(!depthDetected || Math.abs(height) < 0.8) {
+				var scene = viewer.scene;
+				var startPointCrtsClone = new Cesium.Cartesian3(startPointCrts.x, startPointCrts.y, startPointCrts.z);
+				
+				var surfaceNormal = scene.globe.ellipsoid.geodeticSurfaceNormal(startPointCrtsClone);
+                var planeNormal = Cesium.Cartesian3.subtract(scene.camera.position, startPointCrtsClone, new Cesium.Cartesian3());
+                planeNormal = Cesium.Cartesian3.normalize(planeNormal, planeNormal);
+                var ray =  viewer.scene.camera.getPickRay(e.endPosition);
+                var plane = Cesium.Plane.fromPointNormal(startPointCrtsClone, planeNormal);
+                var newCartesian =  Cesium.IntersectionTests.rayPlane(ray, plane);
+                var newCartographic = scene.globe.ellipsoid.cartesianToCartographic(newCartesian);
+
+                height = newCartographic.height;
+                if(height < 0) height *= -1;
+			}
+			
+			var startPointGeographic = Mago3D.ManagerUtils.pointToGeographicCoord(startPointCrts);
+			var guideCrts = Cesium.Cartesian3.fromDegrees(startPointGeographic.longitude, startPointGeographic.latitude, height);
+			
+			drawer.result.guide.position = guideCrts;
+		} else {
+			var point3d = API.Converter.screenCoordToMagoPoint3D(e.endPosition.x, e.endPosition.y, magoManager);
+			var crts3 = API.Converter.magoToCesiumForPoint3D(point3d);
+			
+			if(drawer.status === Measure.STATUS.NOTSTART) {
+				drawer.result.points = [];
+				drawer.result.guide = viewer.entities.add({
+					point : pointGraphic
+				});
+				
+				drawer.status = Measure.STATUS.NEEDVERTEXPOINT;
+			}
+			
+			if(drawer.status === Measure.STATUS.NEEDLINE) {
+				drawer.result.line = viewer.entities.add({
+					polyline : {
+						positions : new Cesium.CallbackProperty(_lineCoordinate),
+						width : 3,
+						depthFailMaterial : Cesium.Color.RED,
+						material : new Cesium.PolylineGlowMaterialProperty({
+							color: new Cesium.Color(0.88627, 0.19216, 0.86667, 1),
+							glowPower: 0.25
+						})
+					}
+				});
+				drawer.status = Measure.STATUS.NEEDLASTPOINT;
+			}
+			
+			drawer.result.guide.position = crts3;
+		}
+	}
+	
+	this.drawer.setInputAction(_click ,Cesium.ScreenSpaceEventType.LEFT_CLICK);
+	this.drawer.setInputAction(_move ,Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 }
 
 
