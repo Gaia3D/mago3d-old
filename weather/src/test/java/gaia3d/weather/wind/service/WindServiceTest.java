@@ -17,7 +17,7 @@ class WindServiceTest {
         windService.generate(location);
     }
 
-    @Disabled
+    @Test
     void generateByDir() throws IOException {
 
         WindService windService = new WindService();

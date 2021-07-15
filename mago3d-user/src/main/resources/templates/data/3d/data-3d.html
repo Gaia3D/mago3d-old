@@ -1,9 +1,13 @@
 ﻿<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
-<div id="data-content" class="data-contents sb-page" >
+<div id="data-content" class="data-contents sb-page" style="height: 100%;">
 	<form id="search-data-form" th:object="${searchDataForm}" method="post" onsubmit="return false;">
+		<input type="hidden" name="searchWord" value="data_name" />
+		<input type="hidden" name="dataGroupId" value="0" />
+		<input type="hidden" name="sharing" value="" />
+		<input type="hidden" name="dataType" value="" />
 		<!-- 데이터명 검색 -->
-		<input type="text" class="datasearch" placeholder="데이터명을 입력하세요" />
-		<a class="btn-datasearch" href="#"><span class="blind">데이터명 검색</span></a>
+		<input type="text" name="searchValue" class="datasearch" placeholder="데이터명을 입력하세요"/>
+		<a id="search-data" class="btn-datasearch" href="#"><span class="blind">데이터명 검색</span></a>
 	</form>
 	<!-- 전체-필터더보기 -->
 	<div class="dataselect">
@@ -16,8 +20,9 @@
 			</select>
 		</form>
 		-->
-		<a id="search-data-group" href="#" class="data-group-search">그룹으로 검색</a>
-		<a id="search-data-filter" href="#" class="data-filter">필터 더보기</a>
+		<a id="search-data-group" href="#" class="data-group-search marR5">그룹으로 검색</a>
+		<a id="search-data-filter" href="#" class="data-filter marR5">필터 더보기</a>
+		<button id="search-data-reset" class="p-btn cancel">필터 초기화</button>
 	</div>
 	<dl class="legendWrap">
 		<dt th:text="#{data.group.sharing}"></dt>
@@ -26,12 +31,12 @@
 		<dd><span class="legend pr">P</span><th:block th:text="#{common.private}"></th:block></dd>
 		<dd><span class="legend gr">G</span><th:block th:text="#{common.group}"></th:block></dd>
 	</dl>
-	<hr class="h5" />
+	<!--<hr class="h5" />-->
 
 	<!-- 전체건수-페이지 -->
 	<div id="data-search-summary-dhtml"></div>
 	<!-- datalist  -->
-	<div id="data-list-dhtml" class="sb-page"></div>
+	<div id="data-list-dhtml" class="sb-page yScroll" style="max-height: calc(100% - 300px);"></div>
 	<!-- paging -->
 	<div id="data-paging-dhtml"></div>
 
