@@ -135,7 +135,7 @@ function mapDataInfoList(pageNo, searchDataName, searchDataGroupId, searchDataTy
 									}
 								}
 								 
-								var groupVisible = projects.attributes.isVisible;
+								const groupVisible = projects.attributes.isVisible;
 								if (groupVisible !== undefined) {
 									isVisible = groupVisible;
 								}

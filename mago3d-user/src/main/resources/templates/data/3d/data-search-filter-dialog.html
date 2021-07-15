@@ -4,19 +4,19 @@
 	<button type="button" class="close-s" onclick="Data3D.dataSearchFilterOnOff()"><span class="blind">팝업레이어 닫기</span></button>
 	<span class="layer-ttl">공유유형</span>
 	<div class="layer-bx">
-		<div class="layer-list">
+		<div class="sharing layer-list" data-sharing="common">
 			<a class="icon common"></a>
 			<a class="txt">공통</a>
 		</div>
-		<div class="layer-list">
+		<div class="sharing layer-list" data-sharing="public">
 			<a class="icon open"></a>
 			<a class="txt">공개</a>
 		</div>
-		<div class="layer-list">
+		<div class="sharing layer-list" data-sharing="private">
 			<a class="icon notopen"></a>
 			<a class="txt">비공개</a>
 		</div>
-		<div class="layer-list">
+		<div class="sharing layer-list" data-sharing="group">
 			<a class="icon group"></a>
 			<a class="txt">그룹</a>
 		</div>
@@ -24,39 +24,39 @@
 	<hr class="h5" />
 	<span class="layer-ttl">데이터 타입</span>
 	<div class="layer-bx">
-		<div class="layer-list">
+		<div class="data-type layer-list" data-type="citygml">
 			<a class="icon file"></a>
 			<a class="txt">CityGML</a>
 		</div>
-		<div class="layer-list">
+		<div class="data-type layer-list" data-type="indoorgml">
 			<a class="icon file"></a>
 			<a class="txt">IndoorGML</a>
 		</div>
-		<div class="layer-list">
+		<div class="data-type layer-list" data-type="las">
 			<a class="icon file"></a>
 			<a class="txt">LAS</a>
 		</div>
-		<div class="layer-list">
+		<div class="data-type layer-list" data-type="ifc">
 			<a class="icon file"></a>
 			<a class="txt">IFC</a>
 		</div>
-		<div class="layer-list">
+		<div class="data-type layer-list" data-type="dae">
 			<a class="icon file"></a>
 			<a class="txt">DAE</a>
 		</div>
-		<div class="layer-list">
+		<div class="data-type layer-list" data-type="obj">
 			<a class="icon file"></a>
 			<a class="txt">OBJ</a>
 		</div>
-		<div class="layer-list">
+		<div class="data-type layer-list" data-type="3ds">
 			<a class="icon file"></a>
 			<a class="txt">3DS</a>
 		</div>
 	</div>
 	<hr class="h5" />
 	<div class="popuplayer-btn">
-		<button type="button" class="p-btn general">적용</button>
-		<button type="button" class="p-btn cancel">필터초기화</button>
+		<button type="button" id="data-search-filter-apply" class="p-btn general">적용</button>
+		<button type="button" id="data-search-filter-reset" class="p-btn cancel">필터초기화</button>
 	</div>
 </div>
 </html>

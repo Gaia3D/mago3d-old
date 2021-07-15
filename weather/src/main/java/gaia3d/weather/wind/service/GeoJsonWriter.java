@@ -66,8 +66,19 @@ public class GeoJsonWriter implements Writer {
         FeatureCollection featureCollection = new FeatureCollection();
         Map<String, Object> styles = new HashMap<>();
         List<ColorRamp> colorRamps = Arrays.asList(
-                ColorRamp.builder().color("#FFFFFF").value(0.0).build(),
-                ColorRamp.builder().color("#0000FF").value(20.0).build());
+                ColorRamp.builder().color("#215587").value(0.0).build(),
+                ColorRamp.builder().color("#245b91").value(0.1).build(),
+                ColorRamp.builder().color("#26629b").value(0.2).build(),
+                ColorRamp.builder().color("#2968a5").value(0.3).build(),
+                ColorRamp.builder().color("#2b6eaf").value(0.4).build(),
+                ColorRamp.builder().color("#307bc3").value(0.5).build(),
+                ColorRamp.builder().color("#3687d7").value(0.6).build(),
+                ColorRamp.builder().color("#3b94eb").value(0.7).build(),
+                ColorRamp.builder().color("#40a0ff").value(0.8).build(),
+                ColorRamp.builder().color("#6db8ff").value(1.0).build(),
+                ColorRamp.builder().color("#9bd0ff").value(2.0).build(),
+                ColorRamp.builder().color("#c8e7ff").value(3.0).build(),
+                ColorRamp.builder().color("#f5ffff").value(4.0).build());
         styles.put("colorRamp", colorRamps);
         featureCollection.setStyle(styles);
         featureCollection.setCrs(CoordinateReferenceSystem.valueOf(coordinateSystem));

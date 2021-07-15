@@ -12,6 +12,14 @@ const Data3D = function(magoInstance) {
     const that = this;
     function setElementEvent() {
 
+        // 팝업 레이어 드래그 가능하도록 설정
+        $('#data-group-search').draggable({containment: "window"});
+        $('#data-search-filter').draggable({containment: "window"});
+
+
+
+
+
         // 데이터 그룹 검색 ON/OFF
         $('#search-data-group').click(function() {
             Data3D.dataGroupSearchOnOff();
@@ -25,14 +33,76 @@ const Data3D = function(magoInstance) {
             return false;
         });
 
+
+
+
+
         // 데이터 그룹 검색 버튼 클릭
         $('#search-data-group').click(function() {
             that.getDataGroups(1);
         });
 
         // 데이터 그룹 검색 엔터키
-        $("#data-group-info-content input:text[name='searchValue']").keyup(function(e) {
+        $("#data-group-content input:text[name='searchValue']").keyup(function(e) {
             if (e.keyCode === 13) that.getDataGroups(1);
+        });
+
+        // 데이터 그룹 선택
+        $("#data-group-content").on('click', '.select-data-group', function() {
+            const groupId = $(this).data('groupId');
+            $("#search-data-form input[name='dataGroupId']").val(groupId);
+            Data3D.dataGroupSearchOnOff();
+            that.getDatas(1);
+        });
+
+
+
+        // 데이터 필터 공유유형 선택
+        $('#data-search-filter .sharing').click(function() {
+           $(this).toggleClass('on');
+           $(this).siblings().removeClass('on');
+        });
+
+        // 데이터 필터 데이터타입 선택
+        $('#data-search-filter .data-type').click(function() {
+            $(this).toggleClass('on');
+            $(this).siblings().removeClass('on');
+        });
+
+        // 데이터 필터 적용
+        $('#data-search-filter-apply').click(function() {
+            const sharing = $('#data-search-filter .sharing.on').data('sharing');
+            const dataType = $('#data-search-filter .data-type.on').data('type');
+            $("#search-data-form input[name='sharing']").val(sharing);
+            $("#search-data-form input[name='dataType']").val(dataType);
+            Data3D.dataSearchFilterOnOff();
+            that.getDatas(1);
+        });
+
+        // 데이터 필터 초기화
+        $('#data-search-filter-reset').click(function() {
+            $('#data-search-filter .layer-list').removeClass('on');
+        });
+
+
+
+        // 데이터 검색 버튼 클릭
+        $('#search-data').click(function() {
+            that.getDatas(1);
+        });
+
+        // 데이터 검색 엔터키
+        $("#data-content input:text[name='searchValue']").keyup(function(e) {
+            if (e.keyCode === 13) that.getDatas(1);
+        });
+
+        // 데이터 그룹/필터 초기화
+        $("#search-data-reset").click(function() {
+            /*$("#search-data-form input:text[name='searchValue']").val("");*/
+            $("#search-data-form input[name='dataGroupId']").val(0);
+            $("#search-data-form input[name='sharing']").val("");
+            $("#search-data-form input[name='dataType']").val("");
+            that.getDatas(1);
         });
 
     }
@@ -59,55 +129,80 @@ Object.defineProperties(Data3D.prototype, {
 
 // 데이터 그룹 검색 ON/OFF
 Data3D.dataGroupSearchOnOff = function() {
-    $('#data-group-search').slideToggle();
+    $('#data-group-search').toggle();
 }
 
 // 데이터 검색 필터 ON/OFF
 Data3D.dataSearchFilterOnOff = function() {
-    $('#data-search-filter').slideToggle();
+    $('#data-search-filter').toggle();
 }
 
-// 데이터 표시/비표시
-Data3D.dataOnOff = function(groupId, dataKey, tiling, _this) {
-
-    if(groupId === null || groupId === '' || dataKey === null || dataKey === '') {
+// 데이터 그룹 표시/비표시
+Data3D.dataGroupOnOff = function (groupId, _this) {
+    if (groupId === null || groupId === '') {
         alert(JS_MESSAGE["data.info.incorrect"]);
         return;
     }
 
     var option = true;
-    if (_this.checked) {
-        option = false;
-    }
-
-    if (tiling) {
-        dataKey = "F4D_" + dataKey;
-    }
-    //setNodeAttributeAPI(MAGO3D_INSTANCE, groupId, dataKey, optionObject);
+    if (!_this.checked) option = false;
 
     groupId = parseInt(groupId);
-    //var nodeMap = MAGO3D_INSTANCE.getMagoManager().hierarchyManager.getNodesMap(groupId);
+    this._dataGroupOnOffById(groupId, option);
+}
 
-    //isExistDataAPI(MAGO3D_INSTANCE, groupId, dataKey);
-    //isDataReadyToRender(MAGO3D_INSTANCE, groupId, dataKey);
+Data3D._dataGroupOnOffById = function (groupId, option) {
+    const nodeMap = MAGO3D_INSTANCE.getMagoManager().hierarchyManager.getNodesMap(groupId);
+    let isLoaded = true;
+    if (!$.isEmptyObject(nodeMap)) {
+        for (const key in nodeMap) {
+            const node = nodeMap[key];
+            if (!$.isEmptyObject(nodeMap)) {
+                const nodeData = node.data;
+                if (nodeData && nodeData.attributes && nodeData.attributes.isPhysical === true) {
+                    const optionObject = { isVisible : option };
+                    setNodeAttributeAPI(MAGO3D_INSTANCE, groupId, key, optionObject);
+                }
+            } else {
+                isLoaded = false;
+                break;
+            }
+        }
+    } else {
+        isLoaded = false;
+    }
 
-    if (!isExistDataAPI(MAGO3D_INSTANCE, groupId, dataKey)) {
+    if (!isLoaded) {
         alert(JS_MESSAGE["data.not.loaded"]);
         return;
     }
 
+    const projectsMap = MAGO3D_INSTANCE.getMagoManager().hierarchyManager.projectsMap;
+    if (!$.isEmptyObject(projectsMap) && projectsMap[groupId] && projectsMap[groupId].attributes) {
+        projectsMap[groupId].attributes.isVisible = option;
+    }
+}
+
+// 데이터 표시/비표시
+Data3D.dataOnOff = function(groupId, dataKey, tiling, _this) {
+
+    if (groupId === null || groupId === '' || dataKey === null || dataKey === '') {
+        alert(JS_MESSAGE["data.info.incorrect"]);
+        return;
+    }
+
+    var option = true;
+    if (!_this.checked) option = false;
+
+    if (tiling) dataKey = "F4D_" + dataKey;
+
+    groupId = parseInt(groupId);
+    if (!isExistDataAPI(MAGO3D_INSTANCE, groupId, dataKey)) {
+        alert(JS_MESSAGE["data.not.loaded"]);
+        return;
+    }
     var optionObject = { isVisible : option };
     setNodeAttributeAPI(MAGO3D_INSTANCE, groupId, dataKey, optionObject);
-
-    /*
-    if ($(this).hasClass("show")) {
-        $(this).removeClass("show");
-        $(this).addClass("hide");
-    } else {
-        $(this).removeClass("hide");
-        $(this).addClass("show");
-    }
-    */
 
 }
 
@@ -131,6 +226,7 @@ Data3D.prototype.success = function(res) {
 
         if (res.dataList) {
             this.datas = res.dataList;
+            this.datasGroupOnOff();
             this.createDataContents(res);
             this.pagingRootElement = $("#data-paging-dhtml");
             if (this.dataPagination) {
@@ -225,11 +321,43 @@ Data3D.prototype.dataGroupOnOff = function() {
                 dataGroup.groupVisible = isVisible;
                 continue;
             }
-            if (projects.attributes.isVisible) {
-                isVisible = projects.attributes.isVisible;
+            const groupVisible = projects.attributes.isVisible;
+            if (groupVisible !== undefined) {
+                isVisible = groupVisible;
             }
         }
         dataGroup.groupVisible = isVisible;
+    }
+}
+
+Data3D.prototype.datasGroupOnOff = function() {
+    if (this.datas.length <= 0) return;
+    const projectsMap = this.magoInstance.getMagoManager().hierarchyManager.projectsMap;
+    for (const key in this.datas) {
+        const data = this.datas[key];
+        const dataGroupId = parseInt(data.dataGroupId);
+        let isVisible = true;
+        if (!$.isEmptyObject(projectsMap)) {
+            const projects = projectsMap[dataGroupId];
+            if ($.isEmptyObject(projects)) {
+                data.groupVisible = isVisible;
+                continue;
+            }
+
+            if (!projects.attributes) {
+                projects.attributes = {};
+                projects.attributes.objectType = "basicF4d";
+                if (data.tiling) {
+                    projects.attributes.fromSmartTile = true;
+                }
+            }
+
+            const groupVisible = projects.attributes.isVisible;
+            if (groupVisible !== undefined) {
+                isVisible = groupVisible;
+            }
+        }
+        data.groupVisible = isVisible;
     }
 }
 
