@@ -1,9 +1,16 @@
 package gaia3d.domain.layer;
 
+import gaia3d.domain.cache.CacheManager;
+import gaia3d.domain.policy.GeoPolicy;
+import gaia3d.service.GeoPolicyService;
 import lombok.extern.slf4j.Slf4j;
 import org.geotools.ows.ServiceException;
 import org.geotools.ows.wms.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -12,13 +19,29 @@ import java.util.Iterator;
 import java.util.List;
 
 @Slf4j
+@SpringBootTest
 class GeoserverLayerTest {
+
+    @Autowired
+    private GeoPolicyService geoPolicyService;
+
+    @BeforeEach
+    void setUp() {
+        log.info("************ Cache Reload geoPolicy ************");
+        GeoPolicy geoPolicy = geoPolicyService.getGeoPolicy();
+        CacheManager.setGeoPolicy(geoPolicy);
+    }
 
     @Test
     void getCapabilities() {
+
+        GeoPolicy geoPolicy = CacheManager.getGeoPolicy();
+        String geoserverDataUrl = geoPolicy.getGeoserverDataUrl();
+
         URL url = null;
         try {
-            url = new URL("http://localhost:18080/geoserver/wms?VERSION=1.1.1&Request=GetCapabilities&Service=WMS");
+            //url = new URL("http://localhost:18080/geoserver/wms?VERSION=1.1.1&Request=GetCapabilities&Service=WMS");
+            url = new URL(String.format("%s/wms?version=1.1.1&request=getcapabilities&service=wms", geoserverDataUrl));
         } catch (MalformedURLException e) {
             //will not happen
         }
@@ -57,10 +80,11 @@ class GeoserverLayerTest {
         }
     }
 
-    @Test
+    @Disabled
     void getLayerBoundingBox() {
         GeoserverLayer geoserverLayer = new GeoserverLayer();
-        //BoundingBox layerBoundingBox = geoserverLayer.getLayerBoundingBox("mago3d:BG_MOSAIC_NEW");
-        //log.info("layerBoundingBox : {}", layerBoundingBox);
+        CRSEnvelope boundingBox = geoserverLayer.getLayerBoundingBox("mago3d:BG_MOSAIC_NEW");
+        log.info("layerBoundingBox : {}", boundingBox.toString());
     }
+
 }

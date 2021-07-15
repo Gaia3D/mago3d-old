@@ -125,9 +125,11 @@
 						</td>
 						<td class="col-type">
 							<div class="table_button_group">
-								<a href="#" class="button top" th:onclick="moveUp([[${dataGroup.dataGroupId}]], [[${dataGroup.viewOrder}]]); return false;" style="text-decoration:none; background: #e66666;">
+								<a href="#" class="button top" th:onclick="moveUp([[${dataGroup.dataGroupId}]], [[${dataGroup.viewOrder}]]); return false;"
+								   style="margin-top: 2px; text-decoration:none; background: #e66666;">
 									<th:block th:text="#{common.up}"></th:block></a>
-								<a href="#" class="button bottom" th:onclick="moveDown([[${dataGroup.dataGroupId}]], [[${dataGroup.viewOrder}]]); return false;" style="text-decoration:none; background: #e66666;">
+								<a href="#" class="button bottom" th:onclick="moveDown([[${dataGroup.dataGroupId}]], [[${dataGroup.viewOrder}]]); return false;"
+								   style="margin-top: 2px; text-decoration:none; background: #e66666;">
 									<th:block th:text="#{common.down}"></th:block></a>
 							</div>
 						</td>
@@ -137,7 +139,7 @@
 						<td class="col-type">
 							<th:block th:if="${#bools.isTrue(dataGroup.basic)}" th:text="#{common.cannot.be.deleted}"></th:block>
 							<th:block th:if="${#bools.isFalse(dataGroup.basic)}">
-								<a th:href="@{/data-group/delete(dataGroupId=${dataGroup.dataGroupId})}" class="" th:value="#{common.delete}" onclick="return deleteWarning();">삭제</a>
+								<a th:href="@{/data-group/delete(dataGroupId=${dataGroup.dataGroupId})}" th:value="#{common.delete}" onclick="return deleteWarning();">삭제</a>
 							</th:block>
 						</td>
 						<td class="col-date">

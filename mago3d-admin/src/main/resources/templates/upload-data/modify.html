@@ -94,7 +94,8 @@
 										<span class="icon-glyph glyph-emark-dot color-warning"></span>
 									</th>
 									<td class="col-input">
-										<input type="text" id="dataGroupId" name="dataGroupId" th:field="*{dataGroupId}" class="ml" readonly="readonly" />
+										<input type="hidden" id="dataGroupId" name="dataGroupId" th:field="*{dataGroupId}" />
+										<input type="text" id="dataGroupName" name="dataGroupName" th:field="*{dataGroupName}" class="ml" readonly="readonly" />
 										<input type="button" id="dataGroupButtion" value="데이터 그룹 선택" />
 									</td>
 								</tr>
@@ -203,7 +204,7 @@
 						</form>
 					</div>
 				<!-- 상위 그룹 선택 다이얼 로그 -->
-				<div th:replace="~{/data-group/parent-data-group-dialog :: #dataGroupDialog}"></div>
+				<div th:replace="~{/data-group/data-group-dialog :: #dataGroupDialog}"></div>
 				</div>
 			</div>
 		</div>
