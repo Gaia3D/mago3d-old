@@ -113,7 +113,7 @@ public class DataRestController {
 		dataInfo.setOffset(pagination.getOffset());
 		dataInfo.setLimit(pagination.getPageRows());
 		List<DataInfo> dataList = new ArrayList<>();
-		if(totalCount > 0l) {
+		if(totalCount > 0L) {
 			dataList = dataService.getListData(dataInfo);
 		}
 		

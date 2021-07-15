@@ -306,7 +306,7 @@ public class SigninController {
 //			userDevice.setUser_id(userSession.getUser_id());
 //			userDevice.setDevice_ip(WebUtil.getClientIp(request));
 //			UserDevice dbUserDevice = userDeviceService.getUserDeviceByUserIp(userDevice);
-//			if(dbUserDevice == null || dbUserDevice.getUser_device_id() == null || dbUserDevice.getUser_device_id().longValue() <= 0l) {
+//			if(dbUserDevice == null || dbUserDevice.getUser_device_id() == null || dbUserDevice.getUser_device_id().longValue() <= 0L) {
 //				return "userdevice.ip.invalid";
 //			}
 //		}

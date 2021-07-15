@@ -56,7 +56,7 @@ public class MicroServiceLogController {
 		microServiceLog.setOffset(pagination.getOffset());
 		microServiceLog.setLimit(pagination.getPageRows());
 		List<MicroServiceLog> microServiceLogList = new ArrayList<>();
-		if(totalCount > 0l) {
+		if(totalCount > 0L) {
 			microServiceLogList = microServiceService.getListMicroServiceLog(microServiceLog);
 		}
 		log.info("@@ microServiceLog = {}", microServiceLog);

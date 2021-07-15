@@ -92,7 +92,7 @@ public class FileUtils {
 //	 * @return
 //	 */
 //	private static FileInfo fileValidation(MultipartFile multipartFile, FileInfo fileInfo) {
-//		return fileValidation(multipartFile, fileInfo, 0l);
+//		return fileValidation(multipartFile, fileInfo, 0L);
 //	}
 //	
 //	/**
@@ -104,7 +104,7 @@ public class FileUtils {
 //	private static FileInfo fileValidation(MultipartFile multipartFile, FileInfo fileInfo, long fileUploadSize) {
 //		
 //		// 1 파일 공백 체크
-//		if(multipartFile == null || multipartFile.getSize() == 0l) {
+//		if(multipartFile == null || multipartFile.getSize() == 0L) {
 //			log.info("@@ multipartFile is null");
 //			fileInfo.setErrorCode("fileinfo.invalid");
 //			return fileInfo;
