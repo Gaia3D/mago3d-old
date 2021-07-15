@@ -27,7 +27,7 @@
 	<div class="container" style="float:left; width: calc(100% - 78px);">
 		<div style="padding: 40px 20px 30px 10px; font-size: 28px; color:black; font-weight:600;">My Page</div>
         <!-- TAB -->
-        <div class="tabs">
+        <div class="tabs w800">
             <ul class="tab">
 				<li id="tabMyPageUserInfo"><a href="/mypage/user-modify">기본 정보</a></li>
 				<li id="tabMyPageMembership"><a href="/mypage/membership">멤버십</a></li>
@@ -37,7 +37,7 @@
 
         <!-- S: 사용자 정보 수정 -->
 		<form id="userInfo" th:object="${userInfo}" method="post" th:action="@{#}" onsubmit="return false;">
-		<table class="input-table scope-row">
+		<table class="input-table scope-row w800">
 			<colgroup>
 				<col class="col-label l"></col>
 				<col class="col-input"></col>
