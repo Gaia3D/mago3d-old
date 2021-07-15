@@ -24,7 +24,7 @@ create table membership_usage(
     membership_usage_id             integer,
     membership_id                   integer,
     user_id 					    varchar(32),
-    use_upload_file_size			numeric(20,15)					default 0,
+    use_upload_file_size			bigint					        default 0,
     use_convert_file_count			integer                         default 0,
     update_date					    timestamp with time zone,
     insert_date					    timestamp with time zone		default now(),
