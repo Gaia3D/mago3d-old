@@ -130,7 +130,6 @@
                         <label for="altitude"><th:block th:text="#{common.altitude}"></th:block></label>
                     </th>
                     <td class="col-input">
-<!--                        <input type="text" id="altitude" name="altitude" th:value="*{altitude}" class="m" />-->
                         <input type="text" id="altitude" name="altitude" th:value="${(dataGroup.altitude != 0) ? dataGroup.altitude : 0}" class="m" />
                     </td>
                 </tr>

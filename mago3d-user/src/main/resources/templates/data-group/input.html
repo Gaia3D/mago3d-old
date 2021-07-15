@@ -163,7 +163,7 @@
         <!-- E: 데이터 그룹 등록 -->
 	</div>
 	<!-- 상위 그룹 선택 다이얼 로그 -->
-	<div th:replace="~{/data-group/parent-data-group-dialog :: #dataGroupDialog}"></div>
+	<div th:replace="~{/data-group/data-group-dialog :: #dataGroupDialog}"></div>
 </div>
 <!-- E: WRAP -->
 <script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
@@ -316,7 +316,7 @@
 
 	// 다이얼로그에서 선택
 	function confirmParent(parent, parentName, parentDepth) {
-		if(parentDepth >= 3) {
+		if(parentDepth >= 5) {
 			alert(JS_MESSAGE["data.group.depth.constraint"]);
 			return;
 		}
