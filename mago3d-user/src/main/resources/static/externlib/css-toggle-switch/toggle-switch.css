@@ -316,11 +316,11 @@
       border-radius: 1.75em;
       transition: all 0.12s ease-out; }
     .switch-ios.switch-toggle label {
-      height: 16px;
+      height: 22px;
       color: #888b92;
       border:0;
       font-size:11px !important;
-      line-height: 16px;
+      line-height: 22px;
       vertical-align: middle; }
   .switch-ios input:checked + label {
     color: #fff; }
