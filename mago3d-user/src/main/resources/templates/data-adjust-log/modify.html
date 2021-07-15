@@ -198,8 +198,7 @@
 		</table>
 		<div class="button-group">
 			<div class="center-buttons">
-				<input type="submit" value="<spring:message code='data.transform.save.request'/>" 
-						onclick="insertDataAdjustLog();"/>
+				<input type="submit" th:value="#{data.transform.save.request}" onclick="insertDataAdjustLog();"/>
 				<a href="/data/list" class="button"><th:block th:text="#{common.list}"></th:block></a>
 			</div>
 		</div>

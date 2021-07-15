@@ -131,10 +131,13 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:if="${dataInfoLogList.empty}">
+	<th:block th:if="${#lists.isEmpty(dataInfoLogList)}">
+						<tr>
 							<td colspan="10" class="col-none"><th:block th:text="#{data.log.change.history.does.not.exist}"></th:block></td>
 						</tr>
-						<tr th:if="${!dataInfoLogList.empty}" th:each="dataInfoLog : ${dataInfoLogList}">
+	</th:block>
+	<th:block th:unless="${#lists.isEmpty(dataInfoLogList)}" th:each="dataInfoLog : ${dataInfoLogList}">
+						<tr>
 							<td class="col-checkbox">
 								<input type="checkbox" id="dataInfoLogId_${dataInfoLog.dataLogId}" name="dataLogId" th:value="${dataInfoLog.dataLogId}" />
 							</td>
@@ -162,6 +165,7 @@
 								<th:block th:text="${#temporals.format(dataInfoLog.insertDate,'yyyy-MM-dd HH:mm')}"></th:block>
 							</td>
 						</tr>
+	</th:block>
 					</tbody>
 				</table>
 			</form>
