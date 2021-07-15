@@ -5357,20 +5357,20 @@ span.sumnail {float:right; width:50px; height:50px; border:1px solid #e9e8e8;}
 .poplayer > .tbl-data {margin-top:15px;}
 .poplayer > .tbl-data table {width:100%; margin:0 auto; font-size:13px;}
 .poplayer > .tbl-data td {text-align:left; padding:7px 1px;}
-.poplayer > .data-ttl {clear:both; float:left; width:100%; background:#f7f7f6; height:30px; margin-top:15px;line-height:30px; font-size:13px; text-indent:10px;}
+.poplayer .data-ttl {clear:both; float:left; width:100%; background:#f7f7f6; height:30px; margin-top:15px;line-height:30px; font-size:13px; text-indent:10px;}
 .layer-line {clear:both; float:left; width:100%; height:5px; border-bottom:1px solid #e9e8e8; border-top:none; margin:0; margin-top:10px; padding:0;}
 .poplayer > .setup {height:30px;}
 .poplayer > .setup.advance {display:none;}
-.poplayer > .setup > label {float:left; display:inline-block; width:100px;}
+.poplayer > .setup > label {float:left; display:inline-block; width:100px; line-height:30px;}
 .poplayer > .setup > .data-go {float:left; margin-top:4px; margin-left:20px;}
-.poplayer > .object-setup {display:block; float:left; height:auto; margin-top:8px; padding:0;}
-.poplayer > .object-setup > label {clear:both; float:left; margin:0; margin-top:3px; height:24px !important; padding:0; line-height:24px;  display:inline-block; font-size:12px; width:50px;}
-.poplayer > .object-setup > input {height:24px !important; float:left;  margin:0; margin-top:3px; font-size:12px; padding:0 !important; padding-left:2px;}
-.color-value {display:inline-block; float:left; margin-top:3px; padding:0; width:30px; height:24px; border-top:1px solid #d6d6d6; border-bottom:1px solid #d6d6d6;  border-left:1px solid #d6d6d6;  background:yellow;}
+.poplayer .object-setup {display:block; float:left; height:auto; margin-top:8px; padding:0;}
+.poplayer .object-setup > label {clear:both; float:left; margin:0; margin-top:5px; height:26px !important; padding:0; line-height:26px;  display:inline-block; font-size:12px; width:50px;}
+.poplayer .object-setup > input {height:24px !important; float:left;  margin:0; margin-top:5px; font-size:12px; padding:0 !important; padding-left:2px;}
+.color-value {display:inline-block; float:left; margin-top:5px; padding:0; width:30px; height:24px; border-top:1px solid #d6d6d6; border-bottom:1px solid #d6d6d6;  border-left:1px solid #d6d6d6;  background:yellow;}
 .wd50 {width:50px; display:block; font-size:12px;}
-.poplayer > .object-setup > button {display:inline-block; height:26px; font-size:12px; padding:0 7px; margin-top:3px;}
-.poplayer > .object-setup > button.apply {border:1px solid #848484; background:#848484; color:white;}
-.poplayer > .object-setup > button.cancel { border:1px solid #848484; background:white; color:black;}
+.poplayer .object-setup > button {display:inline-block; height:26px; font-size:12px; margin-top:5px;}
+.poplayer .object-setup > button.apply {border:1px solid #848484 !important;  background:#848484 !important; color:white !important;}
+.poplayer .object-setup > button.cancel { border:1px solid #848484!important; background:white !important; color:black !important;}
 .wscroll-bg {float:left; margin-left:20px; display:inline-block; margin-top:12px; border-radius:30px; width:100px; height:7px; background:#ebe9e9;}
 .wscroll-bg > .scroll {display:inline-block; cursor:pointer; width:11px; height:11px; margin-top:-2px; background:#439ff6; border-radius:30px;}
 .btn-up {float:left; display:inline-block; margin-left:5px; border:1px solid #d6d6d6; width:20px; height:15px; background:url(/images/ko/btn_more.png) no-repeat 5px -41px;}
@@ -5381,7 +5381,7 @@ span.sumnail {float:right; width:50px; height:50px; border:1px solid #e9e8e8;}
 .btn-center button {display:inline-block; border:0; height:30px; line-height:12px; border-radius:2px; background:#1489f5; color:white; font-size:13px;}
 
 
-#map-control-advance-toggle-btn {border: 0;width: 24px;height: 24px;float: right;}
+#map-control-advance-toggle-btn {border: 0;width: 24px;height: 24px;float: right; margin-top:10px;}
 #map-control-advance-toggle-btn.map-control-advance-collapse-on {background: white url(/images/ko/ic_toolbox.png) no-repeat -7px -445px;}
 #map-control-advance-toggle-btn.map-control-advance-collapse-off {background: white url(/images/ko/ic_toolbox.png) no-repeat -7px -487px;}
 
