@@ -5,6 +5,13 @@ var SelectedDataController = function(magoInstance) {
 	this.setEventHandler();
 }
 
+//정규화 범위
+var minMarginLeft = 0;
+var maxMarginLeft = 90;
+//실제값 범위
+var minRotation = -360;
+var maxRotation = 360;
+
 SelectedDataController.prototype.isActive = function() {
 	return this.selected ? true : false;
 }
@@ -300,12 +307,6 @@ SelectedDataController.prototype.setEventHandler = function() {
 	
 	var rotSliderOn = false;
 	var x =0;
-	//정규화 범위
-	var minMarginLeft = 0;
-	var maxMarginLeft = 90;
-	//실제값 범위
-	var minRotation = -360;
-	var maxRotation = 360;
 	
 	var rotationSetupDivElement = document.querySelector('#data-controll-wrap .object-setup-rotation');
 	
@@ -345,11 +346,14 @@ SelectedDataController.prototype.setEventHandler = function() {
 			x = curX;
 			marginLeft = marginLeft + (direction ? calX : calX*-1);
 			
-			if((marginLeft <= minMarginLeft && !direction) || (marginLeft >= maxMarginLeft && direction)) return;
+			if((marginLeft < minMarginLeft && !direction) || (marginLeft > maxMarginLeft && direction)) return;
 			
 			scroll.style['margin-left'] = `${marginLeft }px`;
 		}
 	});
+	var rotChange = function(e) {
+		that.changeRotation();
+	}
 	
 	var PREFIX_ROT_INPUT_ID = 'data-controll-input-';
 	const scrollObserver = new MutationObserver(function(mutations) {
@@ -358,15 +362,18 @@ SelectedDataController.prototype.setEventHandler = function() {
 			var style = window.getComputedStyle(mutation.target);
 			var curMarginLeft = parseInt(style['margin-left']);
 			
-			var range = maxMarginLeft - minMarginLeft;
-			var rot = (curMarginLeft - minRotation) / range * (maxRotation - minRotation);
-			//var rot = curMarginLeft / ((maxMarginLeft - minMarginLeft) * range) + minRotation
+			var rot = API.MATH.minMaxDenormalize(minRotation, maxRotation, curMarginLeft, (maxMarginLeft - minMarginLeft));
 			var type = mutation.target.dataset.type;
 			var id = `${PREFIX_ROT_INPUT_ID + type}`;
-			document.getElementById(id).value = rot;
+			
+			var input = document.getElementById(id); 
+			input.value = rot;
+			rotChange(input);
 		});
 	});
 	scrollObserver.observe(rotationSetupDivElement, { attributes: true, attributeFilter:['style'],subtree: true,childList:true, attributeOldValue:true});
+	
+	$('#data-controll-wrap').on('change', 'input.data-control-rotation-input', rotChange);
 }
 
 SelectedDataController.prototype.selectData = function(selected, parent) {
@@ -467,9 +474,10 @@ SelectedDataController.prototype.changePositionInfo = function(obj) {
 	$('#data-controll-input-latitude').val(obj.latitude);
 	$('#data-controll-input-altitude').val(obj.altitude);
 
-	$('#data-controll-input-pitch,#dcPitchRange').val(obj.pitch);
-	$('#data-controll-input-heading,#dcHeadingRange').val(obj.heading);
-	$('#data-controll-input-roll,#dcRollRange').val(obj.roll);
+	//set span margin-left, change input value
+	$('#data-controll-wrap .object-setup-rotation span[data-type="pitch"]').css('marginLeft', `${API.MATH.minMaxNormalize(minRotation, maxRotation, obj.pitch, 90)}px`);
+	$('#data-controll-wrap .object-setup-rotation span[data-type="heading"]').css('marginLeft', `${API.MATH.minMaxNormalize(minRotation, maxRotation, obj.heading, 90)}px`);
+	$('#data-controll-wrap .object-setup-rotation span[data-type="roll"]').css('marginLeft', `${API.MATH.minMaxNormalize(minRotation, maxRotation, obj.roll, 90)}px`);
 }
 SelectedDataController.prototype.changeHeightInfo = function(heightReference) {
 	switch(heightReference) {

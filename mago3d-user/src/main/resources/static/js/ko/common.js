@@ -418,3 +418,15 @@ API.Converter.radToDeg = function(rad) {
 API.Converter.degToRad = function(deg) {
 	return deg * Math.PI / 180;
 }
+
+API.MATH = function(){};
+
+API.MATH.minMaxDenormalize = function(minValue, maxValue, normalValue, normalRange) {
+	var range = maxValue - minValue;
+	return normalValue / normalRange * range + minValue;
+}
+	
+API.MATH.minMaxNormalize = function(minValue, maxValue, value, normalRange) {
+	var range = maxValue - minValue;
+	return (value - minValue) / range * normalRange;
+}

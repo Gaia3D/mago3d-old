@@ -7,6 +7,13 @@ const SmltWater =(function() {
 		this._createType = SmltWater.CREATE_TYPE.NONE;
 		this._action;
 		
+		this.selectInteraction = new Mago3D.PointSelectInteraction();
+		this.translateInteraction = new Mago3D.TranslateInteraction();
+		
+		var mm = this.magoInstance.getMagoManager();
+		mm.interactionCollection.add(this.selectInteraction);
+		mm.interactionCollection.add(this.translateInteraction);
+		
 		const viewer = this.magoInstance.getViewer();
 		this.cesiumEventHandler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
 		
@@ -156,15 +163,15 @@ const SmltWater =(function() {
 		
 		const magoManager = this.magoInstance.getMagoManager();
 		
-		_toggleDeleteResource(magoManager, false);
-		_toggleMovingResource(magoManager, false);
+		_toggleDeleteResource(this, false);
+		_toggleMovingResource(this, false);
 	}
 	
 	SmltWater.prototype.clear = function() {
 		this.step = SmltWater.STATUS.UNREADY;
 		this.mode = SmltWater.MODE.WAITING;
 		
-		_clear(this.magoInstance);
+		_clear(this);
 	}
 	
 	SmltWater.prototype.getModeAction = function(mode) {
@@ -194,7 +201,7 @@ const SmltWater =(function() {
 	
 	_Area.run = function() {
 		this.step = SmltWater.STATUS.UNREADY;
-		_clear(this.magoInstance);
+		_clear(this);
 		this.unbindMouseEvent();
 		this.bindMouseEvent();
 	}
@@ -405,7 +412,7 @@ const SmltWater =(function() {
 	
 	_Clear.run = function() {
 		if(confirm('초기화하시겠습니까?')) {
-			_clear(this.magoInstance);
+			_clear(this);
 			this.step = SmltWater.STATUS.UNREADY;
 			this.mode = SmltWater.MODE.WAITING;
 			this.unbindMouseEvent();	
@@ -419,12 +426,12 @@ const SmltWater =(function() {
 	_Moving.run = function() {
 		_clearCreateResource(this.magoInstance.getViewer());
 		this.unbindMouseEvent();
-		_toggleDeleteResource(this.magoInstance.getMagoManager(), false);
-		_toggleMovingResource(this.magoInstance.getMagoManager(), true);
+		_toggleDeleteResource(this, false);
+		_toggleMovingResource(this, true);
 	}
 	_Moving.terminate = function() {
 		this.unbindMouseEvent();
-		_toggleMovingResource(this.magoInstance.getMagoManager(), false);
+		_toggleMovingResource(this, false);
 	}
 	
 	let isDelete = false;
@@ -432,8 +439,8 @@ const SmltWater =(function() {
 	_Delete.run = function() {
 		_clearCreateResource(this.magoInstance.getViewer());
 		this.unbindMouseEvent();
-		_toggleMovingResource(this.magoInstance.getMagoManager(), false);
-		_toggleDeleteResource(this.magoInstance.getMagoManager(), true);
+		_toggleMovingResource(this, false);
+		_toggleDeleteResource(this, true);
 	}
 	_Delete.delete = function(selected, silence) {
 		if(!silence) {
@@ -451,15 +458,15 @@ const SmltWater =(function() {
 	}
 	_Delete.terminate = function() {
 		this.unbindMouseEvent();
-		_toggleDeleteResource(this.magoInstance.getMagoManager(), false);
+		_toggleDeleteResource(this, false);
 	}
 	
-	const _clear = function(magoInstance) {
-		const viewer = magoInstance.getViewer();
-		const magoManager = magoInstance.getMagoManager();
+	const _clear = function(water) {
+		const viewer = water.magoInstance.getViewer();
+		const magoManager = water.magoInstance.getMagoManager();
 		_clearRectangle(viewer);
 		_clearCreateResource(viewer);
-		_toggleMovingResource(magoManager, false);
+		_toggleMovingResource(water, false);
 		
 		_clearObjects(magoManager);
 		magoManager.setCameraMotion(true);
@@ -472,14 +479,14 @@ const SmltWater =(function() {
 		leftUpCoord = undefined;
 		leftDown = false;
 	}
-	const _toggleMovingResource = function(magoManager, is) {
+	const _toggleMovingResource = function(water, is) {
 		isMoving = is;
-		_setSelect(magoManager, isMoving);
-		_setTranslate(magoManager, isMoving);
+		_setSelect(water, isMoving);
+		_setTranslate(water, isMoving);
 	}
-	const _toggleDeleteResource = function(magoManager, is) {
+	const _toggleDeleteResource = function(water, is) {
 		isDelete = is;
-		_setSelect(magoManager, isDelete);
+		_setSelect(water, isDelete);
 	}
 	
 	const _leftDown = function(position, text, magoManager) {
@@ -490,14 +497,15 @@ const SmltWater =(function() {
 		guidePoint.label.text = text;
 	}
 	
-	const _setSelect = function(magoManager, active) {
-		const select = magoManager.defaultSelectInteraction;
+	
+	const _setSelect = function(water, active) {
+		const select = water.selectInteraction;
 		select.setActive(active);
 		if(active) select.setTargetType(Mago3D.DataType.NATIVE);
 	}
 	
-	const _setTranslate = function(magoManager, active) {
-		const translate = magoManager.defaultTranslateInteraction;
+	const _setTranslate = function(water, active) {
+		const translate = water.translateInteraction;
 		translate.setActive(active);
 		if(active) translate.setTargetType(Mago3D.DataType.NATIVE);
 	}
