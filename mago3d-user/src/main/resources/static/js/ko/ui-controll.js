@@ -60,6 +60,7 @@ $(function() {
 				// 임시
 				$("#data-menu").addClass('on');
 				$('#data-wrap-content').toggle(true);
+				$('#closeLeftBtn').show();
 			}
 			$('#contentsWrap').toggle(true);
 		} else if( currentUrl.indexOf("/mypage/") >= 0) {

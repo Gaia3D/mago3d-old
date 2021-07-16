@@ -5161,11 +5161,11 @@ span.mago {color:#6649ca;}
 .toolbox-measure button.toolbox-measure-btn:focus, .toolbox-measure button.toolbox-measure-btn:hover, .toolbox-measure button.toolbox-measure-btn.on {border: none;}
 .toolbox-measure > button::before {content:""; display:inline-block; width:0; height:70%; margin-right:0; vertical-align:bottom;}
 #toolbox-measure-btn-distance {display:inline-block;  margin:0; padding:0; border-right:1px solid #d9d8d8; height:50px; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat 3px -153px;}
-#t#toolbox-measure-btn-distance:hover, #toolbox-measure-btn-distance.on {color:white; background: #2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -54px -153px;}
-oolbox-measure-btn-area {display:inline-block;  margin:0; padding:0; height:50px; border-right:1px solid #d9d8d8; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat -115px#toolbox-measure-btn-area:hover, #toolbox-measure-btn-area.on {color:white; background: #2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -167px -201px;}
- -201px;}
-#toolbox-measure-btn-height {display:inline-block;  margin:0; padding:0; height:50px; border-right:1px solid #d9d8d8; width:50px; background: white url(/images/ko/ic_toolbox.png) no-#toolbox-measure-btn-height:hover, #toolbox-measure-btn-height.on {color:white; background: #2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -164px -253px;}
-repeat -164px -253px;}
+#toolbox-measure-btn-distance:hover, #toolbox-measure-btn-distance.on {color:white; background: #2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -54px -153px;}
+#toolbox-measure-btn-area {display:inline-block;  margin:0; padding:0; height:50px; border-right:1px solid #d9d8d8; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat -115px -201px;}
+#toolbox-measure-btn-area:hover, #toolbox-measure-btn-area.on {color:white; background: #2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -167px -201px;}
+#toolbox-measure-btn-height {display:inline-block;  margin:0; padding:0; height:50px; border-right:1px solid #d9d8d8; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat -113px -253px;}
+#toolbox-measure-btn-height:hover, #toolbox-measure-btn-height.on {color:white; background: #2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -164px -253px;}
 .toolbox-3dttl {position: absolute; top: 12px; right: 250px; display:inline-block;  line-height:50px; text-align:center; font-size:12px; width:28px; height:52px; color:white; z-index:9999; border-radius:4px; background:#405379;}
 .toolbox-mapttl {position: absolute; top: 12px; right: 398px; display:inline-block;  line-height:50px; text-align:center; font-size:12px; width:28px; height:52px; color:white; z-index:9999; border-radius:4px; background:#405379;}
 .toolbox-map {clear:both; position: absolute; top: 12px; right: 290px; z-index: 1; width:106px; font-family: 'NotoKrR'; Height:52px; margin:0; padding:0; border-radius:6px; box-shadow: 0 0 2px rgba(132,132,132,0.6);}
