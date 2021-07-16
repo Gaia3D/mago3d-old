@@ -4830,7 +4830,7 @@ align-items: center;
 clear:both;
 width:340px;
 margin:0 auto;
-margin-top:10px;
+margin-top:0;
 margin-bottom: 20px;
 padding:0;
 border: 1px solid #ddd;
@@ -5193,7 +5193,7 @@ span.mago {color:#6649ca;}
 /* 서브 탭메뉴 */
 .tabmenu {width:340px; margin:0 auto; margin-top:17px; height:56px;}
 .tabmenu > ul {margin:0; padding:0;}
-.tabmenu > ul li {margin:0; width:112px; padding:10px 0; cursor:pointer; border-top:1px solid #e3e3e3; border-right:1px solid #e3e3e3; border-bottom:1px solid #e3e3e3; border-radius:3px; float:left; list-style:none; font-size:14px; display:inline-block; text-align:center;}
+.tabmenu > ul li {margin:0; width:112px; padding:10px 0; cursor:pointer; border-top:1px solid #e3e3e3; border-right:1px solid #e3e3e3; border-bottom:1px solid #e3e3e3; float:left; list-style:none; font-size:14px; display:inline-block; text-align:center;}
 .tabmenu > ul li:first-child {border-left:1px solid #e3e3e3;}
 .tabmenu > ul li:first-child:hover, .tabmenu > ul li:first-child:focus {border-left:1px solid #99b3f7;}
 .tabmenu > ul li:first-child.actived {border-left:1px solid #258fff;}
@@ -5220,7 +5220,7 @@ span.mago {color:#6649ca;}
 .tabmenu-iot > ul li:nth-child(2).actived {background:#1289f8 url(/images/ko/ic_sb_tabmenu.png) no-repeat 18px -90px;}
 
 /* form */
-input.datasearch {display:block; width:340px; margin:0 auto; padding:0; height:37px; text-indent:5px; line-height:30px; background:white; border: 1px solid #d8d8d8; font-size:13px; color:#464646; border-radius:3px;}
+input.datasearch {display:block; width:340px; margin:0 auto; padding:0; height:37px; text-indent:5px; line-height:30px; background:white; border: 1px solid #d8d8d8; font-size:13px; color:#464646;}
 input.datasearch:focus {border:1px solid #2078e7;}
 a.btn-datasearch {float:right; margin:-34px 16px 0 -20px; display:block; width:35px; height:30px; background:url(/images/ko/ic_search.png) no-repeat 5px -28px;}
 a.btn-datasearch:hover, a.btn-datasearch:focus {background:url(/images/ko/ic_search.png) no-repeat 5px -28px;}
@@ -5228,8 +5228,8 @@ select {width:auto; height: 28px; color:#464646; padding-left:5px; padding-right
 select::-ms-expand {display: none;}
 .dataselect {width:342px; margin:0 auto; height:40px; margin-top:8px;}
 .dataselect-item {float:left; width:180px; padding-left:3px; height:32px !important; border-radius:3px;}
-.data-group-search {float:left; width:85px; height:30px; padding-left:26px; line-height:30px; display:inline-block; border-radius:3px; background:url(/images/ko/ic_filter_more.png) 6px 50% no-repeat; font-size:12px; border:1px solid #d8d8d8;}
-.data-filter {float:left; width:85px; height:30px; padding-left:26px; line-height:30px; display:inline-block; border-radius:3px; background:url(/images/ko/ic_filter_more.png) 6px 50% no-repeat; font-size:12px; border:1px solid #d8d8d8;}
+.data-group-search {float:left; width:85px; height:30px; padding-left:26px; line-height:30px; display:inline-block;  background:url(/images/ko/ic_filter_more.png) 6px 50% no-repeat; font-size:12px; border:1px solid #d8d8d8;}
+.data-filter {float:left; width:85px; height:30px; padding-left:26px; line-height:30px; display:inline-block; background:url(/images/ko/ic_filter_more.png) 6px 50% no-repeat; font-size:12px; border:1px solid #d8d8d8;}
 .switch {position: relative; display: inline-block; width:40px; height: 18px; margin-left:12px; margin-right:4px; line-height: 2px;}
 .switch input {opacity: 0; width: 0; height: 0; }
 .slider {position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #a3a3a3; border-radius: 34px; transition: .3s;}
