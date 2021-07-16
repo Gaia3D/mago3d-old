@@ -40,7 +40,6 @@ const Pagination = function(pageNo, count, top, nextLink, pagination, target) {
 
     if (pagination && target) {
 
-        console.info("paging event");
         const that = this;
         const root = this.target.pagingRootElement;
 

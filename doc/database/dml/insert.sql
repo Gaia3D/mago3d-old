@@ -102,7 +102,8 @@ values
 insert into menu(menu_id, menu_type, menu_target, name, name_en, ancestor, parent, depth, previous_depth, view_order, url, url_alias, html_id, html_content_id,
                  css_class, default_yn, use_yn, display_yn)
 values
-    (1001, '1', '0', '데이터', 'DATA', 1001, 0, 1, 0, 1, '/data/map', null, 'dataMenu', 'dataContent', 'data', 'Y', 'Y', 'Y'),
+--    (1001, '1', '0', '데이터', 'DATA', 1001, 0, 1, 0, 1, '/data/map', null, 'dataMenu', 'dataContent', 'data', 'Y', 'Y', 'Y'),
+    (1001, '1', '0', '데이터', 'DATA', 1001, 0, 1, 0, 1, '/data/map', null, 'data-menu', 'data-wrap-content', 'data', 'Y', 'Y', 'Y'),
     (1002, '1', '0', '변환', 'CONVERTER', 1002, 0, 1, 1, 2, '/upload-data/list', null, 'converterMenu', 'converterContent', 'converter', 'Y', 'Y', 'Y'),
     (1003, '1', '0', '시뮬레이션', 'SIMULATION', 1003, 0, 1, 1, 3, '/simulation', null, 'simulationMenu', 'simulationContent', 'simulation', 'Y', 'Y', 'Y'),
     (1004, '1', '0', 'IOT', 'IOT', 1004, 0, 1, 1, 4, '/iot', null, 'iotMenu', 'iotContent', 'iot', 'Y', 'Y', 'Y'),

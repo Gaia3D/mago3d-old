@@ -58,10 +58,10 @@ $(function() {
 				$('#layerContent').toggle(true);
 			} else {
 				// 임시
-				// $("#dataMenu").addClass('on');
-				// $('#dataContent').toggle(true);
+				$("#data-menu").addClass('on');
+				$('#data-wrap-content').toggle(true);
 			}
-			//$('#contentsWrap').toggle(true);
+			$('#contentsWrap').toggle(true);
 		} else if( currentUrl.indexOf("/mypage/") >= 0) {
 			// MyPage
 			$("#mypageMenu").addClass('on');

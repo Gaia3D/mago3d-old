@@ -22,14 +22,21 @@ const Data = function(magoInstance) {
         }
         const addOnClassTarget = ($target) => {$target.addClass(ON_CLASS_NAME)};
         const toggleContents = ($menu) => {
+
             if(!$menu.hasClass(ON_CLASS_NAME)) {
                 const convertId = $obj => {
                     const id = $obj.get(0).id;
                     return '#' + id.replace('tab', 'content');
                 }
+
+                if ('#address-content' === convertId($menu)) {
+                    alert('서비스 준비중 입니다.');
+                    return false;
+                }
+
                 hide('tab');
                 addOnClassTarget($menu);
-                $(convertId($menu)).slideDown("slow");
+                $(convertId($menu)).toggle();
             }
         }
         const clickTab = (event) => {

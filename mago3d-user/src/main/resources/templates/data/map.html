@@ -85,7 +85,7 @@
 		<div th:replace="~{/data/3d/data-search-filter-dialog :: #data-search-filter}"></div>
 
 		<div class="contentsBtn">
-			<button type="button" id="closeLeftBtn" th:title="#{common.close}" style="display:none;">Close</button>
+			<button type="button" id="closeLeftBtn" th:title="#{common.close}">Close</button>
 		</div>
 		<!-- E: CONTENTSWRAP -->
 
@@ -287,7 +287,11 @@
 		dataGroupList();
 		mapDataGroupList(1, null);
 		mapDataInfoList(1, null, null, null);
-		Data(magoInstance);
+
+		//임시
+		var data3dTab = Data(magoInstance);
+		data3dTab.getDatas(1);
+
 
         var simul = Simulation(magoInstance);
 		setTimeout(function() {
