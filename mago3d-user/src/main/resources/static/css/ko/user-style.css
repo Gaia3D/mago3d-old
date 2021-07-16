@@ -5181,11 +5181,14 @@ span.mago {color:#6649ca;}
 #toolbox-measure-btn-area:hover, #toolbox-measure-btn-area.on {background: #2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -167px -201px;}
 #toolbox-measure-btn-height {display:inline-block;  margin:0; padding:0; height:50px; border-right:1px solid #d9d8d8; width:50px; background: white url(/images/ko/ic_toolbox.png) no-repeat -113px -253px;}
 #toolbox-measure-btn-height:hover, #toolbox-measure-btn-height.on {background: #2f94f3 url(/images/ko/ic_toolbox.png) no-repeat -164px -253px;}
-.toolbox-map {clear:both; position: absolute; top: 12px; right: 80px; z-index: 1; width:170px; font-family: 'NotoKrR'; Height:52px; margin:0; padding:0; border-radius:6px; box-shadow: 0 0 2px rgba(132,132,132,0.6);}
+.toolbox-map {clear:both; position: absolute; top: 12px; right: 270px; z-index: 1; width:170px; font-family: 'NotoKrR'; Height:52px; margin:0; padding:0; border-radius:6px; box-shadow: 0 0 2px rgba(132,132,132,0.6);}
 .toolbox-map > button {border:0; cursor:pointer; display:inline-block; font-size:11px; color:black; letter-spacing:-0.5px; vertical-align:bottom;  border-radius:4px;}
 .toolbox-map > button::before {content:""; display:inline-block; width:0; height:78%; margin-right:0; vertical-align:bottom;} 
-.toolbox-map > button:first-child {display:inline-block; margin:0; padding:0; height:52px; width:53px; background: white url(/images/ko/ic_toolbox.png) no-repeat -177px -330px;}
-.toolbox-map > button:first-child:hover {color:#1289f8; background: white url(/images/ko/ic_toolbox.png) no-repeat -272px -330px;}
+.toolbox-map > button:first-child {display:inline-block; margin:0; padding:0; height:52px; width:53px; background: white url(/images/ko/ic_toolbox.png) no-repeat -181px  -397px;}
+.toolbox-map > button:last-child {display:inline-block; margin:0; padding:0; height:52px; width:53px; background: white url(/images/ko/ic_toolbox.png) no-repeat -181px -467px;}
+.toolbox-map > button:first-child:hover, .toolbox-map > button:first-child:focus {color:#1289f8; background: white url(/images/ko/ic_toolbox.png) no-repeat -181px -397px; border:1px solid #1289f8;}
+.toolbox-map > button:first-child:hover, .toolbox-map > button:first-child:focus {color:#1289f8; background: white url(/images/ko/ic_toolbox.png) no-repeat -181px -467px; border:1px solid #1289f8;}
+
 
 
 /* scrollbar */
