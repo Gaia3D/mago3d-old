@@ -2536,7 +2536,7 @@ tr:hover td {
 .marT5{margin-top:5px !important}
 .marT10{margin-top:10px !important}
 .marT15{margin-top:15px !important}
-.marT20{margin-top:20px !important}
+.marT20{clear:both; margin-top:20px !important}
 .marT25{margin-top:25px !important}
 .marT30{margin-top:30px !important}
 .marT35{margin-top:35px !important}
@@ -2586,9 +2586,9 @@ tr:hover td {
 .padR30{padding-right:30px !important}
 .padB0{padding-bottom:0 !important}
 .padB5{padding-bottom:5px !important}
-.padB10{padding-bottom:10px !important}
+.padB10{clear:both; padding-bottom:10px !important;}
 .padB15{padding-bottom:15px !important}
-.padB20{padding-bottom:20px !important}
+.padB20{clear:both; padding-bottom:20px !important}
 .padB25{padding-bottom:25px !important}
 .padB30{padding-bottom:30px !important}
 .padB35{padding-bottom:35px !important}
@@ -5168,12 +5168,12 @@ span.mago {color:#6649ca;}
 .toolbox-mapttl {position: absolute; top: 12px; right: 398px; display:inline-block;  line-height:50px; text-align:center; font-size:12px; width:28px; height:52px; color:white; z-index:9999; border-radius:4px; background:#405379;}
 .toolbox-map {clear:both; position: absolute; top: 12px; right: 290px; z-index: 1; width:106px; font-family: 'NotoKrR'; Height:52px; margin:0; padding:0; border-radius:6px; box-shadow: 0 0 2px rgba(132,132,132,0.6);}
 .toolbox-map > button {border:0; cursor:pointer; display:inline-block; font-size:11px; color:black; letter-spacing:-0.5px; vertical-align:bottom;  border-radius:4px;}
-.toolbox-map > button::before {content:""; display:inline-block; width:0; height:80%; margin-right:0; vertical-align:bottom;} 
+.toolbox-map > button::before {content:""; display:inline-block; width:0; height:82%; margin-right:0; vertical-align:bottom;} 
 .toolbox-map > button:first-child {display:inline-block; margin:0; padding:0; height:52px; width:51px; background: white url(/images/ko/ic_toolbox.png) no-repeat -182px  -397px;}
 .toolbox-map > button:last-child {display:inline-block; margin:0; padding:0; height:52px; width:51px; background: white url(/images/ko/ic_toolbox.png) no-repeat -182px -467px;}
-.toolbox-map > button:hover::before {content:""; display:inline-block; width:0; height:83%; margin-right:0; vertical-align:bottom;}
-.toolbox-map > button:focus::before {content:""; display:inline-block; width:0; height:83%; margin-right:0; vertical-align:bottom;}
-.toolbox-map > button:active::before {content:""; display:inline-block; width:0; height:83%; margin-right:0; vertical-align:bottom;}
+.toolbox-map > button:hover::before {content:""; display:inline-block; width:0; height:85%; margin-right:0; vertical-align:bottom;}
+.toolbox-map > button:focus::before {content:""; display:inline-block; width:0; height:85%; margin-right:0; vertical-align:bottom;}
+.toolbox-map > button:active::before {content:""; display:inline-block; width:0; height:85%; margin-right:0; vertical-align:bottom;}
 .toolbox-map > button:first-child:hover, .toolbox-map > button:first-child:focus {color:#1289f8; background: white url(/images/ko/ic_toolbox.png) no-repeat -182px -397px; border:1px solid #1289f8;}
 .toolbox-map > button:last-child:hover, .toolbox-map > button:last-child:focus {color:#1289f8; background: white url(/images/ko/ic_toolbox.png) no-repeat -182px -467px; border:1px solid #1289f8;}
 
@@ -6031,3 +6031,6 @@ span.subResult {
 .half-doughnut-chart-container > .label span:last-child {
 	float: right;
 }
+
+.corp-copyright {float:left; font-size:11px; background:#f3f3f2; padding:6px; line-height:15px; font-family: 'NotoKrL';}
+.corp-copyright a.go-corp {clear:both; float:left; padding:0 10px; background:white; border:1px solid silver; color:black;}
