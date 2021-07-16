@@ -109,6 +109,7 @@
     color: #333; }
   /* Radio Switch
  */
+ .switch-toggle input, .switch-toggle label {border:0;}
   .switch-toggle {
     position: relative;
     display: block;
@@ -155,7 +156,8 @@
       .switch-toggle input:focus ~ span a,
       .switch-toggle input:focus + label {
         outline-color: -webkit-focus-ring-color;
-        outline-style: auto; } }
+        outline-style: auto; 
+        border:0;} }
 
 @media only screen {
     .switch-toggle input {
@@ -175,6 +177,7 @@
       position: absolute;
       top: 0;
       left: 0;
+      border:0;
       padding: 0;
       z-index: 1;
       width: 10px;
@@ -312,17 +315,18 @@
     box-shadow: inset rgba(0, 0, 0, 0.1) 0 1px 0; }
     .switch-ios.switch-toggle a {
       background-color: #287be4;
-      border: 0.125em solid #ddd;
+      border: 0;
       border-radius: 1.75em;
       transition: all 0.12s ease-out; }
     .switch-ios.switch-toggle label {
-      height: 22px;
+      height: 24px;
       color: #888b92;
       border:0;
       font-size:11px !important;
-      line-height: 22px;
+      line-height: 24px;
       vertical-align: middle; }
   .switch-ios input:checked + label {
+  	border:0;
     color: #fff; }
   /* Holo Theme
  */

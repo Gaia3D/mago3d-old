@@ -2843,7 +2843,7 @@ h3 {color:#343434; font-size:18px;}
 h1.sc-tit {margin-top:36px;}
 h2.join, h2.find-password  {font-size:30px; padding-top:80px; padding-bottom:40px; font-family: 'NotoKrM' !important;}
 h3.data {clear:both; height:29px; font-size:19px; color:#086ada; line-height:28px; vertical-align:middle; display:inline-block; margin:0; padding:0; font-weight:600;}
-h3.nodata {clear:both; height:29px; font-size:17px; color:black; line-height:28px; vertical-align:middle; display:inline-block; margin:0; padding:0; margin-top:20px;}
+h3.nodata {clear:both; height:29px; font-size:15px; color:#666666; line-height:28px; font-weight:normal; vertical-align:middle; display:inline-block; margin:0; padding:0; margin-top:20px;}
 h3.data a {color:#086ada;}
 h3.sttl {height:28px; color:#0764cd; font-size:18px !important;  width:200px;vertical-align:middle; display:inline-block; margin:6px 0 0 0; padding:0px; font-weight:600;}
 h3.popup-data {font-size:20px; height:28px; color:#1d2540; line-height:28px; vertical-align:middle; display:inline-block; margin:0; padding:0; font-weight:600;}
