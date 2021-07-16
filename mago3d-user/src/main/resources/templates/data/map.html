@@ -168,6 +168,7 @@
 <script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/selection-data.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/{lang}/base-map.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/map-controll.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/ui-controll.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/spatial-analysis.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
@@ -243,6 +244,8 @@
 		var magoInstance = e;
 		var geoPolicyJson = MAGO.policy;
 		var viewer = magoInstance.getViewer();
+		
+		MAGO.baseMapController = new BaseMapController(viewer);
 		
 		/* var cesiumEventHandler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
 		cesiumEventHandler.setInputAction(function(e) {

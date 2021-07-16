@@ -5174,8 +5174,8 @@ span.mago {color:#6649ca;}
 .toolbox-map > button:hover::before {content:""; display:inline-block; width:0; height:85%; margin-right:0; vertical-align:bottom;}
 .toolbox-map > button:focus::before {content:""; display:inline-block; width:0; height:85%; margin-right:0; vertical-align:bottom;}
 .toolbox-map > button:active::before {content:""; display:inline-block; width:0; height:85%; margin-right:0; vertical-align:bottom;}
-.toolbox-map > button:first-child:hover, .toolbox-map > button:first-child:focus {color:#1289f8; background: white url(/images/ko/ic_toolbox.png) no-repeat -182px -397px; border:1px solid #1289f8;}
-.toolbox-map > button:last-child:hover, .toolbox-map > button:last-child:focus {color:#1289f8; background: white url(/images/ko/ic_toolbox.png) no-repeat -182px -467px; border:1px solid #1289f8;}
+.toolbox-map > button:first-child.on, .toolbox-map > button:first-child:hover, .toolbox-map > button:first-child:focus {color:#1289f8; background: white url(/images/ko/ic_toolbox.png) no-repeat -182px -397px; border:1px solid #1289f8;}
+.toolbox-map > button:last-child.on, .toolbox-map > button:last-child:hover, .toolbox-map > button:last-child:focus {color:#1289f8; background: white url(/images/ko/ic_toolbox.png) no-repeat -182px -467px; border:1px solid #1289f8;}
 
 
 

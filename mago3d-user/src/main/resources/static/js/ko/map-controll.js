@@ -418,6 +418,10 @@ var mapControllEventHandler = function(magoInstance) {
 		magoManager.sceneState.setApplySunShadows($(this).hasClass('on'));
 	});
 	
+	//경관
+	$('#map-ctrl-scene').click(function() {
+		alert('준비중입니다.');		
+	});
 	
 	var defaultSelectInteraction = magoInstance.getMagoManager().defaultSelectInteraction;
 	var defaultTranslateInteraction = magoInstance.getMagoManager().defaultTranslateInteraction;
