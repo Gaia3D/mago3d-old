@@ -5442,23 +5442,23 @@ span.sumnail {float:right; width:50px; height:50px; border:1px solid #e9e8e8;}
 .layer-ttl-large {clear:both; display:block; width:auto; height:28px; font-size:18px; border-bottom:1px solid #d9dadb; margin-bottom:10px;}
 .layer-bx {display:flex; flex-wrap:wrap; width:100%; margin:0 auto;}
 .layer-bx .layer-list {display:inline-block; width:55px; text-align:center; margin-bottom:10px;}
-.layer-bx .layer-list .icon {display:inline-block; width:24px; height:24px; cursor:pointer; margin-bottom:3px; text-align:center;  border-radius:50px; border:1px solid #d9dadb;}
+.layer-bx .layer-list .icon {display:inline-block; width:26px; height:26px; cursor:pointer; margin-bottom:3px; text-align:center;  border-radius:50px; border:1px solid #ededed;}
 .layer-bx .layer-list .txt {clear:both; width:55px;  display:inline-block; color:#636363; font-size:11px; text-align:center;}
-.layer-bx .layer-list .common {display:inline-block; background:url(/images/ko/ic_filter.png) -4px -40px no-repeat;}
-.layer-bx .layer-list .open {display:inline-block; background:url(/images/ko/ic_filter.png) -89px -40px no-repeat;}
-.layer-bx .layer-list .notopen {display:inline-block; background:url(/images/ko/ic_filter.png) -132px -40px no-repeat;}
-.layer-bx .layer-list .group {display:inline-block; background:url(/images/ko/ic_filter.png) -177px -40px no-repeat;}
-.layer-bx .layer-list .file {display:inline-block; background:url(/images/ko/ic_filter.png) -47px -40px no-repeat;}
-.layer-bx .layer-list .common:hover, .layer-bx .layer-list .common:focus {display:inline-block; background:url(/images/ko/ic_filter.png) -4px -7px no-repeat;}
+.layer-bx .layer-list .common {display:inline-block; background:#f6f6f6 url(/images/ko/ic_filter.png) -3px -39px no-repeat;}
+.layer-bx .layer-list .open {display:inline-block; background:#f6f6f6 url(/images/ko/ic_filter.png) -89px -40px no-repeat;}
+.layer-bx .layer-list .notopen {display:inline-block; background:#f6f6f6 url(/images/ko/ic_filter.png) -132px -40px no-repeat;}
+.layer-bx .layer-list .group {display:inline-block; background:#f6f6f6 url(/images/ko/ic_filter.png) -177px -40px no-repeat;}
+.layer-bx .layer-list .file {display:inline-block; background:#f6f6f6 url(/images/ko/ic_filter.png) -46px -39px no-repeat;}
+.layer-bx .layer-list .common:hover, .layer-bx .layer-list .common:focus {display:inline-block; background:url(/images/ko/ic_filter.png) -3px -6px no-repeat;}
 .layer-bx .layer-list .open:hover, .layer-bx .layer-list .open:focus {display:inline-block; background:url(/images/ko/ic_filter.png) -89px -7px no-repeat;}
 .layer-bx .layer-list .notopen:hover, .layer-bx .layer-list .notopen:focus {display:inline-block; background:url(/images/ko/ic_filter.png) -132px -7px no-repeat;}
 .layer-bx .layer-list .group:hover, .layer-bx .layer-list .group:focus {display:inline-block; background:url(/images/ko/ic_filter.png) -177px -7px no-repeat;}
-.layer-bx .layer-list .file:hover, .layer-bx .layer-list .file:focus {display:inline-block; background:url(/images/ko/ic_filter.png) -47px -7px no-repeat;}
-.layer-bx .layer-list.on .common {display:inline-block; background:url(/images/ko/ic_filter.png) -4px -7px no-repeat;}
+.layer-bx .layer-list .file:hover, .layer-bx .layer-list .file:focus {display:inline-block; background:url(/images/ko/ic_filter.png) -46px -6px no-repeat;}
+.layer-bx .layer-list.on .common {display:inline-block; background:url(/images/ko/ic_filter.png) -3px -6px no-repeat;}
 .layer-bx .layer-list.on .open {display:inline-block; background:url(/images/ko/ic_filter.png) -89px -7px no-repeat;}
 .layer-bx .layer-list.on .notopen {display:inline-block; background:url(/images/ko/ic_filter.png) -132px -7px no-repeat;}
-.layer-bx .layer-list.on .group {display:inline-block; background:url(/images/ko/ic_filter.png) -177px -7px no-repeat;}
-.layer-bx .layer-list.on .file {display:inline-block; background:url(/images/ko/ic_filter.png) -47px -7px no-repeat;}
+.layer-bx .layer-list.on .group {display:inline-block; background:url(/images/ko/ic_filter.png) -175px -4px no-repeat;}
+.layer-bx .layer-list.on .file {display:inline-block; background:url(/images/ko/ic_filter.png) -46px -6px no-repeat;}
 .layer-bx .layer-list.on .txt {color:#2674ff;}
 
 .popuplayer-btn {clear:both; position:relative; bottom:0; left:0; height:30px; margin-top:0; text-align:right; width:auto;}
