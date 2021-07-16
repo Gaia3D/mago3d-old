@@ -1,20 +1,3 @@
-var lengthInMeters = 0;
-var areaInMeters = 0;
-
-var formatDistance = function (_length) {
-	var unitFactor = 1;//parseFloat($('#distanceFactor option:selected').val());
-	var unitName = 'm (미터)';//$('#distanceFactor option:selected').text();
-	var output= Math.round(_length / unitFactor * 100) / 100 + " " + unitName.substring(0, unitName.indexOf('('));
-	return output;
-};
-
-var formatArea = function (_area) {
-	var unitFactor = 1;//parseFloat($('#areaFactor option:selected').val());
-	var unitName = 'm² (제곱미터)' //$('#areaFactor option:selected').text();
-		var output= Math.round(_area / unitFactor * 100) / 100 + " " + unitName.substring(0, unitName.indexOf('('));
-	return output;
-};
-
 $("#mapPolicy").click(function(){
 	$("#mapPolicy").toggleClass("on");
 	$("#mago3DSettingLabelLayer").toggle();
@@ -130,29 +113,6 @@ var MapControll = {
 var mapControllEventHandler = function(magoInstance) {
 	var magoManager = magoInstance.getMagoManager();
 	var configInformation = magoManager.configInformation;
-	//var Shape = _Shape(magoInstance);
-	
-	//MAGO.measureTools.lineShape = new Shape(2, false);
-	//MAGO.measureTools.polygonShape = new Shape(3, false);
-	
-	var shapeInfo = document.getElementById("measureInfo");
-	
-	$('#geoLod0').val(configInformation.lod0);
-	$('#geoLod1').val(configInformation.lod1);
-	$('#geoLod2').val(configInformation.lod2);
-	$('#geoLod3').val(configInformation.lod3);
-	$('#geoLod4').val(configInformation.lod4);
-	$('#geoLod5').val(configInformation.lod5);
-	
-	var translateInteraction = magoManager.defaultTranslateInteraction;
-	var selectInteraction = magoManager.defaultSelectInteraction;
-	
-	selectInteraction.on(Mago3D.PointSelectInteraction.EVENT_TYPE.DEACTIVE, function(){
-		$('div.buttonModeWrap button').removeClass('on');
-		translateInteraction.setActive(false);
-		//MAGO.selectedDataController.toggleWrap(false);
-	});
-	
 	
 	// 처음
 	$('#mapCtrlReset').click(function() {
@@ -176,7 +136,6 @@ var mapControllEventHandler = function(magoInstance) {
 	});
 
 	// 전체화면
-	
 	let fullScreen = false;
 	const fullScreenTarget = document.getElementById(magoInstance.getMagoManager().config.getContainerId());
 	
@@ -255,35 +214,6 @@ var mapControllEventHandler = function(magoInstance) {
 		
 		$('.toolbox-measure-btn').removeClass('on');
 	});
-
-	// 높이 측정
-	var heigtEntities = [];
-	$('#mapCtrlMeasureHeight').click(function() {
-		$(this).siblings().removeClass('on');
-		$(this).toggleClass('on');
-		
-		if(MAGO.measureTools.polygonShape.entityId.length !=0){
-			MAGO.measureTools.polygonShape.init();
-		}
-		
-		if(MAGO.measureTools.lineShape.entityId.length !=0){
-			MAGO.measureTools.lineShape.init();
-		}
-		shapeInfo.innerHTML = '';
-		shapeInfo.style.display = 'none';
-
-		deleteHeigtEntities();
-		measureHeight();
-	});
-	
-	function deleteHeigtEntities() {
-		var viewer = magoInstance.getViewer();
-		
-		for (var index = 0; index < heigtEntities.length; index++) {
-			viewer.entities.remove(heigtEntities[index]);
-		}
-		heigtEntities.length = 0;
-	}
 	
 	//카메라 고정, 임시
 	$('#mapCameraFix').click(function() {
@@ -344,7 +274,7 @@ var mapControllEventHandler = function(magoInstance) {
 		var ray = cesiumCamera.getPickRay(windowCoordinates);
 		var intersection = cesiumGlobe.pick(ray, cesiumScene);
 		
-		var promise = Cesium.sampleTerrain(viewer.terrainProvider, 17, [Cesium.Cartographic.fromCartesian(intersection)]);
+		var promise = Cesium.sampleTerrain(viewer.terrainProvider, Mago3D.MagoManager.getMaximumLevelOfTerrainProvider(viewer.terrainProvider), [Cesium.Cartographic.fromCartesian(intersection)]);
     	promise.then(function(t){
     		var p = t[0];
     		
@@ -393,12 +323,14 @@ var mapControllEventHandler = function(magoInstance) {
 			$('#map-control-popup div.setup.advance').show({
 				easing : 'swing'
 			});
-			$(this).removeClass('map-control-advance-collapse-on').addClass('map-control-advance-collapse-off');
+			//$(this).removeClass('map-control-advance-collapse-on').addClass('map-control-advance-collapse-off');
+			$(this).text('접기');
 		} else {
 			$('#map-control-popup div.setup.advance').hide({
 				easing : 'swing'
 			});
-			$(this).addClass('map-control-advance-collapse-on').removeClass('map-control-advance-collapse-off');
+			//$(this).addClass('map-control-advance-collapse-on').removeClass('map-control-advance-collapse-off');
+			$(this).text('더보기');
 		}
 		$(this).data('collapse', !collapse);
 	});
@@ -491,232 +423,5 @@ var mapControllEventHandler = function(magoInstance) {
 	var defaultTranslateInteraction = magoInstance.getMagoManager().defaultTranslateInteraction;
 
 	// SELECT, MOVE MODE
-	$('#selectModeF4d').click(function() {
-		setClassSiblingsInteractionBtn($(this));
-		setSelectInteraction($(this).hasClass('on'), 'f4d');
-	});
-	$('#moveModeF4d').click(function() {
-		setClassSiblingsInteractionBtn($(this));
-		setSelectInteraction($(this).hasClass('on'), 'f4d');
-		setTranslateInteraction($(this).hasClass('on'), 'f4d');
-	});
-
-	$('#selectModeObject').click(function() {
-		setClassSiblingsInteractionBtn($(this));
-		setSelectInteraction($(this).hasClass('on'), 'object');
-	});
-	$('#moveModeObject').click(function() {
-		setClassSiblingsInteractionBtn($(this));
-		setSelectInteraction($(this).hasClass('on'), 'object');
-		setTranslateInteraction($(this).hasClass('on'), 'object');
-	});
-
-	$('#selectModeNative').click(function() {
-		setClassSiblingsInteractionBtn($(this));
-		setSelectInteraction($(this).hasClass('on'), 'native');
-	});
-	$('#moveModeNative').click(function() {
-		setClassSiblingsInteractionBtn($(this));
-		setSelectInteraction($(this).hasClass('on'), 'native');
-		setTranslateInteraction($(this).hasClass('on'), 'native');
-	});
-	
-	function setClassSiblingsInteractionBtn($obj) {
-		var buttonModeWrap = $obj.parents('div.buttonModeWrap');
-		var wrapSiblings = buttonModeWrap.siblings();
-		wrapSiblings.each(function(idx, e){
-			var buttons = $(this).find('div.rightButtonWrap').children();
-			buttons.each(function(){
-				$(this).removeClass('on');
-			});
-		});
-		
-		$obj.siblings('button').removeClass('on');
-		$obj.toggleClass('on');
-	}
-	
-	function setSelectInteraction(active, type) {
-		defaultSelectInteraction.setActive(active);
-		defaultSelectInteraction.setTargetType(type);
-	}
-	function setTranslateInteraction(active, type) {
-		defaultTranslateInteraction.setActive(active);
-		defaultTranslateInteraction.setTargetType(type);
-	}
-	
-	magoInstance.getViewer().clock.onTick.addEventListener(function(clock) {
-		if(heigtEntities.length > 0 && heigtEntities.length === 3) {
-			var point = heigtEntities[heigtEntities.length-1];
-			var position = point.position.getValue();
-			
-			var position2d = Cesium.SceneTransforms.wgs84ToWindowCoordinates(
-							magoInstance.getViewer().scene, position);
-				
-			if(position2d.x > 0 && position2d.y > 0) {
-				shapeInfo.style.display = 'block';
-
-				var left = position2d.x;
-				if($('#navWrap').is(':visible')) {
-					left += $('#navWrap').width();
-				}
-				if($('#contentsWrap').is(':visible')) {
-					left += $('#contentsWrap').width();
-				}
-				var top = position2d.y-50;
-
-				shapeInfo.style.left = left - 60 + 'px';
-				shapeInfo.style.top = top + 'px';
-			} else {
-				shapeInfo.style.display = 'none';
-			}
-		}
-	});
-	
-	var measureHeight = function () {
-		var magoManager = MAGO3D_INSTANCE.getMagoManager();
-		var handler = new Cesium.ScreenSpaceEventHandler(MAGO3D_INSTANCE.getViewer().scene.canvas);
-		var points = [];
-		
-		var lineEndPoint;
-		var line;
-		var depthDetected = false;
-		//클릭
-		handler.setInputAction(function(event){
-			depthDetected = Mago3D.ManagerUtils.detectedDepth(event.position.x, event.position.y, magoManager);
-			if(points.length === 0) {
-				var point3d = Mago3D.ManagerUtils.screenCoordToWorldCoordUseDepthCheck(event.position.x, event.position.y, magoManager); 
-				var geographic = Mago3D.ManagerUtils.pointToGeographicCoord(point3d);
-				
-				let worldPosition = Cesium.Cartesian3.fromDegrees(geographic.longitude, geographic.latitude, geographic.altitude);
-				var entity = MAGO3D_INSTANCE.getViewer().entities.add({
-			        position: worldPosition,
-			        point: {
-			        	pixelSize: 10,
-						color: Cesium.Color.WHITE,
-			            disableDepthTestDistance: Number.POSITIVE_INFINITY
-			        }
-			    });
-				points.push(entity);
-				heigtEntities.push(entity);
-			} else {
-				var height;
-				var orgPoint3d = lineEndPoint;
-				var orggeographic = Mago3D.ManagerUtils.pointToGeographicCoord(orgPoint3d);
-				var entity = MAGO3D_INSTANCE.getViewer().entities.add({
-			        position: lineEndPoint,
-			        point: {
-			            pixelSize: 10,
-						color: Cesium.Color.WHITE,
-			            disableDepthTestDistance: Number.POSITIVE_INFINITY
-			        }
-			    });
-				points.push(entity);
-				heigtEntities.push(entity);
-				handler = handler.destroy();
-		    	
-				$('#mapCtrlMeasureHeight').removeClass('on');
-			}
-		}, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-		
-		handler.setInputAction(function(event){
-			if(points.length > 0) {
-				var orgPoint3d = points[0].position.getValue(new Date());
-				var height;
-				if(depthDetected) {
-					var point3d = Mago3D.ManagerUtils.screenCoordToWorldCoordUseDepthCheck(event.endPosition.x, event.endPosition.y, magoManager);
-					var geographic = Mago3D.ManagerUtils.pointToGeographicCoord(point3d);
-					
-					height = geographic.altitude;
-				}
-				
-				if(!depthDetected || Math.abs(height) < 0.8) {
-					var viewer = MAGO3D_INSTANCE.getViewer();
-					var scene = viewer.scene;
-					
-					var orgCartesian = new Cesium.Cartesian3(orgPoint3d.x, orgPoint3d.y, orgPoint3d.z);
-					
-                    var surfaceNormal = scene.globe.ellipsoid.geodeticSurfaceNormal(orgCartesian);
-                    var planeNormal = Cesium.Cartesian3.subtract(scene.camera.position, orgCartesian, new Cesium.Cartesian3());
-                    planeNormal = Cesium.Cartesian3.normalize(planeNormal, planeNormal);
-                    var ray =  viewer.scene.camera.getPickRay(event.endPosition);
-                    var plane = Cesium.Plane.fromPointNormal(orgCartesian, planeNormal);
-                    var newCartesian =  Cesium.IntersectionTests.rayPlane(ray, plane);
-                    
-                    var newCartographic = viewer.scene.globe.ellipsoid.cartesianToCartographic(newCartesian);
-                    height = newCartographic.height;
-                    if(height < 0) height *= -1;
-				}
-				
-				var orggeographic = Mago3D.ManagerUtils.pointToGeographicCoord(orgPoint3d);
-				lineEndPoint = Cesium.Cartesian3.fromDegrees(orggeographic.longitude, orggeographic.latitude, height);
-
-				if(!line) {
-					line = MAGO3D_INSTANCE.getViewer().entities.add({
-						polyline: {
-							// This callback updates positions each frame.
-			                positions: new Cesium.CallbackProperty(function() {
-								return [points[0].position.getValue(new Date()), lineEndPoint];                    
-			                }, false),
-			                width: 10,
-			                depthFailMaterial : Cesium.Color.RED,
-			                material: new Cesium.PolylineGlowMaterialProperty({
-								color: Cesium.Color.DEEPSKYBLUE,
-								glowPower: 0.25
-							})
-			            },
-					});
-					heigtEntities.push(line);
-				}
-				
-				var shapeInfo = document.getElementById("measureInfo");
-				if(shapeInfo.style.display === 'none') {
-					shapeInfo.style.display = "block";
-					shapeInfo.style.background = 'white';
-					shapeInfo.style.border = '1px solid #888';
-					shapeInfo.style.paddingLeft = '5px';
-					shapeInfo.style.position = 'absolute';
-					shapeInfo.style.zIndex = '100';
-					shapeInfo.style.color = "#00BFFF";
-				}
-				
-				var position2d = Mago3D.ManagerUtils.calculateWorldPositionToScreenCoord(undefined, lineEndPoint.x, lineEndPoint.y, lineEndPoint.z,undefined, MAGO3D_INSTANCE.getMagoManager());
-				
-				if(position2d.x > 0 && position2d.y > 0) {
-					var left = position2d.x;
-					if($('#navWrap').is(':visible')) {
-						left += $('#navWrap').width();
-					}
-					if($('#contentsWrap').is(':visible')) {
-						left += $('#contentsWrap').width();
-					}
-					var top = position2d.y-50;
-
-					shapeInfo.style.left = left - 60 + 'px';
-					shapeInfo.style.top = top + 'px';
-					$('#measureInfo').text("height : " + getHeight(lineEndPoint));
-					
-					var exitbtn = document.createElement("button");
-					exitbtn.id = "exit";
-					exitbtn.innerText = "x";
-					exitbtn.style.border = "0px";
-					exitbtn.style.padding = "0 5px";
-					exitbtn.style.backgroundColor = "transparent";
-					exitbtn.addEventListener("click", function() {
-						shapeInfo.innerHTML = "";
-						deleteHeigtEntities();
-						handler = handler.destroy();
-					});
-					shapeInfo.appendChild(exitbtn);
-				}
-			}
-		}, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-		
-		function getHeight(last) {
-			
-			var startgeographic = Mago3D.ManagerUtils.pointToGeographicCoord(points[0].position.getValue(new Date()));
-			var endgeographic = Mago3D.ManagerUtils.pointToGeographicCoord(last ? last : points[1].position.getValue(new Date()));
-			var height = endgeographic.altitude - startgeographic.altitude;
-			return height.toFixed(3) + 'm';
-		}
-	}
+	var selectedDataController = new SelectedDataController(magoInstance);
 }

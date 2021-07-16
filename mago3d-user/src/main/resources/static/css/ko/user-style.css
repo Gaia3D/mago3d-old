@@ -449,23 +449,6 @@ input[type="button"],
 .ui-dialog .ui-dialog-buttonpane button .ui-button-text {
 	padding: 0; }
 
-button:hover,
-button:hover,
-input[type="submit"]:hover,
-input[type="reset"]:hover,
-input[type="button"]:hover,
-.ui-dialog .ui-dialog-buttonpane button:hover,
-.button:focus,
-button:focus,
-input[type="submit"]:focus,
-input[type="reset"]:focus,
-input[type="button"]:focus,
-.ui-dialog .ui-dialog-buttonpane button:focus {
-	background-color: #747474;
-	border:1px solid #636363;
-	color:white;
-	outline: 0; }
-
 a.button {
 	line-height: 28px;
 	padding: 0px 10px;
@@ -5187,7 +5170,7 @@ span.mago {color:#6649ca;}
 .toolbox-map > button:first-child {display:inline-block; margin:0; padding:0; height:52px; width:53px; background: white url(/images/ko/ic_toolbox.png) no-repeat -181px  -397px;}
 .toolbox-map > button:last-child {display:inline-block; margin:0; padding:0; height:52px; width:53px; background: white url(/images/ko/ic_toolbox.png) no-repeat -181px -467px;}
 .toolbox-map > button:first-child:hover, .toolbox-map > button:first-child:focus {color:#1289f8; background: white url(/images/ko/ic_toolbox.png) no-repeat -181px -397px; border:1px solid #1289f8;}
-.toolbox-map > button:first-child:hover, .toolbox-map > button:first-child:focus {color:#1289f8; background: white url(/images/ko/ic_toolbox.png) no-repeat -181px -467px; border:1px solid #1289f8;}
+.toolbox-map > button:last-child:hover, .toolbox-map > button:last-child:focus {color:#1289f8; background: white url(/images/ko/ic_toolbox.png) no-repeat -181px -467px; border:1px solid #1289f8;}
 
 
 
@@ -5207,7 +5190,7 @@ span.mago {color:#6649ca;}
 .tabmenu > ul li:first-child.actived {border-left:1px solid #258fff;}
 .tabmenu > ul li.actived a {color:white;}
 .tabmenu > ul li:hover a {color:#065ce1 !important;}
-.tabmenu > ul li.actived:hover a {color:white !important;;}
+.tabmenu > ul li.actived:hover a {color:white !important;}
 .tabmenu > ul li:hover, .tabmenu > ul li:focus { border-top:1px solid #1289f8; border-right:1px solid #1289f8; border-bottom:1px solid #1289f8;}
 .tabmenu > ul li.actived {border-top:1px solid #1289f8; border-right:1px solid #1289f8; border-bottom:1px solid #1289f8;}
 .tabmenu02> ul li {width:168px;}
@@ -5388,7 +5371,7 @@ span.sumnail {float:right; width:50px; height:50px; border:1px solid #e9e8e8;}
 .poplayer .object-setup > button.apply {border:1px solid #848484 !important;  background:#848484 !important; color:white !important;}
 .poplayer .object-setup > button.cancel { border:1px solid #848484!important; background:white !important; color:black !important;}
 .wscroll-bg {float:left; margin-left:20px; display:inline-block; margin-top:12px; border-radius:30px; width:100px; height:7px; background:#ebe9e9;}
-.wscroll-bg > .scroll {display:inline-block; cursor:pointer; width:11px; height:11px; margin-top:-2px; background:#439ff6; border-radius:30px;}
+.wscroll-bg > .scroll {display:inline-block; cursor:pointer; width:11px; height:11px; margin-top:-2px; margin-left:45px;background:#439ff6; border-radius:30px;}
 .btn-up {float:left; display:inline-block; margin-left:5px; border:1px solid #d6d6d6; width:20px; height:15px; background:url(/images/ko/btn_more.png) no-repeat 5px -41px;}
 .btn-up:hover {border:1px solid #d6d6d6; background:#f5f5f5 url(/images/ko/btn_more.png) no-repeat 5px -41px;}
 .btn-down {float:left; display:inline-block; margin-left:2px; border:1px solid #d6d6d6; width:20px; height:15px; background:url(/images/ko/btn_more.png) no-repeat 5px 10px;}
@@ -5397,7 +5380,7 @@ span.sumnail {float:right; width:50px; height:50px; border:1px solid #e9e8e8;}
 .btn-center button {display:inline-block; border:0; height:30px; line-height:12px; border-radius:2px; background:#1489f5; color:white; font-size:13px;}
 
 
-#map-control-advance-toggle-btn {border: 0;width: 24px;height: 24px;float: right; margin-top:10px;}
+#map-control-advance-toggle-btn {border: 0;float: right; margin-top:2px;font-size: 10px;background: white;}
 #map-control-advance-toggle-btn.map-control-advance-collapse-on {background: white url(/images/ko/ic_toolbox.png) no-repeat -7px -445px;}
 #map-control-advance-toggle-btn.map-control-advance-collapse-off {background: white url(/images/ko/ic_toolbox.png) no-repeat -7px -487px;}
 

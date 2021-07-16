@@ -2,7 +2,7 @@
 <div id="map-control-popup" class="detaildata poplayer" style="display: none;max-height: 800px;height: auto;">
 	<button type="button" class="pop-close"></button>
 	<h6 class="pop-title">3D 데이터 설정</h6>
-	<button type="button" id="map-control-advance-toggle-btn" class="map-control-advance-collapse-on" data-collapse="true"></button>
+	<button type="button" id="map-control-advance-toggle-btn" data-collapse="true">더보기</button>
 	<div class="setup marT15">
 		<label>레이블</label>
 		<div class="data-go">
@@ -51,7 +51,7 @@
             </div>
 		</div>
 	</div>
-	<div class="setup" style="display:none;">
+	<div class="setup">
 		<label>선택 및 이동</label>
 		<div class="data-go" style="width:150px;">
 			<div class="switch-toggle switch-ios">
@@ -65,52 +65,57 @@
             </div>
 		</div>
 	</div>
-	<div id="data-controll-wrap">
+	<div id="data-controll-wrap" style="display:none;">
+		<div class="data-ttl header" id="data-controll-wrap-header"></div>
 		<div class="data-ttl">색상 변경</div>
-		<div class="object-setup">
+		<div class="object-setup object-setup-color">
 			<label>색상</label>
 			<span class="color-value"></span>
 			<input type="text" class="wd50" />
-			<button type="button" class="apply marL10">적용</button>
-			<button type="button" class="cancel">취소</button>
+			<input type="color" style="height:0.1px !important;width:0.1px;visibility:hidden;"/>
+			<button type="button" id="data-controll-color-apply-btn" class="apply marL10">적용</button>
+			<button type="button" id="data-controll-color-restore-btn" class="cancel">취소</button>
 		</div>
-		<div class="data-ttl">위치 변경</div>
-		<div class="object-setup">
-			<label>경도</label>
-			<input type="text" />
-			<label>위도</label>
-			<input type="text" />
-			<label>높이</label>
-			<input type="text" class="wd50" />
-			<button type="button" class="btn-up"><span class="blind">위로</span></button>
-			<button type="button" class="btn-down"><span class="blind">아래로</span></button>
-			<label>offset</label>
-			<input type="text" class="wd50" />
-		</div>
-		<div class="data-ttl">회전 변경</div>
-		<div class="object-setup">
-			<label>x(피치)</label>
-			<input type="text" class="wd50" />
-			<span class="wscroll-bg">
-					<span class="scroll"></span>
+		<form id=data-controll-form th:action="@{#}">
+			<input type="hidden" name="dataId" value="" />
+			<div class="data-ttl">위치 변경</div>
+			<div class="object-setup object-setup-position">
+				<label for="data-controll-input-longitude">경도</label>
+				<input type="text" id="data-controll-input-longitude" name="longitude" readonly/>
+				<label for="data-controll-input-latitude">위도</label>
+				<input type="text" id="data-controll-input-latitude" name="latitude" readonly/>
+				<label for="data-controll-input-altitude">높이</label>
+				<input type="text" class="wd50" id="data-controll-input-altitude" name="altitude" readonly />
+				<button type="button" id="data-controll-alt-up-btn" class="btn-up" data-type="up"><span class="blind">위로</span></button>
+				<button type="button" id="data-controll-alt-down-btn" class="btn-down" data-type="down"><span class="blind">아래로</span></button>
+				<label for="data-controll-input-altitude-offset">offset</label>
+				<input type="text" id="data-controll-input-altitude-offset" class="wd50" value="1"/>
+			</div>
+			<div class="data-ttl">회전 변경</div>
+			<div class="object-setup object-setup-rotation">
+				<label for="data-controll-input-pitch">x(피치)</label>
+				<input type="text" id="data-controll-input-pitch" name="pitch" class="wd50" readonly/>
+				<span class="wscroll-bg">
+					<span class="scroll" data-type="pitch"></span>
 				</span>
-			<label>y(롤)</label>
-			<input type="text" class="wd50" />
-			<span class="wscroll-bg">
-					<span class="scroll"></span>
+				<label for="data-controll-input-roll">y(롤)</label>
+				<input type="text" id="data-controll-input-roll" name="roll" class="wd50" readonly/>
+				<span class="wscroll-bg">
+					<span class="scroll" data-type="roll"></span>
 				</span>
-			<label>z(헤딩)</label>
-			<input type="text" class="wd50" />
-			<span class="wscroll-bg">
-					<span class="scroll"></span>
+				<label for="data-controll-input-heading">z(헤딩)</label>
+				<input type="text" id="data-controll-input-heading" name="heading" class="wd50" readonly/>
+				<span class="wscroll-bg">
+					<span class="scroll" data-type="heading"></span>
 				</span>
-		</div>
-		<hr class="layer-line" />
-		<div class="btn-center">
-			<button type="button">위치/회전변경</button>
-			<button type="button">이슈 등록</button>
-			<button type="button">데이터 조회</button>
-		</div>
+			</div>
+			<hr class="layer-line" />
+			<div class="btn-center">
+				<button id="data-controll-save-btn" type="button">위치/회전변경</button>
+				<button id="data-controll-issue-btn" type="button">이슈 등록</button>
+				<button id="data-controll-attr-btn" type="button">데이터 조회</button>
+			</div>
+		</form>
 	</div>
 </div>
 </html>

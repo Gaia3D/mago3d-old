@@ -167,6 +167,7 @@
 <script type="text/javascript" th:src="@{/js/{lang}/common/pagination.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/{lang}/selection-data.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/map-controll.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/ui-controll.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/spatial-analysis.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
@@ -282,7 +283,7 @@
         var simul = Simulation(magoInstance);
 		setTimeout(function() {
 			SmltWater.onAutoRun(simul.water);
-		},6000);
+		},10000);
 
 		// 사물인터넷
 		if (MAGO.microService && MAGO.microService['SENSOR_THINGS']) {
