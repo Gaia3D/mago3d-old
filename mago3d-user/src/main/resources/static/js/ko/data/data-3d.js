@@ -16,75 +16,71 @@ const Data3D = function(magoInstance) {
         $('#data-group-search').draggable({containment: "window"});
         $('#data-search-filter').draggable({containment: "window"});
 
+        $('#data-info-dialog-dhtml').draggable({containment: "window"});
+        $('#data-group-dialog-dhtml').draggable({containment: "window"});
 
-
-
+        /** 필터 ON/OFF **/
 
         // 데이터 그룹 검색 ON/OFF
         $('#search-data-group').click(function() {
-            Data3D.dataGroupSearchOnOff();
+            Data3D.toggleLayer('data-group-search');
             that.getDataGroups(1);
             return false;
         });
-
         // 데이터 검색 필터 ON/OFF
         $('#search-data-filter').click(function() {
-            Data3D.dataSearchFilterOnOff();
+            Data3D.toggleLayer('data-search-filter');
             return false;
         });
 
 
-
-
+        /** 데이터 그룹 **/
 
         // 데이터 그룹 검색 버튼 클릭
         $('#search-data-group').click(function() {
             that.getDataGroups(1);
         });
-
         // 데이터 그룹 검색 엔터키
         $("#data-group-content input:text[name='searchValue']").keyup(function(e) {
             if (e.keyCode === 13) that.getDataGroups(1);
         });
-
         // 데이터 그룹 선택
         $("#data-group-content").on('click', '.select-data-group', function() {
             const groupId = $(this).data('groupId');
             $("#search-data-form input[name='dataGroupId']").val(groupId);
-            Data3D.dataGroupSearchOnOff();
+            Data3D.toggleLayer('data-group-search');
             that.getDatas(1);
         });
 
 
+        /** 데이터 필터 **/
 
         // 데이터 필터 공유유형 선택
         $('#data-search-filter .sharing').click(function() {
            $(this).toggleClass('on');
            $(this).siblings().removeClass('on');
         });
-
         // 데이터 필터 데이터타입 선택
         $('#data-search-filter .data-type').click(function() {
             $(this).toggleClass('on');
             $(this).siblings().removeClass('on');
         });
-
         // 데이터 필터 적용
         $('#data-search-filter-apply').click(function() {
             const sharing = $('#data-search-filter .sharing.on').data('sharing');
             const dataType = $('#data-search-filter .data-type.on').data('type');
             $("#search-data-form input[name='sharing']").val(sharing);
             $("#search-data-form input[name='dataType']").val(dataType);
-            Data3D.dataSearchFilterOnOff();
+            Data3D.toggleLayer('data-search-filter');
             that.getDatas(1);
         });
-
         // 데이터 필터 초기화
         $('#data-search-filter-reset').click(function() {
             $('#data-search-filter .layer-list').removeClass('on');
         });
 
 
+        /** 데이터 **/
 
         // 데이터 검색 버튼 클릭
         $('#search-data').click(function() {
@@ -127,14 +123,12 @@ Object.defineProperties(Data3D.prototype, {
     }
 });
 
-// 데이터 그룹 검색 ON/OFF
-Data3D.dataGroupSearchOnOff = function() {
-    $('#data-group-search').toggle();
-}
-
-// 데이터 검색 필터 ON/OFF
-Data3D.dataSearchFilterOnOff = function() {
-    $('#data-search-filter').toggle();
+/**
+ * HTML 팝업레이어 ON/OFF
+ * @param id 토글해야할 html id
+ */
+Data3D.toggleLayer = function(id) {
+    $('#' + id).toggle();
 }
 
 // 데이터 그룹 표시/비표시
@@ -204,6 +198,47 @@ Data3D.dataOnOff = function(groupId, dataKey, tiling, _this) {
     var optionObject = { isVisible : option };
     setNodeAttributeAPI(MAGO3D_INSTANCE, groupId, dataKey, optionObject);
 
+}
+
+// 데이터 상세 팝업 레이어
+Data3D.dataInfoPopupLayerOnOff = function(url) {
+    const callback = function(msg) {
+        if(msg.statusCode <= 200) {
+            console.info(msg.dataInfo);
+            const template = Handlebars.compile($("#data-info-source").html());
+            $("#data-info-dialog-dhtml").html("").append(template(msg.dataInfo)).show();
+        } else {
+            alert(JS_MESSAGE[msg.errorCode]);
+        }
+    }
+    this._loadDetail(url, callback);
+}
+// 데이터 그룹 상세 팝업 레이어
+Data3D.dataGroupPopupLayerOnOff = function(url) {
+    const callback = function(msg) {
+        if(msg.statusCode <= 200) {
+            const template = Handlebars.compile($("#data-group-info-source").html());
+            $("#data-group-dialog-dhtml").html("").append(template(msg.dataGroup)).show();
+        } else {
+            alert(JS_MESSAGE[msg.errorCode]);
+        }
+    }
+    this._loadDetail(url, callback);
+}
+
+Data3D._loadDetail = function(url, callback) {
+    $.ajax({
+        url: url,
+        type: "GET",
+        headers: {"X-Requested-With": "XMLHttpRequest"},
+        dataType: "json",
+        success: function(msg){
+            callback(msg);
+        },
+        error:function(request,status,error){
+            alert(JS_MESSAGE["ajax.error.message"]);
+        }
+    });
 }
 
 // 페이징 성공 콜백

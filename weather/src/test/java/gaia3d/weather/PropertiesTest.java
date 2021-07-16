@@ -18,7 +18,7 @@ public class PropertiesTest {
     void getProperties() throws IOException {
 
         Properties properties = new Properties();
-        String location = "src/main/resources/mago3d.properties";
+        String location = "src/test/resources/mago3d.properties";
         BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(location));
         properties.load(bufferedReader);
 

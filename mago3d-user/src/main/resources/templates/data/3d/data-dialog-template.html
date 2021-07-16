@@ -1,0 +1,89 @@
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
+<!-- 팝업레이어/데이터 정보 -->
+<script id="data-info-source" type="text/x-handlebars-template">
+	<button type="button" class="close" href="#" onclick="Data3D.toggleLayer('data-info-dialog-dhtml')"><span class="blind">팝업레이어 닫기</span></button>
+	<div class="datalist">
+		<h3 class="popup-data">{{dataName}}</h3>
+
+		{{#ifMatch dataGroupTarget 'admin'}}
+		<span class="data-username" th:text="#{data.administrator}"></span>
+		{{else}}
+		{{#ifMatch userId ../owner}}
+
+		{{else}}
+		<span class="data-username">{{userId}}</span>
+		{{/ifMatch}}
+		{{/ifMatch}}
+
+		<div class="data-group">
+			<span class="ttl" th:text="#{data.group.name}"></span> {{dataGroupName}}
+			<span class="gap"></span>
+			<span class="ttl" th:text="#{common.data.type}"></span> {{dataType}}
+		</div>
+		<div class="data-go">
+			<a class="move" href="">이동</a>
+			<label class="switch">
+				<input type="checkbox" />
+				<span class="slider"></span>
+			</label> 표시
+		</div>
+	</div>
+	<div class="thumbnail">
+		<img src="{{thumbnailPath}}" alt="썸네일 이미지">
+	</div>
+	<div class="popup-datatype">
+		<table>
+			<caption>상세 데이터정보 보기</caption>
+			<colgroup>
+				<col width="37%" />
+				<col width="63%" />
+			</colgroup>
+			<tr>
+				<td>사용자 아이디</td>
+				<td>{{userId}}</td>
+			</tr>
+			<tr>
+				<td>기본유무</td>
+				<td>기본</td>
+			</tr>
+			<tr>
+				<td>사용유무</td>
+				<td>{{status}}</td>
+			</tr>
+			<tr>
+				<td>경도</td>
+				<td>{{longitude}}</td>
+			</tr>
+			<tr>
+				<td>위도</td>
+				<td>{{latitude}}</td>
+			</tr>
+			<tr>
+				<td>높이</td>
+				<td>{{altitude}}</td>
+			</tr>
+			<tr>
+				<td>메타정보</td>
+				<td>{{metainfo}}</td>
+			</tr>
+			<tr>
+				<td>설명</td>
+				<td>{{description}}</td>
+			</tr>
+			<tr>
+				<td>수정일</td>
+				<td>{{viewUpdateDate}}</td>
+			</tr>
+			<tr>
+				<td>등록일</td>
+				<td>{{viewInsertDate}}</td>
+			</tr>
+		</table>
+	</div>
+	<!--
+	<a class="more-info">상세정보1</a>
+	<a class="more-info">상세정보2</a>
+	<a class="more-info">상세정보3</a>
+	-->
+</script>
+</html>

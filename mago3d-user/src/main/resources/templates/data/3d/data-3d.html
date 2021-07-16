@@ -40,7 +40,9 @@
 	<!-- paging -->
 	<div id="data-paging-dhtml"></div>
 
+	<div th:replace="~{/common/search-summary-template :: #search-summary-source}"></div>
 	<div th:replace="~{/data/3d/data-template :: #data-list-source}"></div>
+	<div th:replace="~{/common/pagination-template :: #pagination-source}"></div>
 
 <!--
 	<div class="datalist">

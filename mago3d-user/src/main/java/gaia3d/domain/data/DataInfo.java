@@ -137,6 +137,8 @@ public class DataInfo extends Search implements Serializable {
 	private Boolean objectAttributeExist;
 	// 설명
 	private String description;
+	// 썸네일 경로
+	private String thumbnailPath;
 	
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)

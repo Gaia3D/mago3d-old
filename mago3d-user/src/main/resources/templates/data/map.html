@@ -80,6 +80,10 @@
 			<div th:replace="~{/layer/list :: #layerContent}"></div>
 			<!-- E: CONTENTSBTN -->
 		</div>
+
+		<div th:replace="~{/data/3d/data-group-search-dialog :: #data-group-search}"></div>
+		<div th:replace="~{/data/3d/data-search-filter-dialog :: #data-search-filter}"></div>
+
 		<div class="contentsBtn">
 			<button type="button" id="closeLeftBtn" th:title="#{common.close}" style="display:none;">Close</button>
 		</div>
@@ -88,12 +92,14 @@
 	</div>
 	<!-- E: NAVWRAP -->
 
+	<div id="data-info-dialog-dhtml" class="detaildata popuplayer"></div>
+	<div id="data-group-dialog-dhtml" class="detaildata popuplayer"></div>
+	<div th:replace="~{/data/3d/data-dialog-template :: #data-info-source}"></div>
+	<div th:replace="~{/data/3d/data-group-dialog-template :: #data-group-info-source}"></div>
+
 	<!-- S: GNB WRAP -->
 	<!--<div th:replace="~{/fragments/global-search :: #gnbWrap}"></div>-->
 	<!-- E: GNB WRAP -->
-
-	<div th:replace="~{/data/3d/data-group-search-dialog :: #data-group-search}"></div>
-	<div th:replace="~{/data/3d/data-search-filter-dialog :: #data-search-filter}"></div>
 
 	<!-- CTRLWRAP -->
 	<div th:replace="~{/fragments/toolbar :: #toolbarWrap}"></div>

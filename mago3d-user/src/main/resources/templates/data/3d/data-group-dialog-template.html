@@ -1,0 +1,111 @@
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
+<!-- 팝업레이어/데이터그룹 정보 -->
+<script id="data-group-info-source" type="text/x-handlebars-template">
+	<button type="button" class="close" href="#" onclick="Data3D.toggleLayer('data-group-dialog-dhtml')"><span class="blind">팝업레이어 닫기</span></button>
+	<div class="datalist">
+		<h3 class="popup-data">{{dataGroupName}}</h3>
+		<span class="data-username">슈퍼관리자</span>
+		<div class="data-group">
+			<span class="ttl" th:text="#{data.group.target}"></span> {{dataGroupTarget}}
+			<span class="gap"></span>
+			<span class="ttl" th:text="#{data.group.sharing}"></span>
+
+			{{#ifMatch sharing 'common'}}
+			<th:block th:text="#{common.common}"></th:block>
+			{{/ifMatch}}
+			{{#ifMatch sharing 'public'}}
+			<th:block th:text="#{common.public}"></th:block>
+			{{/ifMatch}}
+			{{#ifMatch sharing 'private'}}
+			<th:block th:text="#{common.private}"></th:block>
+			{{/ifMatch}}
+			{{#ifMatch sharing 'group'}}
+			<th:block th:text="#{common.group}"></th:block>
+			{{/ifMatch}}
+
+		</div>
+		<div class="data-go">
+			<a class="move" href="">이동</a>
+			<label class="switch">
+				<input type="checkbox" />
+				<span class="slider"></span>
+			</label> 표시
+		</div>
+	</div>
+	<!--<div class="thumbnail"></div>-->
+	<div class="popup-datatype">
+		<table>
+			<caption>상세 데이터정보 보기</caption>
+			<colgroup>
+				<col width="37%" />
+				<col width="63%" />
+			</colgroup>
+			<tr>
+				<td>사용자 아이디</td>
+				<td>{{userId}}</td>
+			</tr>
+			<tr>
+				<td>기본유무</td>
+				<td>
+					{{#if basic}}
+					<th:block th:text="#{common.basic}"></th:block>
+					{{else}}
+					<th:block th:text="#{common.option}"></th:block>
+					{{/if}}
+				</td>
+			</tr>
+			<tr>
+				<td>사용유무</td>
+				<td>
+					{{#if available}}
+					<th:block th:text="#{common.use}"></th:block>
+					{{else}}
+					<th:block th:text="#{common.unused}"></th:block>
+					{{/if}}
+				</td>
+			</tr>
+			<tr>
+				<td>데이터건수</td>
+				<td>{{dataCount}}</td>
+			</tr>
+			<tr>
+				<td>경도</td>
+				<td>{{longitude}}</td>
+			</tr>
+			<tr>
+				<td>위도</td>
+				<td>{{latitude}}</td>
+			</tr>
+			<tr>
+				<td>높이</td>
+				<td>{{altitude}}</td>
+			</tr>
+			<tr>
+				<td>이동시간</td>
+				<td>{{duration}}</td>
+			</tr>
+			<tr>
+				<td>메타정보</td>
+				<td>{{metainfo}}</td>
+			</tr>
+			<tr>
+				<td>설명</td>
+				<td>{{description}}</td>
+			</tr>
+			<tr>
+				<td>수정일</td>
+				<td>{{viewUpdateDate}}</td>
+			</tr>
+			<tr>
+				<td>등록일</td>
+				<td>{{viewInsertDate}}</td>
+			</tr>
+		</table>
+	</div>
+	<!--
+	<a class="more-info">상세정보1</a>
+	<a class="more-info">상세정보2</a>
+	<a class="more-info">상세정보3</a>
+	-->
+</script>
+</html>

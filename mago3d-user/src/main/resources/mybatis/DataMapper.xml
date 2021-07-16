@@ -452,7 +452,7 @@
 			<if test="metainfo != null and metainfo != ''">
 			metainfo,
 			</if>
-			status, label, label_template, description
+			status, label, label_template, description, thumbnail_path
 		) VALUES (
 			#{dataId}, #{dataGroupId}, #{converterJobId}, #{dataRelationId}, #{dataKey}, #{dataName}, #{dataType}, #{sharing}, #{userId}, #{mappingType}, #{assemble},
 			<if test="location != null">
@@ -462,7 +462,7 @@
 			<if test="metainfo != null and metainfo != ''">
 			#{metainfo}::jsonb,
 			</if>
-			#{status}, #{label}, #{labelTemplate}, #{description}
+			#{status}, #{label}, #{labelTemplate}, #{description}, #{thumbnailPath}
 		)
 	</insert>
 	
@@ -535,6 +535,9 @@
 			</if>
 			<if test="description != null and description != ''">
 			description = #{description},
+			</if>
+			<if test="thumbnailPath != null and thumbnailPath != ''">
+				thumbnail_path = #{thumbnailPath},
 			</if>
 			update_date = now()
 		WHERE data_id = #{dataId}

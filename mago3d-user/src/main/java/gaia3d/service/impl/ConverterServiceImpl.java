@@ -527,6 +527,12 @@ public class ConverterServiceImpl implements ConverterService {
 		dataInfo.setDataKey(dataKey);
 		dataInfo = dataService.getDataByDataKey(dataInfo);
 
+		DataGroup dataGroup = new DataGroup();
+		dataGroup.setUserId(userId);
+		dataGroup.setDataGroupId(dataGroupId);
+		dataGroup = dataGroupService.getDataGroup(dataGroup);
+		String dataGroupPath = dataGroup.getDataGroupPath();
+
 		if (dataInfo == null) {
 			// int order = 1;
 			// TODO nodeType 도 입력해야 함
@@ -554,6 +560,7 @@ public class ConverterServiceImpl implements ConverterService {
 			//dataInfo.setStatus(DataStatus.PROCESSING.name().toLowerCase());
 			dataInfo.setStatus(DataStatus.USE.name().toLowerCase());
 			dataInfo.setLabel(dataName);
+			dataInfo.setThumbnailPath(String.format("/f4d/%sF4D_%s/%s", dataGroupPath, dataKey, "thumbnail.jpg"));
 			dataService.insertData(dataInfo);
 
 		} else {
@@ -577,6 +584,7 @@ public class ConverterServiceImpl implements ConverterService {
 			}
 			//dataInfo.setStatus(DataStatus.PROCESSING.name().toLowerCase());
 			dataInfo.setStatus(DataStatus.USE.name().toLowerCase());
+			dataInfo.setThumbnailPath(String.format("/f4d/%sF4D_%s/%s", dataGroupPath, dataKey, "thumbnail.jpg"));
 			dataService.updateData(dataInfo);
 		}
 

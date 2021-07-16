@@ -91,6 +91,7 @@ create table data_info(
 	attribute_exist				boolean								default false,
 	object_attribute_exist		boolean								default false,
 	description					varchar(256),
+    thumbnail_path              varchar(256),
 	update_date					timestamp with time zone,
 	insert_date					timestamp with time zone			default now(),
 	constraint data_info_pk 	primary key(data_id)
