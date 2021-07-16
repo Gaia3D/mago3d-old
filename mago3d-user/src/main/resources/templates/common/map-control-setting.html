@@ -111,7 +111,12 @@
 			</div>
 			<hr class="layer-line" />
 			<div class="btn-center">
+	<th:block th:if="${session.USER_SESSION}">
 				<button id="data-controll-save-btn" type="button">위치/회전변경</button>
+	</th:block>
+	<th:block th:unless="${session.USER_SESSION}">
+				<button type="button" onclick="alert('로그인 후 이용 가능한 서비스 입니다.'); return false;">위치/회전변경</button>
+	</th:block>
 				<button id="data-controll-issue-btn" type="button">이슈 등록</button>
 				<button id="data-controll-attr-btn" type="button">데이터 조회</button>
 			</div>
