@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <!-- 팝업레이어/필터 -->
 <div id="data-search-filter" class="filter popuplayer-s">
-	<button type="button" class="close-s" onclick="Data3D.toggleLayer('data-search-filter')"><span class="blind">팝업레이어 닫기</span></button>
+	<button type="button" class="pop-sclose" onclick="Data3D.toggleLayer('data-search-filter')"><span class="blind">팝업레이어 닫기</span></button>
 	<span class="layer-ttl">공유유형</span>
 	<div class="layer-bx">
 		<div class="sharing layer-list" data-sharing="common">
@@ -21,7 +21,7 @@
 			<a class="txt">그룹</a>
 		</div>
 	</div>
-	<span class="layer-ttl">데이터 타입</span>
+	<span class="layer-ttl marT20">데이터 타입</span>
 	<div class="layer-bx">
 		<div class="data-type layer-list" data-type="citygml">
 			<a class="icon file"></a>

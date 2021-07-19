@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <!-- 팝업레이어/데이터 그룹 검색 -->
 <div id="data-group-search" class="groupdata popuplayer-s">
-	<button type="button" class="close-s" onclick="Data3D.toggleLayer('data-group-search')"><span class="blind">팝업레이어 닫기</span></button>
+	<button type="button" class="pop-sclose" onclick="Data3D.toggleLayer('data-group-search')"><span class="blind">팝업레이어 닫기</span></button>
 
 	<div id="data-group-content">
 		<!--<h3 th:text="#{data.group.sharing.status}"></h3>-->
@@ -35,7 +35,7 @@
 			</div>
 			<div class="summary-group-divide"></div>
 			-->
-			<span class="layer-ttl" th:text="#{data.group.search}"></span>
+			<span class="layer-ttl marB20" th:text="#{data.group.search}"></span>
 			<!-- 데이터명 검색 -->
 			<input type="text" name="searchValue" class="datasearch" th:placeholder="#{data.group.search.placeholder}" />
 			<a id="search-data-group" class="btn-datasearch" href="#"><span class="blind">그룹명 검색</span></a>
@@ -55,9 +55,9 @@
 			<dd><span class="legend gr">G</span><th:block th:text="#{common.group}"></th:block></dd>
 		</dl>
 
-		<div id="data-group-search-summary-dhtml"></div>
-		<div id="data-group-list-dhtml"></div>
-		<div id="data-group-paging-dhtml"></div>
+		<div id="data-group-search-summary-dhtml" class="pop"></div>
+		<div id="data-group-list-dhtml" class="pop"></div>
+		<div id="data-group-paging-dhtml" class="pop"></div>
 
 		<div th:replace="~{/data/3d/data-group-template :: #data-group-list-source}"></div>
 
