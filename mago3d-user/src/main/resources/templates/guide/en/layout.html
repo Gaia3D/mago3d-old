@@ -176,7 +176,7 @@ function magoLoadEnd2(e) {
 		dataType: "json",
 		success: function(res){
 			if(res) {
-				var policy = Mago3D.MagoConfig.getPolicy();
+				var policy = magoManager.config.getPolicy();
 				var initLat = parseFloat(policy.initLatitude);
 				var initLon = parseFloat(policy.initLongitude);
 				var childs = res.children;
