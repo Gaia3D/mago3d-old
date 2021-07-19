@@ -341,6 +341,8 @@ const DataLibraryDrawer = (function() {
 		
 		var _click = function(e){
 			var point3d = API.Converter.screenCoordToMagoPoint3D(e.position.x, e.position.y, self.magoInstance.getMagoManager());
+			if(!point3d) return;
+			
 			var crts3 = API.Converter.magoToCesiumForPoint3D(point3d);
 			var geographicCoord = API.Converter.Cartesian3ToMagoGeographicCoord(crts3);
 			var cartographic = API.Converter.magoToCesiumForGeographic(geographicCoord);
@@ -349,6 +351,8 @@ const DataLibraryDrawer = (function() {
 		}
 		var _move = function(e) {
 			var point3d = API.Converter.screenCoordToMagoPoint3D(e.endPosition.x, e.endPosition.y, magoManager);
+			if(!point3d) return;
+			
 			var crts3 = API.Converter.magoToCesiumForPoint3D(point3d);
 			
 			var drawer = self.drawer;
@@ -402,6 +406,8 @@ const DataLibraryDrawer = (function() {
 			var drawer = self.drawer;
 			
 			var point3d = API.Converter.screenCoordToMagoPoint3D(e.position.x, e.position.y, self.magoInstance.getMagoManager());
+			if(!point3d) return;
+			
 			var crts3 = API.Converter.magoToCesiumForPoint3D(point3d);
 			var geographicCoord = API.Converter.Cartesian3ToMagoGeographicCoord(crts3);
 			var cartographic = API.Converter.magoToCesiumForGeographic(geographicCoord);
@@ -423,6 +429,8 @@ const DataLibraryDrawer = (function() {
 		}
 		var _move = function(e) {
 			var point3d = API.Converter.screenCoordToMagoPoint3D(e.endPosition.x, e.endPosition.y, magoManager);
+			if(!point3d) return;
+			
 			var crts3 = API.Converter.magoToCesiumForPoint3D(point3d);
 			
 			var drawer = self.drawer;
