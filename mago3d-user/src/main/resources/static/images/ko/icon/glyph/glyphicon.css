@@ -64,10 +64,14 @@
 .glyph-next-dot:before {
 	content: "\e959";
 }
-.glyph-first:before {
+.glyph-first:before {	
+	vertical-align:top !important;
+	line-height:12px !important;
 	content: "\e91d";
 }
 .glyph-last:before {
+	vertical-align:top !important;
+	line-height:12px !important;
 	content: "\e926";
 }
 .glyph-next:before {
@@ -158,7 +162,7 @@
 	content: "\e91a";
 }
 .glyph-first-circle:before {
-	content: "\e91b";
+		content: "\e91b";
 }
 .glyph-first-dot:before {
 	content: "\e91c";
