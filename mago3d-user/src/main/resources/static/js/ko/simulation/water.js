@@ -234,6 +234,7 @@ const SmltWater =(function() {
 		waterOptions.terrainDemSourceType = "QUANTIZEDMESH";
 		waterOptions.terrainProvider = this.magoInstance.getViewer().terrainProvider;
 		waterOptions.simulationGeographicExtent = geoExtent;
+		waterOptions.renderParticles = false;
 		magoManager.waterManager = new Mago3D.WaterManager(magoManager, waterOptions);
 		
 		magoManager.waterManager.bSsimulateWater = true;
