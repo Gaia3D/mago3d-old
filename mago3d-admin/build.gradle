@@ -9,7 +9,7 @@ apply plugin: 'project-report'
 
 group = 'com.gaia3d'
 version = '2.5.1-SNAPSHOT'
-sourceCompatibility = '16'
+sourceCompatibility = '11'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 // gradle build -Pprofile=product (develop, test, local)

@@ -4,7 +4,7 @@ plugins {
 
 group = 'com.gaia3d'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '16'
+sourceCompatibility = '11'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 configurations {
