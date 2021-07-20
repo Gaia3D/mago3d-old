@@ -2724,7 +2724,7 @@ header {
 display: flex;
 /* min-width: 1420px; */
 width:100%;
-height: 44px;
+height: 50px;
 background-color: #1289f8;
 z-index:999 !important;
 min-width:1600px !important;
@@ -2732,7 +2732,7 @@ min-width:1600px !important;
 #wrap {
 position: relative;
 /* min-width: 1420px; */
-height: calc(100% - 44px);
+height: calc(100% - 50px);
 min-height: 100%;
 }
 .map {
@@ -2742,7 +2742,7 @@ height: 100%;
 /* ////////// HEADER ////////// */
 h1 {
 width: 500px;
-height: 44px;
+height: 50px;
 margin: 13px;
 /* padding: 0 0 0 80px; */
 font-size: 17px;
@@ -2754,11 +2754,11 @@ font-weight: normal;
 }
 h2, h2 {font-weight:normal; font-family:'NotoKrL' !important;}
 .gnb {position: absolute;right: 0;padding:0; margin:0 11px 0 0;font-size: 13px;color: #fff;}
-.gnb li {display: inline-block;padding:0; margin:0;line-height:42px;}
-.gnb .userid {display:inline-block; width:100px ;margin:0; padding:0; height:42px; text-indent:36px; background:url(/images/ko/img_user.png) -58px 6px no-repeat;}
+.gnb li {display: inline-block;padding:0; margin:0;line-height:47px;}
+.gnb .userid {display:inline-block; width:100px ;margin:0; padding:0; height:47px; text-indent:36px; background:url(/images/ko/img_user.png) -58px 10px no-repeat;}
 .gnb li > span * {vertical-align:  middle;margin-right:5px;display:inline-block; font-family:'NotoKrL'}
 .gnb li > button {margin-top: -5px;padding: 5px 0 7px 0;color: white;border: none;}
-.gnb li a {padding: 3px 17px 4px 15px; color: white; border-radius:30px; margin-left:10px;font-size:13px; background:#359af9; }
+.gnb li a {padding: 3px 17px 4px 15px; color: white; border-radius:30px; font-family:'NotoKrL' margin-left:10px; font-weight:normal; font-size:13px; background:#48a2f7; }
 .gnb .signout {width:20px; height:20px; margin-left:16px; background:url(/images/ko/ic_sbmenu.png) -215px -295px no-repeat;}
 .gnb .signout:hover { background:url(/images/ko/ic_sbmenu.png) -215px -351px no-repeat;}
 
@@ -5020,7 +5020,7 @@ button::-moz-focus-inner { border: 0; padding: 0;}
 button, [type="button"],[type="reset"],[type="submit"] {-webkit-appearance: button;}
 button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none; padding: 0;}
 button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring {  outline: 1px dotted ButtonText;}
-h1.magologo {display:block; width:270px; font-size:17px; margin:0 0 0 20px; padding:0; font-family: 'NotoKrM'; height:45px; font-weight:normal; line-height:42px; text-indent:106px;  background:url(/images/ko/ic_sbmenu.png) no-repeat -338px -50px;}
+h1.magologo {display:block; width:270px; font-size:17px; margin:0 0 0 20px; padding:0; font-family: 'NotoKrM'; height:50px; font-weight:normal; line-height:50px; text-indent:106px;  background:url(/images/ko/ic_sbmenu.png) no-repeat -338px -47px;}
 
 /* common */
 .pgcount {width:380px; margin:0 auto; font-size:12px; height:24px; border-bottom:1px solid #e1e1e1; margin-left:0; margin-top:30px;}
