@@ -20,10 +20,26 @@
 			</select>
 		</form>
 		-->
-		<a id="search-data-group" href="#" class="data-group-search">그룹 검색</a>
-		<a id="search-data-filter" href="#" class="data-filter">필터 검색</a>
-		<button id="search-data-reset" class="filter-clear">전체 초기화</button>
+		<a id="search-data-group" href="#" class="data-group-search">그룹 필터</a>
+		<a id="search-data-filter" href="#" class="data-filter">상세 필터</a>
+		<button id="search-data-reset" class="filter-clear">필터 초기화</button>
 	</div>
+
+	<div id="filter-contents">
+		<span>
+			<span>시흥캠퍼스</span>
+			<button>X</button>
+		</span>
+		<span>
+			<span>공개</span>
+			<button>X</button>
+		</span>
+		<span>
+			<span>IndoorGML</span>
+			<button>X</button>
+		</span>
+	</div>
+
 	<dl class="legendWrap">
 		<dt th:text="#{data.group.sharing}"></dt>
 		<dd><span class="legend co">C</span><th:block th:text="#{common.common}"></th:block></dd>
