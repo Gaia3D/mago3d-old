@@ -311,6 +311,11 @@
 		// 환경설정
 		UserPolicy(magoInstance);
 
+		// 데모 사이트용 나무, 가로등, 신호등
+		showTree(e);
+		showLamp(e);
+		showTrafficLight(e);
+
 		// 이슈 등록
 		MAGO.issueController = new IssueController(magoInstance);
 
@@ -323,6 +328,155 @@
 		},6000);
 		
 		MAGO.backgroundRunningBuilding = new BackgroundRunningBuilding(magoInstance);
+	}
+
+	// 데모 사이트용 나무, 가로등, 신호등
+	var dataInformationUrl = '/sample/json/';
+	function showTree(e) {
+		e.getMagoManager().addStaticModel({
+			projectId : 'tree',
+			projectFolderName : 'static/',
+			buildingFolderName : 'F4D_tree'
+		});
+
+		$.ajax({
+			url: dataInformationUrl + "tree.geojson",
+			type: "GET",
+			dataType: "json",
+			success: function(geojson){
+				var features = geojson.features;
+				for(var i in features)
+				{
+					//if(i > 0) break;
+					var feature = features[i];
+					var coordinates = feature.geometry.coordinates;
+					MAGO3D_INSTANCE.getMagoManager().instantiateStaticModel({
+						projectId : 'tree',
+						instanceId : 'tree_'+i,
+						longitude : coordinates[0],
+						latitude : coordinates[1],
+						height: 3.75,
+						heightReference : Mago3D.HeightReference.CLAMP_TO_GROUND
+					});
+				}
+			},
+			error: function(e){
+				alert(e.responseText);
+			}
+		});
+	}
+
+	function showLamp(e) {
+		e.getMagoManager().addStaticModel({
+			projectId : 'lamp',
+			projectFolderName : 'static/',
+			buildingFolderName : 'F4D_StreetLights_M01'
+		});
+
+		$.ajax({
+			url: dataInformationUrl + "lamp.geojson",
+			type: "GET",
+			dataType: "json",
+			success: function(geojson){
+				var features = geojson.features;
+				for(var i in features)
+				{
+					//if(i > 0) break;
+					var feature = features[i];
+					var coordinates = feature.geometry.coordinates;
+					if(i < 18) {
+						MAGO3D_INSTANCE.getMagoManager().instantiateStaticModel({
+							projectId: 'lamp',
+							instanceId: 'lamp_' + i,
+							longitude: coordinates[0],
+							latitude: coordinates[1],
+							height: 3.75,
+							heading: 45,
+							heightReference: Mago3D.HeightReference.CLAMP_TO_GROUND
+						});
+					}else {
+						MAGO3D_INSTANCE.getMagoManager().instantiateStaticModel({
+							projectId : 'lamp',
+							instanceId : 'lamp_'+i,
+							longitude : coordinates[0],
+							latitude : coordinates[1],
+							height: 3.75,
+							heading : 225,
+							heightReference : Mago3D.HeightReference.CLAMP_TO_GROUND
+						});
+					}
+				}
+			},
+			error: function(e){
+				alert(e.responseText);
+			}
+		});
+	}
+
+	function showTrafficLight(e) {
+		e.getMagoManager().addStaticModel({
+			projectId: 'trafficlight',
+			projectFolderName: 'static/',
+			buildingFolderName: 'F4D_sj173006'
+		});
+
+		$.ajax({
+			url: dataInformationUrl + "trafficlight.geojson",
+			type: "GET",
+			dataType: "json",
+			success: function (geojson) {
+				var features = geojson.features;
+				for (var i in features) {
+					var feature = features[i];
+					var coordinates = feature.geometry.coordinates;
+
+					if ((i == 0) || (i == 3) || (i == 12)) {
+						MAGO3D_INSTANCE.getMagoManager().instantiateStaticModel({
+							projectId: 'trafficlight',
+							instanceId: 'trafficlight_' + i,
+							longitude: coordinates[0],
+							latitude: coordinates[1],
+							heading: 45,
+							height: 3.75,
+							heightReference: Mago3D.HeightReference.CLAMP_TO_GROUND
+						});
+					} else if ((i == 9) || (i == 14) || (i == 17)) {
+						MAGO3D_INSTANCE.getMagoManager().instantiateStaticModel({
+							projectId: 'trafficlight',
+							instanceId: 'trafficlight_' + i,
+							longitude: coordinates[0],
+							latitude: coordinates[1],
+							heading: 225,
+							height: 3.75,
+							heightReference: Mago3D.HeightReference.CLAMP_TO_GROUND
+						});
+					} else if ((i == 2) || (i == 4) || (i == 5) || (i == 7) || (i == 11) || (i == 15)) {
+						MAGO3D_INSTANCE.getMagoManager().instantiateStaticModel({
+							projectId: 'trafficlight',
+							instanceId: 'trafficlight_' + i,
+							longitude: coordinates[0],
+							latitude: coordinates[1],
+							heading: 315,
+							height: 3.75,
+							heightReference: Mago3D.HeightReference.CLAMP_TO_GROUND
+						});
+					} else {
+						MAGO3D_INSTANCE.getMagoManager().instantiateStaticModel({
+							projectId: 'trafficlight',
+							instanceId: 'trafficlight_' + i,
+							longitude: coordinates[0],
+							latitude: coordinates[1],
+							heading: 135,
+							height: 3.75,
+							heightReference: Mago3D.HeightReference.CLAMP_TO_GROUND
+						});
+					}
+				}
+			},
+			error: function (e) {
+				alert(e.responseText);
+			}
+		});
 	}
 
 </script>
