@@ -23,11 +23,6 @@
 			<span>켜기</span>
 		</span>
 	</div>
-	<!--
-		<li class="mapLayer" data-depth="{{layerGroupId}}" data-ancestor="{{ancestor}}">
-		<p class="ellipsis"><span class="folder"></span>{{layerGroupName}}</p>
-		<ul>
-	-->
 	{{/ifMatch}}
 	{{#ifMatch depth 3}}
 	<div class="data-layer" data-depth="{{layerGroupId}}" data-ancestor="{{ancestor}}" onclick="Data2D.collapseTree({{layerGroupId}}, this)">
@@ -40,11 +35,6 @@
 			<span>켜기</span>
 		</span>
 	</div>
-	<!--
-		<li class="mapLayer" data-depth="{{layerGroupId}}" data-ancestor="{{ancestor}}">
-		<p class="ellipsis"><span class="depthThree"></span>{{layerGroupName}}</p>
-		<ul>
-	-->
 	{{/ifMatch}}
 	{{#if layerList}}
 	<div class="data-layerlist-bx" data-parent="{{layerGroupId}}">
