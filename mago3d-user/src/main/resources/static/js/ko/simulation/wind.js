@@ -117,10 +117,11 @@ SmltWind.prototype.run = function() {
 
 }
 
-SmltWind.prototype.clear = function() {
+SmltWind.prototype.clear = function () {
 	this.magoInstance.getMagoManager().weatherStation.deleteWindVolumes();
-	if(MAGO3D_DIVIDE_INSTANCE) {
+	if (MAGO3D_DIVIDE_INSTANCE) {
 		MAGO3D_DIVIDE_INSTANCE.getMagoManager().weatherStation.deleteWindVolumes();
+		MapControll.undivideMap();
 	}
 	//MapControll.undivideMap();
 }

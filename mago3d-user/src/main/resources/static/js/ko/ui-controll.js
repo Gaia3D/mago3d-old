@@ -58,9 +58,7 @@ $(function() {
 				$('#layerContent').toggle(true);
 			} else {
 				// 임시
-				$("#data-menu").addClass('on');
-				$('#data-wrap-content').toggle(true);
-				$('#closeLeftBtn').show();
+				$('#closeLeftBtn').toggle(true);
 			}
 			$('#contentsWrap').toggle(true);
 		} else if( currentUrl.indexOf("/mypage/") >= 0) {

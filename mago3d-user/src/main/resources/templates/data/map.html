@@ -197,8 +197,8 @@
 <script type="text/javascript" th:src="@{/js/{lang}/issue-controller.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/background-car.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/measure.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
-<script type="text/javascript" th:src="@{/js/{lang}/map-data.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
-<script type="text/javascript" th:src="@{/js/{lang}/map-data-group.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<!--<script type="text/javascript" th:src="@{/js/{lang}/map-data.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>-->
+<!--<script type="text/javascript" th:src="@{/js/{lang}/map-data-group.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>-->
 
 <script type="text/javascript">
 
@@ -284,14 +284,12 @@
 		// DistrictControll(magoInstance);
 
 		// 데이터
-		dataGroupList();
-		mapDataGroupList(1, null);
-		mapDataInfoList(1, null, null, null);
+		//dataGroupList();
+		//mapDataGroupList(1, null);
+		//mapDataInfoList(1, null, null, null);
 
-		//임시
-		var data3dTab = Data(magoInstance);
-		data3dTab.getDatas(1);
-
+		// 데이터 신규
+		Data(magoInstance);
 
         var simul = Simulation(magoInstance);
 		setTimeout(function() {

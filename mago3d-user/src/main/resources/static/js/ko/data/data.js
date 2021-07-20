@@ -49,54 +49,53 @@ const Data = function(magoInstance) {
 
     const _run = function() {
 
-        let data;
         const datas = {
             'layer-tab' : new Data2D(magoInstance),
             'data-tab' : new Data3D(magoInstance)
         }
 
         const init = function(targetId) {
-            data = datas[targetId];
+            let data = datas[targetId];
             if (data && data.load === false) {
                 data.load = true;
             }
         }
 
         const dataObserverTarget = document.getElementById('data-menu');
-        if (dataObserverTarget) {
-            const dataObserverConfig = {attributes: true, attributeFilter: ['class']};
-            const dataMenuObserver = new MutationObserver(function (mutations) {
-                for (const mutation of mutations) {
-                    const isVisible = mutation.target.classList.contains('actived');
-                    if (isVisible) {
-                        init(mutation.target.id);
-                    }
+        const dataObserverConfig = {attributes: true, attributeFilter: ['class']};
+        const dataMenuObserver = new MutationObserver(function (mutations) {
+            for (const mutation of mutations) {
+                const isVisible = mutation.target.classList.contains('actived');
+                if (isVisible) {
+                    init(mutation.target.id);
                 }
-            });
-            const dataTabObserver = new MutationObserver(function (mutations) {
-                for (const mutation of mutations) {
-                    const isVisible = mutation.target.classList.contains('on');
-                    if (isVisible) {
-                        const targetId = $('#data-wrap-content').find('.data-menu.actived').attr('id');
-                        init(targetId);
-                        for (const targetId in datas) {
-                            dataMenuObserver.observe(document.getElementById(targetId), dataObserverConfig);
-                        }
-                    } else {
-                        dataMenuObserver.disconnect();
+            }
+        });
+        const dataTabObserver = new MutationObserver(function (mutations) {
+            for (const mutation of mutations) {
+                const isVisible = mutation.target.classList.contains('on');
+                if (isVisible) {
+                    const targetId = $('#data-wrap-content').find('.data-menu.actived').attr('id');
+                    init(targetId);
+                    for (const targetId in datas) {
+                        dataMenuObserver.observe(document.getElementById(targetId), dataObserverConfig);
                     }
+                } else {
+                    dataMenuObserver.disconnect();
                 }
-            });
-            dataTabObserver.observe(dataObserverTarget, dataObserverConfig);
-        }
-
-        return datas["data-tab"];
+            }
+        });
+        dataTabObserver.observe(dataObserverTarget, dataObserverConfig);
 
     }
 
-    //버튼 클릭같은거
+    // 버튼 클릭같은거
     _ui();
 
-    //프로그램 실행
-    return _run();
+    // 프로그램 실행
+    _run();
+
+    // 기본으로 data 메뉴 켜지도록 이벤트 실행
+    $("#data-menu").trigger('click');
+
 }

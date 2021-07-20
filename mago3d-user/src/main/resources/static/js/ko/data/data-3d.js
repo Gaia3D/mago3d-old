@@ -114,6 +114,7 @@ Object.defineProperties(Data3D.prototype, {
         set : function (load) {
             if(load) {
                 //this.getDataGroups(1);
+                this.initF4dDatas();
                 this.getDatas(1);
             } else {
                 //this.clear();
@@ -275,6 +276,101 @@ Data3D.prototype.success = function(res) {
     } else {
         alert(JS_MESSAGE[res.errorCode]);
         console.log("---- " + res.message);
+    }
+}
+
+// 서버에서 데이터 전체 목록을 가져와 F4D에 등록
+Data3D.prototype.initF4dDatas = function() {
+    const _this = this;
+    let dataGroupMap = new Map();
+    $.ajax({
+        url: "/data-groups/all",
+        type: "GET",
+        headers: {"X-Requested-With": "XMLHttpRequest"},
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(res) {
+            if (res.statusCode <= 200) {
+                const dataGroupList = res.dataGroupList;
+
+                if (dataGroupList === null || dataGroupList === undefined)
+                    return false;
+
+                // 스마트 타일링이 적용되지 않은 데이터 그룹 목록
+                const noneTilingDataGroupList = dataGroupList.filter(function (dataGroup) {
+                    dataGroupMap.set(dataGroup.dataGroupId, dataGroup.dataGroupName);
+                    return !dataGroup.tiling;
+                });
+
+                MAGO.dataGroup = dataGroupMap;
+                _this.initF4dDataNoneTiling(noneTilingDataGroupList);
+
+                // 스마트 타일링이 적용된 데이터 그룹 목록
+                const tilingDataGroupList = dataGroupList.filter(function (dataGroup) {
+                    return dataGroup.tiling;
+                });
+                _this.initF4dDataTiling(tilingDataGroupList);
+
+            } else {
+                alert(JS_MESSAGE[res.errorCode]);
+            }
+        },
+        error: function(request, status, error) {
+            alert(JS_MESSAGE["ajax.error.message"]);
+        }
+    });
+}
+
+Data3D.prototype.initF4dDataNoneTiling = function (dataGroups) {
+    const dataGroupArrayLength = dataGroups.length;
+    const f4dController = this.magoInstance.getF4dController();
+
+    for (let i = 0; i < dataGroupArrayLength; i++) {
+        const dataGroup = dataGroups[i];
+        if (dataGroup.tiling) continue;
+
+        $.ajax({
+            url: "/datas/" + dataGroup.dataGroupId + "/list",
+            type: "GET",
+            headers: {"X-Requested-With": "XMLHttpRequest"},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(res) {
+                if (res.statusCode <= 200) {
+                    const dataInfoList = res.dataInfoList;
+
+                    if (dataInfoList === null || dataInfoList.length <= 0)
+                        return false;
+
+                    const dataInfoGroupId = dataInfoList[0].dataGroupId;
+                    let group;
+                    for (let j = 0; j < dataGroupArrayLength; j++) {
+                        if (dataGroups[j].dataGroupId === dataInfoGroupId) {
+                            group = dataGroups[j];
+                            break;
+                        }
+                    }
+                    group.datas = dataInfoList;
+                    f4dController.addF4dGroup(group);
+
+                }
+            },
+            error: function(request, status, error) {
+                alert(JS_MESSAGE["ajax.error.message"]);
+            }
+        });
+
+    }
+}
+
+Data3D.prototype.initF4dDataTiling = function (dataGroups) {
+    const f4dController = this.magoInstance.getF4dController();
+    for (let i in dataGroups) {
+        const tilingDataGroup = dataGroups[i];
+        if (i == dataGroups.length - 1) {
+            tilingDataGroup.smartTileIndexPath = 'infra/_TILE';
+        }
+        f4dController.addSmartTileGroup(tilingDataGroup);
     }
 }
 
