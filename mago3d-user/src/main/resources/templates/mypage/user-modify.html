@@ -73,14 +73,14 @@
 				<td class="col-input">
 					<span>
 	<th:block th:if="${#strings.isEmpty(userInfo.email)}">
-					인증, 서비스 변경에 사용할 이메일 주소 입니다.
-	</th:block>
+					
+	</th:block>인증, 서비스 변경에 사용할 이메일 주소 입니다.
 	<th:block th:unless="${#strings.isEmpty(userInfo.email)}">
 					<th:block th:text="${userInfo.viewMaskingEmail}"></th:block>
 	</th:block>
-					</span>
-					<span style="margin-left: 50px;">
-						<button type="button" id="emailButton">변경</button>
+					</span><br />
+					<span>
+						<button type="button" class="btn-mypage" id="emailButton">수정</button>
 					</span>
 				</td>
 			</tr>
@@ -89,7 +89,8 @@
 					비밀번호
 				</th>
 				<td class="col-input">
-					<button type="button" id="passwordButton">변경</button>
+					비밀번호를 변경합니다. <br />
+					<button type="button" class="btn-mypage" id="passwordButton">수정</button>
 				</td>
 			</tr>
 		</table>

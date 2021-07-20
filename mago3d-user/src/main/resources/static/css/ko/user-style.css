@@ -43,61 +43,26 @@ url("font/NotoSans-Bold.woff") format('woff'),
 url("font/NotoSans-Bold.otf") format('opentype');
 }
 
-/* Typo
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-/*user-style css 때문에 important로 적용 */
-/* * { margin:0; padding:0; outline:0; vertical-align:middle !important; } */
 
+html {font-size: 62.5%; }
 
-html {
-	font-size: 62.5%; }
-
-/* body { */
-/* 	font-size: 1.3em; currently ems cause chrome bug misinterpreting rems on body element */
-/* 	line-height: 1.6; */
-/* 	font-weight: 400; Regular 300~500, Bold 600~700, Extra Bold 800~900 */
-/* 	font-family: 'Nanum Gothic', sans-serif; */
-/* 	color: #888; } */
-
-p {
-	margin: 0;}
+p {	margin: 0;}
 
 input, select, textarea, button,
 .ui-widget,
 .ui-widget input,
 .ui-widget select,
 .ui-widget textarea,
-.ui-widget button {
-	font-family: 'NotoKrL', sans-serif;
-	font-size: 1.3rem;
-	color: #565657;}
-
-/* h1, h2, h3, h4, h5, h6 { */
-/* 	margin: 0; */
-/* 	font-weight: 700; */
-/* 	color: #34373d; } */
-
-/* h1 { font-size: 4.0rem; line-height: 1.2;  letter-spacing: -.1rem;} */
+.ui-widget button {	font-family: 'NotoKrL', sans-serif;	font-size: 1.3rem;	color: #565657;}
 h2 { font-size: 3.6rem; line-height: 1.25; letter-spacing: -.1rem; }
 h3 { font-size: 3.0rem; line-height: 1.3;  letter-spacing: -.1rem; }
 h4 { font-size: 2.4rem; line-height: 1.35; letter-spacing: -.08rem; }
 h5 { font-size: 1.8rem; line-height: 1.5;  letter-spacing: -.05rem; }
 h6 { font-size: 1.5rem; line-height: 1.6;  letter-spacing: 0; }
-
-a {
-	color: inherit;
-	text-decoration: none; }
-
-a:hover {
-	color: #573592; }
-
-a img {
-	border: 0; }
-
-em {
-	color: #573592;
-	font-style: normal;
-	font-weight: bold; }
+a {color: inherit;	text-decoration: none; }
+a:hover {	color: #573592; }
+a img {	border: 0; }
+em {color: #573592;	font-style: normal;	font-weight: bold; }
 
 .page-title {
 	font-size: 2.5rem;
@@ -448,7 +413,23 @@ input[type="button"],
 
 .ui-dialog .ui-dialog-buttonpane button .ui-button-text {
 	padding: 0; }
-
+button:hover,
+button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+.ui-dialog .ui-dialog-buttonpane button:hover,
+.button:focus,
+button:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus,
+input[type="button"]:focus,
+.ui-dialog .ui-dialog-buttonpane button:focus {
+	background-color: #747474;
+	border:1px solid #636363;
+	color:black;
+	outline: 0; }
+	
 a.button {
 	line-height: 28px;
 	padding: 0px 10px;
@@ -739,20 +720,21 @@ label {
 	width: 250px; }
 .l {
 	width: 400px; }
-
+	
 .xl {
 	width: 700px; }
 
 .h20 {
 	height: 20px; }
 .h30 {
-	height: 30px; }
+	height: 30px; }		
 .h40 {
-	height: 40px; }
-
+	height: 40px; }	
+	
 .input-set {
 	margin: 10px 20px 10px 10px;
-	float: left; }
+	float: left; } 
+	
 
 .input-set input,
 .input-set a.button,
@@ -1628,25 +1610,26 @@ tr:hover td {
 
 	/* Input Table
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 .input-table {
 	margin-top:30px;
 	border: 1px solid #d9d9d9; }
 
-.input-table th label {
-	font-size: 1.5rem;
+.input-table th label {	
+	font-size: 1.3rem;
 	color: #888;
 	padding: 0;
 	color: black;
 	width: auto; }
-
+	
 .input-table th {
-	font-size: 1.5rem;
+	font-size: 1.3rem;
 	color: black;
 	font-weight:normal;
 	border: 1px solid #d9d9d9;
 	background-color: #f5f5f5;
-	height: 45px;
-	line-height: 45px;
+	height: 37px;
+	line-height: 37px;
 	text-align: left;
 	padding-top: 6px;
 	padding-left: 20px;
@@ -1658,29 +1641,31 @@ tr:hover td {
 
 .input-table .col-label span:first-child {
 	color: #888;
-	font-size: 1.5rem; }
+	font-size:  1.3rem; }
 
 .input-table .col-sub-label span:first-child {
 	color: #666;
-	padding-left: 20px;
-	padding-right: 20px; }
+	padding-left: 5px;
+	padding-right: 5px; }
+
+.input-table td button.btn-mypage {font-size: 12px;	border: 1px solid #d9d9d9; height: 30px; line-height: 30px; padding:0 10px;	margin-bottom:6px; }
+.input-table td button:hover.btn-mypage {background:gray; font-size: 12px; border:1px gray; line-height: 30px; line-height: 30px; color:white;}
 
 .input-table td {
-	font-size: 1.5rem;
+	font-size: 1.3rem;
 	border: 1px solid #d9d9d9;
-	height: 45px;
-	line-height: 45px;
-	padding-top: 6px;
-	padding-left: 20px;
-	padding-right: 20px; }
-
+	height: 37px;
+	line-height: 37px;
+	padding-left: 5px;}
+	
 .input-table.scope-col th {
-	padding-left: 20px;
-	padding-right: 20px; }
-
+	padding-left: 10px;
+	padding-right: 10px; }
+	
 .input-table.scope-col td {
-	padding-left: 20px;
-	padding-right: 20px; }
+	padding-left: 10px;
+	padding-right: 10px; }
+	
 
 .input-table input,
 .input-table a.button,
@@ -1693,21 +1678,22 @@ tr:hover td {
 .input-table textarea {
 	display: block;
 	float: left; }
-
+	
 .input-table textarea {
 	margin-top: 5px;
 	margin-bottom: 5px; }
+	
 
 .input-table input[type=search],
 .input-table input[type=password],
 .input-table input[type=text],
 .input-table textarea {
 	background-color: #fff; }
-
+	
 .input-table input[readonly=readonly],
 .input-table input[disabled=disabled] {
 	background-color: #ececec; }
-
+	
 .input-table input[type=text] + .button,
 .input-table input[type=text] + button,
 .input-table input[type=text] + input[type=submit],
@@ -1717,7 +1703,7 @@ tr:hover td {
 .input-table input[type=text] + input,
 .input-table input[type=text] + .table-desc {
 	margin-left: 10px; }
-
+	
 .input-table input[type=password] + .button,
 .input-table input[type=password] + button,
 .input-table input[type=password] + input[type=submit],
@@ -1727,14 +1713,14 @@ tr:hover td {
 .input-table input[type=password] + input,
 .input-table input[type=password] + .table-desc {
 	margin-left: 10px; }
-
+	
 .input-table .delimeter {
 	width: 20px;
 	height: 30px;
 	line-height: 30px;
 	text-align: center;
 	vertical-align: text-bottom; }
-
+	
 .input-table .delimeter.at + input {
 	margin-right: 10px; }
 
@@ -1750,26 +1736,27 @@ tr:hover td {
 .input-table .image-button {
 	line-height: 30px;
 	height: 30px; }
-
+	
 .input-table.scope-row .col-label .icon-glyph {
 	float: right; }
-
+	
 .input-table.scope-col th .icon-glyph {
 	float: left;
 	margin-left: 10px; }
-
+	
 .input-table.scope-row .col-input .icon-glyph,
 .input-table.scope-row .col-data .icon-glyph {
 	line-height: 37px;
 	height: 37px;
 	padding-right: 5px; }
-
+	
 .input-table.scope-col .col-label .icon-glyph {
 	float: left;
 	margin-left: 10px; }
-
+	
 .input-table tr:hover td {
 	background-color: #fff; }
+
 
 .w800 {width:800px !important;}
 
@@ -1923,7 +1910,7 @@ tr:hover td {
 	float: none; }
 
 .col-input .ml{
-    margin-left:5px }
+    }
 
 .input-table .pt{
     padding-top:5px }
@@ -2636,68 +2623,15 @@ tr:hover td {
 
 
 /****************************************************************************************************/
-.tab {
-height: 50px;
-width:100%;
-min-width:1400px;
-margin: 0;
-padding:0;
-border:none;
-border-bottom:1px solid #d9d9d9;
-}
-.tab li {
-display: inline-block;
-float:left;
-margin:0;
-/* padding: 5px 0px; */
-color: #000;
-height: 50px;
-line-height:50px;
-cursor: pointer;
-font-size:1.2em;
-padding:0 20px;
-border-top:none;
-border-left: 1px solid #d9d9d9;
-border-right:none;
-border-radius:0;
-border-bottom:none;
-background-color: #f8f8f8;
-text-align: center;
-}
-.tab li:first-child {border-left:none;}
-.tab li.on {
-color: #206ee7;
-margin-top:-2px;
-font-weight:600;
-border-top: 3px solid #206ee7;
-border-left:1px solid #d9d9d9;
-border-right:none;
-border-radius:0;
-border-bottom:none;
-background-color: white;
-}
-.tab li:last-child.on {border-right:1px solid #d9d9d9;}
-.tab li > a {
-width: 100%;
-height: 100%;
-padding: 5px 0px;
-}
-.tab li > a:hover {
-color: #fff;
-}
-.tab li:not(.on) > a:hover {
-color: #006bd2;
-}
-.input-set {
-margin: 10px 20px 10px 10px;
-float: left; 
-}
+
 
 
 /* custom select box */
 .selectBoxClass {float:left; width:auto; min-width:70px; height: 30px; margin: 0 5px 7px 0; padding:0 20px 0 3px; color:black; border-radius:0; border:1px solid #d6d6d6; 
 	background:url("/images/ko/ic_select.png") no-repeat right 50%; -webkit-appearance: none; -moz-appearance: none; appearance: none; padding-right:20px !important;
 	}
+
+/* 마고 라벨 렌더 캔버스 */
 select::-ms-expand {display: none;}
 .hiddenTag {
 overflow: hidden;
@@ -2799,7 +2733,7 @@ min-width:1600px !important;
 position: relative;
 /* min-width: 1420px; */
 height: calc(100% - 44px);
-min-height: 560px;
+min-height: 100%;
 }
 .map {
 height: 100%;
@@ -4067,33 +4001,63 @@ font-size: 16px;
 cursor: pointer;
 }
 
+
 .tab {
-height: 34px;
-width:auto;
-margin: 15px 10px 5px;
-border-bottom: 1px solid #d9d9d9;
+height: 50px;
+width:100%;
+margin: 0;
 padding:0;
+border:none;
+min-width: 325px;
+border-bottom:1px solid #d9d9d9;
 }
 .tab li {
 display: inline-block;
-color: #000;
 float:left;
-height: 34px;
-line-height:34px;
-margin:0; padding:0;
+margin:0;
+padding:0 24px;
+color: #000;
+height: 50px;
+line-height:50px;
 cursor: pointer;
-border: 1px solid #d9d9d9;
-border-radius: 0;
-background-color: #fff;
+font-size:1.2em;
+border-top:none;
+border-left: 1px solid #d9d9d9;
+border-right:none;
+border-radius:0;
+border-bottom:none;
+background-color: #f8f8f8;
 text-align: center;
 }
-.tab li.on {color:#065ce1; background:white !important; border-top: 2px solid #2f94f3; border-right:1px solid #2f94f3; border-left:1px solid #2f94f3; border-bottom:none;}
-.tab li:hover a {color:#065ce1 !important; }
-
-.input-set {
-margin: 0;
-float: left;
+.tab li:first-child {border-left:none;}
+.tab li.on {
+color: #206ee7;
+margin-top:-2px;
+font-weight:normal;
+border-top: 3px solid #206ee7;
+border-left:1px solid #d9d9d9;
+border-right:none;
+border-radius:0;
+border-bottom:none;
+background-color: white;
 }
+.tab li:last-child.on {border-right:1px solid #d9d9d9;}
+.tab li > a {
+width: 100%;
+height: 100%;
+padding: 5px 0px;
+}
+.tab li > a:hover {
+color: #006bd2;
+}
+.tab li:not(.on) > a:hover {
+color: #006bd2;
+}
+.input-set {
+margin: 10px 20px 10px 10px;
+float: left; 
+}
+
 #loadingWrap{
 position: fixed;
 top: 50px;
@@ -4577,11 +4541,12 @@ ul.listDrop li.list-drop-button-none > p {
 .form-group-data:first-of-type {
 }
 .form-group > label {
-    width: 87px !important;		
+    width: 100px !important;		
     display:inline-block;
 		padding: 2px;
 		line-height: 1.5em;
     vertical-align: middle;
+    text-indent:30px !important;	
   	text-align: justify;
 }
 .form-group > input {
