@@ -2758,7 +2758,7 @@ h2, h2 {font-weight:normal; font-family:'NotoKrL' !important;}
 .gnb .userid {display:inline-block; width:100px ;margin:0; padding:0; height:50px; text-indent:36px; background:url(/images/ko/img_user.png) -58px 10px no-repeat;}
 .gnb li > span * {vertical-align:  middle;margin-right:5px;display:inline-block; font-family:'NotoKrL'; font-weight:normal;}
 .gnb li > button {margin-top: -5px;padding: 5px 0 7px 0;color: white;border: none;}
-.gnb li a {padding: 3px 17px 4px 15px; color: white; border-radius:30px; font-family:'NotoKrL' margin-left:10px; font-weight:normal; font-family:'NotoKrL' font-size:13px; background:#48a2f7; }
+.gnb li a {padding: 3px 17px 4px 15px; color: white; border-radius:30px; font-family:'NotoKrL'; margin-left:10px; font-weight:normal; font-family:'NotoKrL'; font-size:13px; background:#48a2f7; }
 .gnb .signout {width:20px; height:20px; margin-left:16px; background:url(/images/ko/ic_sbmenu.png) -215px -295px no-repeat;}
 .gnb .signout:hover { background:url(/images/ko/ic_sbmenu.png) -215px -351px no-repeat;}
 
