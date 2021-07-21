@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <!-- 팝업레이어/필터 -->
-<div id="data-search-filter" class="filter popuplayer-s">
-	<button type="button" class="pop-sclose" onclick="Data3D.toggleLayer('data-search-filter')"><span class="blind">팝업레이어 닫기</span></button>
+<div id="data-filter-search" class="filter popuplayer-s">
+	<button type="button" class="pop-sclose" onclick="Data3D.toggleLayer('data-filter-search');$('#search-data-filter').toggleClass('on');"><span class="blind">팝업레이어 닫기</span></button>
 	<span class="layer-ttl">공유유형</span>
 	<div class="layer-bx">
 		<div class="sharing layer-list" data-sharing="common">
@@ -53,8 +53,8 @@
 		</div>
 	</div>
 	<div class="popuplayer-btn marT20">
-		<button type="button" id="data-search-filter-apply" class="p-btn general">적용</button>
-		<button type="button" id="data-search-filter-reset" class="p-btn cancel">필터초기화</button>
+		<button type="button" id="data-filter-search-apply" class="p-btn general">적용</button>
+		<button type="button" id="data-filter-search-reset" class="p-btn cancel">필터초기화</button>
 	</div>
 </div>
 </html>

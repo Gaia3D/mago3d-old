@@ -19,7 +19,7 @@ const Data3D = function(magoInstance) {
 
         // 팝업 레이어 드래그 가능하도록 설정
         $('#data-group-search').draggable({containment: "window"});
-        $('#data-search-filter').draggable({containment: "window"});
+        $('#data-filter-search').draggable({containment: "window"});
 
         $('#data-info-dialog-dhtml').draggable({containment: "window"});
         $('#data-group-dialog-dhtml').draggable({containment: "window"});
@@ -28,13 +28,15 @@ const Data3D = function(magoInstance) {
 
         // 데이터 그룹 검색 ON/OFF
         $('#search-data-group').click(function() {
+            $(this).toggleClass('on');
             Data3D.toggleLayer('data-group-search');
             that.getDataGroups(1);
             return false;
         });
         // 데이터 검색 필터 ON/OFF
         $('#search-data-filter').click(function() {
-            Data3D.toggleLayer('data-search-filter');
+            $(this).toggleClass('on');
+            Data3D.toggleLayer('data-filter-search');
             return false;
         });
 
@@ -42,7 +44,7 @@ const Data3D = function(magoInstance) {
         /** 데이터 그룹 **/
 
         // 데이터 그룹 검색 버튼 클릭
-        $('#search-data-group').click(function() {
+        $('#search-data').click(function() {
             that.getDataGroups(1);
         });
         // 데이터 그룹 검색 엔터키
@@ -63,31 +65,31 @@ const Data3D = function(magoInstance) {
         /** 데이터 필터 **/
 
         // 데이터 필터 공유유형 선택
-        $('#data-search-filter .sharing').click(function() {
+        $('#data-filter-search .sharing').click(function() {
            $(this).toggleClass('on');
            $(this).siblings().removeClass('on');
         });
         // 데이터 필터 데이터타입 선택
-        $('#data-search-filter .data-type').click(function() {
+        $('#data-filter-search .data-type').click(function() {
             $(this).toggleClass('on');
             $(this).siblings().removeClass('on');
         });
         // 데이터 필터 적용
-        $('#data-search-filter-apply').click(function() {
-            const sharing = $('#data-search-filter .sharing.on').data('sharing');
-            const dataType = $('#data-search-filter .data-type.on').data('type');
+        $('#data-filter-search-apply').click(function() {
+            const sharing = $('#data-filter-search .sharing.on').data('sharing');
+            const dataType = $('#data-filter-search .data-type.on').data('type');
             $("#search-data-form input[name='sharing']").val(sharing);
             $("#search-data-form input[name='dataType']").val(dataType);
 
-            _makeFilterContents($('#filter-contents-sharing'), $('#data-search-filter .sharing.on .txt').text());
-            _makeFilterContents($('#filter-contents-type'), $('#data-search-filter .data-type.on .txt').text());
+            _makeFilterContents($('#filter-contents-sharing'), $('#data-filter-search .sharing.on .txt').text());
+            _makeFilterContents($('#filter-contents-type'), $('#data-filter-search .data-type.on .txt').text());
 
-            //Data3D.toggleLayer('data-search-filter');
+            //Data3D.toggleLayer('data-filter-search');
             that.getDatas(1);
         });
         // 데이터 필터 초기화
-        $('#data-search-filter-reset').click(function() {
-            $('#data-search-filter .layer-list').removeClass('on');
+        $('#data-filter-search-reset').click(function() {
+            $('#data-filter-search .layer-list').removeClass('on');
         });
 
 
@@ -106,10 +108,18 @@ const Data3D = function(magoInstance) {
         // 전체 필터 초기화
         $("#search-data-reset").click(function() {
             /*$("#search-data-form input:text[name='searchValue']").val("");*/
-            $("#search-data-form input[name='dataGroupId']").val(0);
+            $("#search-data-form input[name='dataGroupId']").val("");
             $("#search-data-form input[name='sharing']").val("");
             $("#search-data-form input[name='dataType']").val("");
-            $("#filter-contents span span").text("");
+            $("#filter-contents > span").hide();
+            that.getDatas(1);
+        });
+
+        // 검색 필터 개별 삭제
+        $('#filter-contents button.close').click(function() {
+            const _filter = $(this).data('filter');
+            $("#search-data-form input[name=" + _filter + "]").val("");
+            $(this).parent().hide();
             that.getDatas(1);
         });
 

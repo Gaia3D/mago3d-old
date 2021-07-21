@@ -2,7 +2,7 @@
 <div id="data-content" class="data-contents sb-page" style="height: 100%;">
 	<form id="search-data-form" th:object="${searchDataForm}" method="post" onsubmit="return false;">
 		<input type="hidden" name="searchWord" value="data_name" />
-		<input type="hidden" name="dataGroupId" value="0" />
+		<input type="hidden" name="dataGroupId" value="" />
 		<input type="hidden" name="sharing" value="" />
 		<input type="hidden" name="dataType" value="" />
 		<!-- 데이터명 검색 -->
@@ -28,15 +28,15 @@
 	<div id="filter-contents" class="filter-result">
 		<span id="filter-contents-group" style="display: none;">
 			<span class="type">시흥캠퍼스</span>
-			<button>X</button>
+			<button class="close" data-filter="dataGroupId">X</button>
 		</span>
 		<span id="filter-contents-sharing" style="display: none;">
 			<span class="type02">공개</span>
-			<button>X</button>
+			<button class="close" data-filter="sharing">X</button>
 		</span>
 		<span id="filter-contents-type" style="display: none;">
 			<span class="type03">IndoorGML</span>
-			<button>X</button>
+			<button class="close" data-filter="dataType">X</button>
 		</span>
 	</div>
 

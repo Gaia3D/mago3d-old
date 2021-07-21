@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <!-- 팝업레이어/데이터 그룹 검색 -->
 <div id="data-group-search" class="groupdata popuplayer-s">
-	<button type="button" class="pop-sclose" onclick="Data3D.toggleLayer('data-group-search')"><span class="blind">팝업레이어 닫기</span></button>
+	<button type="button" class="pop-sclose" onclick="Data3D.toggleLayer('data-group-search');$('#search-data-group').toggleClass('on');"><span class="blind">팝업레이어 닫기</span></button>
 
 	<div id="data-group-content">
 		<!--<h3 th:text="#{data.group.sharing.status}"></h3>-->
