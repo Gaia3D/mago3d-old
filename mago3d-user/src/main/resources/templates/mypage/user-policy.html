@@ -5,7 +5,7 @@
     <meta name="referrer" content="origin">
     <meta name="viewport" content="width=device-width">
     <meta name="robots" content="index,nofollow"/>
-	<title><th:block th:text="#{my.page.title}"></th:block></title>
+	<title><th:block th:text="#{mypage.title}"></th:block></title>
     <link rel="shortcut icon" th:href="@{/images/favicon.ico(cacheVersion=${contentCacheVersion})}">
 	<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}">
     <link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
@@ -23,13 +23,13 @@
     </div>
     <!-- E: NAVWRAP -->
 	<div class="container" style="float:left; width: calc(100% - 78px);">
-		<div style="padding: 40px 20px 30px 10px; font-size: 28px; color:black; font-weight:600;">마이 페이지</div>
+		<div style="padding: 40px 20px 30px 10px; font-size: 28px; color:black; font-weight:600;">My Page</div>
         <!-- TAB -->
         <div class="tabs w800">
             <ul class="tab">
-				<li id="tabMyPageUserInfo"><a href="/mypage/user-modify">기본 정보</a></li>
-				<li id="tabMyPageMembership"><a href="/mypage/membership">멤버십</a></li>
-				<li id="tabMyPageUserPolicy"><a href="/mypage/user-policy">공간정보 설정</a></li>
+				<li id="tabMyPageUserInfo"><a href="/mypage/user-modify"><th:block th:text="#{mypage.user.info.basic}"></th:block></a></li>
+				<li id="tabMyPageMembership"><a href="/mypage/membership"><th:block th:text="#{mypage.membership}"></th:block></a></li>
+				<li id="tabMyPageUserPolicy"><a href="/mypage/user-policy"><th:block th:text="#{mypage.user.policy.config}"></th:block></a></li>
             </ul>
         </div>
 
@@ -39,7 +39,7 @@
 			<input type="hidden" id="altitude" name="altitude" value="" />
 			<div class="userPolicyContent w800 marT30">
 				<div class="button-group-align marB10">
-					<h3 class="h3-heading">시작 위치</h3>
+					<h3 class="h3-heading"><th:block th:text="#{policy.init.position}"></th:block></h3>
 					<button type="button" id="mapButton" class="btnTextF right-align marR10" th:text="#{common.select}"></button>
 				</div>
 				<div class="userPolicyContentDetail">
@@ -114,7 +114,7 @@
 			</div>
 			<div class="button-group w800">
 				<div class="center-buttons">
-					<button class="btn" th:text="#{common.save}" th:onclick="'update();'"></button>
+					<button class="btn" th:text="#{common.update}" th:onclick="'update();'"></button>
 				</div>
 			</div>
 			

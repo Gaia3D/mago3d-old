@@ -1,8 +1,8 @@
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
-<div id="emailDialog" class="basicTable" title="이메일 변경하기" style="display: none;">
+<div id="emailDialog" class="basicTable" th:title="#{mypage.email.change}" style="display: none;">
 	<form id="emailForm" th:object="${userInfo}" method="post" th:action="@{#}" onsubmit="return false;">
 	<table class="inner-table scope-row">
-		<caption class="hiddenTag">이메일 변경</caption>
+		<caption class="hiddenTag"><th:block th:text="#{mypage.email.change}"></th:block></caption>
 		<colgroup>
 			<col class="col-label"></col>
 			<col class="col-data"></col>
@@ -18,7 +18,7 @@
 			<td class="col-data" style="font-size: 14px;">
 				<input type="text" id="preEmail" name="preEmail" class="inputemail ml" />
 				<select id="selectEmail" name="selectEmail" class="select-email">
-					<option value="">직접입력</option>
+					<option value=""><th:block th:text="#{common.email.direct.input}"></th:block></option>
 					<option value="@naver.com">@naver.com</option>
 					<option value="@daum.net">@daum.net</option>
 					<option value="@gmail.com">@gmail.com</option>
@@ -29,7 +29,7 @@
 	</table>
 
 	<div style="margin-top: 10px; text-align: center;">
-		<button id="emailUpdateButton" th:text="수정" />
+		<button id="emailUpdateButton" th:text="#{common.update}" />
 	</div>
 	</form>
 </div>

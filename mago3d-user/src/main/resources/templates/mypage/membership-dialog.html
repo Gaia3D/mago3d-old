@@ -1,8 +1,8 @@
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
-	<div id="membershipDialog" class="basicTable" title="멤버십 변경" style="display: none;">
+	<div id="membershipDialog" class="basicTable" th:title="#{mypage.membership.change}" style="display: none;">
 		<form id="membershipForm" method="post" th:action="@{#}" onsubmit="return false;">
 		<table class="inner-table scope-row">
-			<caption class="hiddenTag">멤버십 변경</caption>
+			<caption class="hiddenTag"><th:block th:text="#{mypage.membership.change}"></th:block></caption>
 			<colgroup>
 				<col class="col-label"></col>
 				<col class="col-data"></col>
@@ -15,24 +15,24 @@
 				<td>
 					<table style="font-size: 20px; margin: 5px;">
 						<tr>
-							<td style="width: 40%;">업로드 가능 용량(월)</td>
+							<td style="width: 40%;"><th:block th:text="#{mypage.membership.uploadable.capacity}"></th:block></td>
 							<td style="width: 60%;">500MB</td>
 						</tr>
 						<tr>
-							<td>변환 가능 건수(월)</td>
-							<td>30 건</td>
+							<td><th:block th:text="#{mypage.membership.converter.count}"></th:block></td>
+							<td>30 <th:block th:text="#{search.what.count}"></th:block></td>
 						</tr>
 						<tr>
-							<td>가격(월)</td>
-							<td>무료</td>
+							<td><th:block th:text="#{mypage.membership.price}"></th:block></td>
+							<td><th:block th:text="#{common.free}"></th:block></td>
 						</tr>
 						<tr>
 							<td colspan="2" style="text-align: center;">
 	<th:block th:if="${membershipUsage.membershipId} == 1">
-								사용중
+								<th:block th:text="#{search.in.use}"></th:block>
 	</th:block>
 	<th:block th:unless="${membershipUsage.membershipId} == 1">
-								<button th:text="선택" onclick="update('BASIC')" style="margin: 5px;" />
+								<button th:text="#{common.select}" onclick="update('BASIC')" style="margin: 5px;" />
 	</th:block>
 							</td>
 						</tr>
@@ -41,24 +41,24 @@
 				<td>
 					<table style="font-size: 20px; margin: 5px;">
 						<tr>
-							<td style="width: 40%;">업로드 가능 용량(월)</td>
+							<td style="width: 40%;"><th:block th:text="#{mypage.membership.uploadable.capacity}"></th:block></td>
 							<td style="width: 60%;">1GB</td>
 						</tr>
 						<tr>
-							<td>변환 가능 건수(월)</td>
-							<td>50건</td>
+							<td><th:block th:text="#{mypage.membership.converter.count}"></th:block></td>
+							<td>50 <th:block th:text="#{search.what.count}"></th:block></td>
 						</tr>
 						<tr>
-							<td>가격(월)</td>
-							<td>유료</td>
+							<td><th:block th:text="#{mypage.membership.price}"></th:block></td>
+							<td><th:block th:text="#{common.free}"></th:block></td>
 						</tr>
 						<tr>
 							<td colspan="2" style="text-align: center;">
 	<th:block th:if="${membershipUsage.membershipId} == 2">
-								사용중
+								<th:block th:text="#{search.in.use}"></th:block>
 	</th:block>
 	<th:block th:unless="${membershipUsage.membershipId} == 2">
-								<button th:text="선택" onclick="update('SILVER')" style="margin: 5px;" />
+								<button th:text="#{common.select}" onclick="update('SILVER')" style="margin: 5px;" />
 	</th:block>
 							</td>
 						</tr>
@@ -67,7 +67,7 @@
 		</table>
 
 		<table class="inner-table scope-row" style="margin-top: 30px;">
-			<caption class="hiddenTag">멤버십 변경</caption>
+			<caption class="hiddenTag"><th:block th:text="#{mypage.membership.change}"></th:block></caption>
 			<colgroup>
 				<col class="col-label"></col>
 				<col class="col-data"></col>
@@ -80,24 +80,24 @@
 				<td>
 					<table style="font-size: 20px; margin: 5px;">
 						<tr>
-							<td style="width: 40%;">업로드 가능 용량(월)</td>
+							<td style="width: 40%;"><th:block th:text="#{mypage.membership.uploadable.capacity}"></th:block></td>
 							<td style="width: 60%;">5GB</td>
 						</tr>
 						<tr>
-							<td>변환 가능 건수(월)</td>
-							<td>100건</td>
+							<td><th:block th:text="#{mypage.membership.converter.count}"></th:block></td>
+							<td>100 <th:block th:text="#{search.what.count}"></th:block></td>
 						</tr>
 						<tr>
-							<td>가격(월)</td>
-							<td>유료</td>
+							<td><th:block th:text="#{mypage.membership.price}"></th:block></td>
+							<td><th:block th:text="#{common.free}"></th:block></td>
 						</tr>
 						<tr>
 							<td colspan="2" style="text-align: center;">
 	<th:block th:if="${membershipUsage.membershipId} == 3">
-								사용중
+								<th:block th:text="#{search.in.use}"></th:block>
 	</th:block>
 	<th:block th:unless="${membershipUsage.membershipId} == 3">
-								<button th:text="선택" onclick="update('GOLD')" style="margin: 5px;" />
+								<button th:text="#{common.select}" onclick="update('GOLD')" style="margin: 5px;" />
 	</th:block>
 							</td>
 						</tr>
@@ -106,24 +106,24 @@
 				<td>
 					<table style="font-size: 20px; margin: 5px;">
 						<tr>
-							<td style="width: 40%;">업로드 가능 용량(월)</td>
+							<td style="width: 40%;"><th:block th:text="#{mypage.membership.uploadable.capacity}"></th:block></td>
 							<td style="width: 60%;">10GB</td>
 						</tr>
 						<tr>
-							<td>변환 가능 건수(월)</td>
-							<td>1000건</td>
+							<td><th:block th:text="#{mypage.membership.converter.count}"></th:block></td>
+							<td>1000 <th:block th:text="#{search.what.count}"></th:block></td>
 						</tr>
 						<tr>
-							<td>가격(월)</td>
-							<td>유료</td>
+							<td><th:block th:text="#{mypage.membership.price}"></th:block></td>
+							<td><th:block th:text="#{common.free}"></th:block></td>
 						</tr>
 						<tr>
 							<td colspan="2" style="text-align: center;">
 	<th:block th:if="${membershipUsage.membershipId} == 4">
-								사용중
+								<th:block th:text="#{search.in.use}"></th:block>
 	</th:block>
 	<th:block th:unless="${membershipUsage.membershipId} == 4">
-								<button th:text="선택" onclick="update('PLATINUM')" style="margin: 5px;" />
+								<button th:text="#{common.select}" onclick="update('PLATINUM')" style="margin: 5px;" />
 	</th:block>
 							</td>
 						</tr>

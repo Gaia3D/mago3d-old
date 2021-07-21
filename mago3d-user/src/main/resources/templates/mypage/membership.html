@@ -5,7 +5,7 @@
     <meta name="referrer" content="origin">
     <meta name="viewport" content="width=device-width">
     <meta name="robots" content="index,nofollow"/>
-	<title><th:block th:text="#{my.page.title}"></th:block></title>
+	<title><th:block th:text="#{mypage.title}"></th:block></title>
     <link rel="shortcut icon" th:href="@{/images/favicon.ico(cacheVersion=${contentCacheVersion})}">
 	<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}">
     <link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
@@ -25,13 +25,13 @@
     <!-- E: NAVWRAP -->
 
 	<div class="container" style="float:left; width: calc(100% - 78px);">
-		<div style="padding: 40px 20px 30px 10px; font-size: 28px; color:black; font-weight:600;">마이 페이지</div>
+		<div style="padding: 40px 20px 30px 10px; font-size: 28px; color:black; font-weight:600;">My Page</div>
         <!-- TAB -->
         <div class="tabs w800">
             <ul class="tab">
-				<li id="tabMyPageUserInfo"><a href="/mypage/user-modify">기본 정보</a></li>
-				<li id="tabMyPageMembership"><a href="/mypage/membership">멤버십</a></li>
-				<li id="tabMyPageUserPolicy"><a href="/mypage/user-policy">공간정보 설정</a></li>
+				<li id="tabMyPageUserInfo"><a href="/mypage/user-modify"><th:block th:text="#{mypage.user.info.basic}"></th:block></a></li>
+				<li id="tabMyPageMembership"><a href="/mypage/membership"><th:block th:text="#{mypage.membership}"></th:block></a></li>
+				<li id="tabMyPageUserPolicy"><a href="/mypage/user-policy"><th:block th:text="#{mypage.user.policy.config}"></th:block></a></li>
             </ul>
         </div>
 
@@ -44,7 +44,7 @@
 			</colgroup>
 			<tr>
 				<th class="col-label" scope="row">
-					멤버십 등급
+					<th:block th:text="#{mypage.membership.grade}"></th:block>
 				</th>
 				<td class="col-input">
 					<span>
@@ -52,13 +52,15 @@
 					</span>
 					<br />
 					<span>
-						<button type="button" class="btn-mypage" id="membershipButton">수정</button>
+						<button type="button" class="btn-mypage" id="membershipButton">
+							<th:block th:text="#{common.update}"></th:block>
+						</button>
 					</span>
 				</td>
 			</tr>
 			<tr>
 				<th class="col-label" scope="row">
-					파일 업로딩 건수
+					<th:block th:text="#{mypage.membership.file.upload.count}"></th:block>
 				</th>
 				<td class="col-input">
 					<th:block th:text="${membershipUsage.useConvertFileCount}"></th:block>
@@ -66,7 +68,7 @@
 			</tr>
 			<tr>
 				<th class="col-label" scope="row">
-					파일 업로딩 용량
+					<th:block th:text="#{mypage.membership.file.upload.size}"></th:block>
 				</th>
 				<td class="col-input">
 	<th:block th:if="${membershipUsage.useUploadFileSize} < 1024">
@@ -83,7 +85,7 @@
 		</table>
 		<div class="button-group w800">
 			<div class="center-buttons">
-				<input type="submit" th:value="#{common.save}" onclick="update();" />
+				<input type="submit" th:value="#{common.update}" onclick="update();" />
 			</div>
 		</div>
         </form>
@@ -104,7 +106,7 @@
 
 	$( "#membershipButton" ).on( "click", function() {
 		membershipDialog.dialog( "open" );
-		membershipDialog.dialog( "option", "title", "멤버십 변경");
+		membershipDialog.dialog( "option", "title", JS_MESSAGE["membership.change"]);
 	});
 
 	var membershipDialog = $( "#membershipDialog" ).dialog({

@@ -186,3 +186,8 @@ JS_MESSAGE["iot.dust.legend.nodata"]="없음";
 JS_MESSAGE["membership.file.count.exceed"]="변환 월 허용횟수를 초과하였습니다.";
 JS_MESSAGE["membership.file.size.exceed"]="파일 업로딩 월 허용용량을 초과하였습니다.";
 JS_MESSAGE["membership.request.approval.waiting"]="멤버십 변경 요청 승인 대기중 입니다. 승인 후 변경 가능 합니다.";
+
+JS_MESSAGE["mypage.email.change"]="이메일 변경";
+JS_MESSAGE["mypage.password.change"]="비밀번호 변경";
+JS_MESSAGE["mypage.new.email.empty"]="새로운 이메일을 입력하여 주십시오."
+JS_MESSAGE["mypage.membership.change"]="멤버십 변경";

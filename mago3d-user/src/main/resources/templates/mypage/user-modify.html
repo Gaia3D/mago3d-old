@@ -5,7 +5,7 @@
     <meta name="referrer" content="origin">
     <meta name="viewport" content="width=device-width">
     <meta name="robots" content="index,nofollow"/>
-    <title><th:block th:text="#{my.page.title}"></th:block></title>
+    <title><th:block th:text="#{mypage.title}"></th:block></title>
     <link rel="shortcut icon" th:href="@{/images/favicon.ico(cacheVersion=${contentCacheVersion})}">
 	<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}">
     <link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang}, cacheVersion=${contentCacheVersion})}">
@@ -29,9 +29,9 @@
         <!-- TAB -->
         <div class="tabs w800">
             <ul class="tab">
-				<li id="tabMyPageUserInfo"><a href="/mypage/user-modify">기본 정보</a></li>
-				<li id="tabMyPageMembership"><a href="/mypage/membership">멤버십</a></li>
-				<li id="tabMyPageUserPolicy"><a href="/mypage/user-policy">공간정보 설정</a></li>
+				<li id="tabMyPageUserInfo"><a href="/mypage/user-modify"><th:block th:text="#{mypage.user.info.basic}"></th:block></a></li>
+				<li id="tabMyPageMembership"><a href="/mypage/membership"><th:block th:text="#{mypage.membership}"></th:block></a></li>
+				<li id="tabMyPageUserPolicy"><a href="/mypage/user-policy"><th:block th:text="#{mypage.user.policy.config}"></th:block></a></li>
             </ul>
         </div>
 
@@ -60,7 +60,7 @@
 			</tr>
 			<tr>
 				<th class="col-label" scope="row">
-					그룹명
+					<th:block th:text="#{user.group.name}"></th:block>
 				</th>
 				<td class="col-input">
 					<th:block th:text="${userInfo.userGroupName}"></th:block>
@@ -68,37 +68,36 @@
 			</tr>
 			<tr>
 				<th class="col-label" scope="row">
-					이메일
+					<th:block th:text="#{common.email}"></th:block>
 				</th>
 				<td class="col-input">
 					<span>
 	<th:block th:if="${#strings.isEmpty(userInfo.email)}">
-					
-	</th:block>인증, 서비스 변경에 사용할 이메일 주소 입니다.
+						<th:block th:text="#{mypage.email.empty.notice}"></th:block>
+	</th:block>
 	<th:block th:unless="${#strings.isEmpty(userInfo.email)}">
 					<th:block th:text="${userInfo.viewMaskingEmail}"></th:block>
 	</th:block>
 					</span><br />
 					<span>
-						<button type="button" class="btn-mypage" id="emailButton">수정</button>
+						<button type="button" id="emailButton" class="btn-mypage">
+							<th:block th:text="#{common.update}"></th:block>
+						</button>
 					</span>
 				</td>
 			</tr>
 			<tr>
 				<th class="col-label" scope="row">
-					비밀번호
+					<th:block th:text="#{common.password}"></th:block>
 				</th>
 				<td class="col-input">
-					비밀번호를 변경합니다. <br />
-					<button type="button" class="btn-mypage" id="passwordButton">수정</button>
+					<th:block th:text="#{mypage.password.change.notice}"></th:block><br />
+					<button type="button" id="passwordButton" class="btn-mypage">
+						<th:block th:text="#{common.update}"></th:block>
+					</button>
 				</td>
 			</tr>
 		</table>
-<!--		<div class="button-group">-->
-<!--			<div class="center-buttons">-->
-<!--				<input type="submit" th:value="#{common.save}" onclick="update();" />-->
-<!--			</div>-->
-<!--		</div>-->
         </form>
         <!-- E: 사용자 기본 정보 수정 -->
 	</div>
@@ -118,44 +117,9 @@
 		//
 	});
 
-	// // 수정
-	// var updateFlag = true;
-	// function update() {
-	// 	if (validate() == false) {
-	// 		return false;
-	// 	}
-	// 	if(updateFlag) {
-	// 		updateFlag = false;
-	// 		var formData = $("#userInfo").serialize();
-	// 		$.ajax({
-	// 			url: "/mypage/users/[[${userInfo.userId}]]",
-	// 			type: "POST",
-	// 			headers: {"X-Requested-With": "XMLHttpRequest"},
-	// 			data: formData,
-	// 			success: function(msg){
-	// 				if(msg.statusCode <= 200) {
-	// 					alert(JS_MESSAGE["update"]);
-	// 					window.location.reload();
-	// 				} else {
-	// 					alert(JS_MESSAGE[msg.errorCode]);
-	// 					console.log("---- " + msg.message);
-	// 				}
-	// 				updateFlag = true;
-	// 			},
-	// 			error:function(request, status, error){
-	// 				alert(JS_MESSAGE["ajax.error.message"]);
-	// 				updateFlag = true;
-	// 			}
-	// 		});
-	// 	} else {
-	// 		alert(JS_MESSAGE["button.double.click"]);
-	// 		return;
-	// 	}
-	// }
-
 	$( "#emailButton" ).on( "click", function() {
 		emailDialog.dialog( "open" );
-		emailDialog.dialog( "option", "title", "이메일 변경");
+		emailDialog.dialog( "option", "title", JS_MESSAGE["mypage.email.change"]);
 	});
 
 	var emailDialog = $( "#emailDialog" ).dialog({
@@ -206,7 +170,7 @@
 
 	$( "#passwordButton" ).on( "click", function() {
 		passwordDialog.dialog( "open" );
-		passwordDialog.dialog( "option", "title", "비밀번호 변경");
+		passwordDialog.dialog( "option", "title", JS_MESSAGE["mypage.password.change"]);
 	});
 
 	// 데이터 Object 속성 다이얼 로그
@@ -248,17 +212,17 @@
 
 	function checkPasswordModify() {
 		if ($("#password").val() == "") {
-			alert("비빌번호를 입력하여 주십시오.");
+			alert(JS_MESSAGE["password.empty"]);
 			$("#password").focus();
 			return false;
 		}
 		if ($("#newPassword").val() == "") {
-			alert("변경할 비밀번호를 입력하여 주십시오.");
+			alert(JS_MESSAGE["password.new"]);
 			$("#newPassword").focus();
 			return false;
 		}
 		if ($("#newPasswordConfirm").val() == "") {
-			alert("비밀번호 확인을 입력하여 주십시오.");
+			alert(JS_MESSAGE["password.correct.empty"]);
 			$("#newPasswordConfirm").focus();
 			return false;
 		}
@@ -267,7 +231,7 @@
 
 	function checkEmailModify(newEmail) {
 		if (newEmail == "") {
-			alert("변경할 이메일을 입력하여 주십시오.");
+			alert(JS_MESSAGE["mypage.new.email.empty"]);
 			$("#preEmail").focus();
 			return false;
 		}
