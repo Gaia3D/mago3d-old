@@ -17,7 +17,7 @@ services:
   geoserver:
     container_name: mago3d-geoserver
     restart: always
-    image: gaia3d/geoserver:mago3d-2.17.3
+    image: gaia3d/geoserver:mago3D2.5-2.17.3
 #    build:
 #      context: ./doc/docker/geoserver
 #      dockerfile: Dockerfile
