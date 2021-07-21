@@ -36,7 +36,7 @@ letter-spacing: -1px;
 color: #fff;
 cursor: pointer;
 font-weight: normal;
-background: url(/images/ko/logo.png) no-repeat 0 0;
+background: url(/images/en/logo.png) no-repeat 0 0;
 }
 .user {
 position: absolute;
@@ -88,7 +88,7 @@ margin-left: -5px;
 border: none;
 text-indent: -999em;
 background-color: #fff;
-background-image: url(/images/ko/ico.png);
+background-image: url(/images/en/ico.png);
 background-repeat: no-repeat;
 background-position: 5px -103px;
 }
@@ -101,7 +101,7 @@ padding-right: 10px;
 color: #fff;
 cursor: pointer;
 background-color: #35353d;
-background-image: url(/images/ko/ico.png);
+background-image: url(/images/en/ico.png);
 background-repeat: no-repeat;
 background-position: right -750px;
 }
@@ -172,7 +172,7 @@ color: #fff;
 cursor: pointer;
 text-align: center;
 border-bottom: 1px dotted #444a61;
-background-image: url(/images/ko/ico.png);
+background-image: url(/images/en/ico.png);
 background-repeat: no-repeat;
 }
 ul.nav li.on {
@@ -217,7 +217,7 @@ height: 50px;
 color: transparent;
 border-radius: 0px 5px 5px 0;
 border: none;
-background-image: url(/images/ko/ico.png);
+background-image: url(/images/en/ico.png);
 background-position: 8px -405px;
 background-repeat: no-repeat;
 background-color: #ccc;
@@ -260,7 +260,7 @@ height: calc(100% - 37px);
 margin-bottom: 10px;
 padding-left: 12px;
 font-size: 16px;
-background: url(/images/ko/ico.png) no-repeat 3px -592px;
+background: url(/images/en/ico.png) no-repeat 3px -592px;
 }
 h3 > span {
 color: #287be4;
@@ -283,7 +283,7 @@ background-color: #252535;
 border: none;
 border-radius: 25px;
 background-color: transparent;
-background-image: url(/images/ko/ico.png);
+background-image: url(/images/en/ico.png);
 background-repeat: no-repeat;
 }
 .ctrlWrap div button:hover {
@@ -438,7 +438,7 @@ width: 30px;
 height: 30px;
 border:none;
 text-indent: -999em;
-background: url(/images/ko/ico.png) no-repeat -462px -697px;
+background: url(/images/en/ico.png) no-repeat -462px -697px;
 }
 
 /* 양쪽으로 나눠진 구분DIV */
@@ -499,7 +499,7 @@ padding: 8px 5px 0 15px;
 font-size: 17px;
 font-weight: bold;
 text-align: right;
-background: url(/images/ko/ico.png) no-repeat 0 -968px;
+background: url(/images/en/ico.png) no-repeat 0 -968px;
 }
 
 
@@ -516,7 +516,7 @@ padding: 10px 0 0 25px;
 font-size: 18px;
 font-weight: bold;
 border-radius: 5px;
-background: url(/images/ko/ico.png) no-repeat 3px -639px;
+background: url(/images/en/ico.png) no-repeat 3px -639px;
 }
 .commentView > .con {
 max-height: 250px;
@@ -532,7 +532,7 @@ height: calc(100% - 485px);
 }
 .agreeWrap p.agree {
 padding: 0 0 0 25px;
-background: url(../images//images/ko/ico.png) no-repeat 0 -495px;	
+background: url(../images//images/en/ico.png) no-repeat 0 -495px;
 }
 .agreeCount {
 margin: 7px 0;
@@ -547,7 +547,7 @@ margin: 20px 0;
 width: 198px;
 padding: 7px 7px 7px 30px;
 border: 2px solid #555;
-background: url(/images/ko/ico.png) no-repeat 7px -490px;	
+background: url(/images/en/ico.png) no-repeat 7px -490px;
 }
 
 /* 의견등록 */
@@ -591,7 +591,7 @@ height: 30px;
 margin-left: -5px;
 border: none;
 text-indent: -999em;
-background-image: url(/images/ko/ico.png);
+background-image: url(/images/en/ico.png);
 background-repeat: no-repeat;
 background-position: 0px -107px;
 }
@@ -684,14 +684,14 @@ width: 110px;
 padding: 0 0 0 12px;
 font-size: 15px;
 margin-bottom: 7px;
-background: url(/images/ko/ico.png) no-repeat left -815px;
+background: url(/images/en/ico.png) no-repeat left -815px;
 }
 .layerDiv li label {
 display: inline-block;
 padding-left: 10px;
 font-size: 13px;
 font-weight: bold;
-background: url(/images/ko/ico.png) no-repeat left -865px;	
+background: url(/images/en/ico.png) no-repeat left -865px;
 }
 .layerDiv {
 display: inline-block;
@@ -728,7 +728,7 @@ width: 30px;
 height: 30px;
 text-indent: -999em;
 border: 1px solid #ccc;
-background-image: url(/images/ko/ico.png);
+background-image: url(/images/en/ico.png);
 background-repeat: no-repeat;
 background-color: #fff;
 }
@@ -943,7 +943,7 @@ margin-left: -5px;
 border: none;
 text-indent: -999em;
 background-color: #fff;
-background-image: url(/images/ko/ico.png);
+background-image: url(/images/en/ico.png);
 background-repeat: no-repeat;
 background-position: 5px -108px;
 }
@@ -1050,7 +1050,7 @@ width: 30px;
 height: 30px;
 border: none;
 text-indent: -999em;
-background-image: url(/images/ko/ico.png);
+background-image: url(/images/en/ico.png);
 background-position: -10px 792px;
 }
 .labelLayer2 div.layerContents > ul.category {
