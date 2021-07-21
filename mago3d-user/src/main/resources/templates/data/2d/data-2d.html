@@ -1,22 +1,21 @@
 ﻿<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <div id="layer-content" class="data-contents" style="height: 100%; display: none;">
-	<div class="center-area pad0 padB10">
-		<button id="layer-content-turn-on-all" class="textBtnSub" th:text="#{common.turn.on}"></button>
-		<button id="layer-content-turn-off-all" class="textBtnSub" th:text="#{common.turn.off}"></button>
-		<button id="layer-content-unfold-tree" class="textBtnSub" th:text="#{common.unfold}"></button>
-		<button id="layer-content-fold-tree" class="textBtnSub" th:text="#{common.folding}"></button>
-		<!--<button class="textBtn" th:text="#{common.save}" onClick="saveUserLayers(); return false;"></button>-->
+	<div class="marL20 pad0 padB10">
+		<button id="layer-content-turn-on-all" class="textBtnSub" th:title="#{common.turn.on}" th:text="#{common.turn.on}"></button>
+		<button id="layer-content-turn-off-all" class="textBtnSub" th:title="#{common.turn.off}" th:text="#{common.turn.off}"></button>
+		<button id="layer-content-unfold-tree" class="textBtnSub" th:title="#{common.unfold}" th:text="#{common.unfold}"></button>
+		<button id="layer-content-fold-tree" class="textBtnSub" th:title="#{common.folding}" th:text="#{common.folding}"></button>
 	</div>
-	<div class="sb-page" style="max-height: calc(100% - 145px);overflow-y: auto;">
+	<div id="layer-list-dhtml" class="sb-page" style="max-height: calc(100% - 145px);overflow-y: auto;">
 		<form id="layer-form" th:object="${userPolicy}" th:action="@{#}">
 			<input type="hidden" id="base-layers" name="baseLayers"/>
-			<div th:replace="~{/data/2d/data-2d-template :: #layer-list-source}"></div>
 		</form>
+		<div th:replace="~{/data/2d/data-2d-template :: #layer-list-source}"></div>
 	</div>
 	<hr class="h10 mar0" />
 	<!-- /버튼 -->
 	<div class="right-area margin-r20">
-		<button type="button" id="layer-content-save-user-layers" class="btn m-btn general"/>설정 저장</button>
+		<button type="button" id="layer-content-save-user-layers" class="btn m-btn general" th:title="#{data.setting.save}" th:text="#{data.setting.save}"></button>
 	</div>
 </div>
 </html>

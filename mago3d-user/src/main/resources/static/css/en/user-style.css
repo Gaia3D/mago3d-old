@@ -2755,7 +2755,7 @@ font-weight: normal;
 h2, h2 {font-weight:normal; font-family:'NotoKrL' !important;}
 .gnb {position: absolute;right: 0;padding:0; margin:0 11px 0 0;font-size: 13px;color: #fff;}
 .gnb li {display: inline-block;padding:0; margin:0;line-height:50px;}
-.gnb .userid {display:inline-block; width:100px ;margin:0; padding:0; height:50px; text-indent:36px; background:url(/images/en/img_user.png) -58px 10px no-repeat;}
+.gnb .userid {display:inline-block; margin:0; padding:0; height:50px; text-indent:36px; background:url(/images/en/img_user.png) -58px 10px no-repeat;}
 .gnb li > span * {vertical-align:  middle;margin-right:5px;display:inline-block; font-family:'NotoKrL'; font-weight:normal;}
 .gnb li > button {margin-top: -5px;padding: 5px 0 7px 0;color: white;border: none;}
 .gnb li a {padding: 3px 17px 4px 15px; color: white; border-radius:30px; font-family:'NotoKrL'; margin-left:10px; font-weight:normal; font-family:'NotoKrL'; font-size:13px; background:#48a2f7; }
@@ -5221,13 +5221,13 @@ span.gap {display:inline-block; width:3px; height:3px; background:#bcbcbc; margi
 span.ttl {color:black;}
 hr.datalist-line {width:100%;border:none; margin:0; padding:0; border-bottom:1px solid #e1e1e1;}
 .data-layer {width:90%; margin:0 auto; background:#f4f4f4; border-top:1px solid #cecece; height:38px; line-height:38px; cursor: pointer;}
-.data-layer span.data-lafyer-ttl {display:inline-block; padding-left:26px; font-size:14px; background:url(/images/en/ic_view_status.png) no-repeat 8px 15px;}
+.data-layer span.data-layer-ttl {display:inline-block; padding-left:26px; font-size:14px; background:url(/images/en/ic_view_status.png) no-repeat 8px 15px;}
 .data-layer span.data-layer-ttld {display:inline-block; padding-left:26px; font-size:14px; background:url(/images/en/ic_view_status.png) no-repeat 9px -21px;}
-.data-layer .view-option {display:inline-block; width:146px; float:right; margin-top:10px; font-size:12px !important; line-height:16px; }
+.data-layer .view-option {display:inline-block; width:153px; float:right; margin-top:10px; font-size:12px !important; line-height:16px; }
 .data-layerlist-bx {width:90%; margin:0 auto; }
 .data-layerlist {width:100%; height:34px; background:white; line-height:34px; text-indent:10px; font-size:14px; border-bottom:1px dotted #d8d7d7;}
 .data-layerlist span.data-layerlist-ttl {color:#464545; font-size:13px}
-.data-layerlist .view-option {display:inline-block; width:146px; float:right; text-indent:0; margin-top:10px; font-size:12px !important; line-height:19px; }
+.data-layerlist .view-option {display:inline-block; width:153px; float:right; text-indent:0; margin-top:10px; font-size:12px !important; line-height:19px; }
 .data-layerlist span.view-option a.move {display:inline-block; margin-left:12px; height:18px; text-indent:20px; background:url(/images/en/ic_move.png) no-repeat left 2px;}
 
 /* paging */

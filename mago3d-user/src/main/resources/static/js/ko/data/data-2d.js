@@ -206,7 +206,7 @@ Data2D.prototype.createLayerTree = function() {
         const contents = template(layer);
         let selector = "";
         if (layer.depth === 1) {
-            selector = $("#layer-form");
+            selector = $("#layer-list-dhtml");
             selector.append(contents);
         } else {
             selector = $("[data-depth=" + layer.parent + "] > div");

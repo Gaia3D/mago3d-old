@@ -8,7 +8,7 @@
 				<input type="checkbox" onchange="Data2D.layerGroupOnOff({{layerGroupId}}, this)"/>
 				<span class="slider"></span>
 			</label>
-			<span>켜기</span>
+			<span th:title="#{common.show}" th:text="#{common.show}"></span>
 		</span>
 	</div>
 	{{/ifMatch}}
@@ -20,7 +20,7 @@
 				<input type="checkbox" onchange="Data2D.layerGroupOnOff({{layerGroupId}}, this, event)"/>
 				<span class="slider"></span>
 			</label>
-			<span>켜기</span>
+			<span th:title="#{common.show}" th:text="#{common.show}"></span>
 		</span>
 	</div>
 	{{/ifMatch}}
@@ -32,7 +32,7 @@
 				<input type="checkbox" onchange="Data2D.layerGroupOnOff({{layerGroupId}}, this, event)"/>
 				<span class="slider"></span>
 			</label>
-			<span>켜기</span>
+			<span th:title="#{common.show}" th:text="#{common.show}"></span>
 		</span>
 	</div>
 	{{/ifMatch}}
@@ -52,8 +52,8 @@
 						   {{#replace defaultDisplay true 'checked'}}{{/replace}} />
 					<span class="slider"></span>
 				</label>
-				<span>켜기</span>
-				<a class="move" href="#" onclick="Data2D.move({{layerId}});return false;">이동</a>
+				<span th:title="#{common.show}" th:text="#{common.show}"></span>
+				<a class="move" href="#" onclick="Data2D.move({{layerId}});return false;" th:title="#{common.move}" th:text="#{common.move}"></a>
 			</span>
 		</div>
 		{{/each}}
