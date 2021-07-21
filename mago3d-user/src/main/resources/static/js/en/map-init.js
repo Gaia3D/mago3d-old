@@ -263,7 +263,7 @@ function mapInit(magoInstance, baseLayers, policy) {
 	return {
 		/**
 		 * 지도 객체에 baseLaye list를 추가
-		 * @param displayFlag {boolean} true일 경우에는 모든 레이어 추가, 아닐 경우에는 defaultDiaply true인 레이어만 추가
+		 * @param displayFlag {boolean} true일경우에는 모든 레이어 추가, 아닐 경우에는 defaultDiaply true인 레이어만 추가 
 		 * @returns
 		 */
 		initLayer : function(displayFlag) {

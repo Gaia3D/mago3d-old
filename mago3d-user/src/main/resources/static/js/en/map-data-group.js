@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	
-	$(".ui-slider-handle").slider({});
+	//$(".ui-slider-handle").slider({});
 	
 	//데이터 그룹 목록 초기화
 	//mapDataGroupList(1, null);
@@ -103,7 +103,9 @@ function dataGroupList() {
 					for(var i in tilingDataGroupList)
 					{
 						var tilingDataGroup = tilingDataGroupList[i];
-						tilingDataGroup.smartTileIndexPath = tilingDataGroup.tilePath;
+						if(i == tilingDataGroupList.length-1) {
+							tilingDataGroup.smartTileIndexPath = 'infra/_TILE';
+						}
 						f4dController.addSmartTileGroup(tilingDataGroup);
 					}
 				}
@@ -233,4 +235,49 @@ function mapDataGroupList(pageNo, searchDataGroupName) {
 	} else {
 		alert(JS_MESSAGE["button.double.click"]);
 	}
+}
+
+
+// 데이터 그룹 다이얼로그
+var dataGroupDialog = $( "#dataGroupDialogDHTML" ).dialog({
+	autoOpen: false,
+	width: 500,
+	height: 620,
+	modal: true,
+	overflow : "auto",
+	resizable: false
+});
+
+// 데이터 그룹 상세 정보 조회
+function detailDataGroup(url) {
+	dataGroupDialog.dialog( "open" );
+	$.ajax({
+		url: url,
+		type: "GET",
+		headers: {"X-Requested-With": "XMLHttpRequest"},
+		dataType: "json",
+		success: function(msg){
+			if(msg.statusCode <= 200) {
+				dataGroupDialog.dialog( "option", "title", msg.dataGroup.dataGroupName + JS_MESSAGE["more.information"]);
+
+				var template = Handlebars.compile($("#dataGroupSource").html());
+				var dataGroupHtml = template(msg.dataGroup);
+
+				$("#dataGroupDialogDHTML").html("").append(dataGroupHtml);
+			} else {
+				alert(JS_MESSAGE[msg.errorCode]);
+			}
+		},
+		error:function(request,status,error){
+			alert(JS_MESSAGE["ajax.error.message"]);
+		}
+	});
+}
+
+function flyToGroup(longitude, latitude, altitude, duration) {
+	if(longitude === null || longitude === '' || latitude === null || latitude === '' || altitude === null || altitude === '') {
+		alert(JS_MESSAGE["location.invalid"]);
+		return;
+	}
+	gotoFlyAPI(MAGO3D_INSTANCE, parseFloat(longitude), parseFloat(latitude), parseFloat(altitude), parseFloat(duration));
 }

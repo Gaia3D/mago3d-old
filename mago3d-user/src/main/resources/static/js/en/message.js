@@ -49,6 +49,7 @@ JS_MESSAGE["fileinfo.size.invalid"] = "업로딩 가능한 파일 사이즈를 �
 // 공통
 JS_MESSAGE["user.session.empty"] = "사인인 후 사용 가능한 서비스 입니다.";
 JS_MESSAGE["db.exception"] = "데이터 베이스 오류가 발생하였습니다. 잠시 후 다시 이용하여 주시기 바랍니다.";
+JS_MESSAGE["filenotfound.exception"] = "파일을(ZIP 압축 한글 오류 또는 계층 오류) 찾을 수 없습니다. 잠시 후 다시 이용하여 주시기 바랍니다.";
 JS_MESSAGE["io.exception"] = "입출력 처리 과정중 오류가 발생하였습니다. 잠시 후 다시 이용하여 주시기 바랍니다.";
 JS_MESSAGE["runtime.exception"] = "프로그램 실행중 오류가 발생하였습니다. 잠시 후 다시 이용하여 주시기 바랍니다.";
 JS_MESSAGE["unknown.exception"] = "서버 장애가 발생하였습니다. 잠시 후 다시 이용하여 주시기 바랍니다.";
@@ -56,6 +57,8 @@ JS_MESSAGE["ajax.error.message"] = "잠시 후 이용해 주시기 바랍니다.
 JS_MESSAGE["button.double.click"] = "진행 중입니다.";
 JS_MESSAGE["cache.reloaded"] = "캐시를 갱신 하였습니다.";
 JS_MESSAGE["usersession.grant.invalid"] = "사용 권한이 유효하지 않습니다.";
+JS_MESSAGE["usersession.password.invalid"] = "비밀번호가 일치하지 않습니다.";
+JS_MESSAGE["usersession.status.wait"] = "승인 대기중입니다. 관리자에게 문의하여 주십시오.";
 
 //사용자
 JS_MESSAGE["user.id.empty"] = "아이디를 입력하여 주십시오.";
@@ -71,13 +74,26 @@ JS_MESSAGE["password.change.next"] = "The next time you change, you will be retu
 JS_MESSAGE["user.name.empty"] = "이름을 입력하여 주십시오.";
 JS_MESSAGE["user.input.invalid"] = "필수 입력값이 유효하지 않습니다.";
 JS_MESSAGE["user.id.duplication"] = "사용중인 아이디 입니다. 다른 아이디를 선택해 주십시오.";
+JS_MESSAGE["user.email.duplication"] = "이미 가입된 이메일 입니다.";
+JS_MESSAGE["user.email.compare.invalid"] = "현재 이메일이 일치하지 않습니다.";
+JS_MESSAGE["user.email.duplication"] = "이미 가입된 이메일 입니다.";
 JS_MESSAGE["user.password.invalid"] = "입력한 패스워드가 설정된 패스워드 정책에 부적합 합니다.";
+JS_MESSAGE["user.password.compare.invalid"] = "현재 패스워드가 일치하지 않습니다.";
+JS_MESSAGE["user.password.confirm.invalid"] = "확인 패스워드가 일치하지 않습니다.";
 JS_MESSAGE["user.session.notexist"] = "세션 정보가 존재하지 않습니다.";
 JS_MESSAGE["user.session.closed"] = "세션 종료 처리 하였습니다.";
 JS_MESSAGE["user.session.close"] = "선택하신 사용자의 세션을 종료 하시겠습니까?";
 JS_MESSAGE["user.insert"] = "사용자를 등록 하였습니다.";
 JS_MESSAGE["user.info.update"] = "사용자 정보를 수정 하였습니다.";
+JS_MESSAGE["user.info.notexist"] = "사용자 정보가 존재하지 않습니다.";
 JS_MESSAGE["user.id.notexist"] = "아이디가 존재하지 않습니다.";
+JS_MESSAGE["user.email.invalid"] = "이메일 형식이 유효하지 않습니다.";
+JS_MESSAGE["user.signin.social"] = "소셜 가입 회원입니다. 소셜 로그인을 이용해 주세요.";
+JS_MESSAGE["social.authentication.access.token.server.fail"] = "소셜 인증 서버 접속에 실패하였습니다.";
+JS_MESSAGE["social.authentication.access.token.fail"] = "소셜 인증 정보(Token)를 가져 오는데 실패 하였습니다.";
+JS_MESSAGE["social.authentication.user.info.fail"] = "소셜 인증 사용자 정보 취득 서버 접속에 실패하였습니다.";
+JS_MESSAGE["social.authentication.user.info.server.fail"] = "소셜 인증 사용자 정보를 가져 오는데 실패 하였습니다.";
+JS_MESSAGE["user.data.group.directory.make.fail"] = "사용자 데이터 그룹 디렉토리 생성에 실패 하였습니다.";
 
 JS_MESSAGE["data.name.empty"] = "Please enter the data name.";
 JS_MESSAGE["data.name.invalid"] = "Data name is invalid.";
@@ -151,3 +167,22 @@ JS_MESSAGE["simulation.analysis.start"] = "Please select a location after starti
 JS_MESSAGE["simulation.select.location"] = "Please specify the location.";
 
 JS_MESSAGE["policy.camera.location"] = "Move the camera closer to the ground.";
+
+JS_MESSAGE["iot.occupancy"]="재실자";
+JS_MESSAGE["iot.dust.fine"]="미세";
+JS_MESSAGE["iot.dust"]="미세먼지";
+JS_MESSAGE["iot.occupancy.legend.good"]="쾌적";
+JS_MESSAGE["iot.occupancy.legend.normal"]="보통";
+JS_MESSAGE["iot.occupancy.legend.bad"]="혼잡";
+JS_MESSAGE["iot.occupancy.legend.very-bad"]="매우혼잡";
+JS_MESSAGE["iot.occupancy.legend.nodata"]="없음";
+
+JS_MESSAGE["iot.dust.legend.good"]="좋음";
+JS_MESSAGE["iot.dust.legend.normal"]="보통";
+JS_MESSAGE["iot.dust.legend.bad"]="나쁨";
+JS_MESSAGE["iot.dust.legend.very-bad"]="매우나쁨";
+JS_MESSAGE["iot.dust.legend.nodata"]="없음";
+
+JS_MESSAGE["membership.file.count.exceed"]="변환 월 허용횟수를 초과하였습니다.";
+JS_MESSAGE["membership.file.size.exceed"]="파일 업로딩 월 허용용량을 초과하였습니다.";
+JS_MESSAGE["membership.request.approval.waiting"]="멤버십 변경 요청 승인 대기중 입니다. 승인 후 변경 가능 합니다.";

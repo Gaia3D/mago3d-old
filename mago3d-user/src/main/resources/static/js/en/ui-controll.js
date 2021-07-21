@@ -9,9 +9,20 @@ $(function() {
 			var navWidth = document.getElementsByClassName('nav')[0].offsetWidth;
 			var contentWidth = observerTarget.offsetWidth;
 			
+			var divided = document.getElementById('mapCtrlDivide').className.indexOf('on') > -1;
 			var offsetWidth = (display === 'none') ? navWidth : navWidth+contentWidth;
-			var cssWidth = 'calc(100% - ' + offsetWidth + 'px)';
+			offsetWidth = divided ? offsetWidth / 2 : offsetWidth;
+			
+			var widthPrct = !divided ? '100%':'50%';
+			
+			var cssWidth = `calc(${widthPrct} - ${offsetWidth}px)`;
 			$('#magoContainer').css('width',cssWidth);
+			
+			var diviedElem = document.getElementById('magoDivideContainer');
+			if(diviedElem.style.display !== 'none') {
+				cssWidth = `calc(${widthPrct} - ${offsetWidth+3}px)`;
+				diviedElem.style.width = cssWidth;
+			}
 		});
 		observer.observe(observerTarget, observerConfig);
 	}
@@ -30,7 +41,7 @@ $(function() {
 		$('#dataContent').toggle(true);
 		$('#contentsWrap').toggle(true);
 	} else {
-		$('button#closeLeftBtn').toggle(true);
+		//$('button#closeLeftBtn').toggle(true);
 		// 다른거 활성화
 		if( currentUrl.indexOf("/data/map") >= 0) {
 			if( currentUrl.indexOf("#search") >= 0) {
@@ -46,10 +57,22 @@ $(function() {
 				$("#layerMenu").addClass('on');
 				$('#layerContent').toggle(true);
 			} else {
-				$("#dataMenu").addClass('on');
-				$('#dataContent').toggle(true);
+				// 임시
+				$('#closeLeftBtn').toggle(true);
 			}
 			$('#contentsWrap').toggle(true);
+		} else if( currentUrl.indexOf("/mypage/") >= 0) {
+			// MyPage
+			$("#mypageMenu").addClass('on');
+			// MyPage 탭 변경 시
+			$(".tab > li").siblings().removeClass("on");
+			if(location.href.indexOf("/mypage/user-modify") > 0) {
+				$("#tabMyPageUserInfo").addClass("on");
+			} else if (location.href.indexOf("/mypage/membership") > 0) {
+				$("#tabMyPageMembership").addClass("on");
+			} else if (location.href.indexOf("/mypage/user-policy") > 0) {
+				$("#tabMyPageUserPolicy").addClass("on");
+			}
 		} else {
 			// 데이터 변환
 			$("#converterMenu").addClass('on');
@@ -80,7 +103,6 @@ $(function() {
 				$("#tabConverterJobFileList").addClass("on");
 			}
 		}
-		
 	}
 	
 	// 상세 메뉴 닫기
@@ -104,7 +126,8 @@ $(function() {
         	|| location.href.indexOf("/data/list") > 0 
         	|| location.href.indexOf("/data/modify") > 0 
         	|| location.href.indexOf("/data-adjust-log") > 0
-        	|| location.href.indexOf("/data-log") > 0) {
+        	|| location.href.indexOf("/data-log") > 0
+			|| location.href.indexOf("/mypage/") > 0) {
         	$(this).removeClass('on');
         	var classId = $(this).attr('class');
         	window.location="../data/map#" + classId;
@@ -113,7 +136,9 @@ $(function() {
         // 변환 클릭 이벤트시 url 변경 
         if(active === "converterContent") {
         	window.location="../upload-data/list";
-        }
+        } else if(active === "mypageContent") {
+			window.location="../mypage/user-modify";
+		}
         
         $("ul.nav li[data-nav]:not(:empty)").not($(this)).each(function() {
             $(this).removeClass('on');

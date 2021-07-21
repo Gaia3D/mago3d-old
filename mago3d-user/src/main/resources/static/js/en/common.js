@@ -80,15 +80,15 @@ function checkedStatus(element) {
 function initDatePicker() {
 	$( ".date" ).datepicker({ 
 		dateFormat : "yymmdd",
-		dayNames : [ "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" ],
-		dayNamesShort : [ "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" ],
-		dayNamesMin : [ "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" ],
-		monthNames : [ "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SET", "OCT", "NOV", "DEC" ],
-		monthNamesShort : [ "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SET", "OCT", "NOV", "DEC" ],
+		dayNames : [ "일", "월", "화", "수", "목", "금", "토" ],
+		dayNamesShort : [ "일", "월", "화", "수", "목", "금", "토" ],
+		dayNamesMin : [ "일", "월", "화", "수", "목", "금", "토" ],
+		monthNames : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+		monthNamesShort : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
 		prevText : "",
 		nextText : "",
 		showMonthAfterYear : true,
-		yearSuffix : "Year"
+		yearSuffix : "년"
 	});
 }
 
@@ -334,7 +334,7 @@ function initPolicy(callback, dataId) {
 		dataType: "json",
 		success: function(msg){
 			if(msg.statusCode <= 200) {
-				callback(msg.geoPolicy, msg.baseLayers);
+				callback(msg.geoPolicy, msg.baseLayers, msg.microService);
 			} else {
 				alert(JS_MESSAGE[msg.errorCode]);
 			}
@@ -366,4 +366,67 @@ function locationValidation(longitude, latitude, altitude) {
 		alert(JS_MESSAGE["location.constraint"]);
 		return false;
 	}
+}
+
+function getFormData($form) {
+	var unindexed_array = $form.find(':visible').serializeArray();
+	var indexed_array = {};
+	$.map(unindexed_array, function (n, i) {
+		if (indexed_array[n['name']]) {
+			indexed_array[n['name']] += ',' + n['value'];
+		} else {
+			indexed_array[n['name']] = n['value'];
+		}
+	});
+	return indexed_array;
+}
+
+function cloneObject (obj) {
+	return JSON.parse(JSON.stringify(obj));
+}
+
+function randomNumber(min, max) { 
+    return Math.random() * (max - min) + min;
+}
+
+const API = function(){};
+API.Converter = function(){};
+
+API.Converter.screenCoordToMagoPoint3D = function(x, y, magoManager) {
+	return Mago3D.ManagerUtils.screenCoordToWorldCoord(undefined, x,y,undefined,undefined,undefined,undefined, magoManager);
+}
+API.Converter.magoToCesiumForGeographic = function(geographic) {
+	return Cesium.Cartographic.fromDegrees(geographic.longitude, geographic.latitude, geographic.altitude);
+}
+API.Converter.magoToCesiumForPoint3D = function(point3d) {
+	return new Cesium.Cartesian3(point3d.x, point3d.y, point3d.z);
+}
+API.Converter.CesiumToMagoForPoint3D = function(cartesian3) {
+	return new Mago3D.Point3D(cartesian3.x, cartesian3.y, cartesian3.z);
+}
+API.Converter.CesiumToMagoForGeographic = function(cartographic) {
+	return new Mago3D.GeographicCoord(API.Converter.radToDeg(cartographic.longitude),
+		API.Converter.radToDeg(cartographic.latitude),
+		cartographic.height);
+}
+API.Converter.Cartesian3ToMagoGeographicCoord = function(cartesian3) {
+	return Mago3D.ManagerUtils.pointToGeographicCoord(API.Converter.CesiumToMagoForPoint3D(cartesian3));
+}
+API.Converter.radToDeg = function(rad) {
+	return rad * 180 / Math.PI;
+}
+API.Converter.degToRad = function(deg) {
+	return deg * Math.PI / 180;
+}
+
+API.MATH = function(){};
+
+API.MATH.minMaxDenormalize = function(minValue, maxValue, normalValue, normalRange) {
+	var range = maxValue - minValue;
+	return normalValue / normalRange * range + minValue;
+}
+	
+API.MATH.minMaxNormalize = function(minValue, maxValue, value, normalRange) {
+	var range = maxValue - minValue;
+	return (value - minValue) / range * normalRange;
 }
