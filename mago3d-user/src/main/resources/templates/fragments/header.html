@@ -1,25 +1,27 @@
 ﻿<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <body>
     <header id="headerWrap">
-        <h1 class="magologo">디지털트윈 플랫폼</h1>
+        <h1 class="magologo" th:title="#{common.homepage.title}" th:text="#{common.homepage.title}"></h1>
         <div class="gnb">
             <th:block th:if="${session.USER_SESSION}">
                 <ul>
                     <li class="user">
-                        <a href="/mypage/user-modify" class="userid" title="Mypage">
-                            <span th:text="${session.USER_SESSION.userName}"><th:block th:text="#{common.sir}"></th:block></span>
+                        <a href="/mypage/user-modify" class="userid" th:title="#{common.mypage}">
+                            <span th:text="|${session.USER_SESSION.userName} #{common.sir}|"></span>
                         </a>
-                        <a href="/guide/help" th:title="#{common.api.document}" onclick="goMagoAPIGuide(this.href);return false;"><th:block th:text="#{common.api.document}"></th:block></a>
-                        <a href="/sign/signout" title="Sign out" class="">Sign out</a>
+                        <a href="/guide/help" th:title="#{common.api.document}" onclick="goMagoAPIGuide(this.href);return false;" th:text="#{common.api.document}"></a>
+                        <a href="/sign/signout" th:title="#{common.sign.out}" class="" th:text="#{common.sign.out}"></a>
                     </li>
                 </ul>
             </th:block>
             <th:block th:unless="${session.USER_SESSION}">
                 <ul>
                     <li>
-                        <a href="/guide/help" th:title="#{common.api.document}" onclick="goMagoAPIGuide(this.href);return false;"><th:block th:text="#{common.api.document}"></th:block></a>
+                        <a href="/guide/help" th:title="#{common.api.document}" onclick="goMagoAPIGuide(this.href);return false;" th:text="#{common.api.document}"></a>
                     </li>
-                    <li class="user"><a href="/sign/signin">Sign in</a></li>
+                    <li class="user">
+                        <a href="/sign/signin" th:title="#{common.sign.in}" th:text="#{common.sign.in}"></a>
+                    </li>
                 </ul>
             </th:block>
         </div>
