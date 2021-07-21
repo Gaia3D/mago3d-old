@@ -125,7 +125,6 @@ function allMenuDisplay() {
 }
 
 function menuControlFullPage() {
-	console.info("menuControlFullPage");
 	var currentUrl = location.href;
 
 	$("ul.nav li[data-nav]:not(:empty)").not($(this)).each(function() {
@@ -188,7 +187,6 @@ function menuControlFullPage() {
 }
 
 function menuControl() {
-	console.info("menuControl");
 	var currentUrl = location.href;
 
 	if (currentUrl === undefined || currentUrl === null || currentUrl === "") {
