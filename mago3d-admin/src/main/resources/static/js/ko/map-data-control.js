@@ -1,4 +1,4 @@
-var MapDataControll = function(magoInstance) {
+var MapDataControl = function(magoInstance) {
 
 	var magoManager = magoInstance.getMagoManager();
 	var $dataControlWrap = $('#dataControlWrap');
