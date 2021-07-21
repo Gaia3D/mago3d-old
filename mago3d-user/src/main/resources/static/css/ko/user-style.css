@@ -5009,6 +5009,8 @@ h1.magologo {display:block; width:270px; font-size:17px; margin:0 0 0 20px; padd
 .pgcount .pgcount-total {float:left; margin-left:20px;}
 .pgcount .pgcount-number {float:right; margin-right:20px;}
 .pop > .pgcount {width:340px !important; margin:0 auto; font-size:12px; height:24px; border-bottom:1px solid #e1e1e1; margin-left:0; margin-top:0; margin-bottom:10px;}
+.pop > .pgcount .pgcount-total {float:left; margin-left:0;}
+.pop > .pgcount .pgcount-number {float:right; margin-right:0;}
 
 /* 멤버십 */
 #membership-item {width:300px; margin:0 auto; height:400px; padding:0; background:white; box-shadow: 0 0 2px rgba(132,132,132,0.6); border-radius:8px; position:absolute; top:60%; margin-top:-300px;}
@@ -5221,9 +5223,9 @@ hr.datalist-line {width:100%;border:none; margin:0; padding:0; border-bottom:1px
 .data-layerlist .view-option {display:inline-block; width:146px; float:right; text-indent:0; margin-top:10px; font-size:12px !important; line-height:19px; }
 .data-layerlist span.view-option a.move {display:inline-block; margin-left:12px; height:18px; text-indent:20px; background:url(/images/ko/ic_move.png) no-repeat left 2px;}
 .filter-result {width:340px; margin:0 auto; margin-bottom:6px; margin-top:0;}
-.filter-result span {margin:0; padding:0; font-size:12px;}
+.filter-result span {margin:0; padding:0; font-size:12px; margin-top:5px;}
 .filter-result span button {border:0; width:14px; height:20px; font-size:12px; margin:0 4px 0 0; background:#f2f3f4; padding:0; text-align:center;}
-.filter-result span button:hover {background:#e5e5e5;}
+.filter-result span button:hover {background:#e5e5e5; color:black;}
 .filter-result span span {font-weight:normal; font-family: 'NotoKrR'; margin:0; padding:0;}
 .filter-result span span.type {color:#315bbc;}
 .filter-result span span.type02 {color:green;}
@@ -5300,7 +5302,7 @@ hr.datalist-line {width:100%;border:none; margin:0; padding:0; border-bottom:1px
 
 /* poplayer */
 .detaildata {width:270px; height:700px; position:absolute; right:85px; top:68px; z-index:1;}
-.poplayer {border-radius:4px; background:white; overflow-y:unset; overflow-x:unset; border:1px solid #d9dadb; padding:10px 25px 25px 25px; margin:0; box-shadow: 0 1px 3px rgba(132,132,132,0.6);}
+.poplayer {border-radius:4px; background:white; overflow-y:unset; overflow-x:unset; padding:10px 25px 25px 25px; margin:0; box-shadow: 0 1px 3px rgba(132,132,132,0.6);}
 .poplayer > h6.pop-title {width:100%; border-bottom:1px solid #e3e3e3; font-size:16px; font-weight:600; height:30px; margin-top:10px;}
 .pop-close {float:right; border:0; width:24px; margin-top:-3px; margin-right:-18px; height:24px; display:inline-block; background: white url(/images/ko/ic_sbmenu.png) -216px -525px no-repeat;}
 .pop-close:hover {border:0; background:url(/images/ko/ic_sbmenu.png) -216px -580px no-repeat;}
@@ -5403,6 +5405,7 @@ span.sumnail img{-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg)
 .popuplayer > .datagroup-select table th {border-left:1px solid #e4e4e5;}
 .popuplayer > .datagroup-select table td {padding:7px; border-bottom:1px solid #e4e4e5; border-right:1px solid #e4e4e5; vertical-align:middle;}
 .popuplayer > .datagroup-select table td:first-child {text-align:left; border-left:1px solid #e4e4e5; padding-left:34px; background:url(/images/ko/ic_group.png) no-repeat 10px 50%;}
+.detaildata button, .detaildata button:hover {color:black;}
 .popuplayer-s {border-radius:4px; background:white; overflow-y:auto; overflow-x:hidden; border:1px solid #d9dadb; padding:0 20px 20px 20px; margin:0; box-shadow: 0 1px 2px rgba(132,132,132,0.6);}
 .popuplayer-s .close-s {float:right; margin:14px -6px 0 0; width:15px; cursor:pointer; height:15px; background:url(/images/ko/ic_close.png) no-repeat;}
 .popuplayer-s .close-s:hover, .popuplayer-s .close-s:focus {border:0;} 
