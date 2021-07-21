@@ -25,11 +25,11 @@ const Data2D = function(magoInstance) {
 }
 
 Object.defineProperties(Data2D.prototype, {
-    load : {
-        get : function () {
+    load: {
+        get: function () {
             return this._load;
         },
-        set : function (load) {
+        set: function (load) {
             if (load) {
                 this.getLayers();
             }

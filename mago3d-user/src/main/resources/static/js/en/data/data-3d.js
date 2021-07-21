@@ -129,12 +129,12 @@ const Data3D = function(magoInstance) {
 }
 
 Object.defineProperties(Data3D.prototype, {
-    load : {
-        get : function () {
+    load: {
+        get: function () {
             return this._load;
         },
-        set : function (load) {
-            if(load) {
+        set: function (load) {
+            if (load) {
                 //this.getDataGroups(1);
                 this.initF4dDatas();
                 this.getDatas(1);

@@ -26,85 +26,9 @@ $(function() {
 		});
 		observer.observe(observerTarget, observerConfig);
 	}
-	
-	var currentUrl = location.href;
-	var defaultMenuId = "";
-	
-	$("ul.nav li[data-nav]:not(:empty)").not($(this)).each(function() {
-        $(this).removeClass("on");
-        $("#" + $(this).attr("data-nav")).hide();
-    });
-	
-	if(currentUrl === undefined || currentUrl === null || currentUrl === "") {
-		// default 활성화
-		$("#dataMenu").addClass('on');
-		$('#dataContent').toggle(true);
-		$('#contentsWrap').toggle(true);
-	} else {
-		//$('button#closeLeftBtn').toggle(true);
-		// 다른거 활성화
-		if( currentUrl.indexOf("/data/map") >= 0) {
-			if( currentUrl.indexOf("#search") >= 0) {
-				$("#searchMenu").addClass('on');
-				$('#searchContent').toggle(true);
-			} else if( currentUrl.indexOf("#spatial") >= 0) {
-				$("#spatialMenu").addClass('on');
-				$('#spatialContent').toggle(true);
-			} else if( currentUrl.indexOf("#simulation") >= 0) {
-				$("#simulationMenu").addClass('on');
-				$('#simulationContent').toggle(true);
-			} else if( currentUrl.indexOf("#layer") >= 0) {
-				$("#layerMenu").addClass('on');
-				$('#layerContent').toggle(true);
-			} else {
-				// 임시
-				$('#closeLeftBtn').toggle(true);
-			}
-			$('#contentsWrap').toggle(true);
-		} else if( currentUrl.indexOf("/mypage/") >= 0) {
-			// MyPage
-			$("#mypageMenu").addClass('on');
-			// MyPage 탭 변경 시
-			$(".tab > li").siblings().removeClass("on");
-			if(location.href.indexOf("/mypage/user-modify") > 0) {
-				$("#tabMyPageUserInfo").addClass("on");
-			} else if (location.href.indexOf("/mypage/membership") > 0) {
-				$("#tabMyPageMembership").addClass("on");
-			} else if (location.href.indexOf("/mypage/user-policy") > 0) {
-				$("#tabMyPageUserPolicy").addClass("on");
-			}
-		} else {
-			// 데이터 변환
-			$("#converterMenu").addClass('on');
-			//$('#contentsWrap').toggle(true);
-			// 데이터 변환 탭 변경 시
-			$(".tab > li").siblings().removeClass("on");
-			if(location.href.indexOf("/data-group/list") > 0
-					|| location.href.indexOf("/data-group/modify") > 0) { 
-				$("#tabDataGroupList").addClass("on");
-			} else if (location.href.indexOf("/data-group/input") > 0) {
-				$("#tabDataGroupInput").addClass("on");
-			} else if (location.href.indexOf("/upload-data/input") > 0) {
-				$("#tabUploadDataInput").addClass("on");
-			} else if (location.href.indexOf("/upload-data/list") > 0
-					|| location.href.indexOf("/upload-data/modify") > 0) {
-				$("#tabUploadDataList").addClass("on");
-			} else if (location.href.indexOf("/converter/list") > 0) {
-				$("#tabConverterList").addClass("on");
-			} else if (location.href.indexOf("/converter/converter-job-file-list") > 0) {
-				$("#tabConverterJobFileList").addClass("on");
-			} else if (location.href.indexOf("/data/list") > 0 
-					|| location.href.indexOf("/data/modify") > 0
-					|| location.href.indexOf("/data-adjust-log/modify") > 0) {
-				$("#tabDataList").addClass("on");
-			} else if (location.href.indexOf("/data-log/list") > 0) {
-				$("#tabDataLogList").addClass("on");
-			} else if (location.href.indexOf("/converter-job-file-list") > 0) {
-				$("#tabConverterJobFileList").addClass("on");
-			}
-		}
-	}
-	
+
+	menuControlFullPage();
+
 	// 상세 메뉴 닫기
 	$('button#closeLeftBtn').click(function() {
 		//$('ul.nav li[data-nav]').removeClass('on');
@@ -151,7 +75,7 @@ $(function() {
     });
 
     
-/***** Contents Wrap: 공간분석 *****/	
+	/***** Contents Wrap: 공간분석 *****/
 	// 공간분석 그룹 클릭 시	
 	$('#spatialContent ul.listDrop li > p').click(function(e) {
 		var parentObj = $(this).parent();
@@ -168,7 +92,7 @@ $(function() {
 		});
 	});
 	
-/***** Contents Wrap: 공간분석 *****/	
+	/***** Contents Wrap: 공간분석 *****/
 	// 시뮬레이션 그룹 클릭 시	
 	$('#simulationContent ul.listDrop li > p').click(function() {
 		var parentObj = $(this).parent();
@@ -199,3 +123,103 @@ function allMenuDisplay() {
     $('#'+ active).toggle(display);
     $('#contentsWrap').toggle(display);
 }
+
+function menuControlFullPage() {
+	console.info("menuControlFullPage");
+	var currentUrl = location.href;
+
+	$("ul.nav li[data-nav]:not(:empty)").not($(this)).each(function() {
+		$(this).removeClass("on");
+		$("#" + $(this).attr("data-nav")).hide();
+	});
+
+	if (currentUrl === undefined || currentUrl === null || currentUrl === "") {
+		// default 활성화
+		$("#dataMenu").addClass('on');
+		$('#dataContent').toggle(true);
+		$('#contentsWrap').toggle(true);
+	} else {
+		// 다른거 활성화
+		if (currentUrl.indexOf("/data/map") >= 0) {
+
+		} else if (currentUrl.indexOf("/mypage/") >= 0) {
+			// MyPage
+			$("#mypageMenu").addClass('on');
+			// MyPage 탭 변경 시
+			$(".tab > li").siblings().removeClass("on");
+			if (location.href.indexOf("/mypage/user-modify") > 0) {
+				$("#tabMyPageUserInfo").addClass("on");
+			} else if (location.href.indexOf("/mypage/membership") > 0) {
+				$("#tabMyPageMembership").addClass("on");
+			} else if (location.href.indexOf("/mypage/user-policy") > 0) {
+				$("#tabMyPageUserPolicy").addClass("on");
+			}
+		} else {
+			// 데이터 변환
+			$("#converterMenu").addClass('on');
+			//$('#contentsWrap').toggle(true);
+			// 데이터 변환 탭 변경 시
+			$(".tab > li").siblings().removeClass("on");
+			if (location.href.indexOf("/data-group/list") > 0
+				|| location.href.indexOf("/data-group/modify") > 0) {
+				$("#tabDataGroupList").addClass("on");
+			} else if (location.href.indexOf("/data-group/input") > 0) {
+				$("#tabDataGroupInput").addClass("on");
+			} else if (location.href.indexOf("/upload-data/input") > 0) {
+				$("#tabUploadDataInput").addClass("on");
+			} else if (location.href.indexOf("/upload-data/list") > 0
+				|| location.href.indexOf("/upload-data/modify") > 0) {
+				$("#tabUploadDataList").addClass("on");
+			} else if (location.href.indexOf("/converter/list") > 0) {
+				$("#tabConverterList").addClass("on");
+			} else if (location.href.indexOf("/converter/converter-job-file-list") > 0) {
+				$("#tabConverterJobFileList").addClass("on");
+			} else if (location.href.indexOf("/data/list") > 0
+				|| location.href.indexOf("/data/modify") > 0
+				|| location.href.indexOf("/data-adjust-log/modify") > 0) {
+				$("#tabDataList").addClass("on");
+			} else if (location.href.indexOf("/data-log/list") > 0) {
+				$("#tabDataLogList").addClass("on");
+			} else if (location.href.indexOf("/converter-job-file-list") > 0) {
+				$("#tabConverterJobFileList").addClass("on");
+			}
+		}
+	}
+}
+
+function menuControl() {
+	console.info("menuControl");
+	var currentUrl = location.href;
+
+	if (currentUrl === undefined || currentUrl === null || currentUrl === "") {
+
+	} else {
+		// 다른거 활성화
+		if (currentUrl.indexOf("/data/map") >= 0) {
+			$('button#closeLeftBtn').toggle(true);
+			if (currentUrl.indexOf("#search") >= 0) {
+				$("#searchMenu").addClass('on');
+				$('#searchContent').toggle(true);
+			} else if (currentUrl.indexOf("#spatial") >= 0) {
+				$("#spatialMenu").addClass('on');
+				$('#spatialContent').toggle(true);
+			} else if (currentUrl.indexOf("#simulation") >= 0) {
+				$("#simulationMenu").addClass('on');
+				$('#simulationContent').toggle(true);
+			} else if (currentUrl.indexOf("#iot") >= 0) {
+				$("#iotMenu").addClass('on');
+				$('#iotContent').toggle(true);
+			} else if (currentUrl.indexOf("#layer") >= 0) {
+				$("#layerMenu").addClass('on');
+				$('#layerContent').toggle(true);
+			} else {
+				// 데이터 탭 활성화
+				$("#data-menu").addClass('on');
+				$('#data-wrap-content').toggle(true);
+			}
+			$('#contentsWrap').toggle(true);
+		}
+	}
+}
+
+

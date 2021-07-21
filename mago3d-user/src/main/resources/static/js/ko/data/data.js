@@ -47,14 +47,14 @@ const Data = function(magoInstance) {
         $('.data-menu').click(clickTab);
     }
 
-    const _run = function() {
+    const _run = function () {
 
         const datas = {
-            'layer-tab' : new Data2D(magoInstance),
-            'data-tab' : new Data3D(magoInstance)
+            'layer-tab': new Data2D(magoInstance),
+            'data-tab': new Data3D(magoInstance)
         }
 
-        const init = function(targetId) {
+        const _init = function(targetId) {
             let data = datas[targetId];
             if (data && data.load === false) {
                 data.load = true;
@@ -67,7 +67,7 @@ const Data = function(magoInstance) {
             for (const mutation of mutations) {
                 const isVisible = mutation.target.classList.contains('actived');
                 if (isVisible) {
-                    init(mutation.target.id);
+                    _init(mutation.target.id);
                 }
             }
         });
@@ -76,7 +76,7 @@ const Data = function(magoInstance) {
                 const isVisible = mutation.target.classList.contains('on');
                 if (isVisible) {
                     const targetId = $('#data-wrap-content').find('.data-menu.actived').attr('id');
-                    init(targetId);
+                    _init(targetId);
                     for (const targetId in datas) {
                         dataMenuObserver.observe(document.getElementById(targetId), dataObserverConfig);
                     }
@@ -94,8 +94,5 @@ const Data = function(magoInstance) {
 
     // 프로그램 실행
     _run();
-
-    // 기본으로 data 메뉴 켜지도록 이벤트 실행
-    $("#data-menu").trigger('click');
 
 }
