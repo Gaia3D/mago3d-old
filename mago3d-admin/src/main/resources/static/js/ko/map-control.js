@@ -1,7 +1,7 @@
 var lengthInMeters = 0;
 var areaInMeters = 0;
 
-function MapControll(viewer, option) {
+function MapControl(viewer, option) {
     this._viewer = viewer;
     this._scene = viewer.scene;
 

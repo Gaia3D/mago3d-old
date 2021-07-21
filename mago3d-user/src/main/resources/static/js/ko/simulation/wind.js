@@ -88,13 +88,13 @@ SmltWind.prototype.run = function() {
 	// 임시
 	const compareDate = parseInt(_this.date) + 10000;
 
-	if (MapControll.divided) {
+	if (MapControl.divided) {
 		//const magoMap = new mapInit(MAGO3D_DIVIDE_INSTANCE, MAGO.baseLayers, MAGO.policy);
 		//magoMap.initLayer(false);
 		_this.load(MAGO3D_DIVIDE_INSTANCE, _this.date);
 		_this.load(orgin, compareDate);
 	} else {
-		MapControll.divideMap(function (divided) {
+		MapControl.divideMap(function (divided) {
 			//const magoMap = new mapInit(divided, MAGO.baseLayers, MAGO.policy);
 			//magoMap.initLayer(false);
 			_this.load(divided, _this.date);
@@ -121,9 +121,9 @@ SmltWind.prototype.clear = function () {
 	this.magoInstance.getMagoManager().weatherStation.deleteWindVolumes();
 	if (MAGO3D_DIVIDE_INSTANCE) {
 		MAGO3D_DIVIDE_INSTANCE.getMagoManager().weatherStation.deleteWindVolumes();
-		MapControll.undivideMap();
+		MapControl.undivideMap();
 	}
-	//MapControll.undivideMap();
+	//MapControl.undivideMap();
 }
 
 SmltWind.prototype.play = function() {

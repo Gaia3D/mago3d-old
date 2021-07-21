@@ -21,7 +21,7 @@ function goMagoAPIGuide(url) {
 	return false;
 }
 
-var MapControll = {
+var MapControl = {
 	divided : false,
 	divideMap : function(loadEnd) {
 		$('.mapWrap2').show();
@@ -110,7 +110,7 @@ var MapControll = {
 	}
 }
 
-var mapControllEventHandler = function(magoInstance) {
+var mapControlEventHandler = function(magoInstance) {
 	var magoManager = magoInstance.getMagoManager();
 	var configInformation = magoManager.configInformation;
 	
@@ -241,9 +241,9 @@ var mapControllEventHandler = function(magoInstance) {
 		$(this).toggleClass('on');
 		
 		if($(this).hasClass('on')) {
-			MapControll.divideMap();
+			MapControl.divideMap();
 		} else {
-			MapControll.undivideMap();
+			MapControl.undivideMap();
 		}
 	});
 	
