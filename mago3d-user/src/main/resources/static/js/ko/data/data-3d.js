@@ -12,6 +12,11 @@ const Data3D = function(magoInstance) {
     const that = this;
     function setElementEvent() {
 
+        const _makeFilterContents = function($filterContents, value) {
+            $filterContents.find('span').text(value);
+            $filterContents.toggle(Boolean(value));
+        }
+
         // 팝업 레이어 드래그 가능하도록 설정
         $('#data-group-search').draggable({containment: "window"});
         $('#data-search-filter').draggable({containment: "window"});
@@ -47,8 +52,10 @@ const Data3D = function(magoInstance) {
         // 데이터 그룹 선택
         $("#data-group-content").on('click', '.select-data-group', function() {
             const groupId = $(this).data('groupId');
+            const groupName = $(this).data('groupName');
             $("#search-data-form input[name='dataGroupId']").val(groupId);
-            Data3D.toggleLayer('data-group-search');
+            _makeFilterContents($('#filter-contents-group'), groupName);
+            //Data3D.toggleLayer('data-group-search');
             that.getDatas(1);
         });
 
@@ -71,7 +78,11 @@ const Data3D = function(magoInstance) {
             const dataType = $('#data-search-filter .data-type.on').data('type');
             $("#search-data-form input[name='sharing']").val(sharing);
             $("#search-data-form input[name='dataType']").val(dataType);
-            Data3D.toggleLayer('data-search-filter');
+
+            _makeFilterContents($('#filter-contents-sharing'), $('#data-search-filter .sharing.on .txt').text());
+            _makeFilterContents($('#filter-contents-type'), $('#data-search-filter .data-type.on .txt').text());
+
+            //Data3D.toggleLayer('data-search-filter');
             that.getDatas(1);
         });
         // 데이터 필터 초기화
@@ -92,12 +103,13 @@ const Data3D = function(magoInstance) {
             if (e.keyCode === 13) that.getDatas(1);
         });
 
-        // 데이터 그룹/필터 초기화
+        // 전체 필터 초기화
         $("#search-data-reset").click(function() {
             /*$("#search-data-form input:text[name='searchValue']").val("");*/
             $("#search-data-form input[name='dataGroupId']").val(0);
             $("#search-data-form input[name='sharing']").val("");
             $("#search-data-form input[name='dataType']").val("");
+            $("#filter-contents span span").text("");
             that.getDatas(1);
         });
 
