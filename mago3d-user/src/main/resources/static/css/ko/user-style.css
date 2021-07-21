@@ -3246,7 +3246,7 @@ text-align: center;
 .pop > .tableList > table {width: 100%; border:none;}
 .pop > .tableList > table th {padding: 3px 3px;vertical-align: middle;font-size:12px !important;font-weight:normal !important; color:black;background-color: #f8f8f8;border:none;}
 .pop > .tableList > table tr.space-top th, .pop > .tableList > table tr td.space-top {border-top:white;}
-.pop button.btnTextF {margin:0; padding:2px 10px; background:white; font-size:12px; border:1px solid silver; height:22pcolor:black; border-radius:0;}
+.pop button.btnTextF {margin:0; padding:2px 10px; background:white; font-size:12px;  border:1px solid silver; height:22px; color:black; border-radius:0;}
 .pop > .tableList > table tr.space-bottom td, .pop > .tableList > table tr td.space-bottom {border-bottom: 1px solid #dddddd;}
 
 button.goto {
