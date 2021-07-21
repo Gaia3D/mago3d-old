@@ -471,7 +471,12 @@ const SmltWater =(function() {
 		
 		_clearObjects(magoManager);
 		magoManager.setCameraMotion(true);
-		magoManager.waterManager = undefined;
+		
+		if(magoManager.waterManager) {
+			magoManager.waterManager.deleteObjects();
+			magoManager.waterManager = undefined;
+		}
+		
 	}
 	const _clearCreateResource = function(viewer) {
 		_clearGuidePoint(viewer);
@@ -568,7 +573,8 @@ const SmltWater =(function() {
 			rectangle : {
 				coordinates : coordinates,
 				material : Cesium.Color.DODGERBLUE.withAlpha(0.1),
-				heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
+				heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
+				height : 0
 			}
 		});
 		return rectangle;
@@ -651,24 +657,40 @@ SmltWater.offAutoRun = function() {
 }
 
 SmltWater.runOnLoaded = function(water) {
+	var first = SmltWater.reservedWork.timeout.length === 0;
 	for(var i in SmltWater.reservedWork.timeout) {
 		clearTimeout(SmltWater.reservedWork.timeout[i]);
 	}
 	SmltWater.reservedWork.timeout = [];
 	
-	water.active = false;
-	water.active = true;
+	if(first) {
+		water.active = false;
+		water.active = true;
+		
+		water.mode = "area";
+		water.action = water.getModeAction("area");
+		
+		const areaRectangle = new Cesium.Rectangle(2.210865731694948, 0.6518091533419034, 2.2117441433463463, 0.6524349961328941);
+		
+		water.action._createRectangle.call(water, areaRectangle);
+		water.action.done.call(water, areaRectangle);
+		water.action.terminate.call(water);
+	} else {
+		water.action = water.getModeAction("delete");
+		var waterObject = water.getWaterObject();
+		for(var key in waterObject) {
+			var entity = waterObject[key];
+			water.action.delete.call(water, entity, true);
+		}
+		
+		water.action.terminate.call(water);
+		
+		var magoManager = water.magoInstance.getMagoManager();
+		magoManager.waterManager.resetSimulation();
+	}
 	
-	water.mode = "area";
-	water.action = water.getModeAction("area");
 	
-	const areaRectangle = new Cesium.Rectangle(2.210865731694948, 0.6518091533419034, 2.2117441433463463, 0.6524349961328941);
-	
-	water.action._createRectangle.call(water, areaRectangle);
-	water.action.done.call(water, areaRectangle);
-	water.action.terminate.call(water);
-	
-	$('#smlt-natural-water-sub button[data-type="water"]').trigger('click');
+	//$('#smlt-natural-water-sub button[data-type="water"]').trigger('click');
 	
 	water.mode = "create";
 	water.action = water.getModeAction("create");

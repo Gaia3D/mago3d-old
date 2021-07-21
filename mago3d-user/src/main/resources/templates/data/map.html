@@ -327,7 +327,9 @@
 			MAGO.backgroundRunningCar = new BackgroundRunningCar(magoInstance);	
 		},6000);
 		
-		MAGO.backgroundRunningBuilding = new BackgroundRunningBuilding(magoInstance);
+		setTimeout(function() {
+			MAGO.backgroundRunningBuilding = new BackgroundRunningBuilding(magoInstance);	
+		},8000);
 	}
 
 	// 데모 사이트용 나무, 가로등, 신호등
