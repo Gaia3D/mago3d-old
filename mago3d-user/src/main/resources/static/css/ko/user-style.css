@@ -5328,7 +5328,7 @@ hr.datalist-line {width:100%;border:none; margin:0; padding:0; border-bottom:1px
 .data-go {width:120px; padding:0;}
 .data-go a.move {display:inline-block; width:20px; height:20px; text-indent:18px; margin-top:-2px; margin-left:20px; background:url(/images/ko/ic_move.png) no-repeat left 4px;}
 #map-control-popup div.data-go {width:100px; padding:0;}
-span.sumnail {float:right; width:50px; height:50px; border:1px solid #e9e8e8;}
+span.sumnail {float:right; width:50px; height:50px; border:1px solid #e9e8e8; background:white;}
 span.sumnail img{-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);}
 #data-library-popup > .tbl-library tr input[type="checkbox"] {vertical-align: middle;}
 .poplayer > .tbl-library {margin-top:10px; border-top:1px solid #e9e8e8;}
