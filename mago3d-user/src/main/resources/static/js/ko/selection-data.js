@@ -162,15 +162,15 @@ SelectedDataController.prototype.setEventHandler = function() {
 		that.restoreColor();
 	});
 	
-	$('#data-controll-wrap div.object-setup-color span.color-value,#data-controll-wrap div.object-setup-color input[type="text"]').click(function() {
-		$('#data-controll-wrap div.object-setup-color input[type="color"]').trigger('click');
+	$('#data-control-wrap div.object-setup-color span.color-value,#data-control-wrap div.object-setup-color input[type="text"]').click(function() {
+		$('#data-control-wrap div.object-setup-color input[type="color"]').trigger('click');
 	}).css('cursor','pointer');
 	
 	//칼라피커 색상 인풋에 저용
-	$('#data-controll-wrap div.object-setup-color input[type="color"]').change(function(){
+	$('#data-control-wrap div.object-setup-color input[type="color"]').change(function(){
 		var color = $(this).val();
-		$('#data-controll-wrap div.object-setup-color span.color-value').css('background', color);
-		$('#data-controll-wrap div.object-setup-color input[type="text"]').val(color);
+		$('#data-control-wrap div.object-setup-color span.color-value').css('background', color);
+		$('#data-control-wrap div.object-setup-color input[type="text"]').val(color);
 	});
 	
 	//회전 변경 range 조절
@@ -308,7 +308,7 @@ SelectedDataController.prototype.setEventHandler = function() {
 	var rotSliderOn = false;
 	var x =0;
 	
-	var rotationSetupDivElement = document.querySelector('#data-controll-wrap .object-setup-rotation');
+	var rotationSetupDivElement = document.querySelector('#data-control-wrap .object-setup-rotation');
 	
 	rotationSetupDivElement.addEventListener('mousedown', function(e) {
 		if(e.target && e.target.className === 'scroll') {
@@ -373,7 +373,7 @@ SelectedDataController.prototype.setEventHandler = function() {
 	});
 	scrollObserver.observe(rotationSetupDivElement, { attributes: true, attributeFilter:['style'],subtree: true,childList:true, attributeOldValue:true});
 	
-	$('#data-controll-wrap').on('change', 'input.data-control-rotation-input', rotChange);
+	$('#data-control-wrap').on('change', 'input.data-control-rotation-input', rotChange);
 }
 
 SelectedDataController.prototype.selectData = function(selected, parent) {
@@ -406,9 +406,9 @@ SelectedDataController.prototype.selectData = function(selected, parent) {
 			}
 			var title = dataGroupName + ' / ' + tempDataName + ((parent) ? ' / ' + selectData.objectId : '');
 			
-			$('#data-controll-wrap-header').text(title);
+			$('#data-control-wrap-header').text(title);
 		} else if(selectData instanceof Mago3D.MagoRenderable) {
-			$('#data-controll-wrap-header').text(selectData._guid);
+			$('#data-control-wrap-header').text(selectData._guid);
 		}
 	}
 	
@@ -424,9 +424,9 @@ SelectedDataController.prototype.selectData = function(selected, parent) {
 				hex = selectData.color4.getHexCode();
 			}
 		}
-		$('#data-controll-wrap div.object-setup-color span.color-value').css('background', hex);
-		$('#data-controll-wrap div.object-setup-color input[type="text"]').val(hex);
-		$('#data-controll-wrap div.object-setup-color input[type="color"]').val(hex).change;
+		$('#data-control-wrap div.object-setup-color span.color-value').css('background', hex);
+		$('#data-control-wrap div.object-setup-color input[type="text"]').val(hex);
+		$('#data-control-wrap div.object-setup-color input[type="color"]').val(hex).change;
 		//$('#dcColorPicker').val(hex).change();
 	}
 	
@@ -475,9 +475,9 @@ SelectedDataController.prototype.changePositionInfo = function(obj) {
 	$('#data-controll-input-altitude').val(obj.altitude);
 
 	//set span margin-left, change input value
-	$('#data-controll-wrap .object-setup-rotation span[data-type="pitch"]').css('marginLeft', `${API.MATH.minMaxNormalize(minRotation, maxRotation, obj.pitch, 90)}px`);
-	$('#data-controll-wrap .object-setup-rotation span[data-type="heading"]').css('marginLeft', `${API.MATH.minMaxNormalize(minRotation, maxRotation, obj.heading, 90)}px`);
-	$('#data-controll-wrap .object-setup-rotation span[data-type="roll"]').css('marginLeft', `${API.MATH.minMaxNormalize(minRotation, maxRotation, obj.roll, 90)}px`);
+	$('#data-control-wrap .object-setup-rotation span[data-type="pitch"]').css('marginLeft', `${API.MATH.minMaxNormalize(minRotation, maxRotation, obj.pitch, 90)}px`);
+	$('#data-control-wrap .object-setup-rotation span[data-type="heading"]').css('marginLeft', `${API.MATH.minMaxNormalize(minRotation, maxRotation, obj.heading, 90)}px`);
+	$('#data-control-wrap .object-setup-rotation span[data-type="roll"]').css('marginLeft', `${API.MATH.minMaxNormalize(minRotation, maxRotation, obj.roll, 90)}px`);
 }
 SelectedDataController.prototype.changeHeightInfo = function(heightReference) {
 	switch(heightReference) {
@@ -542,7 +542,7 @@ SelectedDataController.prototype.changeReferenceColor = function() {
 	}
 	var data = this.parent.data;
 
-	var rgbArray = hex2rgbArray($('#data-controll-wrap div.object-setup-color input[type="text"]').val());
+	var rgbArray = hex2rgbArray($('#data-control-wrap div.object-setup-color input[type="text"]').val());
 	changeColorAPI(this.magoInstance, data.projectId, data.nodeId, [this.selected.objectId], 'isPhysical=true', rgbArray.join(','));
 }
 
@@ -553,7 +553,7 @@ SelectedDataController.prototype.changeF4dColor = function() {
 	}
 	var data = this.selected.data;
 
-	var rgbArray = hex2rgbArray($('#data-controll-wrap div.object-setup-color input[type="text"]').val());
+	var rgbArray = hex2rgbArray($('#data-control-wrap div.object-setup-color input[type="text"]').val());
 	changeColorAPI(this.magoInstance, data.projectId, data.nodeId, null, 'isPhysical=true', rgbArray.join(','));
 }
 
@@ -562,7 +562,7 @@ SelectedDataController.prototype.changeNativeColor = function() {
 		alert(JS_MESSAGE["data.select"]);
 		return;
 	}
-	var rgbArray = hex2rgbArray($('#data-controll-wrap div.object-setup-color input[type="text"]').val());
+	var rgbArray = hex2rgbArray($('#data-control-wrap div.object-setup-color input[type="text"]').val());
 	this.selected.setOneColor(rgbArray[0]/255,rgbArray[1]/255,rgbArray[2]/255,1);
 }
 
@@ -648,9 +648,9 @@ SelectedDataController.prototype.getPositionInfoFromGeolocationData = function(g
 
 SelectedDataController.prototype.toggleWrap = function(show) {
 	if(show) {
-		$('#data-controll-wrap').show();
+		$('#data-control-wrap').show();
 	} else {
-		$('#data-controll-wrap').hide();
+		$('#data-control-wrap').hide();
 	}
 	/*var isRightMenuButton = false;
 	if(show) {
