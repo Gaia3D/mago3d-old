@@ -19,7 +19,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.support.RequestDataValueProcessor;
 
 import java.time.Duration;
@@ -86,10 +88,10 @@ public class ServletConfig implements WebMvcConfigurer {
 	}
 
 	// spring boot 버전 업 데이터 되면서 bean name 충돌 발생, 이게 필요 없을거 같은데...
-//	@Bean
-//	public LocaleResolver localeResolver() {
-//        return new SessionLocaleResolver();
-//	}
+	@Bean
+	public LocaleResolver localeResolver() {
+        return new SessionLocaleResolver();
+	}
 
 	@Bean
 	public ReloadableResourceBundleMessageSource messageSource(){

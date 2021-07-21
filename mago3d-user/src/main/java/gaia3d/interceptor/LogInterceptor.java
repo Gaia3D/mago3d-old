@@ -2,6 +2,7 @@ package gaia3d.interceptor;
 
 import gaia3d.domain.Key;
 import gaia3d.domain.accesslog.AccessLog;
+import gaia3d.domain.user.UserGroupType;
 import gaia3d.domain.user.UserSession;
 import gaia3d.service.AccessLogService;
 import gaia3d.support.URLSupport;
@@ -68,8 +69,8 @@ public class LogInterceptor implements HandlerInterceptor {
     	HttpSession session = request.getSession();
     	UserSession userSession = (UserSession)session.getAttribute(Key.USER_SESSION.name());
     	if(userSession == null || userSession.getUserId() == null || "".equals(userSession.getUserId())) {
-    		accessLog.setUserId("guest");
-    		accessLog.setUserName("guest");
+    		accessLog.setUserId(UserGroupType.GEST.name());
+    		accessLog.setUserName(UserGroupType.GEST.name());
     	} else {
     		accessLog.setUserId(userSession.getUserId());
     		accessLog.setUserName(userSession.getUserName());

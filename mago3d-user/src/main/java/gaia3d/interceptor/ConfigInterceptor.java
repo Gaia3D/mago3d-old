@@ -6,6 +6,7 @@ import gaia3d.domain.YOrN;
 import gaia3d.domain.cache.CacheManager;
 import gaia3d.domain.menu.Menu;
 import gaia3d.domain.user.UserGroupMenu;
+import gaia3d.domain.user.UserGroupType;
 import gaia3d.domain.user.UserSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class ConfigInterceptor implements HandlerInterceptor {
     	// 세션이 존재하지 않는 경우
     	UserSession userSession = (UserSession)session.getAttribute(Key.USER_SESSION.name());
 		String userId = userSession != null ? userId = userSession.getUserId() : null;
-		Integer userGroupId = userSession != null ? userGroupId = userSession.getUserGroupId() : 3;
+		Integer userGroupId = userSession != null ? userGroupId = userSession.getUserGroupId() : UserGroupType.GEST.getValue();
 
 		List<UserGroupMenu> userGroupMenuList = CacheManager.getUserGroupMenuList(userGroupId);
 		Integer clickParentId = null;

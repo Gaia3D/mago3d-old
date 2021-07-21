@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * MyPage
@@ -107,20 +106,4 @@ public class MyPageController {
 		}
 		return null;
 	}
-
-	/**
-	 * request.getLocale을 하면 브라우저 local을 타서, select box 로 lang을 선택할 경우 정상적으로 동작하지 않음
-	 * @param request
-	 * @return
-	 */
-	private Locale getUserLocale(HttpServletRequest request) {
-		String lang = (String)request.getSession().getAttribute(Key.LANG.name());
-		log.info("@@@@@@@@@@@ lang = {}", lang);
-		if(lang == null || "".equals(lang)) {
-			Locale myLocale = request.getLocale();
-			lang = myLocale.getLanguage();
-		}
-		return new Locale(lang);
-	}
-
 }

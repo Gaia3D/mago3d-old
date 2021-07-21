@@ -1,12 +1,7 @@
 package gaia3d.controller.rest;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import gaia3d.domain.Key;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.LocaleResolver;
 
-import gaia3d.domain.Key;
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Locale 관리
@@ -49,8 +47,6 @@ public class LocaleRestController {
 				|| Locale.JAPAN.getLanguage().equals(lang)) {
 			request.getSession().setAttribute(Key.LANG.name(), lang);
 			Locale locale = new Locale(lang);
-//				LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
-//				localeResolver.setLocale(request, response, locale);
 			localeResolver.setLocale(request, response, locale);
 		}
 
