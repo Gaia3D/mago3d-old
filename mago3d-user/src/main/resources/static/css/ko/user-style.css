@@ -144,7 +144,7 @@ em {color: #573592;	font-style: normal;	font-weight: bold; }
     background-color: #f7f7f7;
     font-weight: normal;
     font-family:inherit;
-    color: #7d7d7d;
+    color: #7d7d7d; 
 }
 .ui-state-default a,
 .ui-state-default a:link,
@@ -181,9 +181,6 @@ em {color: #573592;	font-style: normal;	font-weight: bold; }
 
 
 
-/* Icon
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-
 
 
 /* Banner
@@ -194,7 +191,7 @@ em {color: #573592;	font-style: normal;	font-weight: bold; }
 	width: 100%;
 	border: 1px solid #e1e6ef;
 	box-sizing: border-box; }
-
+	
 .banner > div {
 	height: 100%;
 	display: table-cell;
@@ -204,37 +201,38 @@ em {color: #573592;	font-style: normal;	font-weight: bold; }
 .banner > div:first-child {
 	width: 32%;
 	color: #fff; }
-
+	
 .banner > div:last-child {
 	width: 68%; }
-
+	
 .banner-title {
 	color: #6a6a6a;
 	font-size: 1.2rem;
 	line-height: 3.3rem;
 	vertical-align: middle;
 	padding-right: 5px; }
-
+	
 .banner-number {
 	color: #513767;
 	font-size: 3.3rem;
 	line-height: 3.3rem;
 	vertical-align: middle; }
-
+	
 .banner-unit {
 	color: #513767;
 	font-size: 2.4rem;
 	line-height: 3.3rem;
 	vertical-align: middle; }
-
+	
 .banner.info-generates > div:first-child {
 	background-color: #36a9e1; }
-
+	 
 .banner.info-success > div:first-child {
 	background-color: #bdea74; }
-
+	 
 .banner.info-failures > div:first-child {
 	background-color: #ff5454; }
+
 
 
 
@@ -394,7 +392,7 @@ input[type="button"],
 .ui-dialog .ui-dialog-buttonpane button {
 	display: inline-block;
 	font-size: 1.2rem;
-	/*height: 30px; */
+	height: 30px;
 	padding: 6px 10px;
 	box-sizing: border-box;
 	margin: 0;
@@ -410,9 +408,10 @@ input[type="button"],
 	border-radius: 0;
 	border: 1px solid #d9d9da;
 	cursor: pointer; }
-
+	
 .ui-dialog .ui-dialog-buttonpane button .ui-button-text {
 	padding: 0; }
+	
 button:hover,
 button:hover,
 input[type="submit"]:hover,
@@ -427,9 +426,9 @@ input[type="button"]:focus,
 .ui-dialog .ui-dialog-buttonpane button:focus {
 	background-color: #747474;
 	border:1px solid #636363;
-	color:black;
+	color:white;
 	outline: 0; }
-	
+
 a.button {
 	line-height: 28px;
 	padding: 0px 10px;
@@ -443,24 +442,24 @@ a.button:hover {
 .button-group input[type="reset"],
 .button-group input[type="button"] {
 	margin-right: 5px !important;
-	background:white;
+	background:white; 
 	border:1px solid #206ee7;
 	height:46px;
 	line-height:46px;
 	padding: 0 30px;
-	color:#206ee7;
+	color:#206ee7; 
 	border-radius:3px;
 	font-size:1.2em;
 	}
 .button-group input[type="submit"], .button-group button.btn {
 	margin-right: 5px !important;
-	background:#206ee7;
+	background:#206ee7; 
 	border:1px solid #206ee7;
 	height:46px;
 	padding: 0 30px;
-	color:white;
+	color:white; 
 	border-radius:3px;
-	font-size:1.2em;
+	font-size:1.2em;	
 	}
 .button-group .button:hover,
 .button-group button:hover,
@@ -485,7 +484,7 @@ a.button:hover {
 .button-group.u-pull-left input[type="button"] {
 	margin-left: 0 !important;
 	margin-right: 5px !important; }
-
+	
 .button-group.u-pull-right .button,
 .button-group.u-pull-right button,
 .button-group.u-pull-right input[type="submit"],
@@ -493,14 +492,14 @@ a.button:hover {
 .button-group.u-pull-right input[type="button"] {
 	margin-left: 5px !important;
 	margin-right: 0 !important; }
-
+	
 .page-content > .button-group,
 form > .button-group {
 	margin: 30px 0; }
-
+	
 .button-group .center-buttons {
 	text-align: center; }
-
+	
 .button-group .center-buttons a.button,
 .button-group .center-buttons button,
 .button-group .center-buttons input[type="submit"],
@@ -3247,7 +3246,7 @@ text-align: center;
 .pop > .tableList > table {width: 100%; border:none;}
 .pop > .tableList > table th {padding: 3px 3px;vertical-align: middle;font-size:12px !important;font-weight:normal !important; color:black;background-color: #f8f8f8;border:none;}
 .pop > .tableList > table tr.space-top th, .pop > .tableList > table tr td.space-top {border-top:white;}
-.pop button.btnTextF {margin:0; padding:5px 10px; background:white; font-size:12px; border:1px solid silver; color:black; border-radius:0;}
+.pop button.btnTextF {margin:0; padding:2px 10px; background:white; font-size:12px; border:1px solid silver; height:22pcolor:black; border-radius:0;}
 .pop > .tableList > table tr.space-bottom td, .pop > .tableList > table tr td.space-bottom {border-bottom: 1px solid #dddddd;}
 
 button.goto {
@@ -4774,27 +4773,12 @@ float: right;
 }
 
 /* 데이터 목록 / 범례 */
-/*
-.legendWrap {
-margin-bottom: 10px;
-text-align: center;
-border: 1px solid #ddd;
-padding: 10px;
-}
-.legendWrap legend {
-padding: 0 10px;
-}
-.legendWrap li {
-display: inline-flex;
-margin-right: 5px;
-align-items: center;
-}
-*/
+
 .legendWrap {
 clear:both;
 width:340px;
 margin:0 auto;
-margin-top:10px;
+margin-top:15px;
 margin-bottom: 20px;
 padding:0;
 border: 1px solid #ddd;
@@ -4805,9 +4789,9 @@ vertical-align: middle;
 .legendWrap > dt {
 display: inline-block;
 width: 65px;
-height:40px;
+height:34px;
 font-size:1em;
-line-height:40px;
+line-height:34px;
 text-align:center;
 margin:0;
 padding:  0;
@@ -4818,7 +4802,7 @@ border-right: 1px solid #ddd;
 .legendWrap > dd {
 display: inline;
 margin-left: 10px;
-line-height:40px;
+line-height:34px;
 }
 span.legend {
 display: inline-block;
