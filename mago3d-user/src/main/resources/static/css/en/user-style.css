@@ -2784,7 +2784,7 @@ span.data-username, .data-go, span.txt-guide, .data-layerlist-ttl {font-family: 
 h3 {color:#343434; font-size:18px;}
 h1.sc-tit {margin-top:36px;}
 h2.join, h2.find-password  {font-size:30px; padding-top:80px; padding-bottom:40px; font-family: 'NotoKrM' !important;}
-h3.data {clear:both; height:29px; font-size:16px; color:#086ada; line-height:28px; vertical-align:middle; display:inline-block; margin:0; padding:0; font-family: 'NotoKrM';}
+h3.data {clear:both; height:29px; font-size:17px; color:#0c43b7; line-height:28px; vertical-align:middle; display:inline-block; margin:0; padding:0; padding-left:20px; font-family: 'NotoKrM';}
 h3.nodata {clear:both; height:29px; font-size:15px; color:#666666; line-height:28px; font-weight:normal; vertical-align:middle; display:inline-block; margin:0; padding:0; margin-top:20px;}
 h3.data a {color:#063892;}
 h3.sttl {height:28px; color:#0764cd; font-size:18px !important;  width:200px;vertical-align:middle; display:inline-block; margin:6px 0 0 0; padding:0px; font-weight:600;}
@@ -5004,7 +5004,7 @@ button::-moz-focus-inner { border: 0; padding: 0;}
 button, [type="button"],[type="reset"],[type="submit"] {-webkit-appearance: button;}
 button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none; padding: 0;}
 button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring {  outline: 1px dotted ButtonText;}
-h1.magologo {display:block; width:300px; font-size:20px; margin:0 0 0 20px; padding:0; font-family: 'NotoKrM'; height:50px; font-weight:normal; line-height:47px; text-indent:106px;  background:url(/images/en/ic_sbmenu.png) no-repeat -338px -46px;}
+h1.magologo {display:block; width:300px; font-size:19px; margin:0 0 0 20px; padding:0; font-family: 'NotoKrM'; height:50px; font-weight:normal; line-height:47px; text-indent:106px;  background:url(/images/en/ic_sbmenu.png) no-repeat -338px -46px;}
 
 /* common */
 .pgcount {width:380px; margin:0 auto; font-size:12px; height:24px; border-bottom:1px solid #e1e1e1; margin-left:0; margin-top:30px;}
@@ -5167,13 +5167,13 @@ span.mago {color:#6649ca;}
 .tabmenu02> ul li {width:168px;}
 .tabmenu-data > ul li:first-child {text-indent:30px; background:white url(/images/en/ic_sb_tabmenu.png) no-repeat -135px 7px;}
 .tabmenu-data > ul li:nth-child(2) {text-indent:30px; background:white url(/images/en/ic_sb_tabmenu.png) no-repeat -135px -22px;}
-.tabmenu-data > ul li:last-child {text-indent:30px; background:white url(/images/en/ic_sb_tabmenu.png) no-repeat -135px -55px;}
+.tabmenu-data > ul li:last-child {text-indent:30px; background:white url(/images/en/ic_sb_tabmenu.png) no-repeat -150px -55px;}
 .tabmenu-data > ul li:first-child:hover, .tabmenu-data > ul li:first-child:focus {background:white url(/images/en/ic_sb_tabmenu.png) no-repeat -307px 7px;}
 .tabmenu-data > ul li:nth-child(2):hover, .tabmenu-data > ul li:nth-child(2):focus {background:white url(/images/en/ic_sb_tabmenu.png) no-repeat -308px -22px;}
-.tabmenu-data > ul li:last-child:hover, .tabmenu-data > ul li:last-child:focus {background:white url(/images/en/ic_sb_tabmenu.png) no-repeat -308px -55px;}
-.tabmenu-data > ul li:first-child.actived {background:#1289f8 url(/images/en/ic_sb_tabmenu.png) no-repeat 5px 7px;}
-.tabmenu-data > ul li:nth-child(2).actived {background:#1289f8 url(/images/en/ic_sb_tabmenu.png) no-repeat 5px -22px;}
-.tabmenu-data > ul li:last-child.actived {background:#1289f8 url(/images/en/ic_sb_tabmenu.png) no-repeat 5px -55px;}
+.tabmenu-data > ul li:last-child:hover, .tabmenu-data > ul li:last-child:focus {background:white url(/images/en/ic_sb_tabmenu.png) no-repeat -323px -55px;}
+.tabmenu-data > ul li:first-child.actived {background:#1289f8 url(/images/en/ic_sb_tabmenu.png) no-repeat 3px 7px;}
+.tabmenu-data > ul li:nth-child(2).actived {background:#1289f8 url(/images/en/ic_sb_tabmenu.png) no-repeat 3px -22px;}
+.tabmenu-data > ul li:last-child.actived {background:#1289f8 url(/images/en/ic_sb_tabmenu.png) no-repeat 3px -55px;}
 .tabmenu-iot > ul li:first-child {text-indent:35px; background:white url(/images/en/ic_sb_tabmenu.png) no-repeat -125px -124px;}
 .tabmenu-iot > ul li:nth-child(2) {text-indent:38px; background:white url(/images/en/ic_sb_tabmenu.png) no-repeat -118px -90px;}
 .tabmenu-iot > ul li:first-child:hover, .tabmenu-data > ul li:first-child:focus {background:white url(/images/en/ic_sb_tabmenu.png) no-repeat -263px -124px;}
@@ -5203,19 +5203,15 @@ input:checked + .slider {background-color: #1289f8;}
 input:checked + .slider:before {background-color: white;  transform: translateX(23px);}
 
 /* data */
-/*
-.sb-page > .pgcount {width:100%; margin:0 auto; font-size:12px; height:24px; border-bottom:1px solid #e1e1e1;}
-.sb-page > .pgcount .pgcount-total {float:left; margin-left:20px;}
-.sb-page > .pgcount .pgcount-number {float:right; margin-right:20px;}
-*/
 .sb-page {width:100%; margin:0; padding:0;}
-.sb-page > .datalist {width:340px; margin:0 auto;  padding:10px 0 13px 0; height:75px;}
+.sb-page > .datalist {width:100%; margin:0 auto; padding:10px 0 15px 0; height:75px;}
+.sb-page > .datalist:hover { background:#f7f9fa; }
 .sb-page .it-select {background:#f6faff;}
 .datalist .data-username {display:inline-block; font-size:12px; vertical-align:middle; margin:0 0 0 5px; border:1px solid #e1e1e1; border-radius:16px; padding:1px 10px;}
-.datalist .data-go {float:right; width:140px; text-align:right; height:27px; font-size:13px; line-height:16px; margin-top:8px; padding:0;}
-.datalist .data-go a.move {float:left;  width:50px; margin:0; padding:0; display:block; text-indent:21px; background:url(/images/en/ic_move.png) no-repeat left 0;}
+.datalist .data-go {float:right; width:140px; text-align:right; height:27px; font-size:13px; line-height:16px; margin-top:12px; padding:0; padding-right:20px;}
+.datalist .data-go a.move {float:left;  width:50px; margin:0; padding:0; display:block; text-indent:21px; background:url(/images/ko/ic_move.png) no-repeat left 0;}
 .datalist .data-go > label {width:38px;}
-.datalist .data-group {margin-top:3px; padding:0; font-size:13px; color:#787878;}
+.datalist .data-group {margin-top:3px; padding:0; font-size:13px; color:#787878; padding-left:20px;}
 span.gap {display:inline-block; width:3px; height:3px; background:#bcbcbc; margin:10px 2px 2px 2px; }
 span.ttl {color:black;}
 hr.datalist-line {width:100%;border:none; margin:0; padding:0; border-bottom:1px solid #e1e1e1;}

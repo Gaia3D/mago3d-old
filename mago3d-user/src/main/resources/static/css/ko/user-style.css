@@ -2783,9 +2783,9 @@ span.data-username, .data-go, span.txt-guide, .data-layerlist-ttl {font-family: 
 h3 {color:#343434; font-size:18px;}
 h1.sc-tit {margin-top:36px;}
 h2.join, h2.find-password  {font-size:30px; padding-top:80px; padding-bottom:40px; font-family: 'NotoKrM' !important;}
-h3.data {clear:both; height:29px; font-size:16px; color:#086ada; line-height:28px; vertical-align:middle; display:inline-block; margin:0; padding:0; font-family: 'NotoKrM';}
+h3.data {clear:both; height:29px; font-size:17px; color:#0c43b7; line-height:28px; vertical-align:middle; display:inline-block; margin:0; padding:0; padding-left:20px; font-family: 'NotoKrM';}
 h3.nodata {clear:both; height:29px; font-size:15px; color:#666666; line-height:28px; font-weight:normal; vertical-align:middle; display:inline-block; margin:0; padding:0; margin-top:20px;}
-h3.data a {color:#063892;}
+h3.data a {color:#0c43b7;}
 h3.sttl {height:28px; color:#0764cd; font-size:18px !important;  width:200px;vertical-align:middle; display:inline-block; margin:6px 0 0 0; padding:0px; font-weight:600;}
 h3.popup-data {font-size:20px; height:28px; color:#1d2540; line-height:28px; vertical-align:middle; display:inline-block; margin:0; padding:0; font-weight:600;}
 
@@ -4837,8 +4837,7 @@ position: relative;
 margin-bottom: 5px;
 padding: 5px 0 0 0;
 border-radius: 5px;
-/* border-right: 2px solid #c7e0f2; */
-/* border-bottom: 2px solid #c7e0f2; */
+border:1px solid red;
 /* background-color: #ecf7ff; */
 background-color: #c7e0f2;
 }
@@ -5204,13 +5203,14 @@ input:checked + .slider:before {background-color: white;  transform: translateX(
 
 /* data */
 .sb-page {width:100%; margin:0; padding:0;}
-.sb-page > .datalist {width:340px; margin:0 auto;  padding:10px 0 13px 0; height:75px;}
+.sb-page > .datalist {width:100%; margin:0 auto; padding:10px 0 15px 0; height:75px;}
+.sb-page > .datalist:hover { background:#f7f9fa; }
 .sb-page .it-select {background:#f6faff;}
 .datalist .data-username {display:inline-block; font-size:12px; vertical-align:middle; margin:0 0 0 5px; border:1px solid #e1e1e1; border-radius:16px; padding:1px 10px;}
-.datalist .data-go {float:right; width:140px; text-align:right; height:27px; font-size:13px; line-height:16px; margin-top:8px; padding:0;}
+.datalist .data-go {float:right; width:140px; text-align:right; height:27px; font-size:13px; line-height:16px; margin-top:12px; padding:0; padding-right:20px;}
 .datalist .data-go a.move {float:left;  width:50px; margin:0; padding:0; display:block; text-indent:21px; background:url(/images/ko/ic_move.png) no-repeat left 0;}
 .datalist .data-go > label {width:38px;}
-.datalist .data-group {margin-top:3px; padding:0; font-size:13px; color:#787878;}
+.datalist .data-group {margin-top:3px; padding:0; font-size:13px; color:#787878; padding-left:20px;}
 span.gap {display:inline-block; width:3px; height:3px; background:#bcbcbc; margin:10px 2px 2px 2px; }
 span.ttl {color:black;}
 hr.datalist-line {width:100%;border:none; margin:0; padding:0; border-bottom:1px solid #e1e1e1;}
