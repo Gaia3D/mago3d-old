@@ -2,10 +2,8 @@
 <script id="data-list-source" type="text/x-handlebars-template">
 {{#greaterThan dataList.length 0}}
 {{#each dataList}}
-<div class="datalist">
-    <h3 class="data">
-        <a href="#" onclick="Data3D.dataInfoPopupLayerOnOff('/datas/{{dataId}}'); return false;">{{dataName}}</a>
-    </h3>
+<div class="datalist" onclick="Data3D.dataInfoPopupLayerOnOff('/datas/{{dataId}}', this)">
+    <h3 class="data"><a href="#">{{dataName}}</a></h3>
 
     {{#ifMatch sharing 'common'}}
     <span class="legend co marL5">C</span>

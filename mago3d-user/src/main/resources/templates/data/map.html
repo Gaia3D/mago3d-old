@@ -73,6 +73,11 @@
 		<div th:replace="~{/data/3d/data-group-search-dialog :: #data-group-search}"></div>
 		<div th:replace="~{/data/3d/data-filter-search-dialog :: #data-filter-search}"></div>
 
+		<div id="data-info-dialog-dhtml" class="descdata popuplayer"></div>
+		<div id="data-group-dialog-dhtml" class="descdata popuplayer"></div>
+		<div th:replace="~{/data/3d/data-dialog-template :: #data-info-source}"></div>
+		<div th:replace="~{/data/3d/data-group-dialog-template :: #data-group-info-source}"></div>
+
 		<div class="contentsBtn">
 			<button type="button" id="closeLeftBtn" th:title="#{common.close}" th:text="#{common.close}" style="display:none;"></button>
 		</div>
@@ -80,11 +85,6 @@
 
 	</div>
 	<!-- E: NAVWRAP -->
-
-	<div id="data-info-dialog-dhtml" class="detaildata popuplayer"></div>
-	<div id="data-group-dialog-dhtml" class="detaildata popuplayer"></div>
-	<div th:replace="~{/data/3d/data-dialog-template :: #data-info-source}"></div>
-	<div th:replace="~{/data/3d/data-group-dialog-template :: #data-group-info-source}"></div>
 
 	<!-- S: GNB WRAP -->
 	<!--<div th:replace="~{/fragments/global-search :: #gnbWrap}"></div>-->

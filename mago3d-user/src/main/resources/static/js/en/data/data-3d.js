@@ -21,7 +21,7 @@ const Data3D = function(magoInstance) {
         $('#data-group-search').draggable({containment: "window"});
         $('#data-filter-search').draggable({containment: "window"});
 
-        $('#data-info-dialog-dhtml').draggable({containment: "window"});
+        //$('#data-info-dialog-dhtml').draggable({containment: "window"});
         $('#data-group-dialog-dhtml').draggable({containment: "window"});
 
         /** 필터 ON/OFF **/
@@ -224,10 +224,12 @@ Data3D.dataOnOff = function(groupId, dataKey, tiling, _this) {
 }
 
 // 데이터 상세 팝업 레이어
-Data3D.dataInfoPopupLayerOnOff = function(url) {
+Data3D.dataInfoPopupLayerOnOff = function(url, _this) {
+    $(_this).addClass('on');
+    $(_this).siblings().removeClass('on');
     const callback = function(msg) {
         if(msg.statusCode <= 200) {
-            console.info(msg.dataInfo);
+            //console.info(msg.dataInfo);
             const template = Handlebars.compile($("#data-info-source").html());
             $("#data-info-dialog-dhtml").html("").append(template(msg.dataInfo)).show();
         } else {
