@@ -2,26 +2,26 @@
 <!-- 팝업레이어/필터 -->
 <div id="data-filter-search" class="filter popuplayer-s">
 	<button type="button" class="pop-sclose" onclick="Data3D.toggleLayer('data-filter-search');$('#search-data-filter').toggleClass('on');"><span class="blind">팝업레이어 닫기</span></button>
-	<span class="layer-ttl">공유유형</span>
+	<span class="layer-ttl" th:title="#{data.group.sharing}" th:text="#{data.group.sharing}"></span>
 	<div class="layer-bx">
 		<div class="sharing layer-list" data-sharing="common">
 			<a class="icon common"></a>
-			<a class="txt">공통</a>
+			<a class="txt" th:title="#{common.common}" th:text="#{common.common}"></a>
 		</div>
 		<div class="sharing layer-list" data-sharing="public">
 			<a class="icon open"></a>
-			<a class="txt">공개</a>
+			<a class="txt" th:title="#{common.public}" th:text="#{common.public}"></a>
 		</div>
 		<div class="sharing layer-list" data-sharing="private">
 			<a class="icon notopen"></a>
-			<a class="txt">비공개</a>
+			<a class="txt" th:title="#{common.private}" th:text="#{common.private}"></a>
 		</div>
 		<div class="sharing layer-list" data-sharing="group">
 			<a class="icon group"></a>
-			<a class="txt">그룹</a>
+			<a class="txt" th:title="#{common.group}" th:text="#{common.group}"></a>
 		</div>
 	</div>
-	<span class="layer-ttl marT20">데이터 타입</span>
+	<span class="layer-ttl marT20" th:title="#{common.data.type}" th:text="#{common.data.type}"></span>
 	<div class="layer-bx">
 		<div class="data-type layer-list" data-type="citygml">
 			<a class="icon file"></a>
@@ -53,8 +53,8 @@
 		</div>
 	</div>
 	<div class="popuplayer-btn marT20">
-		<button type="button" id="data-filter-search-apply" class="p-btn general">적용</button>
-		<button type="button" id="data-filter-search-reset" class="p-btn cancel">필터초기화</button>
+		<button type="button" id="data-filter-search-apply" class="p-btn general" th:title="#{common.apply}" th:text="#{common.apply}"></button>
+		<button type="button" id="data-filter-search-reset" class="p-btn cancel" th:title="#{data.filter.initialization}" th:text="#{data.filter.initialization}"></button>
 	</div>
 </div>
 </html>
