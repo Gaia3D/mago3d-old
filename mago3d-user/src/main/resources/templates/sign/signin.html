@@ -22,29 +22,29 @@
 		</select>
 	</form>
 	<div class="login-wrapper">
-		<img th:src="@{/images/{lang}/mago3d_logo.png(lang=${lang})}" alt="디지털트윈 플랫폼, mago3D" />
+		<img th:src="@{/images/{lang}/mago3d_logo.png(lang=${lang})}" th:alt="#{alt.mago3d.logo}" />
 		<form id="signinForm" th:object="${signinForm}" method="post" action="/sign/process-signin" autocomplete="off">
 			<fieldset>
-				<legend>mago3D 로그인</legend>
-				<label for="userId"><span class="blind">아이디</span></label>
+				<legend><th:block th:text="#{legend.sign.in}"></th:block></legend>
+				<label for="userId"><span class="blind" ><th:block th:text="#{common.id}"></th:block></span></label>
 				<input type="text" id="userId" name="userId" class="inputid" th:title="#{common.id}" th:placeholder="#{common.id}" required="required" autofocus="autofocus" />
-				<label for="password"><span class="blind">비밀번호</span></label>
+				<label for="password"><span class="blind"><th:block th:text="#{common.password}"></th:block></span></label>
 				<input type="password" id="password" name="password" class="inputpwd" th:title="#{common.password}" th:placeholder="#{common.password}" required="required" />
-				<button type="submit" class="btn-login">로그인</button>
+				<button type="submit" class="btn-login"><th:block th:text="#{common.sign.in}"></th:block></button>
 			</fieldset>
 		</form>
 		<ul class="join">
-			<li class="on"><a href="/sign/signup">회원가입</a></li>
-			<li><a href="/sign/password/find">비밀번호 찾기</a></li>
+			<li class="on"><a href="/sign/signup"><th:block th:text="#{common.sign.up}"></th:block></a></li>
+			<li><a href="/sign/password/find"><th:block th:text="#{common.find.password}"></th:block></a></li>
 		</ul>
 		<hr class="h20">
 		<div class="autologin">
-			<span>쇼셜계정으로 로그인</span>
+			<span><th:block th:text="#{common.social.sign.in}"></th:block></span>
 			<ul>
-				<li><a href="/sign/social-signin/google" class="login-google" title="구글 아이디로 로그인"></a></li>
-				<li><a href="/sign/social-signin/facebook" class="login-facebook" title="페이스북 아이디로 로그인"></a></li>
-				<li><a href="/sign/social-signin/naver" class="login-naver" title="네이버 아아디로 로그인"></a></li>
-				<li><a href="/sign/social-signin/kakao" class="login-kakao" title="카카오 아이디로 로그인"></a></li>
+				<li><a href="/sign/social-signin/google" class="login-google" th:title="#{social.sign.in.google}"></a></li>
+				<li><a href="/sign/social-signin/facebook" class="login-facebook" th:title="#{social.sign.in.facebook}"></a></li>
+				<li><a href="/sign/social-signin/naver" class="login-naver" th:title="#{social.sign.in.naver}"></a></li>
+				<li><a href="/sign/social-signin/kakao" class="login-kakao" th:title="#{social.sign.in.kakao}"></a></li>
 			</ul>
 		</div>		
 	</div>
