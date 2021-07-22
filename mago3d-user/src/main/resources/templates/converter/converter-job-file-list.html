@@ -115,15 +115,15 @@
                         <tr>
                             <td class="col-number" th:text="${pagination.rowNumber - converterJobFileStat.index}"></td>
                             <td class="col-name ellipsis">
-                                <th:block th:if="${#strings.equalsIgnoreCase(converterJobFile.status, 'ready')}" th:text="'준비'"></th:block>
-                                <th:block th:if="${#strings.equalsIgnoreCase(converterJobFile.status, 'success')}" th:text="'성공'"></th:block>
-                                <th:block th:if="${#strings.equalsIgnoreCase(converterJobFile.status, 'fail')}" th:text="'실패'"></th:block>
+                                <th:block th:if="${#strings.equalsIgnoreCase(converterJobFile.status, 'ready')}" th:text="#{converter.status.ready}"></th:block>
+                                <th:block th:if="${#strings.equalsIgnoreCase(converterJobFile.status, 'success')}" th:text="#{converter.status.success}"></th:block>
+                                <th:block th:if="${#strings.equalsIgnoreCase(converterJobFile.status, 'fail')}" th:text="#{converter.status.fail}"></th:block>
                             </td>
                             <td class="col-name ellipsis" style="min-width:200px; max-width:200px;" th:text="${converterJobFile.fileName}"></td>
                             <td class="col-type">
-                                <th:block th:if="${#strings.isEmpty(converterJobFile.errorCode)}" th:text="'없음'"></th:block>
+                                <th:block th:if="${#strings.isEmpty(converterJobFile.errorCode)}" th:text="#{converter.error.code.empty}"></th:block>
                                 <th:block th:if="${not #strings.isEmpty(converterJobFile.errorCode)}">
-                                    <a href="#" th:onclick="detailErrorCode([[${converterJobFile.errorCode}]]); return false;">[보기]</a>
+                                    <a href="#" th:onclick="detailErrorCode([[${converterJobFile.errorCode}]]); return false;">[<th:block th:text="#{common.view}"></th:block>]</a>
                                 </th:block>
                             </td>
                             <td class="col-type">
