@@ -3,7 +3,7 @@
 <div class="legendWrap">
     <h3 style="padding-left: 10px;">
         <th:block th:text="#{iot.occupancy.legend}"></th:block>
-        <span style="font-size: 14px; font-weight: normal;"> (건축통합 정보 경기도 비표시 후 사용) </span>
+        <span style="font-size: 14px; font-weight: normal;" th:text="| (#{iot.occupancy.legend.desc}) |"></span>
     </h3>
     <ul class="legend marT5">
         <li>
