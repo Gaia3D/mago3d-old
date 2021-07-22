@@ -170,24 +170,24 @@ JS_MESSAGE["simulation.select.location"] = "Please specify the location.";
 
 JS_MESSAGE["policy.camera.location"] = "Move the camera closer to the ground.";
 
-JS_MESSAGE["iot.occupancy"]="재실자";
-JS_MESSAGE["iot.dust.fine"]="미세";
-JS_MESSAGE["iot.dust"]="미세먼지";
-JS_MESSAGE["iot.occupancy.legend.good"]="쾌적";
-JS_MESSAGE["iot.occupancy.legend.normal"]="보통";
-JS_MESSAGE["iot.occupancy.legend.bad"]="혼잡";
-JS_MESSAGE["iot.occupancy.legend.very-bad"]="매우혼잡";
-JS_MESSAGE["iot.occupancy.legend.nodata"]="없음";
+JS_MESSAGE["iot.occupancy"]="occupant";
+JS_MESSAGE["iot.dust.fine"]="fine";
+JS_MESSAGE["iot.dust"]="fine dust";
+JS_MESSAGE["iot.occupancy.legend.good"]="geniality";
+JS_MESSAGE["iot.occupancy.legend.normal"]="usually";
+JS_MESSAGE["iot.occupancy.legend.bad"]="confusion";
+JS_MESSAGE["iot.occupancy.legend.very-bad"]="very crowded";
+JS_MESSAGE["iot.occupancy.legend.nodata"]="none";
 
-JS_MESSAGE["iot.dust.legend.good"]="좋음";
-JS_MESSAGE["iot.dust.legend.normal"]="보통";
-JS_MESSAGE["iot.dust.legend.bad"]="나쁨";
-JS_MESSAGE["iot.dust.legend.very-bad"]="매우나쁨";
-JS_MESSAGE["iot.dust.legend.nodata"]="없음";
+JS_MESSAGE["iot.dust.legend.good"]="good";
+JS_MESSAGE["iot.dust.legend.normal"]="normal";
+JS_MESSAGE["iot.dust.legend.bad"]="bad";
+JS_MESSAGE["iot.dust.legend.very-bad"]="very bad";
+JS_MESSAGE["iot.dust.legend.nodata"]="none";
 
-JS_MESSAGE["membership.file.count.exceed"]="변환 월 허용횟수를 초과하였습니다.";
-JS_MESSAGE["membership.file.size.exceed"]="파일 업로딩 월 허용용량을 초과하였습니다.";
-JS_MESSAGE["membership.request.approval.waiting"]="멤버십 변경 요청 승인 대기중 입니다. 승인 후 변경 가능 합니다.";
+JS_MESSAGE["membership.file.count.exceed"]="The number of conversion months allowed is exceeded.";
+JS_MESSAGE["membership.file.size.exceed"]="The monthly file upload limit has been exceeded.";
+JS_MESSAGE["membership.request.approval.waiting"]="Your membership change request is pending approval. It can be changed after approval.";
 
 JS_MESSAGE["mypage.email.change"]="Change Email";
 JS_MESSAGE["mypage.password.change"]="Change Password";
