@@ -145,13 +145,13 @@
 				</tr>
 				<tr>
 					<th class="col-label" scope="row">
-						<label for="heightReference">높이 설정 방법</label>
+						<label for="heightReference"><th:block th:text="#{common.height.reference}"></th:block></label>
 					</th>
 					<td class="col-input radio-set">
 						<select id="heightReference" name="heightReference" class="selectBoxClass">
-							<option value="none" selected="selected"> 해발 고도 </option>
-							<option value="clampToGround"> Terrain(지형)에 맞춤 </option>
-							<option value="relativeToGround"> Terrain(지형)으로 부터 높이 설정 </option>
+							<option value="none" selected="selected"><th:block th:text="#{common.height.reference.none}"></th:block></option>
+							<option value="clampToGround"><th:block th:text="#{common.height.reference.clamp}"></th:block></option>
+							<option value="relativeToGround"><th:block th:text="#{common.height.reference.relative}"></th:block></option>
 						</select>
 					</td>
 					<th class="col-label" scope="row">
@@ -159,24 +159,25 @@
 						<!-- <span class="icon-glyph glyph-emark-dot color-warning"></span> -->
 					</th>
 					<td class="col-input">
+						<label for="longitude" class="hiddenTag"><th:block th:text="#{upload.representative.longitude}"></th:block></label>
 						<input type="text" id="longitude" name="longitude" class="m" placeholder="longitude" />
-						<label for="latitude" class="hiddenTag">대표 위치 (위도)</label>
+						<label for="latitude" class="hiddenTag"><th:block th:text="#{upload.representative.latitude}"></th:block></label>
 						<input type="text" id="latitude" name="latitude" class="m" placeholder="latitude" />
-						<label for="altitude" class="hiddenTag">대표 위치 (높이)</label>
+						<label for="altitude" class="hiddenTag"><th:block th:text="#{upload.representative.altitude}"></th:block></label>
 						<input type="text" id="altitude" name="altitude" class="m" placeholder="altitude" />
 						<input type="button" id="mapButton" th:value="#{common.map}" />
 					</td>
 				</tr>
 				<tr>
 					<th class="col-label l" scope="row">
-						용도
+						<th:block th:text="#{common.usage}"></th:block>
 						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
 					<td class="col-input radio-set">
 						<input type="radio" id="assembleFalse" name="assemble" value="false" checked />
-						<label for="assembleFalse">단일형</label>
+						<label for="assembleFalse"><th:block th:text="#{data.type.single}"></th:block></label>
 						<input type="radio" id="assembleTrue" name="assemble" value="true"/>
-						<label for="assembleTrue">복합형</label>
+						<label for="assembleTrue"><th:block th:text="#{data.type.complex}"></th:block></label>
 					</td>
 					<th class="col-label" scope="row">
 						<label for="description" th:text="#{common.description}"></label>
