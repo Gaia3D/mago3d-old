@@ -5192,7 +5192,8 @@ select::-ms-expand {display: none;}
 .dataselect-item {float:left; width:180px; padding-left:3px; height:32px !important; border-radius:3px;}
 .data-group-search {float:left; width:100px; height:30px; text-align:center; line-height:30px; display:inline-block; font-size:13px; border:1px solid #d8d8d8;}
 .data-filter {float:left; width:100px; height:30px; text-align:center; line-height:30px; display:inline-block; font-size:13px; border-top:1px solid #d8d8d8; border-right:1px solid #d8d8d8; border-bottom:1px solid #d8d8d8;}
-.data-group-search:hover, .data-group-search:focus, .data-group-search:active, .data-filter:hover, .data-filter:focus, .data-filter:active {background:#e9e9ea; color:black;}
+.data-group-search:hover, .data-group-search:focus, .data-group-search:active, .data-filter:hover, .data-filter:focus, .data-filter:active, .data-filter.on {background:#e9e9ea; color:black;}
+.data-group-search.on, .data-filter.on {background:#1289f8; color:white;}
 .filter-clear {float:right; width:auto; height:32px; text-align:center; display:inline-block; font-size:13px; background:white; color:#1289f8; border:1px solid #1289f8;}
 .filter-clear:hover {color:white;}
 .switch {position: relative; display: inline-block; width:38px; height: 16px; margin-left:12px; margin-right:4px; line-height: 2px;}
@@ -5224,6 +5225,14 @@ hr.datalist-line {width:100%;border:none; margin:0; padding:0; border-bottom:1px
 .data-layerlist span.data-layerlist-ttl {color:#464545; font-size:13px}
 .data-layerlist .view-option {display:inline-block; width:153px; float:right; text-indent:0; margin-top:10px; font-size:12px !important; line-height:19px; }
 .data-layerlist span.view-option a.move {display:inline-block; margin-left:12px; height:18px; text-indent:20px; background:url(/images/en/ic_move.png) no-repeat left 2px;}
+.filter-result {width:340px; margin:0 auto; margin-bottom:6px; margin-top:0;}
+.filter-result span {margin:0; padding:0; font-size:12px; margin-top:5px;}
+.filter-result span button {border:0; width:14px; height:20px; font-size:12px; margin:0 4px 0 0; background:#f2f3f4; padding:0; text-align:center;}
+.filter-result span button:hover {background:#e5e5e5; color:black;}
+.filter-result span span {font-weight:normal; font-family: 'NotoKrR'; margin:0; padding:0;}
+.filter-result span span.type {color:#315bbc;}
+.filter-result span span.type02 {color:green;}
+.filter-result span span.type03 {color:#6036ad;}
 
 /* paging */
 .paging {position:absolute; width:100%; background:white; margin:0 auto;  font-size:14px; text-align:center; bottom:0; height:50px; border-top:1px solid #e3e3e3;}
