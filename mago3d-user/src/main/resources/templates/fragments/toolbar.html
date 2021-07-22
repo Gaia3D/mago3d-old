@@ -2,32 +2,32 @@
 <body>
 <div id="toolbarWrap">	
 	<div class="toolbox-menu">
-		<button type="button" id="mapCtrlReset">처음</button>
-		<button type="button" id="mapCtrlAll">전체화면</button>
-		<button type="button" id="map-ctrl-scene">경관</button>
-		<button type="button" id="map-ctrl-measure">측정</button>
-		<button type="button" id="mapCtrlDivide">화면분할</button>
-		<button type="button" id="mapCameraFix">시점고정</button>
-		<button type="button" id="mapRenderPosition">위치조회</button>
+		<button type="button" id="mapCtrlReset" th:title="#{toolbar.initialize.location}" th:text="#{toolbar.initialize.location}"></button>
+		<button type="button" id="mapCtrlAll" th:title="#{toolbar.zoom.all}" th:text="#{toolbar.zoom.all}"></button>
+		<button type="button" id="map-ctrl-scene" th:title="#{toolbar.landscape}" th:text="#{toolbar.landscape}"></button>
+		<button type="button" id="map-ctrl-measure" th:title="#{toolbar.measurement}" th:text="#{toolbar.measurement}"></button>
+		<button type="button" id="mapCtrlDivide" th:title="#{toolbar.divide.screen}" th:text="#{toolbar.divide.screen}"></button>
+		<button type="button" id="mapCameraFix" th:title="#{toolbar.fix.camera}" th:text="#{toolbar.fix.camera}"></button>
+		<button type="button" id="mapRenderPosition" th:title="#{toolbar.position}" th:text="#{toolbar.position}"></button>
 	</div>		
 	<div class="toolbox-zooming">
-		<button type="button" id="mapCtrlZoomIn"><span class="blind">확대</span></button>
-		<button type="button" id="mapCtrlZoomOut"><span class="blind">축소</span></button>
+		<button type="button" id="mapCtrlZoomIn"><span class="blind" th:title="#{toolbar.zoom.in}" th:text="#{toolbar.zoom.in}"></span></button>
+		<button type="button" id="mapCtrlZoomOut"><span class="blind" th:title="#{toolbar.zoom.out}" th:text="#{toolbar.zoom.out}"></span></button>
 	</div>
 	<div class="toolbox-3dttl">3D</div>
 	<div class="toolbox-3d">
-		<button type="button" id="map-control-setting">데이터</button>
-		<button type="button" id="data-library-setting">라이브러리</button>
-		<button type="button" id="master-plan-setting">건축통합</button>
+		<button type="button" id="map-control-setting" th:title="#{toolbar.map.control.setting}" th:text="#{toolbar.map.control.setting}"></button>
+		<button type="button" id="data-library-setting" th:title="#{toolbar.data.library.setting}" th:text="#{toolbar.data.library.setting}"></button>
+		<button type="button" id="master-plan-setting" th:title="#{toolbar.master.plan.setting}" th:text="#{toolbar.master.plan.setting}"></button>
 	</div>
 	<div class="toolbox-map">
-    	<button type="button" id="toolbox-map-satellite" class="toolbox-map-btn" data-type="satellite">위성지도</button>
-		<button type="button" id="toolbox-map-normal" class="toolbox-map-btn" data-type="normal">일반지도</button>
+    	<button type="button" id="toolbox-map-satellite" class="toolbox-map-btn" data-type="satellite" th:title="#{toolbar.map.satellite}" th:text="#{toolbar.map.satellite}"></button>
+		<button type="button" id="toolbox-map-normal" class="toolbox-map-btn" data-type="normal" th:title="#{toolbar.map.normal}" th:text="#{toolbar.map.normal}"></button>
 	</div>
 	<div class="toolbox-measure">
-        <button type="button" id="toolbox-measure-btn-distance" class="toolbox-measure-btn" data-type="distance">거리</button>
-		<button type="button" id="toolbox-measure-btn-area" class="toolbox-measure-btn" data-type="area">면적</button>
-		<button type="button" id="toolbox-measure-btn-height" class="toolbox-measure-btn" data-type="height">높이</button>
+        <button type="button" id="toolbox-measure-btn-distance" class="toolbox-measure-btn" data-type="distance" th:title="#{toolbar.distance}" th:text="#{toolbar.distance}"></button>
+		<button type="button" id="toolbox-measure-btn-area" class="toolbox-measure-btn" data-type="area" th:title="#{toolbar.area}" th:text="#{toolbar.area}"></button>
+		<button type="button" id="toolbox-measure-btn-height" class="toolbox-measure-btn" data-type="height" th:title="#{toolbar.height}" th:text="#{toolbar.height}"></button>
 	</div>
 	<div th:replace="~{/common/map-control-setting :: #map-control-popup}"></div>
 	<div th:replace="~{/common/data-library-setting :: #data-library-popup}"></div>
