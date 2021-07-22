@@ -30,8 +30,9 @@
 					
 				<label for="passwordConfirm"><span class="join-key">*</span> 비밀번호 확인</label>
 				<input type="password" id="passwordConfirm" name="passwordConfirm" class="inputpwd" />
-					<span class="txt-guide" th:text="|영문 대문자 ${policy.passwordEngUpperCount}개, 소문자 ${policy.passwordEngLowerCount}개, 숫자 ${policy.passwordNumberCount}개,
-					특수문자 ${policy.passwordCreateChar}중 ${policy.passwordSpecialCharCount}개 이상을 포함하여 ${policy.passwordMinLength} 이상 총 ${policy.passwordMaxLength}글자 이하|"></span>
+					<span class="txt-guide" th:text="|#{user.password.upper.case} ${policy.passwordEngUpperCount}, #{user.password.lower.case} ${policy.passwordEngLowerCount},
+					 							#{common.password.number} ${policy.passwordNumberCount}, #{user.special.char} ${policy.passwordSpecialCharCount} #{user.password.length} #{user.required.char}
+					 							${policy.passwordMinLength} ~ ${policy.passwordMaxLength} #{user.password.length}|"></span>
 				<label for="mobilePhone"><span class="join-key">*</span> 핸드폰 번호</label>
 				<input type="text" id="mobilePhone" name="mobilePhone" class="inputMobilePhone" maxlength="13"/>
 			</div>
