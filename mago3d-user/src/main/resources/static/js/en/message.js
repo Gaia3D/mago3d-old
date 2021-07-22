@@ -47,7 +47,8 @@ JS_MESSAGE["file.ext.invalid"] = "파일 확장자가 유효하지 않습니다.
 JS_MESSAGE["fileinfo.size.invalid"] = "업로딩 가능한 파일 사이즈를 초과 하였습니다.";
 
 // 공통
-JS_MESSAGE["user.session.empty"] = "사인인 후 사용 가능한 서비스 입니다.";
+JS_MESSAGE["user.session.empty"] = "This service is available after sign in.";
+JS_MESSAGE["redirect.sinin.confirm"] = "Shall we go to the sign-in page?";
 JS_MESSAGE["db.exception"] = "데이터 베이스 오류가 발생하였습니다. 잠시 후 다시 이용하여 주시기 바랍니다.";
 JS_MESSAGE["filenotfound.exception"] = "파일을(ZIP 압축 한글 오류 또는 계층 오류) 찾을 수 없습니다. 잠시 후 다시 이용하여 주시기 바랍니다.";
 JS_MESSAGE["io.exception"] = "입출력 처리 과정중 오류가 발생하였습니다. 잠시 후 다시 이용하여 주시기 바랍니다.";

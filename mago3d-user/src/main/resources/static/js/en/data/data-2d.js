@@ -4,6 +4,7 @@ const Data2D = function(magoInstance) {
     this.layers = [];
 
     var that = this;
+
     function setElementEvent() {
         $('#layer-content-turn-on-all').click(function () {
             Data2D.allLayersOnOff(that, true);
@@ -11,16 +12,17 @@ const Data2D = function(magoInstance) {
         $('#layer-content-turn-off-all').click(function () {
             Data2D.allLayersOnOff(that, false);
         });
-        $('#layer-content-unfold-tree').click(function() {
+        $('#layer-content-unfold-tree').click(function () {
             Data2D.unfoldTree();
         });
-        $('#layer-content-fold-tree').click(function() {
+        $('#layer-content-fold-tree').click(function () {
             Data2D.foldTree();
         });
-        $('#layer-content-save-user-layers').click(function() {
+        $('#layer-content-save-user-layers').click(function () {
             Data2D.updateLayers();
         });
     }
+
     setElementEvent();
 }
 
@@ -39,31 +41,31 @@ Object.defineProperties(Data2D.prototype, {
 });
 
 // 레이어 전체 켜기/끄기
-Data2D.allLayersOnOff = function(data2d, visible) {
+Data2D.allLayersOnOff = function (data2d, visible) {
     for (const key in data2d.layers) {
         const layer = data2d.layers[key];
         const layerGroupId = layer.layerGroupId;
         const _this = {checked: visible};
         Data2D.layerGroupOnOff(layerGroupId, _this);
-        $('.data-layer input').each(function() {
+        $('.data-layer input').each(function () {
             $(this).prop('checked', _this.checked);
         })
     }
 }
 // 레이어 트리 전체 펼치기
-Data2D.unfoldTree = function() {
-    $('.data-layer span').each(function() {
-       if ($(this).is(':first-child')) {
-           const collapseSpan = $(this);
-           collapseSpan.removeClass();
-           collapseSpan.addClass("data-layer-ttl");
-       }
+Data2D.unfoldTree = function () {
+    $('.data-layer span').each(function () {
+        if ($(this).is(':first-child')) {
+            const collapseSpan = $(this);
+            collapseSpan.removeClass();
+            collapseSpan.addClass("data-layer-ttl");
+        }
     });
     $('.data-layerlist-bx').slideDown();
 }
 // 레이어 트리 전체 접기
-Data2D.foldTree = function() {
-    $('.data-layer span').each(function() {
+Data2D.foldTree = function () {
+    $('.data-layer span').each(function () {
         if ($(this).is(':first-child')) {
             const collapseSpan = $(this);
             collapseSpan.removeClass();
@@ -73,7 +75,7 @@ Data2D.foldTree = function() {
     $('.data-layerlist-bx').slideUp();
 }
 // 레이어 트리 접기/펼치기
-Data2D.collapseTree = function (layerGroupId, _this, event) {
+Data2D.collapseTree = function (layerGroupId, _this) {
     const subTree = $(".data-layerlist-bx[data-parent='" + layerGroupId + "']");
     const collapseSpan = $(_this).find("span").first();
     if (subTree.is(':visible')) {
@@ -88,7 +90,7 @@ Data2D.collapseTree = function (layerGroupId, _this, event) {
     return false;
 }
 // 레이어 그룹 ON/OFF
-Data2D.layerGroupOnOff = function (layerGroupId, _this, event) {
+Data2D.layerGroupOnOff = function (layerGroupId, _this) {
     //console.debug("layerGroupOnOff : " + layerGroupId);
     if (_this.checked) {
         MAGO.map.addGroupLayer(Number(layerGroupId));
@@ -99,7 +101,7 @@ Data2D.layerGroupOnOff = function (layerGroupId, _this, event) {
     return false;
 }
 // 레이어 ON/OFF
-Data2D.layerOnOff = function (layerKey, _this, event) {
+Data2D.layerOnOff = function (layerKey, _this) {
     //console.debug("layerOnOff : " + layerKey);
     if (_this.checked) {
         MAGO.map.addLayer(layerKey);
@@ -137,11 +139,11 @@ Data2D.move = function (layerId) {
     });
 }
 // 레이어 설정 저장
-Data2D.updateLayers = function() {
+Data2D.updateLayers = function () {
 
     var layerList = [];
-    $("input:checkbox[name='layer']").each(function(){
-        if(this.checked) {
+    $("input:checkbox[name='layer']").each(function () {
+        if (this.checked) {
             layerList.push($(this).attr("data-layer-key"));
         }
     });
@@ -152,29 +154,29 @@ Data2D.updateLayers = function() {
         type: "POST",
         headers: {"X-Requested-With": "XMLHttpRequest"},
         dataType: "json",
-        data : $("#layer-form").serialize(),
-        success: function(res){
-            if(res.statusCode <= 200) {
+        data: $("#layer-form").serialize(),
+        success: function (res) {
+            if (res.statusCode <= 200) {
                 alert(JS_MESSAGE["update"]);
             } else {
                 if (res.errorCode === "session.required") {
-                    const isGoToSignInPage = confirm("로그인이 필요한 기능입니다. 로그인 페이지로 이동할까요?");
-                    if (isGoToSignInPage) {
-                        window.location = res.message;
+                    if (confirm(JS_MESSAGE["user.session.empty"] + "\n" +
+                        JS_MESSAGE["redirect.sinin.confirm"])) {
+                        window.location = res.loginUrl;
                     }
                 }
-                //alert(JS_MESSAGE[res.errorCode]);
-                //console.log("---- " + res.message);
+                console.log("---- errorCode : " + res.errorCode);
+                console.log("---- errorMessage : " + res.message);
             }
         },
-        error: function(request, status, error) {
+        error: function (request, status, error) {
             console.log([request, status, error]);
             alert(JS_MESSAGE["ajax.error.message"]);
         }
     });
 }
 // 서버에서 레이어 정보 가져오기
-Data2D.prototype.getLayers = function() {
+Data2D.prototype.getLayers = function () {
     const _this = this;
     $.ajax({
         url: "/layers",
@@ -182,8 +184,8 @@ Data2D.prototype.getLayers = function() {
         headers: {"X-Requested-With": "XMLHttpRequest"},
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        success: function(res){
-            if(res.statusCode <= 200) {
+        success: function (res) {
+            if (res.statusCode <= 200) {
                 // html 생성
                 _this.layers = res.layerGroupList;
                 _this.createLayerTree();
@@ -192,13 +194,13 @@ Data2D.prototype.getLayers = function() {
                 console.log("---- " + res.message);
             }
         },
-        error: function(request, status, error) {
+        error: function (request, status, error) {
             alert(JS_MESSAGE["ajax.error.message"]);
         }
     });
 }
 // 레이어 트리 만들기
-Data2D.prototype.createLayerTree = function() {
+Data2D.prototype.createLayerTree = function () {
     if (!$("#layer-list-source").html()) return;
     const template = Handlebars.compile($("#layer-list-source").html());
     for (const key in this.layers) {
@@ -216,14 +218,14 @@ Data2D.prototype.createLayerTree = function() {
     this.layerGroupDefaultOnOff();
 }
 // 레이어 그룹 기본 켜기/끄기 설정
-Data2D.prototype.layerGroupDefaultOnOff = function() {
+Data2D.prototype.layerGroupDefaultOnOff = function () {
     for (const i in this.layers) {
         const layer = this.layers[i];
         const layerGroupId = layer.layerGroupId;
-        const sublayers = layer.layerList;
-        for (const j in sublayers) {
-            const sublayer = sublayers[j];
-            if (sublayer.defaultDisplay) {
+        const subLayers = layer.layerList;
+        for (const j in subLayers) {
+            const subLayer = subLayers[j];
+            if (subLayer.defaultDisplay) {
                 $(".data-layer[data-depth='" + layerGroupId + "'] input").prop('checked', true);
                 break;
             }

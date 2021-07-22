@@ -1,7 +1,6 @@
 package gaia3d.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gaia3d.config.PropertiesConfig;
 import gaia3d.domain.Key;
 import gaia3d.domain.user.UserSession;
 import gaia3d.domain.user.UserStatus;
@@ -28,14 +27,13 @@ import java.util.Map;
 @Component
 public class SecurityInterceptor implements HandlerInterceptor {
 
-	@Autowired
-	private PropertiesConfig propertiesConfig;
+
+	//private PropertiesConfig propertiesConfig;
 	@Autowired
 	private ObjectMapper objectMapper;
 
 	@Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
 
     	String uri = request.getRequestURI();
     	String requestIp = WebUtils.getClientIp(request);
@@ -74,15 +72,16 @@ public class SecurityInterceptor implements HandlerInterceptor {
 			if (isAjax(request)) {
 				log.info("## ajax call session null. uri = {}", uri);
 				Map<String, Object> unauthorizedResult = new HashMap<>();
-				if (!isAuthenticationRequired) {
-					unauthorizedResult.put("statusCode", HttpStatus.UNAUTHORIZED.value());
-					unauthorizedResult.put("errorCode", "session.required");
-					unauthorizedResult.put("message", null);
-				} else {
-					unauthorizedResult.put("statusCode", HttpStatus.UNAUTHORIZED.value());
-					unauthorizedResult.put("errorCode", "session.required");
-					unauthorizedResult.put("message", loginUrl);
-				}
+
+				// 메세지 처리를 위해 messageSource Autowired 하면 다음과 같은 오류 발생, 양방향 의존성.. 재설계 필요!
+				// Requested bean is currently in creation: Is there an unresolvable circular reference?
+
+//				Locale locale = LocaleUtils.getUserLocale(request);
+//				String message = messageSource.getMessage("session.required", null, locale);
+				unauthorizedResult.put("statusCode", HttpStatus.UNAUTHORIZED.value());
+				unauthorizedResult.put("errorCode", "session.required");
+//				unauthorizedResult.put("message", message);
+				unauthorizedResult.put("loginUrl", loginUrl);
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
 //				response.setStatus(HttpStatus.UNAUTHORIZED.value());

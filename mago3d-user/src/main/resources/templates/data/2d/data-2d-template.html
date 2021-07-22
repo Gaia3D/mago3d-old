@@ -17,7 +17,7 @@
 		<span class="data-layer-ttl">{{layerGroupName}}</span>
 		<span class="view-option">
 			<label class="switch" onclick="event.stopImmediatePropagation();event.stopPropagation();">
-				<input type="checkbox" onchange="Data2D.layerGroupOnOff({{layerGroupId}}, this, event)"/>
+				<input type="checkbox" onchange="Data2D.layerGroupOnOff({{layerGroupId}}, this)"/>
 				<span class="slider"></span>
 			</label>
 			<span th:title="#{common.show}" th:text="#{common.show}"></span>
@@ -29,7 +29,7 @@
 		<span class="data-layer-ttl">{{layerGroupName}}</span>
 		<span class="view-option">
 			<label class="switch" onclick="event.stopImmediatePropagation();event.stopPropagation();">
-				<input type="checkbox" onchange="Data2D.layerGroupOnOff({{layerGroupId}}, this, event)"/>
+				<input type="checkbox" onchange="Data2D.layerGroupOnOff({{layerGroupId}}, this)"/>
 				<span class="slider"></span>
 			</label>
 			<span th:title="#{common.show}" th:text="#{common.show}"></span>
@@ -48,7 +48,7 @@
 			<span class="view-option">
 				<label class="switch">
 					<input type="checkbox" name="layer" data-layer-key="{{layerKey}}"
-						   onchange="Data2D.layerOnOff('{{layerKey}}', this, event)"
+						   onchange="Data2D.layerOnOff('{{layerKey}}', this)"
 						   {{#replace defaultDisplay true 'checked'}}{{/replace}} />
 					<span class="slider"></span>
 				</label>
