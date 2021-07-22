@@ -154,11 +154,11 @@ SelectedDataController.prototype.setEventHandler = function() {
 	}*/
 	
 	//색상변경 적용
-	$('#data-controll-color-apply-btn').click(function() {
+	$('#data-control-color-apply-btn').click(function() {
 		that.changeColor();
 	});
 	//색상변경 취소
-	$('#data-controll-color-restore-btn').click(function() {
+	$('#data-control-color-restore-btn').click(function() {
 		that.restoreColor();
 	});
 	
@@ -174,7 +174,7 @@ SelectedDataController.prototype.setEventHandler = function() {
 	});
 	
 	//회전 변경 range 조절
-	$('#data-controll-input-pitch,#data-controll-input-roll,#data-controll-input-heading').on('input change',function(){
+	$('#data-control-input-pitch,#data-control-input-roll,#data-control-input-heading').on('input change',function(){
 		var val = $(this).val();
 		var type = $(this).data('type');
 		$('#dc' + type).val(val);
@@ -209,11 +209,11 @@ SelectedDataController.prototype.setEventHandler = function() {
 	
 	//데이터 높이 이벤트
 	var locAltholdInterval;
-	$('#data-controll-alt-up-btn,#data-controll-alt-down-btn').on('click', function(e) {
+	$('#data-control-alt-up-btn,#data-control-alt-down-btn').on('click', function(e) {
 		if (locAltholdInterval) clearInterval(locAltholdInterval);
 		changeAltitude($(this));
 	});
-	$('#data-controll-alt-up-btn,#data-controll-alt-down-btn').on('mousedown', function(e) {
+	$('#data-control-alt-up-btn,#data-control-alt-down-btn').on('mousedown', function(e) {
 		if (locAltholdInterval) clearInterval(locAltholdInterval);
 		var $this = $(this);
 		locAltholdInterval = setInterval(function(){
@@ -223,33 +223,33 @@ SelectedDataController.prototype.setEventHandler = function() {
 	
 	function changeAltitude($btn) {
 		var type = $btn.data('type');
-		var offset = parseFloat($('#data-controll-input-altitude-offset').val());
+		var offset = parseFloat($('#data-control-input-altitude-offset').val());
 		offset = (type==='up') ? offset : -offset;
 
-		var alt = parseFloat($('#data-controll-input-altitude').val());
-		$('#data-controll-input-altitude').val(alt + offset);
+		var alt = parseFloat($('#data-control-input-altitude').val());
+		$('#data-control-input-altitude').val(alt + offset);
 
 		that.changePosition();
 	}
 	
-	$('#data-controll-alt-up-btn,#data-controll-alt-down-btn').on('mouseup mouseleave',function() {
+	$('#data-control-alt-up-btn,#data-control-alt-down-btn').on('mouseup mouseleave',function() {
 		clearInterval(locAltholdInterval);
 	});
 	
 	//속성조회
-	$('#data-controll-attr-btn').click(function(){
+	$('#data-control-attr-btn').click(function(){
 		detailDataInfo("/datas/" + that.selected.data.dataId);
 	});
 	
 	//위치회전정보 저장
-	$('#data-controll-save-btn').click(function() {
+	$('#data-control-save-btn').click(function() {
 		if(confirm(JS_MESSAGE["data.update.check"])) {
 			if(!that.selected) {
 				alert(JS_MESSAGE["data.not.select"]);
 				return false;
 			}
 			startLoading();
-			var formData = $('#data-controll-form').serialize();
+			var formData = $('#data-control-form').serialize();
 			var dataId = that.selected.data.dataId;
 			$.ajax({
 				url: "/datas/" + dataId,
@@ -265,7 +265,7 @@ SelectedDataController.prototype.setEventHandler = function() {
 					} else if (msg.statusCode === 428) {
 						if(confirm(JS_MESSAGE[msg.errorCode])) {
 							$('input[name="dataId"]').val(dataId);
-							var formData = $('#data-controll-form').serialize();
+							var formData = $('#data-control-form').serialize();
 							$.ajax({
 								url: "/data-adjust-logs",
 								type: "POST",
@@ -355,7 +355,7 @@ SelectedDataController.prototype.setEventHandler = function() {
 		that.changeRotation();
 	}
 	
-	var PREFIX_ROT_INPUT_ID = 'data-controll-input-';
+	var PREFIX_ROT_INPUT_ID = 'data-control-input-';
 	const scrollObserver = new MutationObserver(function(mutations) {
 		mutations.forEach(function(mutation) {
 			if(mutation.target.className !== 'scroll') return;
@@ -431,11 +431,11 @@ SelectedDataController.prototype.selectData = function(selected, parent) {
 	}
 	
 	function setPositionInfo(selectData, parent) {
-		$('#data-controll-form').hide();
+		$('#data-control-form').hide();
 		if(selectData instanceof Mago3D.NeoReference) {
 			return false;
 		} else {
-			$('#data-controll-form').show();
+			$('#data-control-form').show();
 			var currentGeoLocData = selectData.getCurrentGeoLocationData();
 			
 			var positionInfo = that.getPositionInfoFromGeolocationData(currentGeoLocData);
@@ -444,10 +444,10 @@ SelectedDataController.prototype.selectData = function(selected, parent) {
 	}
 	
 	function setBtn(selectData) {
-		var $saveBtn = $('#data-controll-save-btn');
-		var $attrBtn = $('#data-controll-attr-btn'); 
+		var $saveBtn = $('#data-control-save-btn');
+		var $attrBtn = $('#data-control-attr-btn');
 		
-		$('#data-controll-issue-btn').hide();
+		$('#data-control-issue-btn').hide();
 		$saveBtn.show();
 		$attrBtn.show();
 		//$('#dcOpacityBox').show();
@@ -470,9 +470,9 @@ SelectedDataController.prototype.deselectData = function() {
 	this.selected = undefined;
 }
 SelectedDataController.prototype.changePositionInfo = function(obj) {
-	$('#data-controll-input-longitude').val(obj.longitude);
-	$('#data-controll-input-latitude').val(obj.latitude);
-	$('#data-controll-input-altitude').val(obj.altitude);
+	$('#data-control-input-longitude').val(obj.longitude);
+	$('#data-control-input-latitude').val(obj.latitude);
+	$('#data-control-input-altitude').val(obj.altitude);
 
 	//set span margin-left, change input value
 	$('#data-control-wrap .object-setup-rotation span[data-type="pitch"]').css('marginLeft', `${API.MATH.minMaxNormalize(minRotation, maxRotation, obj.pitch, 90)}px`);
@@ -482,7 +482,7 @@ SelectedDataController.prototype.changePositionInfo = function(obj) {
 SelectedDataController.prototype.changeHeightInfo = function(heightReference) {
 	switch(heightReference) {
 		case Mago3D.HeightReference.CLAMP_TO_GROUND : {
-			$('#data-controll-input-altitude').val(0);
+			$('#data-control-input-altitude').val(0);
 			break;
 		}
 		case Mago3D.HeightReference.RELATIVE_TO_GROUND :
@@ -492,7 +492,7 @@ SelectedDataController.prototype.changeHeightInfo = function(heightReference) {
 			
 			var surfaceHeight = (this.selected instanceof Mago3D.Node) ? this.selected.data.surfaceHeight : this.selected.terrainHeight;
 			var height = (heightReference === Mago3D.HeightReference.NONE) ? positionInfo.altitude : positionInfo.altitude - surfaceHeight; 
-			$('#data-controll-input-altitude').val(height);
+			$('#data-control-input-altitude').val(height);
 			break;
 		}
 	}
@@ -624,12 +624,12 @@ SelectedDataController.prototype.changeRotation = function() {
 
 SelectedDataController.prototype.getPositionInfoFromElem = function() {
 	return {
-		longitude : parseFloat($('#data-controll-input-longitude').val()),
-		latitude : parseFloat($('#data-controll-input-latitude').val()),
-		altitude : parseFloat($('#data-controll-input-altitude').val()),
-		heading : parseInt($('#data-controll-input-heading').val()),
-		pitch : parseInt($('#data-controll-input-pitch').val()),
-		roll : parseInt($('#data-controll-input-roll').val())
+		longitude : parseFloat($('#data-control-input-longitude').val()),
+		latitude : parseFloat($('#data-control-input-latitude').val()),
+		altitude : parseFloat($('#data-control-input-altitude').val()),
+		heading : parseInt($('#data-control-input-heading').val()),
+		pitch : parseInt($('#data-control-input-pitch').val()),
+		roll : parseInt($('#data-control-input-roll').val())
 	}
 }
 
