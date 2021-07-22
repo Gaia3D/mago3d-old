@@ -6,8 +6,8 @@
 		<input type="hidden" name="sharing" value="" />
 		<input type="hidden" name="dataType" value="" />
 		<!-- 데이터명 검색 -->
-		<input type="text" name="searchValue" class="datasearch" placeholder="데이터명을 입력하세요"/>
-		<a id="search-data" class="btn-datasearch" href="#"><span class="blind">데이터명 검색</span></a>
+		<input type="text" name="searchValue" class="datasearch" th:placeholder="#{data.enter.data.name}"/>
+		<a id="search-data" class="btn-datasearch" href="#"><span class="blind" th:text="#{common.search}" th:title="#{common.search}"></span></a>
 	</form>
 	<!-- 전체-필터더보기 -->
 	<div class="dataselect">
@@ -20,22 +20,22 @@
 			</select>
 		</form>
 		-->
-		<a id="search-data-group" href="#" class="data-group-search">그룹 필터</a>
-		<a id="search-data-filter" href="#" class="data-filter">상세 필터</a>
-		<button id="search-data-reset" class="filter-clear">필터 초기화</button>
+		<a id="search-data-group" href="#" class="data-group-search" th:title="#{data.filter.group}" th:text="#{data.filter.group}"></a>
+		<a id="search-data-filter" href="#" class="data-filter" th:title="#{data.filter.detail}" th:text="#{data.filter.detail}"></a>
+		<button id="search-data-reset" class="filter-clear" th:title="#{data.filter.initialization}" th:text="#{data.filter.initialization}"></button>
 	</div>
 
 	<div id="filter-contents" class="filter-result">
 		<span id="filter-contents-group" style="display: none;">
-			<span class="type">시흥캠퍼스</span>
+			<span class="type"></span>
 			<button class="close" data-filter="dataGroupId">X</button>
 		</span>
 		<span id="filter-contents-sharing" style="display: none;">
-			<span class="type02">공개</span>
+			<span class="type02"></span>
 			<button class="close" data-filter="sharing">X</button>
 		</span>
 		<span id="filter-contents-type" style="display: none;">
-			<span class="type03">IndoorGML</span>
+			<span class="type03"></span>
 			<button class="close" data-filter="dataType">X</button>
 		</span>
 	</div>
@@ -51,94 +51,17 @@
 
 	<!-- 전체건수-페이지 -->
 	<div id="data-search-summary-dhtml"></div>
+
 	<!-- datalist  -->
 	<div id="data-list-dhtml" class="sb-page yScroll" style="max-height: calc(100% - 300px);"></div>
+	<!-- /.datalist -->
+
 	<!-- paging -->
 	<div id="data-paging-dhtml"></div>
 
 	<div th:replace="~{/common/search-summary-template :: #search-summary-source}"></div>
 	<div th:replace="~{/data/3d/data-template :: #data-list-source}"></div>
 	<div th:replace="~{/common/pagination-template :: #pagination-source}"></div>
-
-<!--
-	<div class="datalist">
-		<h3 class="data"><a href="#" onclick="view_layer('layer1');">계양구청</a></h3>
-		<span class="legend co marL5">C</span>
-		<span class="data-username">슈퍼관리자</span>
-		<div class="data-group">
-			<span class="ttl">그룹명</span> 인천계양
-			<span class="gap"></span>
-			<span class="ttl">파일타입</span> IFC
-		</div>
-		<div class="data-go">
-			<a class="move" href="">이동</a>
-			<label class="switch">
-				<input type="checkbox"/>
-				<span class="slider"></span>
-			</label>
-			<label>표시</label>
-		</div>
-	</div>
-	<hr class="datalist-line" />
-	<div class="datalist">
-		<h3 class="data">계양구청</h3>
-		<span class="legend pu marL5">O</span>
-		<span class="data-username">관리자</span>
-		<div class="data-group">
-			<span class="ttl">그룹명</span> 인천계양
-			<span class="gap"></span>
-			<span class="ttl">파일타입</span> IFC
-		</div>
-		<div class="data-go">
-			<a class="move" href="">이동</a>
-			<label class="switch">
-				<input type="checkbox"/>
-				<span class="slider"></span>
-			</label>
-			<label>표시</label>
-		</div>
-	</div>
-	<hr class="datalist-line" />
-	<div class="datalist">
-		<h3 class="data">계양푸르지오</h3>
-		<span class="legend pr marL5">P</span>
-		<span class="data-username">관리자</span>
-		<div class="data-group">
-			<span class="ttl">그룹명</span> 인천계양
-			<span class="gap"></span>
-			<span class="ttl">파일타입</span> IFC
-		</div>
-		<div class="data-go">
-			<a class="move" href="">이동</a>
-			<label class="switch">
-				<input type="checkbox"/>
-				<span class="slider"></span>
-			</label>
-			<label>표시</label>
-		</div>
-	</div>
-	<hr class="datalist-line" />
-	<div class="datalist">
-		<h3 class="data">계양2블럭</h3>
-		<span class="legend gr marL5">G</span>
-		<span class="data-username">관리자</span>
-		<div class="data-group">
-			<span class="ttl">그룹명</span> 인천계양
-			<span class="gap"></span>
-			<span class="ttl">파일타입</span> IFC
-		</div>
-		<div class="data-go">
-			<a class="move" href="">이동</a>
-			<label class="switch">
-				<input type="checkbox"/>
-				<span class="slider"></span>
-			</label>
-			<label>표시</label>
-		</div>
-	</div>
-	<hr class="datalist-line" />
--->
-	<!-- /.datalist -->
 
 </div>
 </html>

@@ -61,33 +61,22 @@
 	<div class="navWrap">
 		<div th:replace="~{/fragments/menu :: #navWrap}"></div>
 		<!-- E: NAVWRAP -->
+
 		<div id="contentsWrap" class="contentsWrap" style="display: none;">
-			<!--<div th:replace="~{/search/district :: #searchContent}"></div>-->
-			<div id="dataContent" class="contents-margin-default fullHeight" style="display:none;">
-				<div class="tabs">
-					<ul id="dataInfoTab" class="tab tab-divide">
-						<li id="dataGroupTab" th:text="#{data.group.list.tab.menu}" data-nav="dataGroupInfoContent"></li>
-						<li id="dataListTab" class="on" th:text="#{data.list.tab.menu}" data-nav="dataInfoContent"></li>
-					</ul>
-				</div>
-				<div th:replace="~{/data/map-data :: #dataInfoContent}"></div>
-				<div th:replace="~{/data/map-data-group :: #dataGroupInfoContent}"></div>
-			</div>
 			<div th:replace="~{/data/data :: #data-wrap-content}"></div>
-			<div th:replace="~{/spatial/spatial :: #spatialContent}"></div>
 			<div th:replace="~{/simulation/simulation :: #simulationContent}"></div>
 			<div th:replace="~{/iot/list :: #iotContent}"></div>
-			<div th:replace="~{/layer/list :: #layerContent}"></div>
-			<!-- E: CONTENTSBTN -->
+			<div th:replace="~{/spatial/spatial :: #spatialContent}"></div>
 		</div>
+		<!-- E: CONTENTSWRAP -->
 
 		<div th:replace="~{/data/3d/data-group-search-dialog :: #data-group-search}"></div>
 		<div th:replace="~{/data/3d/data-filter-search-dialog :: #data-filter-search}"></div>
 
 		<div class="contentsBtn">
-			<button type="button" id="closeLeftBtn" th:title="#{common.close}" style="display:none;">Close</button>
+			<button type="button" id="closeLeftBtn" th:title="#{common.close}" th:text="#{common.close}" style="display:none;"></button>
 		</div>
-		<!-- E: CONTENTSWRAP -->
+		<!-- E: CONTENTSBTN -->
 
 	</div>
 	<!-- E: NAVWRAP -->
@@ -133,15 +122,14 @@
 			</div>
 		</div>
 	</div>
-	<div id="magoDivideContainer" class="mapWrap2">
-	</div>
+	<div id="magoDivideContainer" class="mapWrap2"></div>
 	<!-- E: MAP -->
 </div>
 <!-- E: WRAP -->
-<div th:replace="~{/data/data-dialog-template :: #dataDialogWrap}"></div>
-<div th:replace="~{/data/data-group-dialog-template :: #dataGroupDialogWrap}"></div>
-<div th:replace="~{/data/map-data-template :: #dataListSource}"></div>
-<div th:replace="~{/data/map-data-group-template :: #dataGroupListSource}"></div>
+<!--<div th:replace="~{/data/data-dialog-template :: #dataDialogWrap}"></div>-->
+<!--<div th:replace="~{/data/data-group-dialog-template :: #dataGroupDialogWrap}"></div>-->
+<!--<div th:replace="~{/data/map-data-template :: #dataListSource}"></div>-->
+<!--<div th:replace="~{/data/map-data-group-template :: #dataGroupListSource}"></div>-->
 <div th:replace="~{/data/data-attribute-dialog :: #dataAttributeDialog}"></div>
 <div th:replace="~{/data/data-object-attribute-dialog :: #dataObjectAttributeDialog}"></div>
 <div th:replace="~{/data/sample-data-attribute-template :: #sampleDataAttributeDialogWrap}"></div>
@@ -179,7 +167,7 @@
 <script type="text/javascript" th:src="@{/js/{lang}/ui-control.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/spatial-analysis.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/wps-request.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
-<script type="text/javascript" th:src="@{/js/{lang}/search.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<!--<script type="text/javascript" th:src="@{/js/{lang}/search.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>-->
 <script type="text/javascript" th:src="@{/js/{lang}/data/data-2d.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/data/data-3d.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/data/data.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
@@ -190,7 +178,6 @@
 <script type="text/javascript" th:src="@{/js/{lang}/simulation/wind.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/simulation/water.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/archinfo/archinfo.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
-<script type="text/javascript" th:src="@{/js/{lang}/layer.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/map-data-control.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/map-init.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
 <script type="text/javascript" th:src="@{/js/{lang}/issue-controller.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
