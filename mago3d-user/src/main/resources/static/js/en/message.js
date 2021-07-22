@@ -11,12 +11,12 @@ JS_MESSAGE["loading"] = "Loading";
 JS_MESSAGE["requested"] = "Requested";
 JS_MESSAGE["searching"] = "Searching.";
 
-JS_MESSAGE["search.input.data.name"] = "데이터명을 입력하여 주십시오.";
-JS_MESSAGE["search.input.data.group.name"] = "데이터 그룹명을 입력하여 주십시오.";
-JS_MESSAGE["search.input.data.address"] = "도로명 입력하여 주십시오.";
+JS_MESSAGE["search.input.data.name"] = "Please enter the data name.";
+JS_MESSAGE["search.input.data.group.name"] = "Enter the data group name.";
+JS_MESSAGE["search.input.data.address"] = "Please enter the road name.";
 
-JS_MESSAGE["apply"] = "적용되었습니다.";
-JS_MESSAGE["upload"] = "업로딩 중입니다.";
+JS_MESSAGE["apply"] = "Applied";
+JS_MESSAGE["upload"] = "Uploading.";
 JS_MESSAGE["proceed.confirm"] = "진행 하시겠습니까?";
 JS_MESSAGE["move.confirm"] = "이동 하시겠습니까?";
 JS_MESSAGE["delete.confirm"] = "Are you sure delete it?";
@@ -183,11 +183,11 @@ JS_MESSAGE["iot.dust.legend.bad"]="나쁨";
 JS_MESSAGE["iot.dust.legend.very-bad"]="매우나쁨";
 JS_MESSAGE["iot.dust.legend.nodata"]="없음";
 
-JS_MESSAGE["membership.file.count.exceed"]="변환 월 허용횟수를 초과하였습니다.";
-JS_MESSAGE["membership.file.size.exceed"]="파일 업로딩 월 허용용량을 초과하였습니다.";
-JS_MESSAGE["membership.request.approval.waiting"]="멤버십 변경 요청 승인 대기중 입니다. 승인 후 변경 가능 합니다.";
+JS_MESSAGE["membership.file.count.exceed"]="The number of conversion months allowed has been exceeded.";
+JS_MESSAGE["membership.file.size.exceed"]="The monthly file upload limit has been exceeded.";
+JS_MESSAGE["membership.request.approval.waiting"]="Your membership change request is pending approval. It can be changed after approval.";
 
-JS_MESSAGE["mypage.email.change"]="이메일 변경";
-JS_MESSAGE["mypage.password.change"]="비밀번호 변경";
-JS_MESSAGE["mypage.new.email.empty"]="새로운 이메일을 입력하여 주십시오."
-JS_MESSAGE["mypage.membership.change"]="멤버십 변경";
+JS_MESSAGE["mypage.email.change"]="Change Email";
+JS_MESSAGE["mypage.password.change"]="Change Password";
+JS_MESSAGE["mypage.new.email.empty"]="Please enter a new email."
+JS_MESSAGE["mypage.membership.change"]="Change Membership";
