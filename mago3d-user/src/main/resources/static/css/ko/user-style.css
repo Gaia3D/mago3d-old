@@ -5206,7 +5206,7 @@ input:checked + .slider:before {background-color: white;  transform: translateX(
 .sb-page > .datalist {width:100%; margin:0 auto; padding:10px 0 15px 0; height:75px;}
 .sb-page > .datalist:hover { background:#f7f9fa; }
 .sb-page .it-select {background:#f6faff;}
-.datalist .data-username {display:inline-block; font-size:12px; vertical-align:middle; margin:0 0 0 5px; border:1px solid #e1e1e1; border-radius:16px; padding:1px 10px;}
+.datalist .data-username {display:inline-block; font-size:12px; vertical-align:middle; margin:0 0 0 5px; background:white; border:1px solid #e1e1e1; border-radius:16px; padding:1px 10px;}
 .datalist .data-go {float:right; width:140px; text-align:right; height:27px; font-size:13px; line-height:16px; margin-top:12px; padding:0; padding-right:20px;}
 .datalist .data-go a.move {float:left;  width:50px; margin:0; padding:0; display:block; text-indent:21px; background:url(/images/ko/ic_move.png) no-repeat left 0;}
 .datalist .data-go > label {width:38px;}

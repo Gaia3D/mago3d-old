@@ -2955,7 +2955,7 @@ padding:0;
 box-shadow: 3px 3px 3px rgba(132,132,132,0.3); z-index:99;
 }
 .contents {
-padding: 10px;
+padding: 20px;
 border: 1px solid white;
 background-color: #fff;
 }
@@ -3721,7 +3721,7 @@ border: none;
 border-bottom: 1px solid #e0e0e0;
 }
 .analysisGroup li input.withBtn {
-width: 100px;
+width: 120px;
 }
 
 .analysisGroup li span.coordText {
@@ -3834,7 +3834,7 @@ width:1000px;
 
 
 /* ////////// POLICY ////////// */
-.userPolicyContentDetail .form-group label {text-indent:20px;}
+.userPolicyContentDetail .form-group label {text-indent:20px;  width:200px;}
 .userPolicyContent .h3-heading {text-indent:20px; font-weight:600; letter-spacing:0;}
 .userPolicyContent {
 padding: 10px 0 10px 0;
@@ -4540,12 +4540,12 @@ ul.listDrop li.list-drop-button-none > p {
 .form-group-data:first-of-type {
 }
 .form-group > label {
-    width: 100px !important;		
+    width: 160px !important;		
     display:inline-block;
 		padding: 2px;
 		line-height: 1.5em;
     vertical-align: middle;
-    text-indent:30px !important;	
+    text-indent:40px !important;	
   	text-align: justify;
 }
 .form-group > input {
@@ -5004,7 +5004,7 @@ button::-moz-focus-inner { border: 0; padding: 0;}
 button, [type="button"],[type="reset"],[type="submit"] {-webkit-appearance: button;}
 button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none; padding: 0;}
 button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring {  outline: 1px dotted ButtonText;}
-h1.magologo {display:block; width:300px; font-size:19px; margin:0 0 0 20px; padding:0; font-family: 'NotoKrM'; height:50px; font-weight:normal; line-height:47px; text-indent:106px;  background:url(/images/en/ic_sbmenu.png) no-repeat -338px -46px;}
+h1.magologo {display:block; width:300px; font-size:18px; margin:0 0 0 20px; padding:0; font-family: 'NotoKrM'; height:50px; font-weight:normal; line-height:47px; text-indent:106px;  background:url(/images/en/ic_sbmenu.png) no-repeat -338px -46px;}
 
 /* common */
 .pgcount {width:380px; margin:0 auto; font-size:12px; height:24px; border-bottom:1px solid #e1e1e1; margin-left:0; margin-top:30px;}
@@ -5190,8 +5190,8 @@ select {width:auto; height: 28px; color:#464646; padding-left:5px; padding-right
 select::-ms-expand {display: none;}
 .dataselect {width:342px; margin:0 auto; height:40px; margin-top:8px;}
 .dataselect-item {float:left; width:180px; padding-left:3px; height:32px !important; border-radius:3px;}
-.data-group-search {float:left; width:122px; height:30px; text-align:center; line-height:30px; display:inline-block; font-size:13px; border:1px solid #d8d8d8;}
-.data-filter {float:left; width:122px; height:30px; text-align:center; line-height:30px; display:inline-block; font-size:13px; border-top:1px solid #d8d8d8; border-right:1px solid #d8d8d8; border-bottom:1px solid #d8d8d8;}
+.data-group-search {float:left; width:100px; height:30px; text-align:center; line-height:30px; display:inline-block; font-size:13px; border:1px solid #d8d8d8;}
+.data-filter {float:left; width:100px; height:30px; text-align:center; line-height:30px; display:inline-block; font-size:13px; border-top:1px solid #d8d8d8; border-right:1px solid #d8d8d8; border-bottom:1px solid #d8d8d8;}
 .data-group-search:hover, .data-group-search:focus, .data-group-search:active, .data-filter:hover, .data-filter:focus, .data-filter:active {background:#e9e9ea; color:black;}
 .filter-clear {float:right; width:auto; height:32px; text-align:center; display:inline-block; font-size:13px; background:white; color:#1289f8; border:1px solid #1289f8;}
 .filter-clear:hover {color:white;}
