@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <!-- 팝업레이어/데이터 그룹 검색 -->
 <div id="data-group-search" class="groupdata popuplayer-s">
-	<button type="button" class="pop-sclose" onclick="Data3D.toggleLayer('data-group-search');$('#search-data-group').toggleClass('on');"><span class="blind">팝업레이어 닫기</span></button>
+	<button type="button" class="pop-sclose" onclick="Data3D.toggleLayer('data-group-search');$('#search-data-group').toggleClass('on');"><span class="blind" th:title="#{common.close}" th:text="#{common.close}"></span></button>
 
 	<div id="data-group-content">
 		<!--<h3 th:text="#{data.group.sharing.status}"></h3>-->
@@ -38,7 +38,7 @@
 			<span class="layer-ttl marB20" th:text="#{data.group.search}"></span>
 			<!-- 데이터명 검색 -->
 			<input type="text" name="searchValue" class="datasearch" th:placeholder="#{data.group.search.placeholder}" />
-			<a id="search-data-group" class="btn-datasearch" href="#"><span class="blind">그룹명 검색</span></a>
+			<a id="search-data-group" class="btn-datasearch" href="#"><span class="blind" th:title="#{common.search}" th:text="#{common.search}"></span></a>
 		</form>
 		<!--
 		<div class="listSearch search-text">
