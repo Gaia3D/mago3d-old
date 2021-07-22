@@ -1,32 +1,33 @@
-<div id="simulSolarDialog" class="basicTable" style="display: none;" title="일조분석 리포트" >
-	<table summary="일조분석 리포트 테이블">
-	<caption class="hiddenTag">일조분석 리포트</caption>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
+<div id="simulSolarDialog" class="basicTable" style="display: none;" th:title="#{simulation.solar.analysis.report}" >
+	<table th:summary="#{simulation.solar.analysis.report}">
+	<caption class="hiddenTag"><th:block th:text="#{simulation.solar.analysis.report}"></th:block></caption>
 		<col class="col-label" style="width: 100px;" />
 		<col class="col-data" />
 		<thead>
 			<tr style="height: 30px;">
-				<th class="col-label" scope="col">절기</th>
-				<th class="col-label" scope="col">일조시간(시간)</th>
+				<th class="col-label" scope="col"><th:block th:text="#{simulation.solar.exquisiteness}"></th:block></th>
+				<th class="col-label" scope="col"><th:block th:text="#{simulation.solar.daylight.hours}"></th:block></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr style="height: 30px;">
-				<th class="col-label" scope="row">춘분</th>
+				<th class="col-label" scope="row"><th:block th:text="#{simulation.solar.vernal.equinox}"></th:block></th>
 				<td id="aa" class="col-data ellipsis">
 				</td>
 			</tr>
 			<tr>
-				<th class="col-label" scope="row">하지</th>
+				<th class="col-label" scope="row"><th:block th:text="#{simulation.solar.summer.solstice}"></th:block></th>
 				<td id="bb" class="col-data">
 				</td>
 			</tr>
 			<tr>
-				<th class="col-label" scope="row">추분</th>
+				<th class="col-label" scope="row"><th:block th:text="#{simulation.solar.autumn.equinox}"></th:block></th>
 				<td class="col-data">
 				</td>
 			</tr>
 			<tr>
-				<th class="col-label" scope="row">동지</th>
+				<th class="col-label" scope="row"><th:block th:text="#{simulation.solar.comrade}"></th:block></th>
 				<td class="col-data">
 				</td>
 			</tr>

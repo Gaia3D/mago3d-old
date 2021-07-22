@@ -4,69 +4,69 @@
 	<div class="smlt">
 		<div class="smlt-item" id="smlt-natural-wind-div" data-type="wind">
 			<span class="smlt-blt"></span>
-			<span class="smlt-tit">바람 시뮬레이션</span>
+			<span class="smlt-tit"><th:block th:text="#{simulation.wind}"></th:block></span>
 		</div>
 		<div class="corp-copyright marTT5">
-			나노웨더에서 제공해준 바람데이터를 가시화하였으며 그 저작권은 나노웨더에 있습니다.
-			<a href="http://www.nano-weather.com" target="_blank" class="img-nano" alt="나노웨더 바로가기" /></a>
+			<th:block th:text="#{simulation.wind.data.notice}"></th:block>
+			<a href="http://www.nano-weather.com" target="_blank" class="img-nano" th:alt="#{simulation.nano.weather.shortcuts}" /></a>
 		</div>
 		<div class="padB5"></div>				
 		<div class="sub">
 			<div class="sublist">
-				<label class="smlt-sub" for="smlt-natural-wind-select" th:title="시간선택">시간선택</label>
-				<select id="smlt-natural-wind-select" th:title="시간선택">
-					<option value="">시간선택</option>
-					<option value="2019100700" selected>2019-10-07 00시</option>
-					<option value="2019100701">2019-10-07 01시</option>
-					<option value="2019100702">2019-10-07 02시</option>
-					<option value="2019100703">2019-10-07 03시</option>
-					<option value="2019100704">2019-10-07 04시</option>
-					<option value="2019100705">2019-10-07 05시</option>
-					<option value="2019100706">2019-10-07 06시</option>
-					<option value="2019100707">2019-10-07 07시</option>
-					<option value="2019100708">2019-10-07 08시</option>
-					<option value="2019100709">2019-10-07 09시</option>
-					<option value="2019100710">2019-10-07 10시</option>
-					<option value="2019100711">2019-10-07 11시</option>
-					<option value="2019100712">2019-10-07 12시</option>
+				<label class="smlt-sub" for="smlt-natural-wind-select" th:title="#{simulation.time.selection}"><th:block th:text="#{simulation.time.selection}"></th:block></label>
+				<select id="smlt-natural-wind-select" th:title="#{simulation.time.selection}">
+					<option value=""><th:block th:text="#{simulation.time.selection}"></th:block></option>
+					<option value="2019100700" selected>2019-10-07 00<th:block th:text="#{common.hour.unit}"></th:block></option>
+					<option value="2019100701">2019-10-07 01<th:block th:text="#{common.hour.unit}"></th:block></option>
+					<option value="2019100702">2019-10-07 02<th:block th:text="#{common.hour.unit}"></th:block></option>
+					<option value="2019100703">2019-10-07 03<th:block th:text="#{common.hour.unit}"></th:block></option>
+					<option value="2019100704">2019-10-07 04<th:block th:text="#{common.hour.unit}"></th:block></option>
+					<option value="2019100705">2019-10-07 05<th:block th:text="#{common.hour.unit}"></th:block></option>
+					<option value="2019100706">2019-10-07 06<th:block th:text="#{common.hour.unit}"></th:block></option>
+					<option value="2019100707">2019-10-07 07<th:block th:text="#{common.hour.unit}"></th:block></option>
+					<option value="2019100708">2019-10-07 08<th:block th:text="#{common.hour.unit}"></th:block></option>
+					<option value="2019100709">2019-10-07 09<th:block th:text="#{common.hour.unit}"></th:block></option>
+					<option value="2019100710">2019-10-07 10<th:block th:text="#{common.hour.unit}"></th:block></option>
+					<option value="2019100711">2019-10-07 11<th:block th:text="#{common.hour.unit}"></th:block></option>
+					<option value="2019100712">2019-10-07 12<th:block th:text="#{common.hour.unit}"></th:block></option>
 				</select>
-				<button id="smlt-natural-wind-play" th:title="재생">재생</button>
+				<button id="smlt-natural-wind-play" th:title="#{common.play}"><th:block th:text="#{common.play}"></th:block></option></button>
 			</div>
 			<div class="sublist">
-				<label class="smlt-sub" for="smlt-natural-time" th:title="시간">선택된 시간</label>
-				<span id="smlt-natural-time" th:title="선택시간">2019-10-07 00시</span>
+				<label class="smlt-sub" for="smlt-natural-time" th:title="#{common.hour}"><th:block th:text="#{simulation.selected.time}"></th:block></option></label>
+				<span id="smlt-natural-time" th:title="#{simulation.selected.time}">2019-10-07 00시</span>
 			</div>
 			
 			<div class="btn-right">
-				<button type="button" class="btn-cancel">닫기</button>
+				<button type="button" class="btn-cancel"><th:block th:text="#{common.close}"></th:block></button>
 			</div>
 		</div>
 	</div>				
 	<div class="smlt">
 		<div class="smlt-item" id="smlt-natural-water-div" data-type="water">
 			<span class="smlt-blt"></span>
-			<span class="smlt-tit">물 시뮬레이션</span>
+			<span class="smlt-tit"><th:block th:text="#{simulation.water}"></th:block></span>
 		</div>	
 		<div class="sub" id="smlt-natural-water-sub">
 			<div class="sublist">
-				<span class="smlt-sub">영역 설정</span>
-				<button type="button" data-mode="area" class="btn-ok">영역 그리기</button>
+				<span class="smlt-sub"><th:block th:text="#{simulation.water.zone.setting}"></th:block></span>
+				<button type="button" data-mode="area" class="btn-ok"><th:block th:text="#{simulation.water.area.drawing}"></th:block></button>
 			</div>
 			<div class="sublist water-action-btn" style="display:none;">
-				<span class="smlt-sub">생성</span>
-				<button type="button" data-mode="create" data-type="water" class="btn-ok">물</button>
-				<button type="button" data-mode="create" data-type="polution" class="btn-ok">오염원</button>
-				<button type="button" data-mode="create" data-type="weir" class="btn-ok">보</button>
+				<span class="smlt-sub"><th:block th:text="#{simulation.water.produce}"></th:block></span>
+				<button type="button" data-mode="create" data-type="water" class="btn-ok"><th:block th:text="#{common.water}"></th:block></button>
+				<button type="button" data-mode="create" data-type="polution" class="btn-ok"><th:block th:text="#{simulation.water.pollution}"></th:block></button>
+				<button type="button" data-mode="create" data-type="weir" class="btn-ok"><th:block th:text="#{simulation.water.dam}"></th:block></button>
 			</div>
 			<div class="sublist water-action-btn" style="display:none;">
-				<span class="smlt-sub">조작</span>
-				<button type="button" data-mode="move" class="btn-ok">이동</button>
-				<button type="button" data-mode="delete" class="btn-ok">삭제</button>
-				<button type="button" data-mode="clear" class="btn-ok">초기화</button>
+				<span class="smlt-sub"><th:block th:text="#{common.operation}"></th:block></span>
+				<button type="button" data-mode="move" class="btn-ok"><th:block th:text="#{common.move}"></th:block></button>
+				<button type="button" data-mode="delete" class="btn-ok"><th:block th:text="#{common.delete}"></th:block></button>
+				<button type="button" data-mode="clear" class="btn-ok"><th:block th:text="#{common.reset}"></th:block></button>
 			</div>
 			
 			<div class="btn-right">
-				<button type="button" data-mode="close" class="btn-cancel">닫기</button>
+				<button type="button" data-mode="close" class="btn-cancel"><th:block th:text="#{common.close}"></th:block></button>
 			</div>
 		</div>	
 	</div>

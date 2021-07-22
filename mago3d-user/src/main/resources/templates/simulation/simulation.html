@@ -1,15 +1,21 @@
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <div id="simulationContent" class="contents yScroll fullHeight" style="display:none;">
 	<ul class="simulation-menu">
-		<li id="smlt_menu_timeseries" class="smlt_menu on" data-smlt="timeSeries">시계열</li>
-		<li id="smlt_menu_natural" class="smlt_menu" data-smlt="natural">기상/자연</li>
-		<li id="smlt_menu_extrusion" class="smlt_menu" data-smlt="extrusion">익스트루전빌딩</li>
-		<li id="smlt_menu_findload" class="smlt_menu" data-smlt="findLoad">길찾기</li>					
+		<li id="smlt_menu_timeseries" class="smlt_menu on" data-smlt="timeSeries">
+			<th:block th:text="#{simulation.time.series}"></th:block>
+		</li>
+		<li id="smlt_menu_natural" class="smlt_menu" data-smlt="natural">
+			<th:block th:text="#{simulation.weather.nature}"></th:block>
+		</li>
+		<li id="smlt_menu_extrusion" class="smlt_menu" data-smlt="extrusion">
+			<th:block th:text="#{simulation.extrusion.building}"></th:block>
+		</li>
+		<!--<li id="smlt_menu_findload" class="smlt_menu" data-smlt="findLoad">길찾기</li>-->
 	</ul>
 	
 	<div th:replace="~{/simulation/simul-contents-timeseries :: #smlt_contents_timeseries}"></div>
 	<div th:replace="~{/simulation/simul-contents-natural :: #smlt_contents_natural}"></div>
 	<div th:replace="~{/simulation/simul-contents-extrusion :: #smlt_contents_extrusion}"></div>
-	<div th:replace="~{/simulation/simul-contents-findload :: #smlt_contents_findload}"></div>
+<!--	<div th:replace="~{/simulation/simul-contents-findload :: #smlt_contents_findload}"></div>-->
 </div>
 </html>

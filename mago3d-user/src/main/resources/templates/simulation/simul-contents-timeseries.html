@@ -3,11 +3,11 @@
 	<div class="smlt">
 		<div class="smlt-item" id="smlt-construction-step-div" data-type="step">
 			<span class="smlt-blt"></span>
-			<span class="smlt-tit">시계열-시공단계별</span>
+			<span class="smlt-tit"><th:block th:text="#{simulation.time.series.construction.stage}"></th:block></span>
 		</div>				
 		<div class="sub">
 			<div class="sublist">
-				<span class="smlt-sub" style="display:inline-block;">시공단계</span>
+				<span class="smlt-sub" style="display:inline-block;"><th:block th:text="#{simulation.construction.stage}"></th:block></span>
 				<div id="smlt-construction-step-slider" style="width:200px;float:right;margin-right: 20px;"></div>
 			</div>
 			<!-- <div class="sublist">
@@ -39,14 +39,14 @@
 				<input id="timeSeriesItem6Disagree" type="radio" class="radiobox mg-l20" /> 비동의
 			</div> -->
 			<div class="btn-right" style="margin-top: 45px;">
-				<button type="button" class="btn-cancel">닫기</button>
+				<button type="button" class="btn-cancel"><th:block th:text="#{common.close}"></th:block></button>
 			</div>
 		</div>
 	</div>				
 	<div class="smlt">
 		<div class="smlt-item" id="smlt-construction-level-div" data-type="level">
 			<span class="smlt-blt"></span>
-			<span class="smlt-tit">시계열-층별 건설공정</span>
+			<span class="smlt-tit"><th:block th:text="#{simulation.time.series.construction.process.floor}"></th:block></span>
 		</div>	
 		<div class="sub">
 			<div class="sublist" style="height:260px;">
@@ -54,7 +54,7 @@
 				<div id="smlt-construction-level-slider" style="width:20px;height:200px;margin-top: 20px;"></div>
 			</div>
 			<div class="btn-right">
-				<button type="button" class="btn-cancel">닫기</button>
+				<button type="button" class="btn-cancel"><th:block th:text="#{common.close}"></th:block></button>
 			</div>
 		</div>	
 	</div>
