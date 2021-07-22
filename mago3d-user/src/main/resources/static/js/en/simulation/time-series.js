@@ -84,7 +84,7 @@ SmltTimeSeries.SMLT_TIMESERIES = {
 				values : [1, 2, 3, 4],
 				format : {
 					to : function(value) {
-						return value + 'Step';
+						return value + ' Step';
 					}
 				}
 		    }
@@ -191,7 +191,7 @@ SmltTimeSeries.SMLT_TIMESERIES = {
 				values : [1, 2, 3, 4, 5],
 				format : {
 					to : function(value) {
-						return value + 'Step';
+						return value + ' Step';
 					}
 				}
 		    }
