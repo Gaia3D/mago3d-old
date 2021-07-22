@@ -3702,11 +3702,12 @@ background-position: -755px -555px;
 background-position: -386px -555px;
 }
 .analysisGroup li {
+height:32px;
 position: relative;
 }
 .analysisGroup li label {
 display: inline-block;
-width: 120px;
+width: 110px;
 height:30px;
 line-height:30px;
 /* width: 35%; */
@@ -3719,7 +3720,7 @@ border: none;
 border-bottom: 1px solid #e0e0e0;
 }
 .analysisGroup li input.withBtn {
-width: 100px;
+width: 124px;
 }
 
 .analysisGroup li span.coordText {
@@ -3807,7 +3808,7 @@ border: 1px solid #477cdb;
 	background-color: #eee;
 }
 
-.analysisGroup > button.btnText {height:24px !important; border-radius:0;}
+.analysisGroup > button.btnText {height:22px !important; margin-top:2px; border-radius:0;}
 /* SCROLL */
 .yScroll {
 overflow-x: hidden;
