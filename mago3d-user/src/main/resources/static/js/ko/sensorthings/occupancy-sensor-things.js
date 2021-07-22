@@ -34,7 +34,7 @@ const OccupancySensorThings = function (magoInstance) {
     //this.currentTime = "2020-11-23T12:15:00.000Z";
     this.currentTime = moment.utc().format();
     this.processingTime = 60;       // 30s
-    this.callInterval = 10;         // 10s
+    this.callInterval = 60;         // 10s
     this.filterInterval = 600;       // 60s
 
     this.gaugeChartNeedle = {};

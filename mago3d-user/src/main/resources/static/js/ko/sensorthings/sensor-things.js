@@ -13,7 +13,7 @@ const SensorThings = function (magoInstance) {
     //this.currentTime = "2020-10-23T04:59:40.000Z";
     this.currentTime = moment().utc().format();
     this.processingTime = 1800;     // 30m
-    this.callInterval = 10;         // 10s
+    this.callInterval = 60;         // 10s
     this.filterInterval = 3600;     // 1hour
 
     this.things = [];

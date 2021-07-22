@@ -18,7 +18,7 @@ const DustSensorThings = function (magoInstance) {
     //this.currentTime = "2020-11-23T12:15:00.000Z";
     this.currentTime = moment().utc().format();
     this.processingTime = 1800;     // 30m
-    this.callInterval = 10;         // 10s
+    this.callInterval = 60;         // 10s
     this.filterInterval = 3600;     // 1hour
 
     this.hourlyAirQualityChart = {};
