@@ -61,28 +61,31 @@ public class SocialAuthenticationServiceImpl implements SocialAuthenticationServ
 
 	private MultiValueMap<String, Object> getParameters(String socialType, String authCode, Policy policy){
 		MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
-		parameters.set("grantType", "authorization_code");
 		parameters.set("code", authCode);
 
 		switch (SocialType.valueOf(socialType)) {
 			case GOOGLE :
+				parameters.set("grantType", "authorization_code");
 				parameters.set("clientId", policy.getSocialSigninGoogleClientId());
 				parameters.set("redirectUri", policy.getSocialSigninGoogleRedirectUri());
 				parameters.set("clientSecret", policy.getSocialSigninGoogleClientSecret());
 				break;
 			case FACEBOOK :
+				parameters.set("grant_type", "authorization_code");
 				parameters.set("client_id", policy.getSocialSigninNaverClientId());
 				parameters.set("redirect_uri", policy.getSocialSigninNaverRedirectUri());
 				parameters.set("client_secret", policy.getSocialSigninNaverClientSecret());
 				parameters.set("session_state", "oauth_state");
 				break;
 			case NAVER :
+				parameters.set("grant_type", "authorization_code");
 				parameters.set("client_id", policy.getSocialSigninNaverClientId());
 				parameters.set("redirect_uri", policy.getSocialSigninNaverRedirectUri());
 				parameters.set("client_secret", policy.getSocialSigninNaverClientSecret());
 				parameters.set("session_state", "oauth_state");
 				break;
 			case KAKAO :
+				parameters.set("grant_type", "authorization_code");
 				parameters.set("client_id", policy.getSocialSigninKakaoClientId());
 				parameters.set("redirect_uri", policy.getSocialSigninKakaoRedirectUri());
 				break;
@@ -171,6 +174,7 @@ public class SocialAuthenticationServiceImpl implements SocialAuthenticationServ
 		try {
 			HttpHeaders headers = new HttpHeaders();
 			headers.set("Authorization", "Bearer " + accessToken);
+			log.info("### accessToken = {}", accessToken);
 			HttpEntity<String> httpEntity = new HttpEntity<>("body", headers);
 			ResponseEntity<Map> responseEntity = restTemplate.exchange(userInfoUri, HttpMethod.GET, httpEntity, Map.class);
 

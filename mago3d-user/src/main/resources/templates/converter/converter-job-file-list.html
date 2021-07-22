@@ -98,7 +98,7 @@
                     </colgroup>
                     <thead>
                         <tr>
-                            <th scope="col" class="col-number" th:text="'번호'"></th>
+                            <th scope="col" class="col-number" th:text="#{common.number}"></th>
                             <th scope="col" class="col-name" th:text="#{converter.status}"></th>
                             <th scope="col" class="col-name" th:text="#{common.filename}"></th>
                             <th scope="col" class="col-type" th:text="#{converter.error.code}"></th>
@@ -108,7 +108,7 @@
                     <tbody>
                     <th:block th:if="${#lists.isEmpty(converterJobFileList)}">
                         <tr>
-                            <td colspan="9" class="col-none">Converter Job File이 존재하지 않습니다.</td>
+                            <td colspan="9" class="col-none"><th:block th:text="#{converter.job.file.does.not.exist}"></th:block></td>
                         </tr>
                     </th:block>
                     <th:block th:if="${not #lists.isEmpty(converterJobFileList)}" th:each="converterJobFile: ${converterJobFileList}">

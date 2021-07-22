@@ -150,6 +150,11 @@ public class SigninController {
 				"&redirect_uri=" + policy.getSocialSigninGoogleRedirectUri() +
 				"&response_type=code&scope=email%20profile%20openid&access_type=offline";
 
+		String facebookUrl = "https://www.facebook.com/dialog/oauth?client_id=" + policy.getSocialSigninFacebookClientId() +
+				"&redirect_uri=" + policy.getSocialSigninFacebookRedirectUri() +
+				"&resource_type=token" +
+				"&scope=email%2Cpublic_profile";
+
 		String naverUrl = "https://nid.naver.com/oauth2.0/authorize?client_id="+policy.getSocialSigninNaverClientId() +
 				"&redirect_uri=" + policy.getSocialSigninNaverRedirectUri() +
 				"&response_type=code&scope=account_email";
@@ -164,7 +169,7 @@ public class SigninController {
 				redirectURL = googleUrl;
 				break;
 			case FACEBOOK :
-				redirectURL = googleUrl;
+				redirectURL = facebookUrl;
 				break;
 			case NAVER :
 				redirectURL = naverUrl;
@@ -189,6 +194,7 @@ public class SigninController {
 
 		Policy policy = CacheManager.getPolicy();
 		UserInfo signinForm = new UserInfo();
+		log.info("## authCode = {}", authCode);
 
 		UserInfo userInfo = socialAuthenticationService.authorize(socialType.toUpperCase(), authCode);
 		if(!ObjectUtils.isEmpty(userInfo.getErrorCode())) {
