@@ -266,6 +266,43 @@ Data3D._loadDetail = function(url, callback) {
     });
 }
 
+// 데이터 속성 다이얼 로그
+const dataAttributeDialog = $("#dataAttributeDialog").dialog({
+    autoOpen: false,
+    width: 600,
+    height: 350,
+    modal: true,
+    resizable: false
+});
+
+// 데이터 속성
+Data3D.detailDataAttribute = function (dataId, dataGroupKey, dataKey, dataName) {
+    dataAttributeDialog.dialog("open");
+    $("#dataNameForAttribute").html(dataName);
+    $.ajax({
+        url: "/datas/attributes/" + dataId,
+        type: "GET",
+        headers: {"X-Requested-With": "XMLHttpRequest"},
+        dataType: "json",
+        success: function (msg) {
+            if (msg.statusCode <= 200) {
+                if (msg.dataAttribute !== null) {
+                    //$("#dataAttributeForOrigin").html(msg.dataAttribute.attributes);
+                    $("#dataAttributeViewer").html("");
+                    const jsonViewer = new JSONViewer();
+                    document.querySelector("#dataAttributeViewer").appendChild(jsonViewer.getContainer());
+                    jsonViewer.showJSON(JSON.parse(msg.dataAttribute.attributes), -1, -1);
+                }
+            } else {
+                alert(JS_MESSAGE[msg.errorCode]);
+            }
+        },
+        error: function (request, status, error) {
+            alert(JS_MESSAGE["ajax.error.message"]);
+        }
+    });
+}
+
 // 페이징 성공 콜백
 Data3D.prototype.success = function(res) {
     if(res.statusCode <= 200) {

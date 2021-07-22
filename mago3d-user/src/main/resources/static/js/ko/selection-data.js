@@ -41,8 +41,8 @@ SelectedDataController.prototype.setEventHandler = function() {
 				break;
 			}
 			case SELECT_MODE.OBJECT : {
-				setSelectInteraction(true, Mago3D.DataType.F4D);
-				setTranslateInteraction(true, Mago3D.DataType.F4D);
+				setSelectInteraction(true, Mago3D.DataType.OBJECT);
+				setTranslateInteraction(true, Mago3D.DataType.OBJECT);
 				break;
 			}
 		}
