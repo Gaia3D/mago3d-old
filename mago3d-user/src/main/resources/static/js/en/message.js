@@ -47,7 +47,8 @@ JS_MESSAGE["file.ext.invalid"] = "The file extension is invalid.";
 JS_MESSAGE["fileinfo.size.invalid"] = "The file size that can be uploaded has been exceeded.";
 
 // 공통
-JS_MESSAGE["user.session.empty"] = "This service is available after signing in.";
+JS_MESSAGE["user.session.empty"] = "This service is available after sign in.";
+JS_MESSAGE["redirect.sinin.confirm"] = "Shall we go to the sign-in page?";
 JS_MESSAGE["db.exception"] = "A database error has occurred. Please try again after a while.";
 JS_MESSAGE["filenotfound.exception"] = "File not found (ZIP Compression Hangul Error or Layer Error). Please try again after a while.";
 JS_MESSAGE["io.exception"] = "An error occurred during I/O processing. Please try again after a while.";
