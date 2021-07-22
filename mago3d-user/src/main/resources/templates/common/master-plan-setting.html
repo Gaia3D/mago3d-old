@@ -1,7 +1,7 @@
 ﻿<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <div id="master-plan-popup" class="detaildata poplayer" style="display: none;">
 	<button type="button" class="pop-close"></button>
-	<h6 class="pop-title">건물 통합정보 가시화</h6>
+	<h6 class="pop-title"><th:block th:text="#{master.plane.visualization}"></th:block></h6>
 	<div class="tbl-layer">
 		<table>
 			<colgroup>
@@ -10,9 +10,9 @@
 				<col width="34%" />
 			</colgroup>
 			<tr>
-				<th>시도명</th>
-				<th>색상</th>
-				<th>3D 가시화</th>
+				<th><th:block th:text="#{common.sdo.name}"></th:block></th>
+				<th><th:block th:text="#{common.color}"></th:block></th>
+				<th>3D <th:block th:text="#{common.visualization}"></th:block></th>
 			</tr>
 		</table>
 	</div>

@@ -1,10 +1,10 @@
 ﻿<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <div id="map-control-popup" class="detaildata poplayer" style="display: none;max-height: 800px;height: auto;">
 	<button type="button" class="pop-close"></button>
-	<h6 class="pop-title">3D 데이터 설정</h6>
-	<button type="button" id="map-control-advance-toggle-btn" data-collapse="true">더보기</button>
+	<h6 class="pop-title"><th:block th:text="#{data.setting}"></th:block></h6>
+	<button type="button" id="map-control-advance-toggle-btn" data-collapse="true"><th:block th:text="#{common.more}"></th:block></button>
 	<div class="setup marT15">
-		<label>레이블</label>
+		<label><th:block th:text="#{common.label}"></th:block></label>
 		<div class="data-go">
 			<div id="labelDisplay" class="switch-toggle switch-ios">
         		<input type="radio" id="labelDisplayY" name="labelDisplay" value="true">
@@ -40,7 +40,7 @@
 		</div>
 	</div>
 	<div class="setup advance">
-		<label>그림자</label>
+		<label><th:block th:text="#{toolbar.shadow}"></th:block></label>
 		<div class="data-go">
 			<div id="shadowDisplay" class="switch-toggle switch-ios">
                 <input type="radio" id="shadowDisplayY" name="shadowDisplay" value="true">
@@ -52,7 +52,7 @@
 		</div>
 	</div>
 	<div class="setup">
-		<label>선택 및 이동</label>
+		<label><th:block th:text="#{toolbar.select.and.move}"></th:block></label>
 		<div class="data-go" style="width:150px;">
 			<div class="switch-toggle switch-ios">
                 <input type="radio" id="objectNoneMove" name="objectMoveMode" value="2" checked>
@@ -67,43 +67,43 @@
 	</div>
 	<div id="data-control-wrap" style="display:none;">
 		<div class="data-ttl header" id="data-control-wrap-header"></div>
-		<div class="data-ttl">색상 변경</div>
+		<div class="data-ttl"><th:block th:text="#{toolbar.change.color}"></th:block></div>
 		<div class="object-setup object-setup-color">
-			<label>색상</label>
+			<label><th:block th:text="#{common.color}"></th:block></label>
 			<span class="color-value"></span>
 			<input type="text" class="wd50" />
 			<input type="color" style="height:0.1px !important;width:0.1px;visibility:hidden;"/>
-			<button type="button" id="data-control-color-apply-btn" class="apply marL10">적용</button>
-			<button type="button" id="data-control-color-restore-btn" class="cancel">취소</button>
+			<button type="button" id="data-control-color-apply-btn" class="apply marL10"><th:block th:text="#{common.apply}"></th:block></button>
+			<button type="button" id="data-control-color-restore-btn" class="cancel"><th:block th:text="#{common.cancel}"></th:block></button>
 		</div>
 		<form id=data-control-form th:action="@{#}">
 			<input type="hidden" name="dataId" value="" />
-			<div class="data-ttl">위치 변경</div>
+			<div class="data-ttl"><th:block th:text="#{toolbar.change.location}"></th:block></div>
 			<div class="object-setup object-setup-position">
-				<label for="data-control-input-longitude">경도</label>
+				<label for="data-control-input-longitude"><th:block th:text="#{common.longitude}"></th:block></label>
 				<input type="text" id="data-control-input-longitude" name="longitude" readonly/>
-				<label for="data-control-input-latitude">위도</label>
+				<label for="data-control-input-latitude"><th:block th:text="#{common.latitude}"></th:block></label>
 				<input type="text" id="data-control-input-latitude" name="latitude" readonly/>
-				<label for="data-control-input-altitude">높이</label>
+				<label for="data-control-input-altitude"><th:block th:text="#{common.altitude}"></th:block></label>
 				<input type="text" class="wd50" id="data-control-input-altitude" name="altitude" readonly />
-				<button type="button" id="data-control-alt-up-btn" class="btn-up" data-type="up"><span class="blind">위로</span></button>
-				<button type="button" id="data-control-alt-down-btn" class="btn-down" data-type="down"><span class="blind">아래로</span></button>
+				<button type="button" id="data-control-alt-up-btn" class="btn-up" data-type="up"><span class="blind"><th:block th:text="#{common.up}"></th:block></span></button>
+				<button type="button" id="data-control-alt-down-btn" class="btn-down" data-type="down"><span class="blind"><th:block th:text="#{common.down}"></th:block></span></button>
 				<label for="data-control-input-altitude-offset">offset</label>
 				<input type="text" id="data-control-input-altitude-offset" class="wd50" value="1"/>
 			</div>
-			<div class="data-ttl">회전 변경</div>
+			<div class="data-ttl"><th:block th:text="#{toolbar.change.rotation}"></th:block></div>
 			<div class="object-setup object-setup-rotation" style="-webkit-touch-callout: none;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;">
-				<label for="data-control-input-pitch">x(피치)</label>
+				<label for="data-control-input-pitch">x(<th:block th:text="#{common.pitch}"></th:block>)</label>
 				<input type="text" id="data-control-input-pitch" name="pitch" class="wd50 data-control-rotation-input" readonly/>
 				<span class="wscroll-bg">
 					<span class="scroll" data-type="pitch"></span>
 				</span>
-				<label for="data-control-input-roll">y(롤)</label>
+				<label for="data-control-input-roll">y(<th:block th:text="#{common.roll}"></th:block>)</label>
 				<input type="text" id="data-control-input-roll" name="roll" class="wd50 data-control-rotation-input" readonly/>
 				<span class="wscroll-bg">
 					<span class="scroll" data-type="roll"></span>
 				</span>
-				<label for="data-control-input-heading">z(헤딩)</label>
+				<label for="data-control-input-heading">z(<th:block th:text="#{common.heading}"></th:block>)</label>
 				<input type="text" id="data-control-input-heading" name="heading" class="wd50 data-control-rotation-input" readonly/>
 				<span class="wscroll-bg">
 					<span class="scroll" data-type="heading"></span>
@@ -112,13 +112,13 @@
 			<hr class="layer-line" />
 			<div class="btn-center">
 	<th:block th:if="${session.USER_SESSION}">
-				<button id="data-control-save-btn" type="button">위치/회전변경</button>
+				<button id="data-control-save-btn" type="button"><th:block th:text="#{toolbar.change.rotation.and.location}"></th:block></button>
 	</th:block>
 	<th:block th:unless="${session.USER_SESSION}">
-				<button type="button" onclick="alert('로그인 후 이용 가능한 서비스 입니다.'); return false;">위치/회전변경</button>
+				<button type="button" onclick="alert(JS_MESSAGE['user.session.empty']); return false;"><th:block th:text="#{toolbar.change.rotation.and.location}"></th:block></button>
 	</th:block>
-				<button id="data-control-issue-btn" type="button">이슈 등록</button>
-				<button id="data-control-attr-btn" type="button">데이터 조회</button>
+				<button id="data-control-issue-btn" type="button"><th:block th:text="#{toolbar.issue.registration}"></th:block></button>
+				<button id="data-control-attr-btn" type="button"><th:block th:text="#{data.inquiry}"></th:block></button>
 			</div>
 		</form>
 	</div>

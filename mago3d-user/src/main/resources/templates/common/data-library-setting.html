@@ -1,24 +1,24 @@
 ﻿<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
 <div id="data-library-popup" class="detaildata poplayer" style="display: none;max-height: 800px;height: auto;">
 	<button type="button" class="pop-close"></button>
-	<h6 class="pop-title">3D 라이브러리 목록</h6>
+	<h6 class="pop-title"><th:block th:text="#{data.library.list}"></th:block></h6>
 		<div class="library-place">
 		<form>
-			<span>배치방법</span>
-			<input type="radio" id="data-library-draw-none" name="data-library-radio-draw-type" data-type="none" checked/><label for="data-library-draw-none">없음</label>
-			<input type="radio" id="data-library-draw-point" name="data-library-radio-draw-type" data-type="point" disabled/><label for="data-library-draw-point">점으로 배치</label>
-			<input type="radio" id="data-library-draw-line" name="data-library-radio-draw-type" data-type="line" disabled/><label for="data-library-draw-line">선으로 배치</label>
+			<span><th:block th:text="#{data.library.placement.method}"></th:block></span>
+			<input type="radio" id="data-library-draw-none" name="data-library-radio-draw-type" data-type="none" checked/><label for="data-library-draw-none"><th:block th:text="#{common.none}"></th:block></label>
+			<input type="radio" id="data-library-draw-point" name="data-library-radio-draw-type" data-type="point" disabled/><label for="data-library-draw-point"><th:block th:text="#{data.library.draw.point}"></th:block></label>
+			<input type="radio" id="data-library-draw-line" name="data-library-radio-draw-type" data-type="line" disabled/><label for="data-library-draw-line"><th:block th:text="#{data.library.draw.line}"></th:block></label>
 		</form>
 	</div>
 	<div class="library-srch">
 		<form>
-			<label for="data-library-select-group">그룹</label>
+			<label for="data-library-select-group"><th:block th:text="#{common.group}"></th:block></label>
 			<select id="data-library-select-group">
-				<option>전체</option>
-				<option>가로수</option>
-				<option>가로등</option>
+				<option><th:block th:text="#{common.total}"></th:block></option>
+				<option><th:block th:text="#{data.library.street.lamp}"></th:block></option>
+				<option><th:block th:text="#{data.library.colonnade}"></th:block></option>
 			</select>
-			<button id="data-library-select-group-search" type="button">검색</button>
+			<button id="data-library-select-group-search" type="button"><th:block th:text="#{common.search}"></th:block></button>
 		</form>
 	</div>
 
@@ -31,9 +31,9 @@
 					<col width="58%" />
 				</colgroup>
 				<tr>
-					<th>선택</th>
-					<th>그룹명</th>
-					<th>3D 라이브러리</th>
+					<th><th:block th:text="#{common.select}"></th:block></th>
+					<th><th:block th:text="#{common.group.name}"></th:block></th>
+					<th><th:block th:text="#{data.library}"></th:block></th>
 				</tr>
 			</thead>
 			<tbody>
