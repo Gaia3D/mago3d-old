@@ -3714,14 +3714,14 @@ line-height:30px;
 /* width: 35%; */
 }
 .analysisGroup li input {
-width: 124px;
+width: 80px;
 /* width: 62%; */
 padding: 0;
 border: none;
 border-bottom: 1px solid #e0e0e0;
 }
-.analysisGroup li input.withBtn {
-width: 120px;
+.analysisGroup li input.withBtn {width: 80px;
+
 }
 
 .analysisGroup li span.coordText {
