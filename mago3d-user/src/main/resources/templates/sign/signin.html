@@ -22,10 +22,10 @@
 		</select>
 	</form>
 	<div class="login-wrapper">
-		<img th:src="@{/images/{lang}/mago3d_logo.png(lang=${lang})}" th:alt="#{alt.mago3d.logo}" />
+		<img th:src="@{/images/{lang}/mago3d_logo.png(lang=${lang})}" th:alt="#{mago3d.logo.alt}" />
 		<form id="signinForm" th:object="${signinForm}" method="post" action="/sign/process-signin" autocomplete="off">
 			<fieldset>
-				<legend><th:block th:text="#{legend.sign.in}"></th:block></legend>
+				<legend><th:block th:text="#{signin.legend}"></th:block></legend>
 				<label for="userId"><span class="blind" ><th:block th:text="#{common.id}"></th:block></span></label>
 				<input type="text" id="userId" name="userId" class="inputid" th:title="#{common.id}" th:placeholder="#{common.id}" required="required" autofocus="autofocus" />
 				<label for="password"><span class="blind"><th:block th:text="#{common.password}"></th:block></span></label>

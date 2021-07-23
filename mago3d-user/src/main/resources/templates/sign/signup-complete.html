@@ -13,8 +13,8 @@
 <div id="loginwrap">
 	<div id="signup-complete">
 		<div class="login-wrapper" style="margin-top: 50px;">
-			<img th:src="@{/images/{lang}/mago3d_logo.png(lang=${lang})}" th:alt="#{alt.mago3d.logo}" style="margin-top: 50px;"/>
-			<p class="stitle"><th:block th:text="#{sign.up.complete}"></th:block></p>
+			<img th:src="@{/images/{lang}/mago3d_logo.png(lang=${lang})}" th:alt="#{mago3d.logo.alt}" style="margin-top: 50px;"/>
+			<p class="stitle"><th:block th:text="#{signup.complete}"></th:block></p>
 	<th:block th:if="${#strings.equals(signupType, 'APPROVAL')}">
 			<p class="stitle"><th:block th:text="#{usersession.status.waiting.approval}"></th:block></p>
 	</th:block>
