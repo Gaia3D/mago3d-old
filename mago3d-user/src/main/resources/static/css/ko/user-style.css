@@ -5007,7 +5007,7 @@ button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusri
 h1.magologo {display:block; width:270px; font-size:17px; margin:0 0 0 20px; padding:0; font-family: 'NotoKrM'; height:50px; font-weight:normal; line-height:50px; text-indent:106px;  background:url(/images/ko/ic_sbmenu.png) no-repeat -338px -47px;}
 
 /* common */
-.pgcount {width:380px; margin:0 auto; font-size:12px; height:24px; border-bottom:1px solid #e1e1e1; margin-left:0; margin-top:30px;}
+.pgcount {width:380px; margin:0 auto; font-size:12px; height:24px; margin-left:0; margin-top:30px;}
 .pgcount .pgcount-total {float:left; margin-left:20px;}
 .pgcount .pgcount-number {float:right; margin-right:20px;}
 .pop > .pgcount {width:340px !important; margin:0 auto; font-size:12px; height:24px; border-bottom:1px solid #e1e1e1; margin-left:0; margin-top:0; margin-bottom:10px;}
@@ -5206,17 +5206,17 @@ input:checked + .slider:before {background-color: white;  transform: translateX(
 
 /* data */
 .sb-page {width:100%; margin:0; padding:0;}
-.sb-page > .datalist {width:100%; margin:0 auto; padding:10px 0 15px 0; height:75px; cursor: pointer;}
-.sb-page > .datalist:hover, .sb-page > .datalist.on { background:#f7f9fa; }
+.sb-page > .datalist {width:100%; margin:0 auto; padding:10px 0 15px 0; height:75px; cursor: pointer; border-top:1px solid #e5e5e5;}
+.sb-page > .datalist:hover, .sb-page > .datalist.on {background:#f7f9fa; border-top:1px solid #1289f8;}
 .sb-page .it-select {background:#f6faff;}
-.datalist .data-username {display:inline-block; font-size:12px; vertical-align:middle; margin:0 0 0 5px; background:white; border:1px solid #e1e1e1; border-radius:16px; padding:1px 10px;}
-.datalist .data-go {float:right; width:140px; text-align:right; height:27px; font-size:13px; line-height:16px; margin-top:12px; padding:0; padding-right:20px;}
+.datalist .data-username {display:inline-block; font-size:12px; vertical-align:middle; margin:0 0 0 5px; border:1px solid #e1e1e1; border-radius:16px; padding:1px 10px;}
+.datalist .data-go {float:right; width:140px; text-align:right; height:27px; font-size:12px; line-height:16px; margin-top:12px; padding:0; padding-right:20px;}
 .datalist .data-go a.move {float:left;  width:50px; margin:0; padding:0; display:block; text-indent:21px; background:url(/images/ko/ic_move.png) no-repeat left 0;}
 .datalist .data-go > label {width:38px;}
 .datalist .data-group {margin-top:3px; padding:0; font-size:13px; color:#787878; padding-left:20px;}
 span.gap {display:inline-block; width:3px; height:3px; background:#bcbcbc; margin:10px 2px 2px 2px; }
 span.ttl {color:black;}
-hr.datalist-line {width:100%;border:none; margin:0; padding:0; border-bottom:1px solid #e1e1e1;}
+hr.datalist-line {width:100%;border:none; margin:0; padding:0; display:none;}
 .data-layer {width:90%; margin:0 auto; background:#f4f4f4; border-top:1px solid #cecece; height:38px; line-height:38px; cursor: pointer;}
 .data-layer span.data-layer-ttl {display:inline-block; padding-left:26px; font-size:14px; background:url(/images/ko/ic_view_status.png) no-repeat 8px 15px;}
 .data-layer span.data-layer-ttld {display:inline-block; padding-left:26px; font-size:14px; background:url(/images/ko/ic_view_status.png) no-repeat 9px -21px;}
@@ -5444,7 +5444,7 @@ span.sumnail img{-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg)
 .groupdata {display:none; width:340px; height:700px; position:absolute; left:452px; top:0; z-index:10000; cursor:move;}
 /* simulation */
 ul.simulation-menu {padding:0; width:330px; margin:5px auto 0 auto; margin-bottom:30px; display:flex; border-top:1px solid #e6e4e4; flex-wrap:wrap; border-bottom:1px solid #e6e4e4;}
-ul.simulation-menu li {width:100px; list-style:none; float:left; margin:0; padding:0; display:inline-block; font-size:15px; padding:8px 5px; word-break:normal; border-bottom:1px solid white; border-top:1px solid #e6e4e4; display:table-cell; text-align:center; cursor: pointer;}
+ul.simulation-menu li {width:100px; list-style:none; float:left; margin:0; padding:0; display:inline-block; font-size:15px; padding:10px 5px; word-break:normal;  border-top:1px solid #e6e4e4; display:table-cell; text-align:center; cursor: pointer;}
 ul.simulation-menu li:first-child,  ul.simulation-menu li:nth-child(2),  ul.simulation-menu li:nth-child(3) {border-top:2px solid white; }
 ul.simulation-menu li:nth-child(4),  ul.simulation-menu li:nth-child(5),  ul.simulation-menu li:nth-child(6) {border-top:2px solid white; border-bottom:none;}
 ul.simulation-menu li.on, ul.simulation-menu li:hover {border-top:2px solid #2f94f3; background:#edf4fb;}
