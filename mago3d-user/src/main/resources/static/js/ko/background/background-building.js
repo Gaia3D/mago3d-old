@@ -31,7 +31,8 @@ var BackgroundRunningBuilding = function(magoInstance) {
 		}
 	}
 	var self = this;
-	var geojsonToExtrusionBuildings = function(json) {
+	var geojsonToExtrusionBuildings = function(arrayBuffer) {
+		var json = Mago3D.geobufDecoder(arrayBuffer)
 		var features = json.features;
 		var featureCnt = features.length; 
 		for(var i=0;i<featureCnt;i++) {
@@ -62,7 +63,15 @@ var BackgroundRunningBuilding = function(magoInstance) {
 		self.ready = true;
 	}
 	
-	$.getJSON('/sample/json/baegot.geojson').then(geojsonToExtrusionBuildings);
+	
+	$.ajax({
+		responseType: 'arraybuffer',
+		dataType: 'binary',
+		url : '/sample/json/baegot.pbf',
+		xhrFields: {
+		    responseType: 'arraybuffer'
+		}
+	}).then(geojsonToExtrusionBuildings);
 }
 
 BackgroundRunningBuilding.prototype.run = function() {

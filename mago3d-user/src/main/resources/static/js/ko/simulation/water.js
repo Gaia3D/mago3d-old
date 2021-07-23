@@ -448,14 +448,16 @@ const SmltWater =(function() {
 			if(!confirm('삭제하시겠습니까?')) return;
 		}
 		
-		
-		delete objects[selected.guid];
-		const magoManager = this.magoInstance.getMagoManager(); 
+		const magoManager = this.magoInstance.getMagoManager();
+		 
+		var deletedGuid = selected.guid;
+		delete objects[deletedGuid];
 		if(selected.name) {
 			magoManager.waterManager.removeObject(selected);	
 		} else {
 			magoManager.modeler.removeObject(selected);
 		}
+		magoManager.waterManager.objectDeleted(deletedGuid);
 	}
 	_Delete.terminate = function() {
 		this.unbindMouseEvent();
@@ -730,5 +732,5 @@ SmltWater.runOnLoaded = function(water) {
 			water.action.delete.call(water, weirs[i], true);
 		}
 		water.action.terminate.call(water);
-	},27000));
+	},32000));
 }

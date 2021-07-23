@@ -2,6 +2,9 @@ const ArchInfoController = function(archInfoList, magoManager) {
 	this.hash = {};
 	this.magoManager = magoManager;
 	
+	//temp
+	this.background = [];
+	
 	let html = '';
 	for(let i in archInfoList) {
 		let archInfo = archInfoList[i];
@@ -26,6 +29,40 @@ const ArchInfoController = function(archInfoList, magoManager) {
 	}
 	
 	document.querySelector('#master-plan-popup .tbl-layer table tbody').insertAdjacentHTML('beforeend', html);
+	
+	var self = this;
+	var geojsonToExtrusionBuildings = function(arrayBuffer) {
+		var json = Mago3D.geobufDecoder(arrayBuffer)
+		var features = json.features;
+		var featureCnt = features.length; 
+		for(var i=0;i<featureCnt;i++) {
+			var feature = features[i];
+			var geographicCoordsList = Mago3D.KoreaBuilding.geometryToGeographicCoordsList(feature.geometry);
+			
+			if(Mago3D.GeographicCoordsList.isClockwise(geographicCoordsList.geographicCoordsArray)) geographicCoordsList.geographicCoordsArray.reverse();
+			
+			var floor = randomNumber(1, 40);
+			var height = 5 + (floor - 1) * 3; 
+			var building = new Mago3D.ExtrusionBuilding(geographicCoordsList, parseFloat(height), {
+				color : new Mago3D.Color(159/255, 172/255, 179/255 ,1),
+				renderWireframe : false,
+				heightReference : Mago3D.HeightReference.CLAMP_TO_GROUND
+			});
+			 
+			self.magoManager.modeler.addObject(building);
+			self.background.push(building);
+		}
+	}
+	
+	
+	$.ajax({
+		responseType: 'arraybuffer',
+		dataType: 'binary',
+		url : '/sample/json/around_building.pbf',
+		xhrFields: {
+		    responseType: 'arraybuffer'
+		}
+	}).then(geojsonToExtrusionBuildings);
 }
 
 ArchInfoController.prototype.getArchInfoById = function(id) {
@@ -60,7 +97,8 @@ ArchInfoController.createMockData = function(magoManager) {
 	for(let i in info) {
 		let archInfo = info[i];
 		archInfo.url = getUrl(archInfo.name);
-		archInfo.option.color = new Mago3D.Color(200/255, 200/255, 200/255 ,1);
+		//archInfo.option.color = new Mago3D.Color(200/255, 200/255, 200/255 ,1);
+		archInfo.option.color = new Mago3D.Color(159/255, 172/255, 179/255 ,1);
 		archInfoList.push(new ArchInfo(archInfo, magoManager));
 	}
 	
@@ -78,6 +116,7 @@ Object.defineProperties(ArchInfo.prototype, {
 			return this.buildingMaster.show;
 		},
 		set : function(show) {
+			console.info(this);
 			this.buildingMaster.show = show;
 		}
 	},
