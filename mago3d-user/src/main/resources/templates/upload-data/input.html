@@ -71,7 +71,7 @@
 	</div>
 	<!-- E: NAVWRAP -->
 	
-	<div class="container" style="float:left; width: calc(100% - 78px);">
+	<div class="container" style="float:left; width: calc(100% - 72px);">
 		<div style="padding: 40px 20px 30px 10px; font-size: 28px; color:black; font-weight:600;"><th:block th:text="#{converter.subtitle}"></th:block></div>
         <div class="tabs">
             <ul class="tab">
@@ -88,22 +88,22 @@
 
         <!-- S: 3D 파일 업로드 -->
 		<form id="uploadData" th:object="${uploadData}" th:action="@{#}" method="post" onsubmit="return false;">
-			<table class="input-table scope-row" >
+			<table class="input-table scope-row">
 				<colgroup>
-					<col class="col-label l" style="width: 15%"></col>
-					<col class="col-input" style="width: 37%"></col>
-					<col class="col-label l" style="width: 15%"></col>
-					<col class="col-input" style="width: 33%"></col>
+					<col class="col-label" />
+					<col class="col-input" />
+					<col class="col-label" />
+					<col class="col-input" />
 				</colgroup>
 				<tr>
-					<th class="col-label" scope="row">
+					<th class="col-label m" scope="row">
 						<label for="dataName"><th:block th:text="#{common.data.name}"></th:block></label>
 						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
 					<td class="col-input">
 						<input type="text" id="dataName" name="dataName" class="l" maxlength="255" />
 					</td>
-					<th class="col-label" scope="row">
+					<th class="col-label m" scope="row">
 						<label for="dataGroupName"><th:block th:text="#{common.data.group.name}"></th:block></label>
 						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
@@ -114,7 +114,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th class="col-label" scope="row">
+					<th class="col-label m" scope="row">
 						<label for="sharing"><th:block th:text="#{common.sharing}"></th:block></label>
 						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
@@ -144,7 +144,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th class="col-label" scope="row">
+					<th class="col-label m" scope="row">
 						<label for="heightReference"><th:block th:text="#{common.height.reference}"></th:block></label>
 					</th>
 					<td class="col-input radio-set">
@@ -154,7 +154,7 @@
 							<option value="relativeToGround"><th:block th:text="#{common.height.reference.relative}"></th:block></option>
 						</select>
 					</td>
-					<th class="col-label" scope="row">
+					<th class="col-label m" scope="row">
 						<label for="longitude"><th:block th:text="#{upload.representative.location}"></th:block></label>
 						<!-- <span class="icon-glyph glyph-emark-dot color-warning"></span> -->
 					</th>
@@ -169,7 +169,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th class="col-label l" scope="row">
+					<th class="col-label m" scope="row">
 						<th:block th:text="#{common.usage}"></th:block>
 						<span class="icon-glyph glyph-emark-dot color-warning"></span>
 					</th>
@@ -179,11 +179,11 @@
 						<input type="radio" id="assembleTrue" name="assemble" value="true"/>
 						<label for="assembleTrue"><th:block th:text="#{data.type.complex}"></th:block></label>
 					</td>
-					<th class="col-label" scope="row">
+					<th class="col-label m" scope="row">
 						<label for="description" th:text="#{common.description}"></label>
 					</th>
 					<td class="col-input">
-						<input type="text" id="description" name="description" class="xl" maxlength="255" />
+						<input type="text" id="description" name="description" class="l" maxlength="255" />
 					</td>
 				</tr>
 			</table>
