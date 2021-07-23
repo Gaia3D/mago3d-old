@@ -33,7 +33,7 @@ $(function() {
 	$('button#closeLeftBtn').click(function() {
 		//$('ul.nav li[data-nav]').removeClass('on');
 		$('#contentsWrap').hide();
-		$('.descdata').hide();
+		$('.desc-data').hide();
 		$('#data-list-dhtml .datalist').removeClass('on');
 		$('ul.nav li.on').removeClass('on');
 		$(this).hide();
