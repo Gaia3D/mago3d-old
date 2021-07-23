@@ -5391,7 +5391,7 @@ ul.simulation-menu li.on, ul.simulation-menu li:hover {border-top:2px solid #2f9
 .smlt-item > .smlt-tit {display:inline-block; float:left; text-indent:7px; height:32px; font-size:14px; line-height:32px;}
 .smlt {width:330px; margin:0 auto; display:block;}
 .smlt .sub {display : none;}
-.sub > .sublist {clear:both; height:28px; margin-left:20px; font-size:12px; margin-top:5px; width:310px; margin-bottom:0px;}
+.sub > .sublist {clear:both; margin-left:20px; font-size:12px; margin-top:5px; width:310px; margin-bottom:0px;}
 .sub > .sublist > label.smlt-sub, .sub > .sublist > span.smlt-sub {clear:both; float:left; display:inline-block; width:80px; height:28px; line-height:28px; }
 .sub > .sublist > button.on {border:1px solid #2F94F3; background:#2F94F3; height:28px !important;}
 .sub > .sublist > button {height:28px !important; margin-left:3px;}
