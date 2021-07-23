@@ -282,7 +282,9 @@
 
         var simul = Simulation(magoInstance);
 		setTimeout(function() {
-			SmltWater.onAutoRun(simul.water);
+			if(magoInstance.getMagoManager().getSecondsPerFrame() < 0.05) {
+				SmltWater.onAutoRun(simul.water);	
+			}
 		},10000);
 
 		// 사물인터넷
