@@ -693,7 +693,16 @@ OccupancySensorThings.prototype.redrawOverlayFloor = function() {
         const targetNode = magoManager.hierarchyManager.getNodeByDataKey(_this.selectedDataGroupId, _this.selectedDataKey);
         const targetNodeGeoLocDataManager = targetNode.getNodeGeoLocDataManager();
         const targetNodeGeoLocData = targetNodeGeoLocDataManager.getCurrentGeoLocationData();
-        const tempGlobalCoordinateObject = targetNodeGeoLocData.localCoordToWorldCoord(localCoordinate);
+
+        const neoBuilding = targetNode.data.neoBuilding;
+        const referencesMap = neoBuilding.motherNeoReferencesMap;
+        let tempGlobalCoordinateObject;
+        if (referencesMap !== undefined) {
+            const reference = referencesMap[cellId][0];
+            tempGlobalCoordinateObject = reference.getCenterPositionWC(neoBuilding, undefined);
+        } else {
+            tempGlobalCoordinateObject = targetNodeGeoLocData.localCoordToWorldCoord(localCoordinate);
+        }
         const wgs84CoordinateObject = Mago3D.Globe.CartesianToGeographicWgs84(tempGlobalCoordinateObject.x, tempGlobalCoordinateObject.y, tempGlobalCoordinateObject.z);
 
         const longitude = Number(wgs84CoordinateObject.longitude);
@@ -900,7 +909,7 @@ OccupancySensorThings.prototype.getFloorInformation = function (buildingInfo) {
 OccupancySensorThings.prototype.displaySelectedFloor = function(floor) {
 
     // TODO 시립대 데이터인 경우 하드코딩 삭제
-    if (this.selectedDataKey === 'admin_20201013064147_346094873669678') {
+    if (this.selectedDataKey === 'admin_20210723160338_194175424390000') {
         searchDataAPI(this.magoInstance, this.selectedDataGroupId, this.selectedDataKey);
         return;
     }
@@ -1158,8 +1167,8 @@ OccupancySensorThings.prototype.drawOccupancyChart = function (dataStreams) {
 OccupancySensorThings.prototype.update = function () {
 
     // TODO 램덤 값 삭제
-    const randomValue = Math.floor(Math.random() * (this.occupancyGradeMax - this.occupancyGradeMin)) + this.occupancyGradeMin;
-    //const randomValue = 0;
+    // const randomValue = Math.floor(Math.random() * (this.occupancyGradeMax - this.occupancyGradeMin)) + this.occupancyGradeMin;
+    const randomValue = 0;
 
     this.updateOverlay(randomValue);
 
@@ -1413,7 +1422,7 @@ OccupancySensorThings.prototype.updateFloorInformation = function (randomValue) 
                     let selectedFloorOn = '';
                     if (_this.selectedDataKey !== '') {
                         // TODO 시립대 데이터인 경우 하드코딩 삭제
-                        if (_this.selectedDataKey === 'admin_20201013064147_346094873669678') {
+                        if (_this.selectedDataKey === 'admin_20210723160338_194175424390000') {
                             selectedFloorOn = 'on';
                         }
                         const dataKeys = _this.selectedDataKey.split('_');
