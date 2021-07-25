@@ -282,7 +282,7 @@
 
         var simul = Simulation(magoInstance);
 		setTimeout(function() {
-			if(magoInstance.getMagoManager().getSecondsPerFrame() < 0.05) {
+			if(magoInstance.getMagoManager().getSecondsPerFrame() < 0.034) {
 				SmltWater.onAutoRun(simul.water);	
 			}
 		},10000);
