@@ -243,7 +243,7 @@ const SmltWater =(function() {
 		if(!this.active || !guidePoint) return;
 		const magoManager = this.magoInstance.getMagoManager();
 		
-		_leftDown(event.position, 'Rectangle의 끝점에서 손을 떼어 주세요.',magoManager);
+		_leftDown(event.position, 'Release your hand at the end of the Rectangle.',magoManager);
 	}
 	_Area[Cesium.ScreenSpaceEventType.LEFT_UP] = function(event) {
 		if(!this.active) return;
@@ -257,7 +257,7 @@ const SmltWater =(function() {
 	_Area[Cesium.ScreenSpaceEventType.MOUSE_MOVE] = function(event) {
 		const _beforeLeftDown = function(position, magoInstance) {
 			if(!guidePoint) _createGuidePoint(magoInstance.getViewer(), {
-				text: 'Rectangle의 시작점부터 드래그하여 주세요.',
+				text: 'Drag from the start point of the Rectangle.',
 				pixelOffset : new Cesium.Cartesian2(200,0)
 			});
 			
@@ -337,7 +337,7 @@ const SmltWater =(function() {
 			if(!_checkAreaContainPoint(cartesian)) {
 				return false;
 			}
-			_leftDown(position, '보를 완성할 지점에서 손을 떼어 주세요.', magoManager);
+			_leftDown(position, 'Release your hand at the point where you want to complete the dam.', magoManager);
 		}
 	}
 	_Create[Cesium.ScreenSpaceEventType.LEFT_UP] = function(event) {
@@ -350,7 +350,7 @@ const SmltWater =(function() {
 		
 		const cartesian = _screenToCartesian3(position, this.magoInstance.getMagoManager());
 		if(!_checkAreaContainPoint(cartesian)) {
-			alert('시뮬레이션 영역내에서 선택해주십시요.');
+			alert('Please select within the simulation area.');
 			return false;
 		}
 		
@@ -367,17 +367,17 @@ const SmltWater =(function() {
 			
 			switch(t) {
 				case SmltWater.CREATE_TYPE.WATER : {
-					text = '클릭한 지점에서 물이 지면을 따라 흐릅니다.';
+					text = 'At the point you click, water flows along the ground.';
 					pixelOffset = new Cesium.Cartesian2(200,0);
 					break;
 				}
 				case SmltWater.CREATE_TYPE.POLUTION : {
-					text = '클릭한 지점에서 오염원이 지면을 따라 흐릅니다.';
+					text = 'A source of pollution flows along the ground at the point you clicked.';
 					pixelOffset = new Cesium.Cartesian2(200,0);
 					break;
 				}
 				case SmltWater.CREATE_TYPE.WEIR : {
-					text = leftDown ? '보를 완성할 지점에서 손을 떼어 주세요.':'드래그를 하여 선을 그리십시오. 물길을 막는 보가 생성됩니다.';
+					text = leftDown ? 'Release your hand at the point where you want to complete the dam.':'Drag to draw a line. A dam is created to block the waterway.';
 					pixelOffset = new Cesium.Cartesian2(200,0);
 					break;
 				}
@@ -399,7 +399,7 @@ const SmltWater =(function() {
 		guidePoint.position = cartesian;
 		
 		if(!_checkAreaContainPoint(cartesian)) {
-			guidePoint.label.text = '시뮬레이션 영역내에서 선택해주세요.';
+			guidePoint.label.text = 'Please select within the simulation area.';
 			guidePoint.label.fillColor = Cesium.Color.RED;
 		} else {
 			let {text, pixelOffset} = getTextAndOffset(this.createType);
@@ -412,7 +412,7 @@ const SmltWater =(function() {
 	const _Clear = function() {}
 	
 	_Clear.run = function() {
-		if(confirm('초기화하시겠습니까?')) {
+		if(confirm('o you want to reset?')) {
 			_clear(this);
 			this.step = SmltWater.STATUS.UNREADY;
 			this.mode = SmltWater.MODE.WAITING;
@@ -445,17 +445,19 @@ const SmltWater =(function() {
 	}
 	_Delete.delete = function(selected, silence) {
 		if(!silence) {
-			if(!confirm('삭제하시겠습니까?')) return;
+			if(!confirm('do you want to delete?')) return;
 		}
 		
-		
-		delete objects[selected.guid];
-		const magoManager = this.magoInstance.getMagoManager(); 
+		const magoManager = this.magoInstance.getMagoManager();
+
+		var deletedGuid = selected.guid;
+		delete objects[deletedGuid];
 		if(selected.name) {
 			magoManager.waterManager.removeObject(selected);	
 		} else {
 			magoManager.modeler.removeObject(selected);
 		}
+		magoManager.waterManager.objectDeleted(deletedGuid);
 	}
 	_Delete.terminate = function() {
 		this.unbindMouseEvent();
@@ -471,7 +473,12 @@ const SmltWater =(function() {
 		
 		_clearObjects(magoManager);
 		magoManager.setCameraMotion(true);
-		magoManager.waterManager = undefined;
+
+		if(magoManager.waterManager) {
+			magoManager.waterManager.deleteObjects();
+			magoManager.waterManager = undefined;
+		}
+
 	}
 	const _clearCreateResource = function(viewer) {
 		_clearGuidePoint(viewer);
@@ -520,7 +527,7 @@ const SmltWater =(function() {
 	
 	const _createGuidePoint = function(viewer, labelOption) {
 		let _labelOption = {
-			text: 'Rectangle의 시작점을 클릭하여 주세요.',
+			text: 'Click the starting point of the Rectangle.',
 	        scale :0.5,
 	        font: "normal normal bolder 35px Helvetica",
 	        fillColor: Cesium.Color.BLACK,
@@ -568,7 +575,8 @@ const SmltWater =(function() {
 			rectangle : {
 				coordinates : coordinates,
 				material : Cesium.Color.DODGERBLUE.withAlpha(0.1),
-				heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
+				heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
+				height : 0
 			}
 		});
 		return rectangle;
@@ -651,24 +659,40 @@ SmltWater.offAutoRun = function() {
 }
 
 SmltWater.runOnLoaded = function(water) {
+	var first = SmltWater.reservedWork.timeout.length === 0;
 	for(var i in SmltWater.reservedWork.timeout) {
 		clearTimeout(SmltWater.reservedWork.timeout[i]);
 	}
 	SmltWater.reservedWork.timeout = [];
 	
-	water.active = false;
-	water.active = true;
+	if(first) {
+		water.active = false;
+		water.active = true;
+
+		water.mode = "area";
+		water.action = water.getModeAction("area");
+
+		const areaRectangle = new Cesium.Rectangle(2.210865731694948, 0.6518091533419034, 2.2117441433463463, 0.6524349961328941);
+
+		water.action._createRectangle.call(water, areaRectangle);
+		water.action.done.call(water, areaRectangle);
+		water.action.terminate.call(water);
+	} else {
+		water.action = water.getModeAction("delete");
+		var waterObject = water.getWaterObject();
+		for(var key in waterObject) {
+			var entity = waterObject[key];
+			water.action.delete.call(water, entity, true);
+		}
+
+		water.action.terminate.call(water);
+
+		var magoManager = water.magoInstance.getMagoManager();
+		magoManager.waterManager.resetSimulation();
+	}
 	
-	water.mode = "area";
-	water.action = water.getModeAction("area");
-	
-	const areaRectangle = new Cesium.Rectangle(2.210865731694948, 0.6518091533419034, 2.2117441433463463, 0.6524349961328941);
-	
-	water.action._createRectangle.call(water, areaRectangle);
-	water.action.done.call(water, areaRectangle);
-	water.action.terminate.call(water);
-	
-	$('#smlt-natural-water-sub button[data-type="water"]').trigger('click');
+
+	//$('#smlt-natural-water-sub button[data-type="water"]').trigger('click');
 	
 	water.mode = "create";
 	water.action = water.getModeAction("create");
@@ -708,5 +732,5 @@ SmltWater.runOnLoaded = function(water) {
 			water.action.delete.call(water, weirs[i], true);
 		}
 		water.action.terminate.call(water);
-	},27000));
+	},32000));
 }
