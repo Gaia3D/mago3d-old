@@ -5330,7 +5330,7 @@ span.sumnail img{-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg)
 .layer-paging > .paging-wrapper .lnk:focus {display:inline-block; color:black; text-decoration:underline;}
 
 /* popuplayer */
-.detaildata {width:320px; height:750px; position:absolute; display:none; right:85px; top:65px; }
+.detaildata {width:320px; height:750px; position:absolute; display:none; right:85px; top:65px; z-index: 1; }
 .popuplayer {border-radius:4px; background:white; overflow-y:scroll; overflow-x:hidden; border-left:1px solid #d9dadb; border-right:1px solid #d9dadb; border-bottom:1px solid #d9dadb; padding:0 20px 20px 20px; margin:0; box-shadow: 0 1px 3px rgba(132,132,132,0.6); z-index:91;}
 .popuplayer .close {float:right; margin:14px -6px 0 0; width:15px; cursor:pointer; height:15px; background:url(/images/en/ic_big_close.png) no-repeat;}
 .popuplayer > .datalist {width:100%; margin:0 auto; margin-top:30px; height:85px;}
