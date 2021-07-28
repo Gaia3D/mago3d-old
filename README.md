@@ -1,5 +1,7 @@
 # MAGO3D 프로젝트
 
+----> openjdk 11로 다시 변경 하였음
+
 ## 1. 프로젝트 버전
 * openjdk 16
 * postgres 13.3
