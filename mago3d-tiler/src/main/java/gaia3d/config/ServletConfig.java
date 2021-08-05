@@ -51,10 +51,10 @@ public class ServletConfig implements WebMvcConfigurer {
         log.info(" @@@ ServletConfig addInterceptors @@@@ ");
     }
 
-    @Bean
-    public LocaleResolver localeResolver() {
-        return new SessionLocaleResolver();
-    }
+	/*
+	 * @Bean public LocaleResolver localeResolver() { return new
+	 * SessionLocaleResolver(); }
+	 */
 
     @Bean
     public ReloadableResourceBundleMessageSource messageSource() {
