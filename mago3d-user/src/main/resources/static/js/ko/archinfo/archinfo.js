@@ -71,7 +71,7 @@ ArchInfoController.prototype.getArchInfoById = function(id) {
 
 ArchInfoController.createMockData = function(magoManager) {
 	let getUrl = function(name) {
-		return `http://222.122.118.28:9991/${name}/15/`;
+		return `https://mago3d.net/buildings/${name}/15/`;
 	}
 	let archInfoList = [];
 	const info = [

@@ -146,6 +146,9 @@ const SmltWater =(function() {
 	SmltWater.prototype.bindMouseEvent = function() {
 		if(!this.action) return;
 		
+		var globe = this.magoInstance.getViewer().scene.globe;
+        globe.depthTestAgainstTerrain = false;
+		
 		const bindEventList = [Cesium.ScreenSpaceEventType.LEFT_DOWN, Cesium.ScreenSpaceEventType.LEFT_UP, Cesium.ScreenSpaceEventType.MOUSE_MOVE];
 		
 		for(let key in bindEventList) {
@@ -157,6 +160,9 @@ const SmltWater =(function() {
 	}
 	
 	SmltWater.prototype.unbindMouseEvent = function() {
+		var globe = this.magoInstance.getViewer().scene.globe;
+        globe.depthTestAgainstTerrain = true;
+        
 		this.cesiumEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOWN);
 		this.cesiumEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_UP);
 		this.cesiumEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.MOUSE_MOVE);
@@ -532,7 +538,7 @@ const SmltWater =(function() {
 	        font: "normal normal bolder 35px Helvetica",
 	        fillColor: Cesium.Color.BLACK,
 	        outlineColor: Cesium.Color.WHITE,
-	        outlineWidth: 1,
+	        outlineWidth: 2.5,
 			pixelOffset : new Cesium.Cartesian2(200,0), 
 	        heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
 	        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
