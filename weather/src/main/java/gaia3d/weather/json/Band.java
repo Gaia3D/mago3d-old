@@ -1,19 +1,22 @@
 package gaia3d.weather.json;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Objects;
 
 @Getter
 @Setter
 @Builder
+@JsonIgnoreProperties(value = { "THRESHOLD" })
 public class Band {
 
-    private final double THRESHOLD = .0001;
     private float min;
     private float max;
+    private final double THRESHOLD = .0001;
 
     @Override
     public boolean equals(Object o) {
@@ -28,4 +31,9 @@ public class Band {
     public int hashCode() {
         return Objects.hash(THRESHOLD, min, max);
     }
+
+    public String toString() {
+        return String.format("(%s : %f, %s : %f)", "min", this.min, "max", this.max);
+    }
+
 }

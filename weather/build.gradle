@@ -1,11 +1,14 @@
 plugins {
+    //id 'java'
     id 'java'
+    id 'application'
 }
 
 group = 'com.gaia3d'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+mainClassName = 'gaia3d.Mago3dWeatherApplication'
 
 configurations {
     compileOnly {
@@ -55,4 +58,16 @@ test {
         events "passed", "skipped", "failed"
     }
     ignoreFailures = true
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+    from {
+        configurations.compileClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }

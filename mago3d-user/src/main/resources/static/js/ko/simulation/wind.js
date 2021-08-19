@@ -2,14 +2,7 @@ const SmltWind = function(magoInstance) {
 	this.magoInstance = magoInstance;
 	this._active = false;
 	this._date = '2019100700';
-	this.position = {
-		destination : Cesium.Cartesian3.fromDegrees(126.72588055371104, 37.37429635539057, 6202.398130875977),
-		orientation : {
-			heading : 3.128764647505197,
-			pitch : -1.4599890461605018,
-			roll : 3.141957219539732
-		}
-	}
+	//this._date = '201705020000';
 	this.playId = [];
 
 	var _this = this;
@@ -44,8 +37,7 @@ Object.defineProperties(SmltWind.prototype, {
 		},
 		set : function (active) {
 			if(active) {
-				this.initCamera();
-				this.run();
+				this.run(true);
 			} else {
 				this.clear();
 			}
@@ -58,17 +50,37 @@ Object.defineProperties(SmltWind.prototype, {
 		},
 		set : function (date) {
 			this._date = date;
-			this.clear();
-			this.run();
+			//this.clear();
+			this.run(false);
 		}
 	}
 });
 
-SmltWind.prototype.initCamera = function() {
-	this.magoInstance.getViewer().camera.flyTo(this.position);
+/**
+ * geojson 영역으로 이동
+ * @param geojson
+ */
+SmltWind.prototype.initCamera = function(instance, geojson) {
+	const pointArray = [];
+	const bbox = geojson.features[0].bbox;
+	const minX = bbox[0];
+	const minY = bbox[1];
+	const maxX = bbox[3];
+	const maxY = bbox[4];
+	pointArray[0] = Mago3D.ManagerUtils.geographicCoordToWorldPoint(minX, minY, 0);
+	pointArray[1] = Mago3D.ManagerUtils.geographicCoordToWorldPoint(maxX, maxY, 0);
+	instance.getMagoManager().flyToBox(pointArray);
+	//this.magoInstance.getViewer().camera.flyTo(this.position);
 }
 
-SmltWind.prototype.load = function(instance, date) {
+/**
+ * wind 시뮬레이션 데이터 로드
+ * @param instance
+ * @param date
+ */
+SmltWind.prototype.load = function(instance, date, flag) {
+	const _this = this;
+	instance.getMagoManager().weatherStation.deleteWindVolumes();
 	$.ajax({
 		url: "/api/wind/date",
 		type: "GET",
@@ -77,55 +89,56 @@ SmltWind.prototype.load = function(instance, date) {
 		headers: {"X-Requested-With": "XMLHttpRequest"},
 		success: function (geojson) {
 			instance.getMagoManager().weatherStation.addWind(geojson);
+			if (flag) {
+				_this.initCamera(instance, geojson);
+			}
 		}
 	});
 }
 
-SmltWind.prototype.run = function() {
+/**
+ * wind 시뮬레이션 실행
+ */
+SmltWind.prototype.run = function(flag) {
 	const orgin = this.magoInstance;
 	const _this = this;
 
-	// 임시
-	const compareDate = parseInt(_this.date) + 10000;
+	// 바람장 단일
+	// _this.load(orgin, _this.date, flag);
 
+	// 바람장 비교
+
+	const compareDate = parseInt(_this.date) + 10000;
 	if (MapControl.divided) {
 		//const magoMap = new mapInit(MAGO3D_DIVIDE_INSTANCE, MAGO.baseLayers, MAGO.policy);
 		//magoMap.initLayer(false);
-		_this.load(MAGO3D_DIVIDE_INSTANCE, _this.date);
-		_this.load(orgin, compareDate);
+		_this.load(MAGO3D_DIVIDE_INSTANCE, _this.date, flag);
+		_this.load(orgin, compareDate, flag);
 	} else {
 		MapControl.divideMap(function (divided) {
 			//const magoMap = new mapInit(divided, MAGO.baseLayers, MAGO.policy);
 			//magoMap.initLayer(false);
-			_this.load(divided, _this.date);
-			_this.load(orgin, compareDate);
+			_this.load(divided, _this.date, flag);
+			_this.load(orgin, compareDate, flag);
 		});
 	}
 
-/*
-	$.ajax({
-		url: "/api/wind/date",
-		type: "GET",
-		data: { date : '2019110700' },
-		dataType: "json",
-		headers: {"X-Requested-With": "XMLHttpRequest"},
-		success: function(geojson){
-			orgin.getMagoManager().weatherStation.addWind(geojson);
-		}
-	});
-*/
-
 }
 
+/**
+ * wind 시뮬레이션 초기화
+ */
 SmltWind.prototype.clear = function () {
 	this.magoInstance.getMagoManager().weatherStation.deleteWindVolumes();
 	if (MAGO3D_DIVIDE_INSTANCE) {
 		MAGO3D_DIVIDE_INSTANCE.getMagoManager().weatherStation.deleteWindVolumes();
 		MapControl.undivideMap();
 	}
-	//MapControl.undivideMap();
 }
 
+/**
+ * wind 시뮬레이션 재생
+ */
 SmltWind.prototype.play = function() {
 	var _this = this;
 	$('#smlt-natural-wind-select option').each(function(idx) {
@@ -135,12 +148,15 @@ SmltWind.prototype.play = function() {
 		_this.playId[idx] = setTimeout(function() {
 			$('#smlt-natural-time').text(text);
 			_this.date = date;
-			_this.clear();
+			//_this.clear();
 			_this.run();
 		}, 5000 * idx);
 	});
 }
 
+/**
+ * wind 시뮬레이션 정지
+ */
 SmltWind.prototype.stop = function() {
 	if (this.playId.length > 0) {
 		for (const i in this.playId) {

@@ -5,13 +5,15 @@ import lombok.Getter;
 import java.util.Arrays;
 
 public enum WindVariable {
-    U("u-component_of_wind_isobaric"),
-    V("v-component_of_wind_isobaric"),
-    W("w-component_of_wind_isobaric");
+    // before
+    U("u-component_of_wind_surface"),
+    V("v-component_of_wind_surface"),
+    W("w-component_of_wind_surface");
 
-//    U("u-component_of_wind_surface"),
-//    V("v-component_of_wind_surface"),
-//    W("w-component_of_wind_surface");
+    // after
+//    U("u-component_of_wind_isobaric"),
+//    V("v-component_of_wind_isobaric"),
+//    W("w-component_of_wind_isobaric");
 
 //    U("u-component_of_wind_height_above_ground"),
 //    V("v-component_of_wind_height_above_ground"),

@@ -43,9 +43,6 @@ public class GeoJsonWriter implements Writer {
         GridCoordSystem coordinateSystem = wind.getCoordinateSystem();
         String date = filePattern.getDate(fileName);
 
-        String path = properties.getProperty("mago3d.admin-wind-service-path");
-        String servicePath = FileUtils.makeDirectory(null, UploadDirectoryType.YEAR_MONTH, path, date);
-
         String directory = properties.getProperty("mago3d.admin-wind-service-dir");
         String serviceDir = FileUtils.makeDirectory(null, UploadDirectoryType.YEAR_MONTH, directory, date);
 
@@ -85,7 +82,7 @@ public class GeoJsonWriter implements Writer {
         featureCollection.setFeatures(features);
 
         try {
-            objectMapper.writeValue(Paths.get(serviceDir, fileName + ".json").toFile(), featureCollection);
+            objectMapper.writeValue(Paths.get(serviceDir, String.format("wind_%s.json", date)).toFile(), featureCollection);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
