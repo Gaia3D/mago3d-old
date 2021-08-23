@@ -20,7 +20,7 @@ public class SimulationWindDate implements SimulationJsonImporter {
     @Override
     public Path getJsonPath() {
         String serviceDir = propertiesConfig.getAdminWindServiceDir();
-        String fileName = String.format("OBS-QWM_%s.json", date);
+        String fileName = String.format("wind_%s.json", date);
         String makeDirectory = FileUtils.makeDirectory(null, UploadDirectoryType.YEAR_MONTH, serviceDir, date);
         return Paths.get(makeDirectory, fileName);
     }
