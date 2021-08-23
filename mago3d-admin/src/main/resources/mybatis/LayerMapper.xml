@@ -134,8 +134,8 @@
 	<select id="addColumnToLayer" parameterType="layer">
 		/* addColumnToLayer */
 		ALTER TABLE ${schema}.${tableName}
-			ADD COLUMN       version_id INTEGER DEFAULT 0,
-			ADD COLUMN       enable_yn CHAR(1)
+			ADD COLUMN IF NOT EXISTS     version_id INTEGER DEFAULT 0,
+			ADD COLUMN IF NOT EXISTS     enable_yn CHAR(1)
 	</select>
 
     <!-- layer 등록 -->
