@@ -10,4 +10,35 @@
 		FROM qrtz_simple_trigger A
 	</select>
 
+	<!-- ScheduleInfo 목록 -->
+	<select id="getListScheduleInfo" resultType="scheduleInfo">
+		/* getListScheduleInfo */
+		SELECT A.*
+		FROM schedule_info A
+	</select>
+
+	<!-- ScheduleInfo 조회 -->
+	<select id="getScheduleInfo" parameterType="long" resultType="scheduleInfo">
+		/* getScheduleInfo */
+		SELECT A.*
+		FROM schedule_info A
+		WHERE A.schedule_id = #{scheduleId}
+	</select>
+
+	<!-- ScheduleInfo 등록 -->
+	<insert id="insertScheduleInfo" parameterType="scheduleInfo" >
+		/* insertScheduleInfo */
+		<selectKey keyProperty="scheduleId" resultType="int" order="BEFORE">
+			SELECT NEXTVAL('schedule_info_seq')
+		</selectKey>
+		INSERT INTO schedule_info (
+		schedule_id, job_name, job_group, trigger_name, trigger_group, cron_schedule,
+		data
+		) values(
+		#{scheduleId}, #{jobName}, #{jobGroup}, #{triggerName}, #{triggerGroup}, #{cronSchedule},
+		#{data}
+		)
+	</insert>
+
+
 </mapper>

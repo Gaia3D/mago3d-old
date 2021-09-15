@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
+<head>
+	<title th:text="#{error.page.title}"></title>
+	<th:block layout:fragment="pageCustomStyle">
+		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+	</th:block>
+</head>
+<body>
+<th:block layout:fragment="pageCustomContent">
+	<div id="errorPage" style="width: 100%; text-align: center; padding-top: 200px;">
+		<img th:src="@{/images/{lang}/no_page.png(lang=${lang},cacheVersion=${contentCacheVersion})}">
+		<div style="margin-top: 10px; font-size: 16px;">
+			<p th:text="|#{error.code} ${httpStatusCode}|" style="height: 30px;"></p>
+	<th:block th:if="${#strings.equals(httpStatusCode, '403')}">
+			사용 권한이 존재하지 않습니다. <br/>
+			관리자에게 문의하여 주십시오.
+	</th:block>
+	<th:block th:unless="${#strings.equals(httpStatusCode, '403')}">
+			<p th:text="#{error.message}" style="height: 30px;"></p>
+			<p th:text="#{error.contact.administrator}" style="height: 30px;"></p>
+	</th:block>
+			<p style="height: 30px;">&nbsp;</p>
+			<a href="/sign/signin" style="margin-top: 40px; font-size: 18px;"><b th:text="#{error.exit}"></b></a>
+		</div>
+	</div>
+</th:block>
+</body>
+</html>

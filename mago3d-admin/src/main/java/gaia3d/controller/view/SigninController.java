@@ -12,6 +12,7 @@ import gaia3d.domain.user.UserSession;
 import gaia3d.domain.user.UserStatus;
 import gaia3d.listener.Gaia3dHttpSessionBindingListener;
 import gaia3d.service.PolicyService;
+import gaia3d.service.QuartzService;
 import gaia3d.service.SigninService;
 import gaia3d.service.SignupService;
 import gaia3d.support.PasswordSupport;
@@ -56,6 +57,8 @@ public class SigninController {
 	private SignupService signupService;
 	@Autowired
 	private RestTemplate restTemplate;
+	@Autowired
+	private QuartzService quartzService;
 
 	/**
 	 * Sign in 페이지
@@ -68,11 +71,20 @@ public class SigninController {
 		Policy policy = policyService.getPolicy();
 		log.info("@@ policy = {}", policy);
 
-		/*ScheduleManager scheduleManager = new ScheduleManager();
+
 		UserSession userSession = new UserSession();
 		userSession.setUserId("admin");
-		scheduleManager.addSchedule(MembershipJobExecutor.class, userSession);*/
-		
+
+		//// 스케줄 테스트
+		/*ScheduleManager scheduleManager = new ScheduleManager();
+
+		List<ScheduleInfo> scheduleInfoList = quartzService.getListScheduleInfo();
+
+		for(ScheduleInfo scheduleInfo : scheduleInfoList){
+			scheduleManager.addSchedule(MembershipJobExecutor.class, scheduleInfo, "admin");
+		}*/
+		////
+
 		UserInfo signinForm = new UserInfo();
 		model.addAttribute("signinForm", signinForm);
 		model.addAttribute("policy", policy);

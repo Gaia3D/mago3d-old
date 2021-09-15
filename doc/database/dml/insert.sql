@@ -95,7 +95,12 @@ values
     (418, '0', '1', '권한 수정', 'ROLE', 401, 401, 2, 2, 8, '/role/modify', '/role/list', null, 'glyph-settings', 'N', 'Y', 'N'),
     (420, '0', '1', '지형 목록', 'TERRAIN', 401, 401, 2, 2, 9, '/terrain/list', null, null, 'glyph-desktop', 'Y', 'Y', 'Y'),
     (421, '0', '1', '지형 등록', 'TERRAIN', 401, 401, 2, 2, 10, '/terrain/input', '/terrain/list', null, 'glyph-desktop', 'N', 'Y', 'N'),
-    (422, '0', '1', '지형 수정', 'TERRAIN', 401, 401, 2, 2, 11, '/terrain/modify', '/terrain/list', null, 'glyph-desktop', 'N', 'Y', 'N');
+    (422, '0', '1', '지형 수정', 'TERRAIN', 401, 401, 2, 2, 11, '/terrain/modify', '/terrain/list', null, 'glyph-desktop', 'N', 'Y', 'N'),
+
+    (501, '0', '1', '스케쥴', 'SCHEDULE', 501, 0, 1, 2, 12, '/schedule/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
+    (511, '0', '1', '스케쥴 목록', 'SCHEDULE', 501, 501, 2, 1, 1, '/schedule/list', null, null, 'glyph-tree', 'Y', 'Y', 'Y'),
+    (512, '0', '1', '스케쥴 등록', 'SCHEDULE', 501, 501, 2, 2, 2, '/schedule/input', '/schedule/list', null, 'glyph-desktop', 'N', 'Y', 'N'),
+    (513, '0', '1', '스케쥴 수정', 'SCHEDULE', 501, 501, 2, 2, 3, '/schedule/modify', '/schedule/list', null, 'glyph-desktop', 'N', 'Y', 'N');
 
 
 -- 사용자 메뉴
@@ -196,6 +201,11 @@ values
     (420, 1, 420, 2, 'Y'),
     (421, 1, 421, 2, 'Y'),
     (422, 1, 422, 2, 'Y'),
+
+    (501, 1, 501, 2, 'Y'),
+    (511, 1, 511, 1, 'Y'),
+    (512, 1, 512, 2, 'Y'),
+    (513, 1, 513, 2, 'Y'),
 
     (NEXTVAL('user_group_menu_seq'), 1, 1001, 1, 'Y'),
     (NEXTVAL('user_group_menu_seq'), 1, 1002, 1, 'Y'),
@@ -312,5 +322,9 @@ values
     qrtz_simple_trigger_id, qrtz_simple_trigger_name, qrtz_simple_trigger_group, executor_name, repeat_count, repeat_interval, times_triggered)
 values
 (1, 'TRIGGER_TEST_1', 'TRIGGER_TEST', 'TEST', 5, 100, 0);*/
+INSERT INTO schedule_info(
+    schedule_id, job_name, job_group, trigger_name, trigger_group, cron_schedule, data)
+values
+(1, 'job01', 'jobGroup01', 'trigger01', 'triggerGroup01', '0 0/1 8-19 * * ?', 'admin' );
 
 commit;

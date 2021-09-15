@@ -1,11 +1,19 @@
 package gaia3d.quartz;
 
-/*@PersistJobDataAfterExecution
+import gaia3d.domain.quartz.ScheduleInfo;
+import org.quartz.*;
+import org.quartz.impl.StdSchedulerFactory;
+import org.springframework.stereotype.Component;
+
+import static org.quartz.CronScheduleBuilder.cronSchedule;
+import static org.quartz.TriggerBuilder.newTrigger;
+
+@PersistJobDataAfterExecution
 @DisallowConcurrentExecution
 @Component
 public class ScheduleManager {
 
-    public <T> void addSchedule(Class<? extends Job> job, T t) {
+    public <T> void addSchedule(Class<? extends Job> job, ScheduleInfo scheduleInfo, T t) {
         try {
             // Scheduler 생성
             SchedulerFactory factory = new StdSchedulerFactory();
@@ -19,24 +27,25 @@ public class ScheduleManager {
             // Scheduler 실행
             scheduler.start();
 
-            // JOB Executor Class
+            // JOB Executor Class (수행할 작업을 기술하는 부분)
             Class<? extends Job> jobClass = job;
 
-            // JOB Data 객체 생성
+            // JOB Data 객체 생성 (수행할 작업에 넘길 데이터)
             JobDataMap jobDataMap = new JobDataMap();
             jobDataMap.put("message", "Hello, Quartz!!!");
-            jobDataMap.put("data", t);
+            jobDataMap.put("data", scheduleInfo.getData());
 
-            // JOB 생성
+            // JOB 생성(작업 생성)
             JobDetail jobDetail = JobBuilder.newJob(jobClass)
-                    .withIdentity("job_name", "job_group")
+                    .withIdentity(scheduleInfo.getJobName(), scheduleInfo.getJobGroup())
                     .setJobData(jobDataMap)
                     .build();
 
+            // Trigger 생성
             Trigger trigger = newTrigger()
-                    .withIdentity("trigger3", "group1")
-                    .withSchedule(cronSchedule("0 0/1 8-19 * * ?"))
-                    .forJob("job_name", "job_group")
+                    .withIdentity(scheduleInfo.getTriggerName(), scheduleInfo.getTriggerGroup())
+                    .withSchedule(cronSchedule(scheduleInfo.getCronSchedule()))
+                    .forJob(scheduleInfo.getJobName(), scheduleInfo.getJobGroup())
                     .build();
 
             // Schedule 등록
@@ -66,18 +75,18 @@ public class ScheduleManager {
 
             // JOB Data 객체 생성
             JobDataMap jobDataMap = new JobDataMap();
-            jobDataMap.put("message", "Hello, Quartz!!!");
+            jobDataMap.put("message", "health check!!!");
 
             // JOB 생성
             JobDetail jobDetail = JobBuilder.newJob(jobClass)
-                    .withIdentity("job_name", "job_group")
+                    .withIdentity("healthJob", "healthJobGroup")
                     .setJobData(jobDataMap)
                     .build();
 
             Trigger trigger = newTrigger()
-                    .withIdentity("trigger3", "group1")
+                    .withIdentity("healthTrigger", "healthTriggerGroup")
                     .withSchedule(cronSchedule("0/10 * 8-19 * * ?"))
-                    .forJob("job_name", "job_group")
+                    .forJob("healthJob", "healthJobGroup")
                     .build();
 
             // Schedule 등록
@@ -87,7 +96,7 @@ public class ScheduleManager {
             e.printStackTrace();
         }
     }
-}*/
+}
 
 
 

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
+<head>
+	<title>스케쥴 관리</title>
+	<th:block layout:fragment="pageCustomStyle">
+		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+	</th:block>
+</head>
+<body>
+<th:block layout:fragment="pageCustomContent">
+	<div id="siteBody" class="site-body">
+		<div class="container">
+			<div class="site-content">
+				<div th:replace="~{/fragments/sub-menu :: #subMenuWrap}"></div>
+				<div class="page-area">
+					<div th:replace="~{/fragments/page-header :: #pageHeaderWrap}"></div>
+					<div class="page-content">
+						<div style="height: 30px;"></div>
+						<div class="list">
+					    	<div class="list-header row">
+								<div class="list-desc u-pull-left">
+									전체: <em th:text="${#lists.size(scheduleInfoList)}"></em> 건
+								</div>
+								<div class="list-functions u-pull-right">
+									<div style="padding-bottom: 3px;" class="button-group">
+										<a href="/schedule/input" class="button" title="스케쥴 등록">스케쥴 등록</a>
+									</div>
+								</div>
+							</div>
+							<table class="list-table scope-col">
+							<caption class="hiddenTag">스케쥴 검색 결과 - 번호, 서비스명, 서비스 타입, URL PATH, 상태, 에러, 등록일로 구성</caption>
+								<thead>
+								<tr>
+									<th scope="col">번호</th>
+									<th scope="col">JOB 명</th>
+									<th scope="col">JOB 그룹명</th>
+									<th scope="col">TRIGGER 명</th>
+									<th scope="col">TRIGGER 그룹 명</th>
+									<th scope="col">CRON</th>
+									<th scope="col">데이터</th>
+									<th scope="col">수정</th>
+									<th scope="col">삭제</th>
+									<th scope="col">등록일</th>
+								</tr>
+								</thead>
+<th:block th:if="${#lists.isEmpty(scheduleInfoList)}">
+									<tr>
+										<td colspan="12" class="col-none">스케쥴이 존재하지 않습니다.</td>
+									</tr>
+</th:block>
+<th:block th:unless="${#lists.isEmpty(scheduleInfoList)}" th:each="scheduleInfo : ${scheduleInfoList}">
+									<tr>
+										<td class="col-number" th:text="${scheduleInfoStat.count}"></td>
+										<td class="col-name" style="text-align: left;">
+											<th:block th:text="${scheduleInfo.jobName}"></th:block>
+										</td>
+										<td class="col-name"><th:block th:text="${scheduleInfo.jobGroup}"></th:block></td>
+										<td class="col-name"><th:block th:text="${scheduleInfo.triggerName}"></th:block></td>
+										<td class="col-name"><th:block th:text="${scheduleInfo.triggerGroup}"></th:block></td>
+										<td class="col-name"><th:block th:text="${scheduleInfo.cronSchedule}"></th:block></td>
+										<td class="col-name"><th:block th:text="${scheduleInfo.data}"></th:block></td>
+										<td class="col-functions">
+											<a th:href="@{/schedule/modify(scheduleId=${scheduleInfo.scheduleId})}" class="linkButton">수정</a>
+										</td>
+										<td class="col-functions">
+											<a href="#" class="linkButton" th:onclick="deleteSchedule([[${scheduleInfo.scheduleId}]]); return false;">삭제</a>
+										</td>
+										<td class="col-date-time">
+											<th:block th:text="${#temporals.format(scheduleInfo.insertDate, 'yyyy-MM-dd HH:mm:ss')}"></th:block>
+										</td>
+									</tr>
+</th:block>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+<th:block layout:fragment="pageCustomScript">
+
+<script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.js(cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+<script type="text/javascript" th:src="@{/js/navigation.js(cacheVersion=${contentCacheVersion})}"></script>
+
+<script th:inline="javascript">
+$(document).ready(function() {
+});
+
+var deleteScheduleFlag = true;
+function deleteMicroService(scheduleId) {
+	if(deleteScheduleFlag) {
+		if(confirm(JS_MESSAGE["delete.confirm"])) {
+			deleteScheduleFlag = false;
+			$.ajax({
+				url: "/schedule/" + scheduleId,
+				type: "DELETE",
+				headers: {"X-Requested-With": "XMLHttpRequest"},
+				dataType: "json",
+				success: function(msg) {
+					alert(JS_MESSAGE["delete"]);
+					location.reload();
+				},
+		        error: function(request, status, error) {
+		        	// alert message, 세션이 없는 경우 로그인 페이지로 이동 - common.js
+		        	ajaxErrorHandler(request);
+					deleteScheduleFlag = true;
+		        }
+			});
+		} else {
+			deleteScheduleFlag = true;
+		}
+	} else {
+		alert(JS_MESSAGE["button.double.click"]);
+	}
+}
+</script>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html th:lang="${accessibility}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/default">
+<head>
+	<title>스케쥴 등록</title>
+	<th:block layout:fragment="pageCustomStyle">
+		<link rel="stylesheet" th:href="@{/css/{lang}/font/font.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/images/{lang}/icon/glyph/glyphicon.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/normalize/normalize.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.css(cacheVersion=${contentCacheVersion})}" />
+		<link rel="stylesheet" th:href="@{/css/fontawesome-free-5.2.0-web/css/all.min.css(cacheVersion=${contentCacheVersion})}">
+		<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang},cacheVersion=${contentCacheVersion})}" />
+	</th:block>
+</head>
+<body>
+<th:block layout:fragment="pageCustomContent">
+	<div id="siteBody" class="site-body">
+		<div class="container">
+			<div class="site-content">
+				<div th:replace="~{/fragments/sub-menu :: #subMenuWrap}"></div>
+				<div class="page-area">
+					<div th:replace="~{/fragments/page-header :: #pageHeaderWrap}"></div>
+					<div class="page-content">
+						<form id="scheduleInfo" th:object="${scheduleInfo}" method="post" th:action="@{#}" onsubmit="return false;">
+						<table class="input-table scope-row" summary="스케쥴 테이블">
+						<caption class="hiddenTag">스케쥴 등록</caption>
+							<col class="col-label l" />
+							<col class="col-input" />
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="jobName">JOB명</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input"><input type="text" id="jobName" name="jobName" th:field="*{jobName}" class="m" /></td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="jobGroup">JOB그룹</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input"><input type="text" id="jobGroup" name="jobGroup" th:field="*{jobGroup}" class="m" /></td>
+							</tr>
+							<!--<tr>
+								<th class="col-label l" scope="row">
+									<label for="microServiceType">스케줄러 유형</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input">
+									<select id="microServiceType" name="microServiceType" th:field="*{microServiceType}" class="selectBoxClass" >
+										<option value="cache"> Cache </option>
+										<option value="simulation"> Simulation </option>
+										<option value="sensor_things"> SensorThings </option>
+									</select>
+								</td>
+							</tr>-->
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="triggerName">트리거명</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input"><input type="text" id="triggerName" name="triggerName" th:field="*{triggerName}" class="m" /></td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="triggerGroup">트리거 그룹명</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input"><input type="text" id="triggerGroup" name="triggerGroup" th:field="*{triggerGroup}" class="m" /></td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="cronSchedule">Cron</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input"><input type="text" id="cronSchedule" name="cronSchedule" th:field="*{cronSchedule}" class="m" /></td>
+							</tr>
+							<tr>
+								<th class="col-label l" scope="row">
+									<label for="data">데이터</label>
+									<span class="icon-glyph glyph-emark-dot color-warning"></span>
+								</th>
+								<td class="col-input"><input type="text" id="data" name="data" th:field="*{data}" class="m" /></td>
+							</tr>
+						</table>
+						<div class="button-group">
+							<div id="insertScheduleLink" class="center-buttons">
+								<input type="submit" value="저장" onclick="insert();"/>
+								<a href="/schedule/list" class="button">목록</a>
+							</div>
+						</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+<th:block layout:fragment="pageCustomScript">
+
+	<script type="text/javascript" th:src="@{/externlib/jquery-3.3.1/jquery.min.js(cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/externlib/jquery-ui-1.12.1/jquery-ui.min.js(cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/{lang}/common.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/{lang}/message.js(lang=${lang},cacheVersion=${contentCacheVersion})}"></script>
+	<script type="text/javascript" th:src="@{/js/navigation.js(cacheVersion=${contentCacheVersion})}"></script>
+
+<script th:inline="javascript">
+$("#jobName").keyup(function(event) {
+	var inputValue = $(this).val();
+	if(isHangul(inputValue)) {
+		alert("JOB 이름은 영문 및 숫자만 입력 가능 합니다.");
+		return;
+	}
+});
+
+function validate() {
+	if( $("#jobName").val().trim() === "" ) {
+		alert("JOB 명을 입력하여 주십시오.");
+		$("#jobName").focus();
+		return false;
+	}
+	if( $("#jobGroup").val().trim() === "" ) {
+		alert("JOB 그룹명을 입력하여 주십시오.");
+		$("#jobGroup").focus();
+		return false;
+	}
+	/*if($("#triggerName").val() === "") {
+		alert("디지털 트윈 서비스 유형을 선택하여 주십시오.");
+		return false;
+	}*/
+
+	if( $("#triggerName").val().trim() === "" ) {
+		alert("TRIGGER 명을 입력하여 주십시오.");
+		$("#triggerName").focus();
+		return false;
+	}
+	if( $("#triggerGroup").val().trim() === "" ) {
+		alert("TRIGGER 그룹명을 입력하여 주십시오.");
+		$("#triggerGroup").focus();
+		return false;
+	}
+
+}
+
+var insertScheduleInfoFlag = true;
+function insert() {
+	if(validate() === false) return false;
+
+	if(insertScheduleInfoFlag) {
+		insertScheduleInfoFlag = false;
+		$.ajax({
+			url: "/schedules",
+			type: "POST",
+			headers: {"X-Requested-With": "XMLHttpRequest"},
+			data: $("#scheduleInfo").serialize(),
+			dataType: "json",
+			success: function(msg) {
+				if(msg.statusCode <= 200) {
+					alert(JS_MESSAGE["insert"]);
+					window.location.reload();
+				} else {
+					alert(JS_MESSAGE[msg.errorCode]);
+					console.log("---- " + msg.message);
+				}
+				insertScheduleInfoFlag = true;
+			},
+	        error: function(request, status, error) {
+				alert(JS_MESSAGE["ajax.error.message"]);
+				insertScheduleInfoFlag = true;
+	        }
+		});
+	} else {
+		alert("진행 중입니다.");
+		return;
+	}
+}
+</script>
+</th:block>
+</body>
+</html>

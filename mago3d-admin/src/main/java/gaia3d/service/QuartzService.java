@@ -1,5 +1,9 @@
 package gaia3d.service;
 
+import gaia3d.domain.quartz.ScheduleInfo;
+
+import java.util.List;
+
 /**
  * 쿼츠
  * @author hansang
@@ -99,4 +103,30 @@ public interface QuartzService {
 		}
 	}*/
 
+	/**
+	 * ScheduleInfo 목록
+	 * @return
+	 */
+	List<ScheduleInfo> getListScheduleInfo();
+
+	/**
+	 * ScheduleInfo 조회
+	 * @param scheduleInfoId
+	 * @return
+	 */
+	ScheduleInfo getScheduleInfo(Integer scheduleInfoId);
+
+	/**
+	 * ScheduleInfo 등록
+	 * @param scheduleInfo
+	 * @return
+	 */
+	int insertScheduleInfo(ScheduleInfo scheduleInfo);
+
+	/**
+	 * ScheduleInfo 정보 수정
+	 * @param scheduleInfo
+	 * @return
+	 */
+	int updateScheduleInfo(ScheduleInfo scheduleInfo);
 }

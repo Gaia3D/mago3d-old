@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${accessibility}">
+<head>
+	<meta charset="utf-8">
+	<meta name="referrer" content="origin">
+	<meta name="viewport" content="width=device-width">
+	<meta name="robots" content="index,nofollow"/>
+	<title th:text="#{error.page.title}"></title>
+	<link rel="shortcut icon" th:href="@{/images/favicon.ico(cacheVersion=${contentCacheVersion})}">
+	<link rel="stylesheet" th:href="@{/css/{lang}/admin-style.css(lang=${lang},cacheVersion=${contentCacheVersion})}"/>
+</head>
+
+<body>
+
+<div id="errorPage" style="width: 100%; text-align: center; padding-top: 200px;">
+	<img th:src="@{/images/{lang}/no_page.png(lang=${lang},cacheVersion=${contentCacheVersion})}">
+	<div style="margin-top: 10px; font-size: 16px;">
+		<th:block th:if="${#strings.equals(errorCode, 'uid.empty')}">
+			사용자 아이디가 유효하지 않습니다. 로그인 정보를 다시 확인해 주십시오.
+		</th:block>
+		<th:block th:if="${#strings.equals(errorCode, 'uid.auth.check.fail')}">
+			사용자 아이디(Auth Check Fail)가 유효하지 않습니다. 로그인 정보를 다시 확인해 주십시오.
+		</th:block>
+		<th:block th:if="${#strings.equals(errorCode, 'usersession.status.invalid')}">
+			관리자에게 사용자 상태를 문의하여 주십시오.
+		</th:block>
+		<th:block th:if="${#strings.equals(errorCode, 'usersession.failsignincount.invalid')}">
+			실패 횟수가 초과 되었습니다. 관리자에게 문의하여 주십시오.
+		</th:block>
+		<th:block th:if="${#strings.equals(errorCode, 'usersession.role.invalid')}">
+			권한이 존재하지 않습니다. 관리자에게 문의하여 주십시오.
+		</th:block>
+		<th:block th:if="${#strings.equals(errorCode, 'user.status.waiting.approval')}">
+			관리자 승인 후 이용 가능 합니다.
+		</th:block>
+
+		<p style="height: 30px;">&nbsp;</p>
+		<!--<a th:href="@{${ssoLoginUrlWidthParams}}" style="margin-top: 40px; font-size: 18px;"><b th:text="#{error.exit}"></b></a>-->
+	</div>
+</div>
+
+</body>
+</html>

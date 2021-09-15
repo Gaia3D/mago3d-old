@@ -1,39 +1,58 @@
-package gaia3d.schedule;
+package gaia3d.quartz.jobExecutor;
 
 import gaia3d.domain.Health;
 import gaia3d.domain.cache.CacheName;
 import gaia3d.domain.healthcheck.HealthCheckLog;
 import gaia3d.domain.microservice.MicroService;
 import gaia3d.domain.microservice.MicroServiceType;
+import gaia3d.quartz.AutowiringSpringBeanJobFactory;
 import gaia3d.service.HealthCheckLogService;
 import gaia3d.service.MicroServiceService;
 import gaia3d.support.LogMessageSupport;
 import lombok.extern.slf4j.Slf4j;
+import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-/**
- * 디지털 트윈 서비스 Health Check
- */
 @Slf4j
+@PersistJobDataAfterExecution
+@DisallowConcurrentExecution
 @Component
-public class HealthCheckScheduler {
+public class HealthCheckJobExecutor extends QuartzJobBean {
+
+    private static final SimpleDateFormat TIMESTAMP_FMT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSSS");
+    //public static final String EXECUTION_COUNT = "EXECUTION_COUNT";
 
     @Autowired
-    private HealthCheckLogService healthCheckLogService;
-    @Autowired
-    private MicroServiceService microServiceService;
-    @Autowired
-    private RestTemplate restTemplate;
+    private static AutowiringSpringBeanJobFactory autowiringSpringBeanJobFactory;
 
-    /*@Scheduled(cron = "${gaia3d.schedule.health.check}")*/
-    public void healthCheck() throws Exception {
+    private static ApplicationContext ctx;
+
+    @Override
+    protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+
+        ctx = autowiringSpringBeanJobFactory.getApplicationContext();
+
+        System.out.println(context);
+        JobDataMap map = context.getJobDetail().getJobDataMap();
+        String currentDate = TIMESTAMP_FMT.format(new Date());
+        String message = map.getString("message");
+        System.out.println("======log======");
+
+        MicroServiceService microServiceService = ctx.getBean(MicroServiceService.class);
+        HealthCheckLogService healthCheckLogService = ctx.getBean(HealthCheckLogService.class);
+
         List<MicroService> microServiceList = microServiceService.getListMicroService(new MicroService());
+
         for (MicroService microService : microServiceList) {
 
             String health = getHealthCheckService(microService);
@@ -41,17 +60,20 @@ public class HealthCheckScheduler {
             HealthCheckLog healthCheckLog = new HealthCheckLog();
             healthCheckLog.setMicroServiceId(microService.getMicroServiceId());
             healthCheckLog.setStatus(health);
-            healthCheckLogService.insertHealthCheckLog(healthCheckLog);
+            //healthCheckLogService.insertHealthCheckLog(healthCheckLog);
 
             microService.setStatus(health);
             microServiceService.updateMicroServiceStatus(microService);
 
         }
+
+        System.out.println(String.format("[%-18s][%s] %s", "execute", currentDate, message ));
     }
 
     public String getHealthCheckService(MicroService microService) {
         //String serviceUrl = microService.getUrlScheme() + "://" + microService.getUrlHost() + ":" + microService.getUrlPort() + "/" + microService.getUrlPath();
         String serviceUrl = createServiceUrl(microService);
+        RestTemplate restTemplate = ctx.getBean(RestTemplate.class);
         HttpStatus status = null;
         String health = null;
         try {
