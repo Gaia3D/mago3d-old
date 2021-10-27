@@ -1,6 +1,10 @@
 # MAGO3D 프로젝트
-
 ----> openjdk 11로 다시 변경 하였음
+
+# 목차 
+1. [mago3D 소개/개발자/사용자 가이드](./mago3d-documentations/README.md)
+2. [프로젝트 설정](#1-프로젝트-버전)
+
 
 ## 1. 프로젝트 버전
 * openjdk 16
