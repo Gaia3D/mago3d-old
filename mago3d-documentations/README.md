@@ -1,3 +1,4 @@
+![mago3D 로고](./images/mago3D_Logo_v25.png)
 # mago3D 문서 작업 저장소
 
 Repository for mago3D documents. 
