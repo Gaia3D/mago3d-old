@@ -67,11 +67,11 @@
 
 ### Save path of F4D data (Full)
 
-![img](./images/f4d_data1_english.png)
+![img](../images/f4d_data1_english.png)
 
 ### Save path of F4D data (Detailed)
 
-![img](./images/f4d_data2_english.png)
+![img](../images/f4d_data2_english.png)
  
 
 ## 4. Understanding What RabbitMQ Does
@@ -93,12 +93,12 @@
 | **Queue**    | * Is a space where the messages sent by producers are saved before the consumers consume them.<br />* Queues are identified by their names; if you create a queue with the same name and settings of an existing queue then it connects to the existing queue without errors; but if you try creating a queue with the same name of an existing one but different settings, an error will occur. |
 | **Consumer** | * Is the principal agent which receives the messages.<br />* Consumer directly access the queue and take the messages. |
 
-![img](./images/rabbitmq1.png)
+![img](../images/rabbitmq1.png)
 
 - The **producer**, which sends the messages, delivers the messages (**routing key**) to **exchange** of **broker**, then the messages are copied into linked **queue** by **binding** rules.
 - The **consumer**, which receives the messages, takes and handles the messages through **queue** of **broker**.
 
-![img](./images/rabbitmq2.png)
+![img](../images/rabbitmq2.png)
 
 - There are 4 types of exchange; The characteristics of each type is as follows:
 
@@ -127,7 +127,7 @@
 
 ### Flow Chart
 
-![img](./images/3dflow1_english.png)
+![img](../images/3dflow1_english.png)
 
  
 
@@ -166,25 +166,25 @@ Log file : `ConverterServiceImpl`, `executeConverter`
 - Vector 
   - Now, only shapefiles can be uploaded.
   - Shapefiles are registered using ogr2ogr; registering is GDAL dependent. 
-- ![img](./images/lm1_english.png)
+- ![img](../images/lm1_english.png)
 - Raster 
   - Raster data is mostly very large so admin does not upload data by data; admin registers data in the storage to GeoServer then manages them. 
   - Admin can set a layer registered at GeoServer as service object; can use not only WMS but GeoWebCache too by setting whether or not using cache.
-- ![img](./images/lm2_english.png)
+- ![img](../images/lm2_english.png)
 
 
 ## 7. Permissions Management
 
 All users belong to their own group; and the group decides which menus and permissions are accessible.
 
-![img](./images/role1.png)
+![img](../images/role1.png)
 
-![img](./images/role2.png)
+![img](../images/role2.png)
 
 
 ## 8. Update of Static Contents
 
-- ![img](./images/static_contents.png)
+- ![img](../images/static_contents.png)
 
 - A browser caches the static contents such as CSS, JavaScript, etc.; they are reflected only when new contents deletes browser cache.
 
@@ -205,7 +205,7 @@ All users belong to their own group; and the group decides which menus and permi
 
    – For encryption / decryption of DB connection information of application.properties, runs a CryptTest from gaia3d.security package of the common project. 
 
-![img](./images/encryption.png)
+![img](../images/encryption.png)
 
 2) Encrypt user password for log-in 
 
@@ -301,7 +301,7 @@ logger name="org.springframework" 값을 "org.springframework.web" 으로 변경
 
 - Uses timestamp with time zone for Time type.
 
-  ![img](./images/db_convention.png)
+  ![img](../images/db_convention.png)
 
 
 ## 13. Code Conventions
@@ -414,7 +414,7 @@ ORDER BY
 
   - Tomcat, WebSphere, JBoss, ...
 
-    ![img](./images/web1_english.png)
+    ![img](../images/web1_english.png)
 
 - Why we separate Web Server from WAS Server?
 
@@ -438,7 +438,7 @@ ORDER BY
   - Linking is possible by adding proxy settings to `location` of Nginx Configuration file.
 - Test 
   - Check access_log files of Web / WAS servers, accessing specific URL of the application deployed at WAS.
-  - ![img](./images/web2.png)
+  - ![img](../images/web2.png)
 
 
 ## 18. Tomcat Settings

@@ -16,7 +16,7 @@
 - 자바설치 홈페이지(https://jdk.java.net/archive/)에 접속하여 Java를 구동하기 위한 환경에 해당하는 파일을 내려받는다.
 - 내려 받은 압축 파일을 설치할 폴더에 압축 해제한다.
 
-![img](./images/e238d7cc-e6ea-40c8-89b6-17f437362bde.png)
+![img](../images/e238d7cc-e6ea-40c8-89b6-17f437362bde.png)
 
 
 ### 2) Java 환경변수 설정
@@ -29,7 +29,7 @@
 - Java 설치 경로를 설정 한 후, **시스템 변수의 [Path] 변수**를 선택하고 [편집] 버튼을 클릭한다.
 - 제일 앞쪽에 **%JAVA_HOME%\bin;**을 입력하고 저장한다.
 
-![img](./images/a8d04789-6e41-46ff-bf86-6c3ae9c1737c.png)
+![img](../images/a8d04789-6e41-46ff-bf86-6c3ae9c1737c.png)
 
  
 
@@ -41,7 +41,7 @@
 1java -version
 ```
 
-![img](./images/d55a5b4e-37dd-4c43-83be-15654a881691.png)
+![img](../images/d55a5b4e-37dd-4c43-83be-15654a881691.png)
 
 
 ## 2. PostgreSQL/PostGIS
@@ -49,7 +49,7 @@
 
 - PostgreSQL 홈페이지(https://www.postgresql.org/)에 접속하여, Windows용 설치 파일을 내려 받는다 (https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
 
-![](./images/85f72c0f-1fcd-4192-a2a5-d7a14172c051.png)
+![](../images/85f72c0f-1fcd-4192-a2a5-d7a14172c051.png)
 
 - 내려 받은 파일을 실행하여, PostgreSQL을 설치한다.
 
@@ -60,7 +60,7 @@
 
 - 포트(5432) 및 지역(Korea)을 설정한다.
 
-![](./images/89c4c1ba-989b-493b-9d91-75568d2d2fa4.png)
+![](../images/89c4c1ba-989b-493b-9d91-75568d2d2fa4.png)
 
  
 
@@ -70,7 +70,7 @@
 - 여기서는 [postgis-bundle-pg12x64-setup-3.0.2-1.exe](http://download.osgeo.org/postgis/windows/pg12/postgis-bundle-pg12x64-setup-3.0.2-1.exe) 버전을 다운받는다.
 - 내려 받기가 완료되면 PostGIS 설치를 진행할 수 있다.
 
-![](./images/24fcd1b5-0cdf-4f0e-b4e6-c26c7c052a52.png)
+![](../images/24fcd1b5-0cdf-4f0e-b4e6-c26c7c052a52.png)
 
 ### 3) PostgreSQL 설정
 
@@ -78,7 +78,7 @@
 
 - postgresql.conf 파일은 윈도우 기준으로 기본으로 설치시 **C:\Program Files\PostgreSQL\12\data** 경로에 위치하며, 설정파일 수정후에는 postgresql 서비스를 재시작해야한다.
 
-  ![](./images/770b3afa-235c-42a4-b08f-2d5132130b8e.png)
+  ![](../images/770b3afa-235c-42a4-b08f-2d5132130b8e.png)
 
    
 
@@ -118,7 +118,7 @@
 
 - Download the [32bit] 0r [64bit]에서 [64bit]를 선택하여 해당 파일을 내려 받는다.
 
-  ![img](./images/082213d2-83bf-44f4-a0dc-755fcf85a00f.png))
+  ![img](../images/082213d2-83bf-44f4-a0dc-755fcf85a00f.png))
 
    
 
@@ -126,7 +126,7 @@
 
 - GDAL을 제외한 QGIS/GRASS GIS는 필요하면 체크하여도 무관하다.
 
-![img](./images/ab65e39e-e7a4-4620-989d-9d249738ed4d.png)
+![img](../images/ab65e39e-e7a4-4620-989d-9d249738ed4d.png)
 
 ### 2) GDAL 환경변수 설정
 
@@ -146,7 +146,7 @@
   ogr2ogr
   ```
 
-  ![img](./images/7c07af03-a122-442e-ad42-7898ace65d5d.png)
+  ![img](../images/7c07af03-a122-442e-ad42-7898ace65d5d.png)
 
 - **환경변수를 등록한 후에는 was가 실행중이라면 재기동해야 등록한 환경변수가 적용되므로 주의해야한다. cmd 창역시 환경변수를 등록후에는 새로운 cmd 창에서 확인하도록 한다.**
 
@@ -179,7 +179,7 @@ https://sourceforge.net/projects/geoserver/files/GeoServer/2.16.4/extensions/geo
 
 - GeoServer 재시작 후, 서비스 항목에 WPS 확인한다.
 
-![img](./images/a2aa61eb-0c49-4fb6-9ba0-d07e294c27d8.png)
+![img](../images/a2aa61eb-0c49-4fb6-9ba0-d07e294c27d8.png)
 
 ### 3) OpenGXT + GeoTools Extentions
 
@@ -197,7 +197,7 @@ https://sourceforge.net/projects/mango-spatialstatistics/files/GeoServer/
 
 - GeoServer 관리자 페이지 → 데모 → WPS 요청 빌더
 
-![img](./images/4559786b-7e34-4642-bfbf-07c7b8318c2a.png)
+![img](../images/4559786b-7e34-4642-bfbf-07c7b8318c2a.png)
 
  
 
@@ -246,7 +246,7 @@ https://sourceforge.net/projects/mango-spatialstatistics/files/GeoServer/
 
 - postgresql 설치 후 생성한 database정보를 적어주는데 postgis extension을 설치하지 않으면 저장소 등록이 되지 않으므로 꼭 생성한 db에 posgis extension을 설치해야 한다.
 
-  ![img](./images/627b0410-bfa7-4596-84c4-f5e973057a75.png)
+  ![img](../images/627b0410-bfa7-4596-84c4-f5e973057a75.png)
 ## 5. F4D Converter
 - 아래의 링크를 통해서, Converter를 내려 받는다.
 
@@ -256,7 +256,7 @@ https://sourceforge.net/projects/mango-spatialstatistics/files/GeoServer/
 
 - 내려 받은 파일을 실행하여, Converter를 설치한다.
 
-  ![](./images/8890e42d-321c-4dc3-aa0f-3a7a603276bd.png)
+  ![](../images/8890e42d-321c-4dc3-aa0f-3a7a603276bd.png)
 ## 6. RabbitMQ
 - RabbitMQ란 표준 MQ 프로토콜인 AMOP(Advanced Message Queueing Protocol)의 메시지 브로커 소프트웨어 오픈소스이다.
 
@@ -268,7 +268,7 @@ https://sourceforge.net/projects/mango-spatialstatistics/files/GeoServer/
 
 - Erlang 홈페이지(https://www.erlang.org/downloads)에 접속하여, Download OTP 23.0 항목에서 ‘OTP 23.0 Windows 64-bit Binary File’을 클릭하여 파일을 내려 받는다.
 
-  ![img](./images/9888965a-6966-4969-8aac-538e9b2b5fc2.png)
+  ![img](../images/9888965a-6966-4969-8aac-538e9b2b5fc2.png)
 
    
 
@@ -316,7 +316,7 @@ https://sourceforge.net/projects/mango-spatialstatistics/files/GeoServer/
 - RabbitMQ 관리자 페이지([http://localhost:15672](http://localhost:15672/))에 접속한다.
 - 아이디와 비밀번호는 모두 guest로 로그인한다.
 
-![img](./images/1cf84fa2-a2e4-47ad-b841-7dbfbca3ebd8.png)
+![img](../images/1cf84fa2-a2e4-47ad-b841-7dbfbca3ebd8.png)
 
 - 상단에 Exchange 탭을 클릭한다.
 
@@ -326,13 +326,13 @@ https://sourceforge.net/projects/mango-spatialstatistics/files/GeoServer/
   - *Type : topic*
   - *Durability : Durable*
 
-  ![img](./images/88198c22-8c7c-4156-990e-cdf72b6cbe30.png)
+  ![img](../images/88198c22-8c7c-4156-990e-cdf72b6cbe30.png)
 
 - 상단에 Queues 탭을 클릭한다.
 
 - 하단에 Add a new queue를 클릭하여 우측 그림과 같이 입력한 뒤, Add queue 버튼을 클릭한다.
 
-  ![img](./images/ff5e92b7-3c79-45dc-93b6-2d756de039b0.png)
+  ![img](../images/ff5e92b7-3c79-45dc-93b6-2d756de039b0.png)
 
 - RabbitMQ를 처음 설치하면 guest 계정이 Administrator로 권한 설정되어 있다. 하지만 이 계정으로 application에 접속할 시, 접속 관련 오류가 발생한다.
 
@@ -342,14 +342,14 @@ https://sourceforge.net/projects/mango-spatialstatistics/files/GeoServer/
 
   - Password : mago3d 
 
-    ![img](./images/b2448bde-1ea4-44b6-abe2-7082ae64cb97.png)
+    ![img](../images/b2448bde-1ea4-44b6-abe2-7082ae64cb97.png)
 
    
 - guest 아래에 새로 생성된 mago3d계정을 클릭한다.
 
 - 아래 화면과 같이 Current permissions, Current topic permissions을 생성하고 Update this user에 비밀번호(mago3d)를 입력한 뒤, 하단의 Update user 버튼을 클릭한다.
 
-  ![](./images/d7b0e288-9c6a-4f45-af18-461a693c6a9a.png)
+  ![](../images/d7b0e288-9c6a-4f45-af18-461a693c6a9a.png)
   
 ## 7. 기본 테이블 생성 및 패스워드 업데이트
 ### 1) SQL 실행
@@ -365,7 +365,7 @@ https://sourceforge.net/projects/mango-spatialstatistics/files/GeoServer/
 
 - Console창에 뜬 encodePassword 값을 복사하여 pgAdmin의 Query Editor에서 update문(update user_info set password = ‘(encodePassword 값)’ where user_id=＇admin’; )으로 admin의 비밀번호 값을 변경한다. mago3d 계정도 동일한 방식으로 변경한다.
 
-  ![img](./images/Table-1.png)
+  ![img](../images/Table-1.png)
 
    
 ## 8. 설정
@@ -386,19 +386,19 @@ https://sourceforge.net/projects/mango-spatialstatistics/files/GeoServer/
 
   - mago3d-user - src - main - resources - application.properties
 
-    ![img](./images/settings1.png)
+    ![img](../images/settings1.png)
 
 - 만약 postgresql 의 port를 15432로 변경할 경우 geoserver 의 postGIS 저장소의 port 도 동일하게 15432로 수정해야 한다. 
 ## 9. 레이어 업로드 테스트
 - Vector 레이어 등록
 
-  ![img](./images/Layer1.png)
+  ![img](../images/Layer1.png)
 
   - 레이어 등록 기능은 geoserver를 통해 이루어지기 때문에 환경설정 - 공간정보 운영정책 - **GeoServer 탭에서 데이터URL 의 geoserver 가 기동중이어야 하고, 작업공간과 저장소가 만들어져 있어야 한다.**
 
     
 
-  ![img](./images/Layer2.png)
+  ![img](../images/Layer2.png)
 
    
 
@@ -408,7 +408,7 @@ https://sourceforge.net/projects/mango-spatialstatistics/files/GeoServer/
 
 - Raster 레이어 등록 
 
-  ![img](./images/Layer3.png)
+  ![img](../images/Layer3.png)
 
 
 
@@ -421,7 +421,7 @@ https://sourceforge.net/projects/mango-spatialstatistics/files/GeoServer/
 
 - 데이터 그룹
 
-  ![img](./images/3d-1.png)
+  ![img](../images/3d-1.png)
 
   - 사용자는 기본적으로 **basic** 이라는 그룹key를  가진 그룹을 가지고 사용자의 필요에 따라 추가적으로 그룹을 생성 할 수 있다.
 
@@ -431,7 +431,7 @@ https://sourceforge.net/projects/mango-spatialstatistics/files/GeoServer/
 
 - 데이터 업로드
 
-  ![img](./images/3d-2.png)
+  ![img](../images/3d-2.png)
 
   - 지원 포맷 : CITYGML, INDOORGML, IFC, LAS(POINT CLOUD), 3DS, OBJ, COLADA(DAE)
 
@@ -441,7 +441,7 @@ https://sourceforge.net/projects/mango-spatialstatistics/files/GeoServer/
 
 - 데이터 변환 
 
-  ![img](./images/3d-3.png)
+  ![img](../images/3d-3.png)
 
   - F4D 변환 버튼을 선택하여 업로드 한 파일을 F4D 포맷으로 변환한다. 
 
@@ -451,7 +451,7 @@ https://sourceforge.net/projects/mango-spatialstatistics/files/GeoServer/
 
   
 
-  ![img](./images/3d-3.png)
+  ![img](../images/3d-3.png)
 
    
 

@@ -16,7 +16,7 @@
 - Download the file corresponding to your development environments at Java Installation homepage (https://jdk.java.net/archive/).
 - Unzip the downloaded file to the installation folder.
 
-![img](./images/e238d7cc-e6ea-40c8-89b6-17f437362bde.png)
+![img](../images/e238d7cc-e6ea-40c8-89b6-17f437362bde.png)
 
 
 ### 2) Setting Java environment variables
@@ -31,7 +31,7 @@
 
 - Enter and save **%JAVA_HOME%\bin;** at the frontmost position.
 
-![img](./images/a8d04789-6e41-46ff-bf86-6c3ae9c1737c.png)
+![img](../images/a8d04789-6e41-46ff-bf86-6c3ae9c1737c.png)
 
  
 
@@ -43,7 +43,7 @@
 java -version
 ```
 
-![img](./images/d55a5b4e-37dd-4c43-83be-15654a881691.png)
+![img](../images/d55a5b4e-37dd-4c43-83be-15654a881691.png)
 
 
 ## 2. PostgreSQL and PostGIS
@@ -51,7 +51,7 @@ java -version
 
 - Download the installation file for Windows from PostgreSQL homepage (https://www.postgresql.org/). (https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
 
-![](./images/85f72c0f-1fcd-4192-a2a5-d7a14172c051.png)
+![](../images/85f72c0f-1fcd-4192-a2a5-d7a14172c051.png)
 
 - Run the downloaded file to install PostgreSQL.
 
@@ -63,7 +63,7 @@ java -version
 
 - Set port (5432) and locale (Korea).
 
-![](./images/89c4c1ba-989b-493b-9d91-75568d2d2fa4.png)
+![](../images/89c4c1ba-989b-493b-9d91-75568d2d2fa4.png)
 
  
 ### 2) Installing PostGIS
@@ -74,7 +74,7 @@ java -version
 
 - When the download is finished, you can proceed to install PostGIS.
 
-![](./images/24fcd1b5-0cdf-4f0e-b4e6-c26c7c052a52.png)
+![](../images/24fcd1b5-0cdf-4f0e-b4e6-c26c7c052a52.png)
 
 
 ### 3) Setting PostgreSQL
@@ -83,7 +83,7 @@ java -version
 
 - In Windows, postgresql.conf file is at **C:\Program Files\PostgreSQL\12\data** path if you installed with default options. You need to restart PostgreSQL service after editing the configuration file.
 
-  ![](./images/770b3afa-235c-42a4-b08f-2d5132130b8e.png)
+  ![](../images/770b3afa-235c-42a4-b08f-2d5132130b8e.png)
    
 
 ### 4) Creating database
@@ -124,13 +124,13 @@ java -version
 
 - Download the corresponding file from [64bit].
 
-  ![img](./images/082213d2-83bf-44f4-a0dc-755fcf85a00f.png))
+  ![img](../images/082213d2-83bf-44f4-a0dc-755fcf85a00f.png))
 
 - Run the downloaded file. A installation window appears.
 
 - Beside GDAL, you may check QGIS / GRASS GIS if you need.
 
-![img](./images/ab65e39e-e7a4-4620-989d-9d249738ed4d.png)
+![img](../images/ab65e39e-e7a4-4620-989d-9d249738ed4d.png)
 
 ### 2) Setting GDAL environment variables
 
@@ -152,7 +152,7 @@ java -version
   ogr2ogr
   ```
 
-  ![img](./images/7c07af03-a122-442e-ad42-7898ace65d5d.png)
+  ![img](../images/7c07af03-a122-442e-ad42-7898ace65d5d.png)
 
 - **If WAS is running after registering environment variables, beware that the registered environment variables will be only applied when WAS is restarted; command prompt, too. After registering environment variables, you need to check in the new command prompt.**
 
@@ -185,7 +185,7 @@ https://sourceforge.net/projects/geoserver/files/GeoServer/2.16.4/extensions/geo
 
 - Check if WPS exists in service items after restarting GeoServer.
 
-![img](./images/a2aa61eb-0c49-4fb6-9ba0-d07e294c27d8.png)
+![img](../images/a2aa61eb-0c49-4fb6-9ba0-d07e294c27d8.png)
 
 
 ### 3) OpenGXT + GeoTools Extentions
@@ -204,7 +204,7 @@ https://sourceforge.net/projects/mango-spatialstatistics/files/GeoServer/
 
 - [GeoServer Administration Page] → [Demo] → [WPS Request Builder]
 
-![img](./images/4559786b-7e34-4642-bfbf-07c7b8318c2a.png)
+![img](../images/4559786b-7e34-4642-bfbf-07c7b8318c2a.png)
 
 
 ### 4) Setting CORS
@@ -252,7 +252,7 @@ Check [Default Workspace]
 
 - Enter the information of DB created after the installation of PostgreSQL. You must have installed PostGIS extension to the created DB, because if not you can not register PostGIS store.
 
-  ![img](./images/627b0410-bfa7-4596-84c4-f5e973057a75.png)
+  ![img](../images/627b0410-bfa7-4596-84c4-f5e973057a75.png)
 
 
 ## 5. F4D Converter
@@ -264,7 +264,7 @@ Check [Default Workspace]
 
 - Run the downloaded file to install F4D Converter.
 
-  ![](./images/8890e42d-321c-4dc3-aa0f-3a7a603276bd.png)
+  ![](../images/8890e42d-321c-4dc3-aa0f-3a7a603276bd.png)
 
 
 ## 6. RabbitMQ
@@ -278,7 +278,7 @@ Check [Default Workspace]
 
 - Click and download 'OTP 23.0 Windows 64-bit Binary File' from [Download OTP 23.0] section of Erlang homepage (https://www.erlang.org/downloads).
 
-  ![img](./images/9888965a-6966-4969-8aac-538e9b2b5fc2.png)
+  ![img](../images/9888965a-6966-4969-8aac-538e9b2b5fc2.png)
 
 - Run the downloaded file.
 
@@ -332,7 +332,7 @@ Check [Default Workspace]
 
 - Login ID and password are both "guest".
 
-![img](./images/1cf84fa2-a2e4-47ad-b841-7dbfbca3ebd8.png)
+![img](../images/1cf84fa2-a2e4-47ad-b841-7dbfbca3ebd8.png)
 
 - Click [Exchange] tab at the topside.
 
@@ -342,13 +342,13 @@ Check [Default Workspace]
   - *Type : topic*
   - *Durability : Durable*
 
-  ![img](./images/88198c22-8c7c-4156-990e-cdf72b6cbe30.png)
+  ![img](../images/88198c22-8c7c-4156-990e-cdf72b6cbe30.png)
 
 - Click [Queues] tab at the topside.
 
 - Click [Add a new queue] at the bottomside and enter as the following screen. Click [Add queue] button.
 
-  ![img](./images/ff5e92b7-3c79-45dc-93b6-2d756de039b0.png)
+  ![img](../images/ff5e92b7-3c79-45dc-93b6-2d756de039b0.png)
 
 - When installing RabbitMQ for the first time, "guest" account has the permissions as Administrator. But if you access the application with this account, a connection error occurs.
 
@@ -358,13 +358,13 @@ Check [Default Workspace]
 
   - Password : mago3d 
 
-    ![img](./images/b2448bde-1ea4-44b6-abe2-7082ae64cb97.png)
+    ![img](../images/b2448bde-1ea4-44b6-abe2-7082ae64cb97.png)
 
 - Click the newly created mago3D account under the guest account.
 
 - Create "Current permissions" and "Current topic permissions" as the following screen. Enter the password (mago3d) at [Update this user] and click [Update user] button.
 
-  ![](./images/d7b0e288-9c6a-4f45-af18-461a693c6a9a.png)
+  ![](../images/d7b0e288-9c6a-4f45-af18-461a693c6a9a.png)
 
 
 ## 7. Default Table Creation and Password Update
@@ -384,7 +384,7 @@ Check [Default Workspace]
 
 - Copy encodePassword value in the console window. Update the admin password using Query Editor of pgAdmin. (update user_info set password = ‘(encodePassword value)’ where user_id=＇admin’;)
 
-  ![img](./images/Table-1.png)
+  ![img](../images/Table-1.png)
 
    
 ## 8. Setup
@@ -406,7 +406,7 @@ Check [Default Workspace]
 
   - mago3d-user - src - main - resources - application.properties
 
-    ![img](./images/settings1.png)
+    ![img](../images/settings1.png)
 
 - If you change the port of PostgreSQL to 15432, The port of PostGIS Stores of GeoServer also needs to be changed to 15432.
 
@@ -415,11 +415,11 @@ Check [Default Workspace]
 
 - Registering vector layer
 
-  ![img](./images/Layer1.png)
+  ![img](../images/Layer1.png)
 
   - Layer Registration function operates via GeoServer. Thus in the [Configuration] - [Operational Policy of Spatial Information] - **[GeoServer] tap, GeoServer of data URL must be running and workspace and stores must have been created.**
 
-  ![img](./images/Layer2.png)
+  ![img](../images/Layer2.png)
 
   - Vector layer registration supports shapefiles format.
     - Modifying styles : Supports transparency, outline thickness, outline / fill color.
@@ -427,7 +427,7 @@ Check [Default Workspace]
 
 - Registering raster layer
 
-  ![img](./images/Layer3.png)
+  ![img](../images/Layer3.png)
 
   - We do not support file upload function for raster data whose size is larger than shapefiles. The function to select and service from layer lists registered at GeoServer is supported.
 
@@ -440,7 +440,7 @@ Check [Default Workspace]
 
 - Data Group
 
-  ![img](./images/3d-1.png)
+  ![img](../images/3d-1.png)
 
   - By default user can create extra groups as needed, with the group which has the group key called **basic**.
 
@@ -448,7 +448,7 @@ Check [Default Workspace]
 
 - Data Upload
 
-  ![img](./images/3d-2.png)
+  ![img](../images/3d-2.png)
 
   - Supporting formats : CITYGML, INDOORGML, IFC, LAS(POINT CLOUD), 3DS, OBJ, COLADA(DAE)
 
@@ -456,13 +456,13 @@ Check [Default Workspace]
 
 - Data Conversion
 
-  ![img](./images/3d-3.png)
+  ![img](../images/3d-3.png)
 
   - Select a file from uploaded files and click [F4D Conversion] button to convert it into F4D format.
 
 - Data Visualization and Search
 
-  ![img](./images/3d-3.png)
+  ![img](../images/3d-3.png)
 
   - The uploaded object will be displayed on the map if the file conversion succeeds.
 
