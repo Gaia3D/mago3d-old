@@ -22,11 +22,11 @@
   yum list installed | grep java
   ```
 
-  ![img](./images/L-Java-1.png)
+  ![img](../images/L-Java-1.png)
 
 - java 설치전 설치할 java 버전이 저장소에 있는지 확인한다. 
 
-  - ![img](./images/l-java-2.png)
+  - ![img](../images/l-java-2.png)
 
 - java 설치
 
@@ -69,7 +69,7 @@
 
   - 기존에 java 가 설치되어 있었기 때문에 11 버전을 설치해도 전역에서 사용하는 java 버전은 바뀌지 않는다. 
 
-  - ![img](./images/l-java-3.png)
+  - ![img](../images/l-java-3.png)
 
   - **alternatives**(심볼릭 링크를 관리할 수 있는 툴) 이용해서 설치된 자바 버전 중 11 버전을 선택해 심볼릭 링크를 설정해준다.
 
@@ -77,7 +77,7 @@
     sudo alternatives --config java
     ```
 
-  - ![img](./images/l-java-4.png)
+  - ![img](../images/l-java-4.png)
 
     yum으로 설치 하지 않고, 별도로 다운 받은 경우에는 별도의 심볼릭 링크를 생성해야 합니다.
 
@@ -117,7 +117,7 @@
     sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
     ```
 
-  - ![img](./images/p-1.png)
+  - ![img](../images/p-1.png)
 
 - postgresql 설치 
 
@@ -127,7 +127,7 @@
     yum list | grep postgresql12
     ```
 
-    - ![img](./images/p-2.png)
+    - ![img](../images/p-2.png)
 
   - 어떤 것을 설치할 것인가? 
 
@@ -160,7 +160,7 @@
     sudo chown -R postgres:postgres /data/postgres
     ```
 
-    - ![img](./images/p-3.png)
+    - ![img](../images/p-3.png)
 
   - postgres 계정으로 변경 후 /data/pg-data 경로로 initdb 실행 
 
@@ -170,7 +170,7 @@
     exit (로그아웃. 다시 gaia3d 계정으로 전환)
     ```
 
-    - ![img](./images/p-4.png)
+    - ![img](../images/p-4.png)
 
     - service 파일 PGDATA 경로 변경 
 
@@ -178,7 +178,7 @@
       sudo vim /usr/lib/systemd/system/postgresql-12.service
       ```
 
-      - ![img](./images/p-5.png)
+      - ![img](../images/p-5.png)
 
       - systemctl reload
 
@@ -193,7 +193,7 @@
         vim /data/postgres/postgresql.conf
         ```
 
-        - ![img](./images/p-6.png)
+        - ![img](../images/p-6.png)
 
       - postgresql 시작 & status 확인
 
@@ -203,7 +203,7 @@
         sudo systemctl status postgresql-12
         ```
 
-        - ![img](./images/p-7.png)
+        - ![img](../images/p-7.png)
 
 - 테스트
 
@@ -220,7 +220,7 @@
     show data_directory;
     ```
 
-    - ![img](./images/p-8.png)
+    - ![img](../images/p-8.png)
 
 ## 3. GDAL
 
@@ -238,9 +238,9 @@
     vim ~/.bash_profile 
     ```
 
-  - ![img](./images/Gdal-1.png)
+  - ![img](../images/Gdal-1.png)
 
-  - ![img](./images/gdal-2.png)
+  - ![img](../images/gdal-2.png)
 
 ## 4. RabbitMQ
 
@@ -252,7 +252,7 @@
   sudo yum install http://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm
   ```
 
-  - ![img](./images/rabbitmq-1.png)
+  - ![img](../images/rabbitmq-1.png)
 
 - erlang & rabbitmq 설치
 
@@ -271,7 +271,7 @@
 - RabbitMQ 관리자 페이지([http://localhost:15672](http://localhost:15672/))에 접속한다.
 - 아이디와 비밀번호는 모두 guest로 로그인한다.
 
-![img](./images/1cf84fa2-a2e4-47ad-b841-7dbfbca3ebd8.png)
+![img](../images/1cf84fa2-a2e4-47ad-b841-7dbfbca3ebd8.png)
 
 - 상단에 Exchange 탭을 클릭한다.
 
@@ -281,13 +281,13 @@
   - *Type : topic*
   - *Durability : Durable*
 
-  ![img](./images/88198c22-8c7c-4156-990e-cdf72b6cbe30.png)
+  ![img](../images/88198c22-8c7c-4156-990e-cdf72b6cbe30.png)
 
 - 상단에 Queues 탭을 클릭한다.
 
 - 하단에 Add a new queue를 클릭하여 우측 그림과 같이 입력한 뒤, Add queue 버튼을 클릭한다.
 
-  ![img](./images/ff5e92b7-3c79-45dc-93b6-2d756de039b0.png)
+  ![img](../images/ff5e92b7-3c79-45dc-93b6-2d756de039b0.png)
 
 - RabbitMQ를 처음 설치하면 guest 계정이 Administrator로 권한 설정되어 있다. 하지만 이 계정으로 application에 접속할 시, 접속 관련 오류가 발생한다.
 
@@ -297,13 +297,13 @@
 
   - Password : mago3d 
 
-    ![img](./images/b2448bde-1ea4-44b6-abe2-7082ae64cb97.png)
+    ![img](../images/b2448bde-1ea4-44b6-abe2-7082ae64cb97.png)
 
 - guest 아래에 새로 생성된 mago3d계정을 클릭한다.
 
 - 아래 화면과 같이 Current permissions, Current topic permissions을 생성하고 Update this user에 비밀번호(mago3d)를 입력한 뒤, 하단의 Update user 버튼을 클릭한다.
 
-  ![](./images/d7b0e288-9c6a-4f45-af18-461a693c6a9a.png)
+  ![](../images/d7b0e288-9c6a-4f45-af18-461a693c6a9a.png)
 
 ## 5. GeoServer 
 
@@ -437,7 +437,7 @@
       log4j.appender.geoserverlogfile.MaxFileSize=200MB 
       ```
 
-    - ![img](./images/geoserver-1.png)
+    - ![img](../images/geoserver-1.png)
 
     - catalina.out 파일은 모든 로그가 한 파일에 계속 쌓이기 때문에 서버 운영을 계속 하다보면 너무 커지게 되므로 catalina.out 파일이 생성되지 않도록 수정한다. 
 
@@ -449,7 +449,7 @@
       CATALINA_OUT=/dev/null
       ```
 
-    - ![img](./images/geoserver-2.png)
+    - ![img](../images/geoserver-2.png)
 
 ## 6. mago3D 
 
@@ -503,7 +503,7 @@
       \q
       ```
 
-      - ![img](./images/mago-1.png)
+      - ![img](../images/mago-1.png)
 
       - postgis extension 설치 
 
@@ -583,7 +583,7 @@
 
     - shutdown port 는 geoserver 8005 를 이미 사용중이므로 다른 포트를 사용하도록 한다.
 
-    - ![img](./images/mago-2.png)
+    - ![img](../images/mago-2.png)
 
       ```
       <Service name="Catalina">
@@ -697,7 +697,7 @@
     CATALINA_OUT=/dev/null
     ```
 
-    - ![img](./images/mago-3.png)
+    - ![img](../images/mago-3.png)
 
   - 서비스 시작
 
@@ -745,7 +745,7 @@
     - xvfb 설치 
       - sudo yum list | grep -i xvfb 명령으로 xvfb 를 respository 에서 검색해서 나오는 항목을 설치한다. 
       
-      - ![img](./images/mago-4.png)
+      - ![img](../images/mago-4.png)
       
       - ```
         sudo yum install xorg-x11-server-Xvfb
@@ -796,7 +796,7 @@
   ```
 
   - yum repolist 명령으로 저장소가 잘 추가 되었는지 확인한다. 
-    - ![img](./images/nginix-1.png)
+    - ![img](../images/nginix-1.png)
 
 - nginx 설치 
 
@@ -948,7 +948,7 @@
 
   - semanage port 에 9090 이 없어서 다음과 같은 에러가 발생할 경우 
 
-    - ![img](./images/nginix-2.png)
+    - ![img](../images/nginix-2.png)
 
   - semanage port 추가 하기 
 
@@ -1063,7 +1063,7 @@
       vim ~/.bash_profile
       ```
 
-      - ![img](./images/f4d-1.png)
+      - ![img](../images/f4d-1.png)
 
       - .bash_profile 수정 후 반영은 새로 로그인(새로운 세션)하거나 아래의 명령어를 입력해 적용 할 수 있다.
 
@@ -1073,7 +1073,7 @@
 
       - 적용후 gcc & g++ 버전을 확인 시 다음과 같이 나오는지 확인 
 
-      - ![img](./images/f4d-2.png)
+      - ![img](../images/f4d-2.png)
 
 - 개발 도구 설치
 
@@ -1087,7 +1087,7 @@
       yum list | grep cmake
       ```
 
-      - ![img](./images/f4d-3.png)
+      - ![img](../images/f4d-3.png)
 
     - CMake 설치 
 
@@ -1101,7 +1101,7 @@
         cmake3 --version
         ```
 
-        - ![img](./images/f4d-4.png)
+        - ![img](../images/f4d-4.png)
 
   - git
 
@@ -1127,7 +1127,7 @@
       ```
 
       - 새로운 세션으로 접속시 git version 이 올라간 것을 확인 할 수 있다. 
-        - ![img](./images/f4d-5.png)
+        - ![img](../images/f4d-5.png)
 
 - 의존성 설치
 
@@ -1189,7 +1189,7 @@
           yum list installed | grep boost
           ```
 
-          ![img](./images/f4d-6.png)
+          ![img](../images/f4d-6.png)
 
         - CMake 에서 Boost 라이브러리를 못 찾는 경우 Boost_INCLUDE_DIR, Boost_LIBRARY_DIRS 값 설정이 필요하다.
 
@@ -1201,7 +1201,7 @@
           yum list installed | grep gdal
           ```
 
-          ![img](./images/f4d-7.png)
+          ![img](../images/f4d-7.png)
 
       - (옵션) libgeotiff 1.3.0 버전 이상 : 옵션이지만 빌드 시 사용
 
@@ -1211,7 +1211,7 @@
           yum list installed | grep libgeotiff
           ```
 
-          ![img](./images/f4d-8.png)
+          ![img](../images/f4d-8.png)
 
     - 소스 설치
 
@@ -1316,7 +1316,7 @@
     . ~/.bash_profile
     ```
 
-    ![img](./images/f4d-9.png))
+    ![img](../images/f4d-9.png))
 
   - 실행 확인
 

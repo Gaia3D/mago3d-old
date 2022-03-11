@@ -26,11 +26,11 @@
   yum list installed | grep java
   ```
 
-  ![img](./images/L-Java-1.png)
+  ![img](../images/L-Java-1.png)
 
 - Before installing, check if the version of Java to install is in the repository.
 
-  - ![img](./images/l-java-2.png)
+  - ![img](../images/l-java-2.png)
 
 - Installing Java
 
@@ -73,7 +73,7 @@
 
   - Because there is a pre-installed Java, the "global" version of Java does not change even if you install v.11.
 
-  - ![img](./images/l-java-3.png)
+  - ![img](../images/l-java-3.png)
 
   - Using **alternatives** (a tool that can manage symbolic links), select and set a symbolic link Java v.11 out of installed versions.
 
@@ -81,7 +81,7 @@
     sudo alternatives --config java
     ```
 
-  - ![img](./images/l-java-4.png)
+  - ![img](../images/l-java-4.png)
 
     If you download a Java file without using Yum, you should create a separate symbolic link.
 
@@ -123,7 +123,7 @@
     sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
     ```
 
-  - ![img](./images/p-1.png)
+  - ![img](../images/p-1.png)
 
 - Installing PostgreSQL
 
@@ -133,7 +133,7 @@
     yum list | grep postgresql12
     ```
 
-    - ![img](./images/p-2.png)
+    - ![img](../images/p-2.png)
 
   - Which version should we install?
 
@@ -166,7 +166,7 @@
     sudo chown -R postgres:postgres /data/postgres
     ```
 
-    - ![img](./images/p-3.png)
+    - ![img](../images/p-3.png)
 
   - After changing postgres account, run initdb to `/data/pg-data` path.
 
@@ -176,7 +176,7 @@
     exit (logout; change back to gaia3d account)
     ```
 
-    - ![img](./images/p-4.png)
+    - ![img](../images/p-4.png)
 
     - Change PGDATA path of service file.
 
@@ -184,7 +184,7 @@
       sudo vim /usr/lib/systemd/system/postgresql-12.service
       ```
 
-      - ![img](./images/p-5.png)
+      - ![img](../images/p-5.png)
 
       - systemctl reload
 
@@ -199,7 +199,7 @@
         vim /data/postgres/postgresql.conf
         ```
 
-        - ![img](./images/p-6.png)
+        - ![img](../images/p-6.png)
 
       - Start postgresql & check status
 
@@ -209,7 +209,7 @@
         sudo systemctl status postgresql-12
         ```
 
-        - ![img](./images/p-7.png)
+        - ![img](../images/p-7.png)
 
 - Test
 
@@ -226,7 +226,7 @@
     show data_directory;
     ```
 
-    - ![img](./images/p-8.png)
+    - ![img](../images/p-8.png)
 
 ## 3. GDAL
 
@@ -244,9 +244,9 @@
     vim ~/.bash_profile 
     ```
 
-  - ![img](./images/Gdal-1.png)
+  - ![img](../images/Gdal-1.png)
 
-  - ![img](./images/gdal-2.png)
+  - ![img](../images/gdal-2.png)
 
 ## 4. RabbitMQ
 
@@ -258,7 +258,7 @@
   sudo yum install http://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm
   ```
 
-  - ![img](./images/rabbitmq-1.png)
+  - ![img](../images/rabbitmq-1.png)
 
 - Installing erlang & rabbitmq
 
@@ -277,7 +277,7 @@
 - Go to RabbitMQ Administration page ([http://localhost:15672](http://localhost:15672/)).
 - Login ID and password are both "guest".
 
-![img](./images/1cf84fa2-a2e4-47ad-b841-7dbfbca3ebd8.png)
+![img](../images/1cf84fa2-a2e4-47ad-b841-7dbfbca3ebd8.png)
 
 - Click the [Exchange] tap at the topside.
 
@@ -287,13 +287,13 @@
   - *Type : topic*
   - *Durability : Durable*
 
-  ![img](./images/88198c22-8c7c-4156-990e-cdf72b6cbe30.png)
+  ![img](../images/88198c22-8c7c-4156-990e-cdf72b6cbe30.png)
 
 - Click the [Queues] tap at the topside.
 
 - Click [Add a new queue] at the bottom and enter as the following screen. Then click [Add queue] button.
 
-  ![img](./images/ff5e92b7-3c79-45dc-93b6-2d756de039b0.png)
+  ![img](../images/ff5e92b7-3c79-45dc-93b6-2d756de039b0.png)
 
 - When installing RabbitMQ for the first time, "guest" account has the permissions as Administrator. But if you access the application with this account, a connection error occurs.
 
@@ -303,13 +303,13 @@
 
   - Password : mago3d 
 
-    ![img](./images/b2448bde-1ea4-44b6-abe2-7082ae64cb97.png)
+    ![img](../images/b2448bde-1ea4-44b6-abe2-7082ae64cb97.png)
 
 - Click the newly created mago3D account under the guest account.
 
 - Create "Current permissions" and "Current topic permissions" as the following screen. Enter the password (mago3d) at [Update this user] and click [Update user] button.
 
-  ![](./images/d7b0e288-9c6a-4f45-af18-461a693c6a9a.png)
+  ![](../images/d7b0e288-9c6a-4f45-af18-461a693c6a9a.png)
 
 
 ## 5. GeoServer 
@@ -444,7 +444,7 @@
       log4j.appender.geoserverlogfile.MaxFileSize=200MB 
       ```
 
-    - ![img](./images/geoserver-1.png)
+    - ![img](../images/geoserver-1.png)
 
     - All the logs will be accumulated in one catalina.out file. As the server operation is going on, this file will become too large. Modify to not create catalina.out file. 
 
@@ -456,7 +456,7 @@
       CATALINA_OUT=/dev/null
       ```
 
-    - ![img](./images/geoserver-2.png)
+    - ![img](../images/geoserver-2.png)
 
 ## 6. mago3D 
 
@@ -510,7 +510,7 @@
       \q
       ```
 
-      - ![img](./images/mago-1.png)
+      - ![img](../images/mago-1.png)
 
       - Installing PostGIS extension
 
@@ -590,7 +590,7 @@
 
     - GeoServer 8005 port is already being used, so shutdown port should use another port.
 
-    - ![img](./images/mago-2.png)
+    - ![img](../images/mago-2.png)
 
       ```
       <Service name="Catalina">
@@ -704,7 +704,7 @@
     CATALINA_OUT=/dev/null
     ```
 
-    - ![img](./images/mago-3.png)
+    - ![img](../images/mago-3.png)
 
   - Starting service
 
@@ -752,7 +752,7 @@
     - Installing Xvfb
       - Run `sudo yum list | grep -i xvfb` command. Install the items those are the search results of xvfb from the respository.
       
-      - ![img](./images/mago-4.png)
+      - ![img](../images/mago-4.png)
       
       - ```
         sudo yum install xorg-x11-server-Xvfb
@@ -803,7 +803,7 @@
   ```
 
   - Check if the repository is well added using `yum repolist` command.
-    - ![img](./images/nginix-1.png)
+    - ![img](../images/nginix-1.png)
 
 - Installing NginX
 
@@ -955,7 +955,7 @@
 
   - In case the following error occurs because semanage port does not have 9090:
 
-    - ![img](./images/nginix-2.png)
+    - ![img](../images/nginix-2.png)
 
   - Adding semanage port
 
@@ -1070,7 +1070,7 @@
       vim ~/.bash_profile
       ```
 
-      - ![img](./images/f4d-1.png)
+      - ![img](../images/f4d-1.png)
 
       - After modifying .bash_profile, you can apply it by logout and login (a new session) or running the following command.
 
@@ -1080,7 +1080,7 @@
 
       - Check if gcc and g++ versions are displayed as the following screen after you applied the modification.
 
-      - ![img](./images/f4d-2.png)
+      - ![img](../images/f4d-2.png)
 
 - Installing development tools
 
@@ -1094,7 +1094,7 @@
       yum list | grep cmake
       ```
 
-      - ![img](./images/f4d-3.png)
+      - ![img](../images/f4d-3.png)
 
     - Installing CMake
 
@@ -1108,7 +1108,7 @@
         cmake3 --version
         ```
 
-        - ![img](./images/f4d-4.png)
+        - ![img](../images/f4d-4.png)
 
   - git
 
@@ -1134,7 +1134,7 @@
       ```
 
       - You can check the newer version of git if you logout and login to a new session.
-        - ![img](./images/f4d-5.png)
+        - ![img](../images/f4d-5.png)
 
 - Dependency Installation
 
@@ -1196,7 +1196,7 @@
           yum list installed | grep boost
           ```
 
-          ![img](./images/f4d-6.png)
+          ![img](../images/f4d-6.png)
 
         - If CMake can not find Boost library, the values of Boost_INCLUDE_DIR and Boost_LIBRARY_DIRS are required to be set.
 
@@ -1208,7 +1208,7 @@
           yum list installed | grep gdal
           ```
 
-          ![img](./images/f4d-7.png)
+          ![img](../images/f4d-7.png)
 
       - (optional) libgeotiff 1.3.0 or later : Optional but used when building
 
@@ -1218,7 +1218,7 @@
           yum list installed | grep libgeotiff
           ```
 
-          ![img](./images/f4d-8.png)
+          ![img](../images/f4d-8.png)
 
     - Installing sources
 
@@ -1323,7 +1323,7 @@
     . ~/.bash_profile
     ```
 
-    ![img](./images/f4d-9.png))
+    ![img](../images/f4d-9.png))
 
   - Check if it runs properly.
 

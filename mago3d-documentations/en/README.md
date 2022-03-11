@@ -41,9 +41,9 @@ Repository for mago3D documents.
 | **Components**       | **Description**                                                     |
 | :------------------- | :----------------------------------------------------------- |
 | **mago3d**           | mago3d Platform<br />* User/Admin System Structure<br />* Data Auto-Conversion (3D/2D)<br />* Rule-Based Management System<br />* Smart Tiling<br />* Simulation<br />* Management Features: Dashboard, User, Role, Menu, etc.<br />* System Configuration<br />* Per-User Configuration |
-| **mago3d-js**        | Open Source Javascript Library for Visualizing 3D Multi-View Blocks<br />![img](./images/mago3.png) |
-| **mago3d-converter** | * Converting 3D formats(IFC, 3DS, OBJ, DAE, JT) to F4D, the mago3D dedicated format<br />* Running data size reduction and preprocessing while converting<br />![img](./images/mago4.png) |
-| **mago3d-tiler**     | * Tiling F4D to shape smart tiles usable in mago3d platform<br />* Not loading full data in the display; Only requesting and rendering data with consideration for visibilities and distances from the camera's viewpoint<br />![img](./images/mago5.png) |
+| **mago3d-js**        | Open Source Javascript Library for Visualizing 3D Multi-View Blocks<br />![img](../images/mago3.png) |
+| **mago3d-converter** | * Converting 3D formats(IFC, 3DS, OBJ, DAE, JT) to F4D, the mago3D dedicated format<br />* Running data size reduction and preprocessing while converting<br />![img](../images/mago4.png) |
+| **mago3d-tiler**     | * Tiling F4D to shape smart tiles usable in mago3d platform<br />* Not loading full data in the display; Only requesting and rendering data with consideration for visibilities and distances from the camera's viewpoint<br />![img](../images/mago5.png) |
 
 ## Utilization Guide of mago3D
 
@@ -104,6 +104,6 @@ Repository for mago3D documents.
 |   **Design Layer**   | * Meaning 2D data to simulate<br />* Can reflects the extrusion (height property) of 2D data |
 |    **Smart Tiles**    | * Smart tiling for optimizing 3D visualization performance<br />* Have the pyramid structure<br />* Are how to save and visualize 3D data as tile structure<br />* Not loading full data in the display; Only requesting and rendering data with consideration for visibilities and distances from the camera's viewpoint |
 
-![](./images/9de76378-b910-4658-84e2-b80bd9b90b01_english.png)
+![](../images/9de76378-b910-4658-84e2-b80bd9b90b01_english.png)
 
-![](./images/ac3cdd08-1095-427d-a981-bd19b3b0acbf_english.png)
+![](../images/ac3cdd08-1095-427d-a981-bd19b3b0acbf_english.png)

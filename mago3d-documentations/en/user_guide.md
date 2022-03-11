@@ -13,13 +13,13 @@
 
 [![img](https://www.youtube.com/s/desktop/0ac1422e/img/favicon_144x144.png)mago3D - 3D Data Conversion and Visualization](https://youtu.be/z3bUZA_jF4s)
 
-![img](./images/data1_english.png)
+![img](../images/data1_english.png)
 
 - Data group
 
-  ![img](./images/data2.png)
+  ![img](../images/data2.png)
 
-  ![img](./images/data3.png)
+  ![img](../images/data3.png)
 
   - By default user can create extra groups as needed, with the group which has the group key called **basic**.
 
@@ -27,7 +27,7 @@
 
 - Data Upload
 
-  ![img](./images/data4.png)
+  ![img](../images/data4.png)
 
   - Supporting formats : CITYGML, INDOORGML, IFC, LAS(POINT CLOUD), 3DS, OBJ, COLADA(DAE)
 
@@ -40,13 +40,13 @@
 
 - Data Conversion
 
-  ![img](./images/data5.png)
+  ![img](../images/data5.png)
 
   - Select a file from uploaded files and click [F4D Conversion] button to convert it into F4D format.
 
 - Data Visualization and Search
 
-  ![img](./images/data6.png)
+  ![img](../images/data6.png)
 
   - The uploaded object will be displayed on the map if the file conversion succeeds.
 
@@ -59,15 +59,15 @@
 
 [![img](https://www.youtube.com/s/desktop/0ac1422e/img/favicon_144x144.png)mago3D - 2D Layer Visualization](https://www.youtube.com/watch?v=uKpysHvppKM&t=979s) 
 
-![img](./images/ls1_english.png)
+![img](../images/ls1_english.png)
 
 - Registering vector layer
 
-  ![img](./images/ls2.png)
+  ![img](../images/ls2.png)
 
   - Layer Registration function operates via GeoServer. Thus in the [Configuration] - [Operational Policy of Spatial Information] - **[GeoServer] tap, GeoServer of data URL must be running and workspace and stores must have been created.**
 
-  ![img](./images/ls3.png)
+  ![img](../images/ls3.png)
 
   - Vector layer registration supports shapefiles format. 
     - Modifying styles : Supports transparency, outline thickness, outline / fill color.
@@ -75,7 +75,7 @@
 
 - Registering raster layer
 
-  ![img](./images/ls4.png)
+  ![img](../images/ls4.png)
 
   - We do not support file upload function for raster data whose size is larger than shapefiles. The function to select and service from layer lists registered at GeoServer is supported.
 
@@ -88,16 +88,16 @@
 
 - Menu management : Admin can specify the list of menus available to certain user groups.
 
-  ![img](./images/user1.png)
+  ![img](../images/user1.png)
 
 - Role management : Admin can specify which user group can use which permissions.
 
-  ![img](./images/user2.png)
+  ![img](../images/user2.png)
 
 
 ## 4. Menus (Admin)
 
-![img](./images/menu1.png)
+![img](../images/menu1.png)
 
 - Admin can edit / delete / add the menus for admin and users.
 
@@ -110,7 +110,7 @@
 
 [![img](https://www.youtube.com/s/desktop/0ac1422e/img/favicon_144x144.png)mago3D - Configuration : Operational Policy of Spatial Information (Admin)](https://www.youtube.com/watch?v=FiCVbQC2Mj8) 
 
-![img](./images/env_settings.png)
+![img](../images/env_settings.png)
 
 - General Operational Policy
 

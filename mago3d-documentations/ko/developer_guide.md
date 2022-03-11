@@ -70,11 +70,11 @@
 
 ### F4D 데이터 저장 경로 (전체)
 
-![img](./images/f4d_data1.png)
+![img](../images/f4d_data1.png)
 
 ### F4D 데이터 저장 경로 (상세)
 
-![img](./images/f4d_data2.png)
+![img](../images/f4d_data2.png)
 
  
 
@@ -97,12 +97,12 @@
 | **Queue**    | * Producer들이 발송한 메세지들이 Consumer가 소비하기 전까지 보관되는 장소<br />* Queue는 이름으로 구분되는데, 같은 이름과 같은 설정으로 Queue를 생성하면 에러 없이 기존 Queue에 연결되지만, 같은 이름과 다른 설정으로 Queue를 생성하려고 시도하면 에러가 발생합니다. |
 | **Consumer** | * 메세지를 수신하는 주체<br />* Consumer는 Queue에 직접 접근하여 메세지를 가져온다. |
 
-![img](./images/rabbitmq1.png)
+![img](../images/rabbitmq1.png)
 
 - 메시지를 발행하는 **produce**r 에서 **broker** 의 **exchange** 로 메시지를(**routing key**) 전달하면, **binding** 규칙에 의해 연결된 **queue** 로 메시지가 복사된다.
 - 메시지를 받아가는 **consumer** 에서는 브로커의 **queue** 를 통해 메시지를 받아가서 처리한다.
 
-![img](./images/rabbitmq2.png)
+![img](../images/rabbitmq2.png)
 
 - Exchange에는 4가지 타입이 있는데, 가 타입별 특징은 다음과 같다.
 
@@ -130,7 +130,7 @@
 
 ### 흐름도
 
-![img](./images/3dflow1.png)
+![img](../images/3dflow1.png)
 
  
 
@@ -170,11 +170,11 @@
 - vector 
   - 현재 업로드 가능 대상은 Shape 파일이다. 
   - shape 파일 등록 시 ogr2ogr 을 사용하기 때문에 gdal 에 의존적이다. 
-- ![img](./images/lm1.png)
+- ![img](../images/lm1.png)
 - raster 
   - raster 데이터는 대용량인 경우가 많아서 관리자에서 별도로 업로드 하지 않고, 직접 storage 에 있는 데이터를 geoserver 로 등록 후 관리자에서 관리한다. 
   - geoserver 에 등록된 레이어중 선택한 레이어를 서비스 대상 레이어로 설정 할 수 있고, wms 외에캐시 사용 유무를 설정하여 geowebcache 를 사용할 수 있다.
-- ![img](./images/lm2.png)
+- ![img](../images/lm2.png)
 
 
 
@@ -182,15 +182,15 @@
 
 모든 사용자는 그룹을 가지고 있고 해당 그룹에 따라 접근 가능한 메뉴와 권한이 결정된다. 
 
-![img](./images/role1.png)
+![img](../images/role1.png)
 
-![img](./images/role2.png)
+![img](../images/role2.png)
 
 
 
 ## 8. 정적 컨텐츠 갱신
 
-- ![img](./images/static_contents.png)
+- ![img](../images/static_contents.png)
 
 - 정적인 컨테츠인 css, js 등은 브라우저가 캐시를 해두기 때문에 새로운 내용이 브라우저 캐시를 지우기 전까지는 반영되지 않는다. 
 
@@ -214,7 +214,7 @@
    – application.properties 의 db connection 정보를 암호화 복호화 할때는  common 프로젝트의
    gaia3d/security 패키지의 CryptTest 의 테스트를 수행해서 암복호화 한다. 
 
-![img](./images/encryption.png)
+![img](../images/encryption.png)
 
 2) 로그인 사용자 패스워드 암호화 
 
@@ -317,7 +317,7 @@ logger name="org.springframework" 값을 "org.springframework.web" 으로 변경
 
 -  시간 타입의 경우 timestamp with time zone 사용
 
-  ![img](./images/db_convention.png)
+  ![img](../images/db_convention.png)
 
 
 
@@ -438,7 +438,7 @@ ORDER BY
 
   - Tomcat, WebSphere, JBoss …
 
-    ![img](./images/web1.png)
+    ![img](../images/web1.png)
 
 - Web Server 와 Was Server 를 분리하는 이유 
 
@@ -463,7 +463,7 @@ ORDER BY
   - nginx conf 파일의 location 에 프록시 설정을 추가하여 연동 가능하다.
 - 테스트 
   - was 에 배포한 application 의 특정 url 에 접근하여 web/was server 의 access_log 파일들을 확인.
-  - ![img](./images/web2.png)
+  - ![img](../images/web2.png)
 
 
 

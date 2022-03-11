@@ -22,7 +22,7 @@
 
    mago3D JS를 사용 시 CesiumJS에서 제공하는 모든 기능들을 사용할 수 있습니다. (import한 cesium.js 버전에 따라 기능에 차이가 있음)
 
-![세슘 사용 시 마고3D 렌더링 하는 루트](./images/depend1.png)
+![세슘 사용 시 마고3D 렌더링 하는 루트](../images/depend1.png)
 
  
 
@@ -118,7 +118,7 @@
 
 ## 5. Data 등록
 
-![](./images/data_reg1.png)
+![](../images/data_reg1.png)
 
 ```
 function magoLoadEnd(e) {

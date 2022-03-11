@@ -1,4 +1,4 @@
-![mago3D 로고](./images/mago3D_Logo_v25.png)
+![mago3D 로고](../images/mago3D_Logo_v25.png)
 # mago3D 문서 작업 저장소
 
 Repository for mago3D documents. 
@@ -23,11 +23,11 @@ Repository for mago3D documents.
 - 오픈소스기반 개발, 개발성과 확장성 확보
 - 초대용량 3차원 파일의 효율적 관리 및 초고속렌더링 
 
-![img](./images/mago1.png)
+![img](../images/mago1.png)
 
 ### **3. 아키텍쳐**
 
-![img](./images/mago2.png)
+![img](../images/mago2.png)
 
 ### **4. mago3D 구성**
 
@@ -41,9 +41,9 @@ Repository for mago3D documents.
 | **구성**             | **설명**                                                     |
 | :------------------- | :----------------------------------------------------------- |
 | **mago3d**           | mago3d 플랫폼<br />* 사용자/관리자 시스템으로 구성<br />* 데이터 변환 자동화 (3D/2D)<br />* Rule-Based Management System<br />* 스마트 타일링<br />* 시뮬레이션<br />* 대시보드, 사용자, Role, 메뉴 등 관리기능<br />* 시스템 환경 설정<br />* 사용자별 환경설정 |
-| **mago3d-js**        | 3D 다중 블록 가시화를 위한 오픈소스 자바스크립트 라이브러리<br />![img](./images/mago3.png) |
-| **mago3d-converter** | * 3D 형식(IFC, 3DS, OBJ, DAE, JT)을 mago3D 서비스 전용 포맷인 F4D로 변환<br />* 변환 과정에서 빠른 렌더링을 위해 데이터 크기 축소 및 사전 처리를 수행<br />![img](./images/mago4.png) |
-| **mago3d-tiler**     | * mago3d 플랫폼에서 사용 가능한 스마트 타일 형태로 F4D를 타일링<br />* 전체 데이터를 불러오지 않고 화면에 들어오며, 카메라와의 거리를 따진 타일의 데이터만 호출<br />![img](./images/mago5.png) |
+| **mago3d-js**        | 3D 다중 블록 가시화를 위한 오픈소스 자바스크립트 라이브러리<br />![img](../images/mago3.png) |
+| **mago3d-converter** | * 3D 형식(IFC, 3DS, OBJ, DAE, JT)을 mago3D 서비스 전용 포맷인 F4D로 변환<br />* 변환 과정에서 빠른 렌더링을 위해 데이터 크기 축소 및 사전 처리를 수행<br />![img](../images/mago4.png) |
+| **mago3d-tiler**     | * mago3d 플랫폼에서 사용 가능한 스마트 타일 형태로 F4D를 타일링<br />* 전체 데이터를 불러오지 않고 화면에 들어오며, 카메라와의 거리를 따진 타일의 데이터만 호출<br />![img](../images/mago5.png) |
 
 ## mago3D 활용 가이드
 
@@ -104,6 +104,6 @@ Repository for mago3D documents.
 |   **디자인 레이어**   | * 시뮬레이션용 2차원 데이터를 지칭<br />* 2차원 데이터의 높이 속성을 반영(Extrusion) 가능 |
 |    **스마트 타일**    | * 3D 가시화 성능 최적화를 위해 스마트타일<br />* 타일 데이터는 피라미드 구조<br />* 스마트 타일이란 3차원 데이터를 타일 구조로 저장하고 가시화하는 방법<br />* 전체 데이터를 불러오지 않고 화면에 들어오며, 카메라와의 거리를 따진 타일의 데이터만 호출 |
 
-![](./images/9de76378-b910-4658-84e2-b80bd9b90b01.png)
+![](../images/9de76378-b910-4658-84e2-b80bd9b90b01.png)
 
-![](./images/ac3cdd08-1095-427d-a981-bd19b3b0acbf.png)
+![](../images/ac3cdd08-1095-427d-a981-bd19b3b0acbf.png)

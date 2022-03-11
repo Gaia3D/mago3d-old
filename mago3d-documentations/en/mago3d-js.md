@@ -20,7 +20,7 @@
 
 - When using mago3D JS, you can use the all functions supported by CesiumJS. (The functions you can use will be different according to imported cesium.js versions.)
 
-![The rendering route of mago3D when using CesiumJS](./images/depend1.png)
+![The rendering route of mago3D when using CesiumJS](../images/depend1.png)
 
 - Thus you should import and use the attached cesium.js when using mago3D JS.
 
@@ -112,7 +112,7 @@
 
 ## 5. Data Registration
 
-![](./images/data_reg1_english.png)
+![](../images/data_reg1_english.png)
 
 ```
 function magoLoadEnd(e) {
