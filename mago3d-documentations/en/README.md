@@ -1,4 +1,4 @@
-![mago3D Logo](./images/mago3D_Logo_v25.png)
+![mago3D Logo](../images/mago3D_Logo_v25.png)
 # mago3D Documentations Repository
 
 Repository for mago3D documents. 
@@ -23,11 +23,11 @@ Repository for mago3D documents.
 - Developing based on Open Sources; guaranteed developability and expandability
 - Efficient managements and super fast renderings of super large 3D files
 
-![img](./images/mago1_english.png)
+![img](../images/mago1_english.png)
 
 ### **3. Architecture of mago3D**
 
-![img](./images/mago2_english.png)
+![img](../images/mago2_english.png)
 
 ### **4. Components of mago3D**
 
