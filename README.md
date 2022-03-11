@@ -1,4 +1,4 @@
-![mago3D 로고](./mago3d-documentations/ko/images/mago3D_Logo_v25.png)
+![mago3D 로고](./mago3d-documentations/images/mago3D_Logo_v25.png)
 
 # MAGO3D 프로젝트
 ----> openjdk 11로 다시 변경 하였음
